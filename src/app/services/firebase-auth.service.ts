@@ -12,7 +12,7 @@ import {
   user,
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
-import { UserInterface } from '../interfaces/user-interface';
+import { AuthUser } from '../interfaces/auth-user';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,8 @@ import { UserInterface } from '../interfaces/user-interface';
 export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
-  
-  currentUserSig = signal<UserInterface | null | undefined>(undefined);
+
+  currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
   constructor() { }
 

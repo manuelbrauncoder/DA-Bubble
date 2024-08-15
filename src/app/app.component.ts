@@ -19,10 +19,6 @@ export class AppComponent implements OnInit {
     this.subLoginState();
   }
 
-
-  
-
-
   /**
    * Subscribes to the login state of the user and updates the current user information.
    * 
