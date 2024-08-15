@@ -11,6 +11,11 @@ html, body, p, h1, h2, h3 , h4 {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 html, body, app-root {
   height: 100%;
 }
