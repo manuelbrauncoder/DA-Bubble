@@ -1,1 +1,59 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html, body, p, h1, h2, h3 , h4 {
+  padding: 0;
+}
+
+html, body, app-root {
+  height: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.gap-05 {
+  gap: .5rem;
+}
+
+.gap-1 {
+  gap: 1rem;
+}
+
+.gap-2 {
+  gap: 2rem;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.full-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
