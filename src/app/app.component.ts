@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
+import { FirestoreService } from './services/firestore.service';
+import { UserInterface } from './interfaces/user-interface';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,26 @@ import { HeaderComponent } from './shared/header/header.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'da-bubble';
 
   authService = inject(FirebaseAuthService);
+  fireService = inject(FirestoreService);
+
+  unsubUsersList;
+
+  constructor() {
+    this.unsubUsersList = this.fireService.getUsersList();
+  }
 
   ngOnInit(): void {
     this.subLoginState();
+    this.subExampleUsers();
+    this.logAfter500Ms()
+  }
+
+  ngOnDestroy(): void {
+    this.unsubUsersList();
   }
 
   /**
@@ -39,5 +54,24 @@ export class AppComponent implements OnInit {
       }
       console.log('currently logged in user:', this.authService.currentUserSig());
     })
+  }
+
+  /**
+   * uses http client to get data form assets/data/exampleUsers.json
+   */
+  subExampleUsers() {
+    this.fireService.getUsers().subscribe((data: UserInterface[])=> {
+      this.fireService.exampleUsers = data;
+    })
+  }
+
+  /**
+   * Just for Testing
+   */
+  logAfter500Ms(){
+    setTimeout(() => {
+      console.log('users:', this.fireService.users);
+      console.log('example data, fetched local', this.fireService.exampleUsers); 
+    }, 500);
   }
 }

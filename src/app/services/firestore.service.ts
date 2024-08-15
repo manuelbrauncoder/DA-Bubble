@@ -2,66 +2,31 @@ import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
 import { UserInterface } from '../interfaces/user-interface';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
   firestore = inject(Firestore);
+  private http = inject(HttpClient);
   users: UserInterface[] = [];
+  exampleUserDataUrl = 'assets/data/exampleUsers.json';
 
-  /**
-   * example Users - Created by ChatGPT
-   */
-   exampleUsers: UserInterface[] = [
-    {
-      id: '',
-      email: 'john.doe@example.com',
-      userName: 'johndoe',
-      firstName: 'John',
-      lastName: 'Doe',
-      date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
-      img: [],
-    },
-    {
-      id: '',
-      email: 'jane.smith@example.com',
-      userName: 'janesmith',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
-      img: [],
-    },
-    {
-      id: '',
-      email: 'michael.johnson@example.com',
-      userName: 'michaelj',
-      firstName: 'Michael',
-      lastName: 'Johnson',
-      date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
-      img: [],
-    },
-    {
-      id: '',
-      email: 'emily.davis@example.com',
-      userName: 'emilydavis',
-      firstName: 'Emily',
-      lastName: 'Davis',
-      date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
-      img: [],
-    },
-    {
-      id: '',
-      email: 'william.brown@example.com',
-      userName: 'williamb',
-      firstName: 'William',
-      lastName: 'Brown',
-      date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
-      img: [],
-    }
-  ];
+
+  exampleUsers: UserInterface[] = [];
 
   constructor() { }
+
+  /**
+   * fetch json from local url
+   * just for example data
+   * @returns 
+   */
+  getUsers(): Observable<UserInterface[]> {
+    return this.http.get<UserInterface[]>(this.exampleUserDataUrl);
+  }
 
   /**
    * 
@@ -100,13 +65,15 @@ export class FirestoreService {
   }
 
 
-  /**
- * Listen to a firebase collection, realtime updates, unsubscribe it in ngOnDestroy
- * orderBy: is just a example, more options are possible, look in firebase docu.
- * calls the docChanges method for updates in console.log
- *
- * @returns A function to unsubscribe from the Firestore snapshot listener.
- */
+  /** Call this method in app-components.ts
+   *  unsubscribe it with ngOnDestroy
+   * 
+   * Listen to a firebase collection, realtime updates, unsubscribe it in ngOnDestroy
+   * orderBy: is just a example, more options are possible, look in firebase docu.
+   * calls the docChanges method for updates in console.log
+   *
+   * @returns A function to unsubscribe from the Firestore snapshot listener.
+   */
   getUsersList() {
     const q = query(this.getCollectionRef('users'), orderBy('username'));
     return onSnapshot(q, (list) => {
