@@ -7,8 +7,9 @@ input {
   width: 61.813rem;
   height: 4.375rem;
   border-radius: 2.625rem;
+  background-image: url("/assets/icons/search.png");
   background-repeat: no-repeat;
-  background-position: right;
+  background-position: calc(100% - 1.5rem) center;
   padding: 17.5px 45px 17.5px 45px;
 }
 
