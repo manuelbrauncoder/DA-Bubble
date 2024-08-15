@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
+import { HeaderComponent } from './shared/header/header.component';
 
 @Component({
   selector: 'app-root',
