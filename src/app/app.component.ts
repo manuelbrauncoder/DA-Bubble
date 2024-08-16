@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
+    //this.authService.guestSignUp(); // just for testing
     //this.logAfter500Ms() // just for testing
   }
 

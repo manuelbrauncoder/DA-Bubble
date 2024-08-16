@@ -40,6 +40,16 @@ input {
   font-weight: 500;
 }
 
+form {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 2rem;
+  gap: 2.5rem;
+  padding: 3.1rem;
+}
+
 input::placeholder {
   color: #686868;
 }
