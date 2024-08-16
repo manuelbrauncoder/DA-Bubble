@@ -1,6 +1,33 @@
+@use './../../../mixins.scss' as *;
+
+
 form {
   >p {
     font-size: 1.2rem;
+  }
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 100%;
+
+    >div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >img {
+        position: absolute;
+        top: 30%;
+        left: 1rem;
+      }
+
+      >input {
+        width: 100%;
+      }
+    }
   }
 
   .or-wrapper {
@@ -18,11 +45,16 @@ form {
 
   >button {
     background-color: #ECEEFE;
-    
-    >span {
-      color: #444DF2;
-      font-size: 1rem;
-      font-weight: 400;
+    @include flexCenter;
+    gap: 1.5rem;
+    width: 100%;
+    color: #444DF2;
+    font-size: 1rem;
+    font-weight: 400;
+        
+    &:hover {
+      border: .1rem solid #444DF2;
+      font-weight: 700;
     }
   }
 
@@ -32,12 +64,22 @@ form {
 
     button:nth-child(1) {
       background-color: #444DF2;
+
+      &:hover {
+        background-color: #797EF3;
+      }
     }
 
     button:nth-child(2) {
       border: .1rem solid #444DF2;
       color: #444DF2;
       background-color: white;
+
+      &:hover {
+        border: .1rem solid #535AF1;
+        color: white;
+        background-color: #535AF1;
+      }
     }
   }
 }

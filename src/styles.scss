@@ -22,6 +22,14 @@ a {
   text-decoration: none;
   cursor: pointer;
   color: #797EF3;
+  padding: 0.2rem;
+  border-radius: 1.5rem;
+
+  &:hover {
+    font-weight: 700;
+    background-color: #ECEEFE;
+    color: #444DF2;
+  }
 }
 
 h2 {
@@ -41,13 +49,28 @@ button {
 }
 
 input {
+  cursor: pointer;
   background-color: #ECEEFE;
   border: none;
-  padding: 1.1rem 2rem;
+  padding: 1.1rem 3rem;
   border-radius: 1.5rem;
   color: black;
   font-size: 1.1rem;
   font-weight: 500;
+
+  &:hover {
+    border: .1rem solid #686868;
+  }
+
+  &:focus {
+    border: none;
+    outline: .1rem solid #444DF2;;
+    color: black;
+  }
+}
+
+input::placeholder {
+  color: #686868;
 }
 
 form {
@@ -58,10 +81,6 @@ form {
   border-radius: 2rem;
   gap: 2.5rem;
   padding: 3.1rem;
-}
-
-input::placeholder {
-  color: #686868;
 }
 
 .row {
