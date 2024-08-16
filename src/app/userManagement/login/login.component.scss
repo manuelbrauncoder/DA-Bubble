@@ -5,17 +5,39 @@ form {
 
   .or-wrapper {
     display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
 
     div {
-      height: .5rem;
-      width: 3rem;
-      color: #ECEEFE;
+      height: .18rem;
+      width: 100%;
+      background-color: #ECEEFE;
     }
   }
 
   >button {
     background-color: #ECEEFE;
+    
+    >span {
+      color: #444DF2;
+      font-size: 1rem;
+      font-weight: 400;
+    }
   }
 
+  .btn-wrapper {
+    display: flex;
+    gap: 2rem;
 
+    button:nth-child(1) {
+      background-color: #444DF2;
+    }
+
+    button:nth-child(2) {
+      border: .1rem solid #444DF2;
+      color: #444DF2;
+      background-color: white;
+    }
+  }
 }
