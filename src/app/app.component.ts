@@ -6,12 +6,10 @@ import { FirestoreService } from './services/firestore.service';
 import { UserService } from './services/user.service';
 import { User } from './models/user.class';
 
-import { ChooseAvatarComponent } from './userManagement/choose-avatar/choose-avatar.component';
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, ChooseAvatarComponent],
+  imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
