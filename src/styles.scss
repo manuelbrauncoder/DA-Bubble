@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
   margin: 0;
 }
 
@@ -19,6 +20,12 @@ a {
   text-decoration: none;
   cursor: pointer;
   color: #797EF3;
+}
+
+h2 {
+  color: #444DF2;
+  font-size: 3rem;
+  font-weight: 700;
 }
 
 button {
