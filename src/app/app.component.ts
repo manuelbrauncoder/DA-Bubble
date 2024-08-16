@@ -5,11 +5,12 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
 import { UserInterface } from './interfaces/user-interface';
 import { UserService } from './services/user.service';
+import { LoginComponent } from './userManagement/login/login.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, LoginComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

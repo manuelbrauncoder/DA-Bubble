@@ -11,13 +11,37 @@ html, body, p, h1, h2, h3 , h4 {
   padding: 0;
 }
 
+html, body, app-root {
+  height: 100%;
+}
+
 a {
   text-decoration: none;
   cursor: pointer;
+  color: #797EF3;
 }
 
-html, body, app-root {
-  height: 100%;
+button {
+  cursor: pointer;
+  border: none;
+  padding: .8rem 1.5rem;
+  border-radius: 1.5rem;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+input {
+  border: none;
+  padding: 1.1rem 2rem;
+  border-radius: 1.5rem;
+  color: black;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+input::placeholder {
+  color: #686868;
 }
 
 .row {
