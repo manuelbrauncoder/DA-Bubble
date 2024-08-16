@@ -1,0 +1,21 @@
+form {
+  >p {
+    font-size: 1.2rem;
+  }
+
+  .or-wrapper {
+    display: flex;
+
+    div {
+      height: .5rem;
+      width: 3rem;
+      color: #ECEEFE;
+    }
+  }
+
+  >button {
+    background-color: #ECEEFE;
+  }
+
+
+}
