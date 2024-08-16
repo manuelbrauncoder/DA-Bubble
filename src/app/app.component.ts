@@ -30,8 +30,9 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
-    //this.authService.guestSignUp(); // just for testing
-    //this.logAfter5000Ms() // just for testing
+
+    //this.authService.guestSignUp();
+    // this.logAfter5000Ms() // just for testing
   }
 
   ngOnDestroy(): void {
@@ -49,6 +50,8 @@ export class AppComponent implements OnInit, OnDestroy {
   subLoginState() {
     this.authService.user$.subscribe(user => {
       if (user) {
+        console.log(user);
+
         this.authService.currentUserSig.set({
           email: user.email!,
           username: user.displayName!
@@ -64,19 +67,21 @@ export class AppComponent implements OnInit, OnDestroy {
    * uses http client to get data form assets/data/exampleUsers.json
    */
   subExampleUsers() {
-    this.fireService.fetchExampleUsers().subscribe((data: User[])=> {
+    this.fireService.fetchExampleUsers().subscribe((data: User[]) => {
       this.fireService.exampleUsers = data;
+      console.log(this.fireService.exampleUsers);
+
     })
   }
 
   /**
    * Just for Testing
    */
-  logAfter5000Ms(){
+  logAfter5000Ms() {
     setTimeout(() => {
-      //this.userService.resetUsersInFirebase();
+      this.userService.resetUsersInFirebase();
       console.log('users:', this.fireService.users);
-      console.log('example data, fetched local', this.fireService.exampleUsers); 
+      console.log('example data, fetched local', this.fireService.exampleUsers);
     }, 5000);
   }
 }
