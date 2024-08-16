@@ -4,6 +4,7 @@ import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
 import { UserInterface } from './interfaces/user-interface';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
+  userService = inject(UserService);
 
   unsubUsersList;
 
@@ -27,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
-    this.logAfter500Ms()
+    //this.logAfter500Ms() // just for testing
   }
 
   ngOnDestroy(): void {
@@ -60,7 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * uses http client to get data form assets/data/exampleUsers.json
    */
   subExampleUsers() {
-    this.fireService.getUsers().subscribe((data: UserInterface[])=> {
+    this.fireService.fetchExampleUsers().subscribe((data: UserInterface[])=> {
       this.fireService.exampleUsers = data;
     })
   }
@@ -70,8 +72,9 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   logAfter500Ms(){
     setTimeout(() => {
+      //this.userService.resetUsersInFirebase();
       console.log('users:', this.fireService.users);
       console.log('example data, fetched local', this.fireService.exampleUsers); 
-    }, 500);
+    }, 5000);
   }
 }

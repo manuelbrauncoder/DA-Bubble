@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, updateDoc } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
 import { UserInterface } from '../interfaces/user-interface';
 import { HttpClient } from '@angular/common/http';
@@ -11,10 +11,10 @@ import { Observable } from 'rxjs';
 export class FirestoreService {
   firestore = inject(Firestore);
   private http = inject(HttpClient);
-  users: UserInterface[] = [];
   exampleUserDataUrl = 'assets/data/exampleUsers.json';
 
 
+  users: UserInterface[] = []; // all users stored here
   exampleUsers: UserInterface[] = [];
 
   constructor() { }
@@ -24,7 +24,7 @@ export class FirestoreService {
    * just for example data
    * @returns 
    */
-  getUsers(): Observable<UserInterface[]> {
+  fetchExampleUsers(): Observable<UserInterface[]> {
     return this.http.get<UserInterface[]>(this.exampleUserDataUrl);
   }
 
@@ -75,13 +75,13 @@ export class FirestoreService {
    * @returns A function to unsubscribe from the Firestore snapshot listener.
    */
   getUsersList() {
-    const q = query(this.getCollectionRef('users'), orderBy('username'));
+    const q = query(this.getCollectionRef('users'), orderBy('userName'));
     return onSnapshot(q, (list) => {
       this.users = [];
       list.forEach((element) => {
         const user = this.setUserObject(element.data(), element.id);
         this.users.push(user);
-      });
+      });      
       list.docChanges().forEach((change) => {
         this.logChanges(change);
       })
@@ -130,6 +130,29 @@ export class FirestoreService {
   async addUser(user: any) {
     await addDoc(this.getCollectionRef('users'), this.getCleanUserJson(user)).catch((err) => {
       console.log('Error adding User to Firebase', err);
+    })
+  }
+
+  /**
+   * delete document from collection with id
+   * @param docId document id
+   * @param collection to delete from
+   */
+  async deleteDocument(docId: string, collection: string) {
+    let docRef = doc(this.getCollectionRef(collection), docId);
+    await deleteDoc(docRef).catch((err) => {
+      console.log('Error deleting Document', err);
+    })
+  }
+
+  /**
+   * update user data
+   * @param user 
+   */
+  async updateUser(user: UserInterface){
+    let docRef = doc(this.getCollectionRef('users'), user.id);
+    await updateDoc(docRef, this.getCleanUserJson(user)).catch((err)=>{
+      console.log('Error updating User', err);  
     })
   }
 }
