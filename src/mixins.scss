@@ -14,3 +14,24 @@
   flex-direction: row;
 }
 
+@mixin arrowBack {
+  >a {
+    position: absolute;
+    left: 1rem;
+    top: 30%;
+    border-radius: 50%;
+
+    >img {
+      
+    }
+
+    &:hover {
+      background-color: #ECEEFE;
+      
+      >img {
+        filter: invert(37%) sepia(86%) saturate(6175%) hue-rotate(235deg) brightness(97%) contrast(96%);
+      }
+    }
+  }
+}
+

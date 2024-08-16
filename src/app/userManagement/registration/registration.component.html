@@ -1,22 +1,31 @@
 <form action="">
-  <a href=""><img src="" alt=""></a>
-  <h2>Konto erstellen</h2>
+  <div class="header-wrapper">
+    <a href="#" onclick="history.back(); return false;"><img src="../assets/icons/login/arrow_back_black.png" alt="arrow"></a>
+    <h2>Konto erstellen</h2>
+  </div>
   <p>Mit deinem Namen und deiner E-Mail-Adresse hast du dein neues DABubble-Konto.</p>
-  <div>
-    <label for=""></label>
-    <input type="text" placeholder="Name und Nachname">
+  <div class="input-wrapper">
+    <div>
+      <label for="name"></label>
+      <img src="../assets/icons/login/person_grey.png" alt="name">
+      <input type="text" placeholder="Name und Nachname">
+    </div>
+    <div>
+      <label for="email"></label>
+      <img src="../assets/icons/login/mail_grey.png" alt="mail">
+      <input type="email" placeholder="beispielname@email.com">
+    </div>
+    <div>
+      <label for="password"></label>
+      <img src="../assets/icons/login/lock_grey.png" alt="lock">
+      <input type="password" placeholder="Passwort">
+    </div>
   </div>
-  <div>
-    <label for=""></label>
-    <input type="email" placeholder="Name und Nachname">
-  </div>
-  <div>
-    <label for=""></label>
-    <input type="password" placeholder="Name und Nachname">
-  </div>
-  <div>
+  <div class="privacy-wrapper">
     <input type="checkbox">
     <p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
   </div>
-  <button>Weiter</button>
+  <div class="btn-wrapper">
+    <button>Weiter</button>
+  </div>
 </form>

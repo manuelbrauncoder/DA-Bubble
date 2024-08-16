@@ -1,11 +1,19 @@
 <form action="">
-  <a href=""><img src="" alt=""></a>
-  <h2>Bitte geben Sie Ihre E-Mail-Adresse ein.</h2>
-  <div>
-    <label for=""></label>
-    <input type="email" placeholder="beispielname@email.com">
+  <div class="header-wrapper">
+    <a href="#" onclick="history.back(); return false;"><img src="../assets/icons/login/arrow_back_black.png" alt="arrow"></a>
+    <h2>Passwort zurücksetzen</h2>
+  </div>
+  <p>Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
+  <div class="input-wrapper">
+    <div>
+      <label for="password"></label>
+      <img src="../assets/icons/login/lock_grey.png" alt="lock">
+      <input type="password" placeholder="Passwort">
+    </div>
   </div>
   <span>Wir senden Ihnen eine E-Mail, über die 
     Sie Ihr Passwort ändern können.</span>
-  <button>E-Mail senden</button>
+  <div class="btn-wrapper">
+    <button>E-Mail senden</button>
+  </div>
 </form>
