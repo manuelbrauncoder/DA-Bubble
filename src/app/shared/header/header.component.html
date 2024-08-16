@@ -4,7 +4,7 @@
 
 <input type="text" placeholder="Code learning durchsuchen">
 
-<div class="profile-menu">
+<div class="profile-menu" (click)="openPopup()">
     <span class="user-name">Frederik Beck</span>
 
     <div class="avatar-container">
@@ -14,3 +14,5 @@
 
     <img src="assets/icons/arrowDown.svg" class="arrow-down">
 </div>
+
+<app-edit-user-and-logout-popup class="d-none"></app-edit-user-and-logout-popup>

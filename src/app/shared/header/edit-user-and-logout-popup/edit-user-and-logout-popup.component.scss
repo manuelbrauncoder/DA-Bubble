@@ -1,0 +1,29 @@
+.popup {
+  width: 282px;
+  height: 181px;
+  background-color: white;
+  border-radius: 30px 0px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  right: 0;
+  top: 85px;
+}
+
+button {
+  color: black;
+  font-size: 1.5rem;
+  font-weight: 600;
+  background-color: transparent;
+  transition: ease-in-out 125ms;
+
+  &:hover {
+    color: #535af1;
+    font-weight: 700;
+    background-color: #eceefe;
+    transition: ease-in-out 125ms;
+  }
+}

@@ -107,6 +107,10 @@ input::placeholder {
   justify-content: center;
 }
 
-.hidden {
+.v-hidden {
+  visibility: hidden;
+}
+
+.d-none {
   display: none;
 }
