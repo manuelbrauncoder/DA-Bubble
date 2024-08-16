@@ -95,6 +95,7 @@ export class FirestoreService {
    */
   getCleanUserJson(user: User) {
     return {
+      uid: user.uid,
       email: user.email,
       username: user.username,
       //createdAt: user.createdAt,

@@ -109,9 +109,9 @@ export class FirebaseAuthService {
    * only once needed
    */
   guestSignUp() {
-    const guestEmail = 'guest@icloud.com';
+    const guestEmail = 'test@more.com';
     const guestPw = '555555'
-    const userName = 'guest222'
+    const userName = 'guest22222'
     this.register(guestEmail, userName, guestPw);
   }
 }
