@@ -3,9 +3,9 @@ import { RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
-import { UserInterface } from './interfaces/user-interface';
 import { UserService } from './services/user.service';
 import { LoginComponent } from './userManagement/login/login.component';
+import { User } from './models/user.class';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subLoginState();
     this.subExampleUsers();
     //this.authService.guestSignUp(); // just for testing
-    //this.logAfter500Ms() // just for testing
+    //this.logAfter5000Ms() // just for testing
   }
 
   ngOnDestroy(): void {
@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, OnDestroy {
    * uses http client to get data form assets/data/exampleUsers.json
    */
   subExampleUsers() {
-    this.fireService.fetchExampleUsers().subscribe((data: UserInterface[])=> {
+    this.fireService.fetchExampleUsers().subscribe((data: User[])=> {
       this.fireService.exampleUsers = data;
     })
   }
@@ -72,7 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
   /**
    * Just for Testing
    */
-  logAfter500Ms(){
+  logAfter5000Ms(){
     setTimeout(() => {
       //this.userService.resetUsersInFirebase();
       console.log('users:', this.fireService.users);

@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, updateDoc } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
-import { UserInterface } from '../interfaces/user-interface';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class FirestoreService {
   exampleUserDataUrl = 'assets/data/exampleUsers.json';
 
 
-  users: UserInterface[] = []; // all users stored here
-  exampleUsers: UserInterface[] = [];
+  users: User[] = []; // all users stored here
+  exampleUsers: User[] = [];
 
   constructor() { }
 
@@ -24,8 +24,8 @@ export class FirestoreService {
    * just for example data
    * @returns 
    */
-  fetchExampleUsers(): Observable<UserInterface[]> {
-    return this.http.get<UserInterface[]>(this.exampleUserDataUrl);
+  fetchExampleUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.exampleUserDataUrl);
   }
 
   /**
@@ -93,12 +93,10 @@ export class FirestoreService {
    * @param user 
    * @returns a clean json from UserInterface
    */
-  getCleanUserJson(user: UserInterface) {
+  getCleanUserJson(user: User) {
     return {
       email: user.email,
-      userName: user.userName,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      username: user.username,
       date: user.date,
       img: user.img
     };
@@ -110,15 +108,13 @@ export class FirestoreService {
    * @param id firebase id
    * @returns a UserInterface Object
    */
-  setUserObject(user: any, id: string): UserInterface {
+  setUserObject(user: any, id: string): User {
     return {
       id: id || '',
       email: user.email || '',
-      userName: user.userName || '',
-      firstName: user.firstName || '',
-      lastName: user.lastName || '',
-      date: user.date || '',
-      img: user.img || []
+      username: user.username || '',
+      date: user.date || 0,
+      img: user.img || ''
     }
   }
 
@@ -149,7 +145,7 @@ export class FirestoreService {
    * update user data
    * @param user 
    */
-  async updateUser(user: UserInterface){
+  async updateUser(user: User){
     let docRef = doc(this.getCollectionRef('users'), user.id);
     await updateDoc(docRef, this.getCleanUserJson(user)).catch((err)=>{
       console.log('Error updating User', err);  
