@@ -6,6 +6,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  deleteUser,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -23,47 +24,40 @@ export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
 
-  uIdCache: string = '';
-
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
   constructor() { }
-
 
   /**
    * Registers a new user with Firebase Authentication.
    *
    * This function creates a new user account with the provided email and password.
-   * After successfully registering, it updates the user's profile with the provided username (displayName).
+   * After successfully registering, it updates the user's profile with the provided username (displayName) and
+   * save the new user with the uid in firestore
    *
    * @param {string} email
    * @param {string} username 
    * @param {string} password 
    * @returns {Observable<void>} An observable that completes when the user is successfully registered and the profile is updated.
    */
-  register(
-    email: string,
-    username: string,
-    password: string
-  ): Observable<void> {
-    const promise = createUserWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    ).then((response) => {
-      updateProfile(response.user, { displayName: username })
-      let newUser =  {
-        uid: response.user.uid,
-        username: username,
-        email: email,
-        createdAt: this.getCurrentTimestamp()
-      }
-      this.fireService.addUser(newUser);
-      //this.uIdCache = response.user.uid;
-    }
-      
-    );
+  register(email: string,  username: string, password: string): Observable<void> {
+    const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
+      updateProfile(response.user, { displayName: username });
+      this.saveNewUserInFirestore(email, username, response.user.uid);
+    }).catch((err)=>{
+      console.log('Error register new User', err);
+    });
     return from(promise);
+  }
+
+  saveNewUserInFirestore(email: string, username: string, uid: string){
+    let newUser =  {
+      uid: uid,
+      username: username,
+      email: email,
+      createdAt: this.getCurrentTimestamp()
+    }
+    this.fireService.addUser(newUser);
   }
 
   getCurrentTimestamp(){
@@ -99,7 +93,7 @@ export class FirebaseAuthService {
    * call this method for guest login
    */
   guestLogin() {
-    const guestEmail = 'guest@icloud.com';
+    const guestEmail = 'guest@gmail.com';
     const guestPw = '555555'
     this.login(guestEmail, guestPw);
   }
@@ -109,9 +103,24 @@ export class FirebaseAuthService {
    * only once needed
    */
   guestSignUp() {
-    const guestEmail = 'test@more.com';
+    const guestEmail = 'guest@gmail.com';
     const guestPw = '555555'
-    const userName = 'guest22222'
+    const userName = 'guest'
     this.register(guestEmail, userName, guestPw);
+  }
+
+  /**
+   * Delete currently logged in User Account
+   */
+  deleteUserAccount(){
+    this.user$.subscribe(user=>{
+      if (user) {
+        deleteUser(user).then(()=>{
+          console.log('User Accout Deleted');
+        }).catch((err)=>{
+          console.log('Error deleting User Account', err);
+        })
+      }
+    })
   }
 }

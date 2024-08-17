@@ -75,7 +75,7 @@ export class FirestoreService {
    * @returns A function to unsubscribe from the Firestore snapshot listener.
    */
   getUsersList() {
-    const q = query(this.getCollectionRef('users'), orderBy('userName'));
+    const q = query(this.getCollectionRef('users'), orderBy('username'));
     return onSnapshot(q, (list) => {
       this.users = [];
       list.forEach((element) => {
@@ -91,7 +91,7 @@ export class FirestoreService {
   /**
    * 
    * @param user 
-   * @returns a clean json from UserInterface
+   * @returns 
    */
   getCleanUserJson(user: User) {
     return {

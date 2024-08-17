@@ -3,3 +3,11 @@
   <app-login></app-login>
 </div>
 <router-outlet/>
+
+@if (testMode) {
+  <button class="test-btn" (click)="userService.resetUsersInFirebase()">reset firestore</button>
+  <button class="test-btn" (click)="authService.guestLogin()">guest login</button>
+  <button class="test-btn" (click)="authService.guestSignUp()">guest sign up</button>
+  <button class="test-btn" (click)="authService.deleteUserAccount()">Delete Account</button>
+  <button class="test-btn" (click)="authService.logout()">Log out</button>
+}

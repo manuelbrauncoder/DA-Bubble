@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
+  testMode: boolean = false;
 
   unsubUsersList;
 
@@ -31,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subLoginState();
     this.subExampleUsers();
     //this.authService.guestSignUp();
-    // this.logAfter5000Ms() // just for testing
+    //this.logAfter5000Ms() // just for testing
   }
 
   ngOnDestroy(): void {
@@ -48,9 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   subLoginState() {
     this.authService.user$.subscribe(user => {
-      if (user) {
-        console.log(user);
-
+      if (user) {        
         this.authService.currentUserSig.set({
           email: user.email!,
           username: user.displayName!
@@ -78,9 +77,8 @@ export class AppComponent implements OnInit, OnDestroy {
    */
   logAfter5000Ms() {
     setTimeout(() => {
-      this.userService.resetUsersInFirebase();
       console.log('users:', this.fireService.users);
-      console.log('example data, fetched local', this.fireService.exampleUsers);
+      //console.log('example data, fetched local', this.fireService.exampleUsers);
     }, 5000);
   }
 }
