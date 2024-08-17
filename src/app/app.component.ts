@@ -5,11 +5,12 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
 import { UserService } from './services/user.service';
 import { User } from './models/user.class';
+import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -65,8 +66,6 @@ export class AppComponent implements OnInit, OnDestroy {
   subExampleUsers() {
     this.fireService.fetchExampleUsers().subscribe((data: User[]) => {
       this.fireService.exampleUsers = data;
-      console.log(this.fireService.exampleUsers);
-
     })
   }
 

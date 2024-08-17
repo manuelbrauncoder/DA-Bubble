@@ -5,7 +5,9 @@ app-header {
 
 .wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    height: calc(100% - 88px);
+    padding: 2rem;
 }
 
 .test-btn{

@@ -1,0 +1,53 @@
+@import '../../../styles.scss';
+@import '../../../mixins.scss';
+
+main{
+    padding: 2rem 1.875rem;
+    background-color: white;
+    border-radius: 1.875rem;
+    @include dFlex($fd: column, $g: 1.563rem, $ai: flex-start, $jc: flex-start);
+    height: 100%;
+}
+
+header{
+    width: 100%;
+    @include dFlex($jc: space-between);
+    >div{
+        @include dFlex($g: 0.938rem);
+    }
+    svg{
+        @include dFlex();
+        padding: 4px;
+        border-radius: 100%;
+        cursor: pointer;
+        &:hover{
+            background-color: lightblue;
+            scale: 1.1;
+        }
+        &:hover path {
+            fill: blue;
+        }
+    }
+}
+
+.channels{
+    width: 100%;
+    
+}
+
+.head{
+    @include dFlex($jc: flex-start, $g: 0.938rem);
+    width: 100%;
+    svg{
+        transform: rotate(-90deg);
+    }
+    .headline{
+        @include dFlex($g: 0.625rem);
+        svg{
+            transform: rotate(0);
+        }
+    }
+    .plus-icon{
+        margin-left: auto;
+    }
+}
