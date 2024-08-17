@@ -45,7 +45,9 @@ header {
     width: 100%;
     margin-bottom: 1.563rem;
     h3{
-       
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.705rem;        
     }
 
     svg {
@@ -67,7 +69,7 @@ header {
 
 .users{
     @include dFlex($fd: column, $g: 1.563rem, $ai: flex-start);
-    padding-left: 32px;
+    padding-left: 2rem;
 }
 
 .user-name {
@@ -78,13 +80,13 @@ header {
 }
 
 .user{
-    @include dFlex($g: 15px);
+    @include dFlex($g: 0.938px);
     cursor: pointer;
 }
 
 .profile-img{
-    width: 50px;
-    height: 50px;
+    width: 3.125rem;
+    height: 3.125rem;
 }
 
 .img-wrapper{
