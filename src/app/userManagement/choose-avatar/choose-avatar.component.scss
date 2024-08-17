@@ -1,0 +1,69 @@
+@use './../../../mixins.scss' as *;
+
+form {
+  >.header-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    >h2 {
+      padding-inline: 3rem;
+    }
+
+    @include arrowBack;
+  }
+
+  >p {
+    font-size: 1.2rem;
+  }
+
+  .profile-wrapper {
+    @include flexColumn;
+    align-items: center;
+  }
+
+  .char-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+
+  .load-img-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 2rem;
+
+    >button {
+      border: .1rem solid #444DF2;
+      color: #444DF2;
+      background-color: white;
+
+      &:hover {
+        border: .1rem solid #535AF1;
+        color: white;
+        background-color: #535AF1;
+      }
+    }
+  }
+
+  .btn-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: 2rem;
+
+    button {
+      background-color: #444DF2;
+
+      &:hover {
+        background-color: #797EF3;
+      }
+    }
+  }
+}

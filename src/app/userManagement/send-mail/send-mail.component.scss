@@ -1,0 +1,60 @@
+@use './../../../mixins.scss' as *;
+
+form {
+  >.header-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    >h2 {
+      padding-inline: 3rem;
+    }
+
+    @include arrowBack;
+  }
+
+  >p {
+    font-size: 1.2rem;
+  }
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 100%;
+
+    >div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >img {
+        position: absolute;
+        top: 30%;
+        left: 1rem;
+      }
+
+      >input {
+        width: 100%;
+      }
+    }
+  }
+
+  .btn-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: 2rem;
+
+    button {
+      background-color: #686868;
+    }
+
+    button.active {
+      background-color: #444DF2;
+    }
+  }
+}

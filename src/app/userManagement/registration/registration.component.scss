@@ -1,0 +1,100 @@
+@use './../../../mixins.scss' as *;
+
+form {
+  >.header-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    @include arrowBack;
+  }
+
+  >p {
+    font-size: 1.2rem;
+  }
+
+  .input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 100%;
+
+    >div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      >img {
+        position: absolute;
+        top: 30%;
+        left: 1rem;
+      }
+
+      >input {
+        width: 100%;
+      }
+    }
+  }
+
+  >.privacy-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+
+    >input {
+      
+    }
+
+    >p {
+      >a {
+        padding: 0 0.2rem;
+      }
+    }
+  }
+
+  .btn-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    gap: 2rem;
+
+    button {
+      background-color: #444DF2;
+
+      &:hover {
+        background-color: #797EF3;
+      }
+    }
+  }
+}
+
+[type="checkbox"] {
+  position: relative;
+  left: 0px;
+  top: -18px;
+  z-index: 0;
+  -webkit-appearance: none;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 0px;
+  max-height: 0px;
+  border: none;
+}
+
+[type="checkbox"]::before {
+  width: 25px;
+  height: 25px;
+  background-image: url("./../../../assets/icons/login/checkbox_empty.png");
+  display: block;
+  content: "";
+  z-index: 5;
+  position: relative;
+}
+
+[type="checkbox"]:checked::before {
+  background-image: url("./../../../assets/icons/login/checkbox_checked.png");
+}
