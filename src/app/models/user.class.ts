@@ -3,7 +3,7 @@ export class User {
     uid: string;
     email: string;
     username: string;
-    createdAt: number; // timestamp
+    createdAt: number | string; // timestamp
     img: string;
 
     constructor(obj?: Partial<User>){
