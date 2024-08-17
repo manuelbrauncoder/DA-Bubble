@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -9,10 +9,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss'
 })
-export class WorkspaceMenuComponent {
+export class WorkspaceMenuComponent{
   authService = inject(FirebaseAuthService);
+
 
   showChannels: boolean = false;
   showDirectMessages: boolean = true;
+
+  toggleDirectMessages(){
+    this.showDirectMessages = !this.showDirectMessages;
+  }
 
 }

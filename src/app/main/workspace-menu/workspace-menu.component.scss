@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 @import '../../../mixins.scss';
 
-main{
+main {
     padding: 2rem 1.875rem;
     background-color: white;
     border-radius: 1.875rem;
@@ -9,45 +9,104 @@ main{
     height: 100%;
 }
 
-header{
+header {
     width: 100%;
     @include dFlex($jc: space-between);
-    >div{
+
+    >div {
         @include dFlex($g: 0.938rem);
     }
-    svg{
+
+    svg {
         @include dFlex();
         padding: 4px;
         border-radius: 100%;
         cursor: pointer;
-        &:hover{
+
+        &:hover {
             background-color: lightblue;
             scale: 1.1;
         }
+
         &:hover path {
             fill: blue;
         }
     }
 }
 
-.channels{
+.channels {
     width: 100%;
-    
+
 }
 
-.head{
+.head {
+    cursor: pointer;
     @include dFlex($jc: flex-start, $g: 0.938rem);
     width: 100%;
-    svg{
+    margin-bottom: 1.563rem;
+    h3{
+       
+    }
+
+    svg {
         transform: rotate(-90deg);
     }
-    .headline{
+
+    .headline {
         @include dFlex($g: 0.625rem);
-        svg{
+
+        svg {
             transform: rotate(0);
         }
     }
-    .plus-icon{
+
+    .plus-icon {
         margin-left: auto;
     }
+}
+
+.users{
+    @include dFlex($fd: column, $g: 1.563rem, $ai: flex-start);
+    padding-left: 32px;
+}
+
+.user-name {
+    font-family: Nunito;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.534rem;
+}
+
+.user{
+    @include dFlex($g: 15px);
+}
+
+.profile-img{
+    width: 50px;
+    height: 50px;
+}
+
+.img-wrapper{
+    position: relative;
+}
+
+.state-icon {
+    position: absolute;
+    bottom: 7px;
+    right: 0px;
+    height: 14px;
+    width: 14px;
+    border-radius: 100%;
+    border: 2px solid white;
+
+}
+
+.online-state{
+    @extend .state-icon;
+    background-color: $color-online-green;
+}
+
+.offline-state{
+    @extend .state-icon;
+    background-color: $color-offline-gray;
 }
