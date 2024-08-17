@@ -15,9 +15,11 @@ import {
   updateProfile,
   user,
 } from '@angular/fire/auth';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
 import { FirestoreService } from './firestore.service';
+import { UserInterface } from '../interfaces/user-interface';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +32,12 @@ export class FirebaseAuthService {
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
-  constructor() { }
+  currentUser = this.auth.currentUser;
+
+  constructor() { 
+  }
+
+  
 
   /**
    * not working yet
@@ -77,7 +84,13 @@ export class FirebaseAuthService {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
       updateProfile(response.user, { displayName: username });
       this.saveNewUserInFirestore(email, username, response.user.uid);
-    }).catch((err) => {
+      this.currentUserSig.set({
+        email: response.user.email!,
+        username: response.user.displayName!,
+        uid: response.user.uid!
+      })
+    })
+    .catch((err) => {
       console.log('Error register new User', err);
     });
     return from(promise);
@@ -88,7 +101,8 @@ export class FirebaseAuthService {
       uid: uid,
       username: username,
       email: email,
-      createdAt: this.getCurrentTimestamp()
+      createdAt: this.getCurrentTimestamp(),
+      currentlyLoggedIn: true
     }
     this.fireService.addUser(newUser);
   }
@@ -167,17 +181,34 @@ export class FirebaseAuthService {
   }
 
   /**
-   * Delete currently logged in User Account
+   * this method deletes the currently logged in user account.
+   * then it deletes the user in firestore
    */
-  deleteUserAccount() {
-    this.user$.subscribe(user => {
-      if (user) {
-        deleteUser(user).then(() => {
-          console.log('User Accout Deleted');
-        }).catch((err) => {
-          console.log('Error deleting User Account', err);
-        })
-      }
+  deleteUserAccount(){
+    const currentUser = this.auth.currentUser;
+    if (currentUser) {
+      deleteUser(currentUser).then(()=>{
+        console.log('User deleted', currentUser);
+        this.deleteUserInFirestore(currentUser.uid);
+      }).catch((err)=>{
+        console.log('Error deleting User', err);
+      });
+    } else {
+      console.log('No user is currently logged in.');
+      
+    }
+  }
+
+  /**
+   * deletes the user with uid in firestore
+   * @param uid 
+   */
+  deleteUserInFirestore(uid: string){
+    this.fireService.users.forEach((user) => {
+      if (uid === user.uid) {
+        this.fireService.deleteDocument(user.id, 'users');
+      } 
     })
   }
+
 }

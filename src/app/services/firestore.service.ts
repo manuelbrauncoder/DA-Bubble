@@ -98,9 +98,7 @@ export class FirestoreService {
       uid: user.uid,
       email: user.email,
       username: user.username,
-      currentlyLoggedIn: user.currentlyLoggedIn,
-      //createdAt: user.createdAt,
-      //img: user.img
+      currentlyLoggedIn: user.currentlyLoggedIn || false,
     };
   }
 

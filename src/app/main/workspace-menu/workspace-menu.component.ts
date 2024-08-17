@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export class WorkspaceMenuComponent{
   authService = inject(FirebaseAuthService);
 
+  currentUser = this.authService.auth.currentUser?.displayName;
 
   showChannels: boolean = false;
   showDirectMessages: boolean = true;

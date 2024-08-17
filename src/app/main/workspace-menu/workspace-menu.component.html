@@ -77,7 +77,7 @@
         </div>
         @if (showDirectMessages) {
             <div class="users">
-                @if (authService.currentUserSig()?.username) {
+                @if (authService.auth.currentUser) {
                     <div class="user">
                         <div class="img-wrapper">
                             <hr class="online-state">
@@ -87,7 +87,7 @@
                     </div>
                 }
                 @for (user of authService.fireService.users; track $index) {
-                    @if (this.authService.currentUserSig()?.username !== user.username) {
+                    @if (user.username !== authService.auth.currentUser?.displayName) {
                         <div class="user">
                             <div class="img-wrapper">
                                 <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
