@@ -31,8 +31,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
-    //this.authService.guestSignUp();
-    //this.logAfter5000Ms() // just for testing
+    //this.authService.handleGoogleSignInRedirect();
   }
 
   ngOnDestroy(): void {
