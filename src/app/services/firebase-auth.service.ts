@@ -109,8 +109,19 @@ export class FirebaseAuthService {
   * @returns {Observable<void>} An observable that completes when the login process is successful.
   */
   login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(this.auth, email, password).then(() => { });
+    const promise = signInWithEmailAndPassword(this.auth, email, password).then((response) => {
+      this.changeUserState(true, response.user.uid);      
+     });
     return from(promise);
+  }
+
+  changeUserState(loggedInState: boolean, uid: string){
+    this.fireService.users.forEach((user) => {
+      if (uid === user.uid) {
+        user.currentlyLoggedIn = loggedInState;
+        this.fireService.updateUser(user);
+      }
+    })
   }
 
   /**
@@ -118,7 +129,9 @@ export class FirebaseAuthService {
    * @returns an observable that completes when logout is successful.
    */
   logout(): Observable<void> {
-    const promise = signOut(this.auth);
+    const promise = signOut(this.auth).then((response) => {
+      
+    });
     return from(promise);
   }
 
