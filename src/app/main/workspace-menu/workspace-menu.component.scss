@@ -79,6 +79,7 @@ header {
 
 .user{
     @include dFlex($g: 15px);
+    cursor: pointer;
 }
 
 .profile-img{
@@ -98,7 +99,6 @@ header {
     width: 14px;
     border-radius: 100%;
     border: 2px solid white;
-
 }
 
 .online-state{
