@@ -13,13 +13,17 @@ import {
 } from '@angular/fire/auth';
 import { from, Observable } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
+import { FirestoreService } from './firestore.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FirebaseAuthService {
+  fireService = inject(FirestoreService);
   auth = inject(Auth);
   user$ = user(this.auth);
+
+  uIdCache: string = '';
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
@@ -46,10 +50,25 @@ export class FirebaseAuthService {
       this.auth,
       email,
       password
-    ).then((response) =>
+    ).then((response) => {
       updateProfile(response.user, { displayName: username })
+      let newUser =  {
+        uid: response.user.uid,
+        username: username,
+        email: email,
+        createdAt: this.getCurrentTimestamp()
+      }
+      this.fireService.addUser(newUser);
+      //this.uIdCache = response.user.uid;
+    }
+      
     );
     return from(promise);
+  }
+
+  getCurrentTimestamp(){
+    const now = new Date();
+    return now.getTime();
   }
 
   /**
@@ -80,8 +99,8 @@ export class FirebaseAuthService {
    * call this method for guest login
    */
   guestLogin() {
-    const guestEmail = 'guest@gmail.com';
-    const guestPw = '123456'
+    const guestEmail = 'guest@icloud.com';
+    const guestPw = '555555'
     this.login(guestEmail, guestPw);
   }
 
@@ -90,9 +109,9 @@ export class FirebaseAuthService {
    * only once needed
    */
   guestSignUp() {
-    const guestEmail = 'guest@gmail.com';
-    const guestPw = '123456'
-    const userName = 'guest'
+    const guestEmail = 'test@more.com';
+    const guestPw = '555555'
+    const userName = 'guest22222'
     this.register(guestEmail, userName, guestPw);
   }
 }

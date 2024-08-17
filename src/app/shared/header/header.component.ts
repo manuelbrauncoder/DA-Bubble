@@ -8,10 +8,13 @@ import { EditUserAndLogoutPopupComponent } from './edit-user-and-logout-popup/ed
   standalone: true,
   imports: [CommonModule, EditUserAndLogoutPopupComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  openPopup() {
+  isActive = false;
 
+
+  togglePopup() {
+    this.isActive = !this.isActive;
   }
 }

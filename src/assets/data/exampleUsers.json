@@ -1,46 +1,41 @@
 [
     {
       "id": "",
+      "uid": "",
       "email": "john.doe@example.com",
-      "userName": "johndoe",
-      "firstName": "John",
-      "lastName": "Doe",
+      "username": "John Doe",
       "date": "2023-08-03T10:15:30.000Z",
       "img": []
     },
     {
       "id": "",
+      "uid": "",
       "email": "jane.smith@example.com",
-      "userName": "janesmith",
-      "firstName": "Jane",
-      "lastName": "Smith",
+      "username": "Jane Smith",
       "date": "2023-08-05T10:15:30.000Z",
       "img": []
     },
     {
       "id": "",
+      "uid": "",
       "email": "michael.johnson@example.com",
-      "userName": "michaelj",
-      "firstName": "Michael",
-      "lastName": "Johnson",
+      "username": "Michael Johnson",
       "date": "2023-08-07T10:15:30.000Z",
       "img": []
     },
     {
       "id": "",
+      "uid": "",
       "email": "emily.davis@example.com",
-      "userName": "emilydavis",
-      "firstName": "Emily",
-      "lastName": "Davis",
+      "username": "Emily Davis",
       "date": "2023-08-09T10:15:30.000Z",
       "img": []
     },
     {
       "id": "",
+      "uid": "",
       "email": "william.brown@example.com",
-      "userName": "williamb",
-      "firstName": "William",
-      "lastName": "Brown",
+      "username": "William Brown",
       "date": "2023-08-11T10:15:30.000Z",
       "img": []
     }

@@ -4,7 +4,7 @@
 
 <input type="text" placeholder="Code learning durchsuchen">
 
-<div class="profile-menu" (click)="openPopup()">
+<div class="profile-menu" (click)="togglePopup()">
     <span class="user-name">Frederik Beck</span>
 
     <div class="avatar-container">
@@ -15,4 +15,6 @@
     <img src="assets/icons/arrowDown.svg" class="arrow-down">
 </div>
 
-<app-edit-user-and-logout-popup class="d-none"></app-edit-user-and-logout-popup>
+<div *ngIf="isActive" class="popup-overlay" (click)="togglePopup()">
+    <app-edit-user-and-logout-popup (click)="$event.stopPropagation()"></app-edit-user-and-logout-popup>
+</div>

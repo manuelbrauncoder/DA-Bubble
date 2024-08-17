@@ -95,10 +95,11 @@ export class FirestoreService {
    */
   getCleanUserJson(user: User) {
     return {
+      uid: user.uid,
       email: user.email,
       username: user.username,
-      date: user.date,
-      img: user.img
+      //createdAt: user.createdAt,
+      //img: user.img
     };
   }
 
@@ -111,9 +112,10 @@ export class FirestoreService {
   setUserObject(user: any, id: string): User {
     return {
       id: id || '',
+      uid: user.uid || '',
       email: user.email || '',
       username: user.username || '',
-      date: user.date || 0,
+      createdAt: user.createdAt || 0,
       img: user.img || ''
     }
   }
