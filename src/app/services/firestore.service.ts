@@ -116,7 +116,8 @@ export class FirestoreService {
       email: user.email || '',
       username: user.username || '',
       createdAt: user.createdAt || 0,
-      img: user.img || ''
+      img: user.img || '',
+      currentlyLoggedIn: user.currentlyLoggedIn || false
     }
   }
 

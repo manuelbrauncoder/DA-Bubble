@@ -15,7 +15,7 @@
     </header>
     <div class="channels">
         <div class="head">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg [ngStyle]="{ 'transform': showChannels ? 'rotate(0deg)' : 'rotate(-90deg)' }" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_71972_10658" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
                 <rect width="30" height="30" fill="#D9D9D9"/>
                 </mask>
@@ -54,7 +54,7 @@
     </div>
     <div class="direct-messages">
         <div class="head">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg [ngStyle]="{ 'transform': showDirectMessages ? 'rotate(0deg)' : 'rotate(-90deg)' }" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_71972_10658" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="30">
                 <rect width="30" height="30" fill="#D9D9D9"/>
                 </mask>
@@ -75,5 +75,12 @@
                     <h3>Direktnachrichten</h3>
                 </div>
         </div>
+        @if (showDirectMessages) {
+            @for (user of authService.fireService.users; track $index) {
+                <div class="user">
+                    <span>{{ user.username }}</span>
+                </div>
+            }
+        }
     </div>
 </main>

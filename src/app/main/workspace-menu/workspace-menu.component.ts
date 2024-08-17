@@ -1,14 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss'
 })
 export class WorkspaceMenuComponent {
   authService = inject(FirebaseAuthService);
+
+  showChannels: boolean = false;
+  showDirectMessages: boolean = true;
 
 }

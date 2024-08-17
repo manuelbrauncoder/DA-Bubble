@@ -5,6 +5,7 @@ export class User {
     username: string;
     createdAt: number | string; // timestamp
     img: string;
+    currentlyLoggedIn: boolean;
 
     constructor(obj?: Partial<User>){
         this.id = obj?.id ?? '';
@@ -13,5 +14,6 @@ export class User {
         this.username = obj?.username ?? '';
         this.createdAt = obj?.createdAt ?? 0;
         this.img = obj?.img ?? '';
+        this.currentlyLoggedIn = obj?.currentlyLoggedIn ?? false;
     }
 }
