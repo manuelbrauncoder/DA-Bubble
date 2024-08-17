@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
-  testMode: boolean = true;
+  testMode: boolean = false;
 
   unsubUsersList;
 
@@ -51,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy {
       if (user) {        
         this.authService.currentUserSig.set({
           email: user.email!,
-          username: user.displayName!
+          username: user.displayName!,
+          uid: user.uid!
         })
       } else {
         this.authService.currentUserSig.set(null);

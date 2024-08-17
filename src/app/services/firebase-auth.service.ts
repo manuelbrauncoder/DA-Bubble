@@ -101,8 +101,7 @@ export class FirebaseAuthService {
   /**
   * Logs in a user with Firebase Authentication.
   *
-  * If the login is successful, the function completes without any additional actions.
-  * .then ==> calls a empty function, without that, typescript will not be happy :)
+  * If the login is successful, it changes the login state in firestore
   *
   * @param {string} email 
   * @param {string} password 
@@ -110,12 +109,19 @@ export class FirebaseAuthService {
   */
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(this.auth, email, password).then((response) => {
-      this.changeUserState(true, response.user.uid);      
-     });
+      this.changeLoginState(true, response.user.uid);
+    });
     return from(promise);
   }
 
-  changeUserState(loggedInState: boolean, uid: string){
+  /**
+   * changes login state in firestore
+   * call this method after login and logout
+   * 
+   * @param loggedInState true after login, false after logout
+   * @param uid 
+   */
+  changeLoginState(loggedInState: boolean, uid: string) {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
         user.currentlyLoggedIn = loggedInState;
@@ -126,11 +132,16 @@ export class FirebaseAuthService {
 
   /**
    * this method logs out the current user
+   * and change the login state in firestore
    * @returns an observable that completes when logout is successful.
    */
   logout(): Observable<void> {
-    const promise = signOut(this.auth).then((response) => {
-      
+    const currentUserUid = this.currentUserSig()?.uid;
+    const promise = signOut(this.auth).then(() => {
+      this.changeLoginState(false, currentUserUid!);
+    }).catch((err) => {
+      console.log('Error logging User out', err);
+
     });
     return from(promise);
   }
