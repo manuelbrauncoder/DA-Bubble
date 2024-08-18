@@ -2,11 +2,12 @@ import { Component, inject } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -14,8 +15,8 @@ export class LoginComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
 
-  email: string = '';
-  pwd: string = '';
+  email: any = '';
+  pwd: any = '';
 
 
     /**

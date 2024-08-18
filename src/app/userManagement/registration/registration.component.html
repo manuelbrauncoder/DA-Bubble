@@ -8,17 +8,17 @@
     <div>
       <label for="name"></label>
       <img src="../assets/icons/login/person_grey.png" alt="name">
-      <input type="text" placeholder="Name und Nachname">
+      <input type="text" placeholder="Name und Nachname" [(ngModel)]="username" name="username">
     </div>
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input type="email" placeholder="beispielname@email.com">
+      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email">
     </div>
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" placeholder="Passwort">
+      <input type="password" placeholder="Passwort" [(ngModel)]="pwd" name="pwd">
     </div>
   </div>
   <div class="privacy-wrapper">
@@ -26,6 +26,6 @@
     <p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
   </div>
   <div class="btn-wrapper">
-    <button>Weiter</button>
+    <button (click)="register()">Weiter</button>
   </div>
 </form>

@@ -28,4 +28,5 @@
     <button (click)="guestLogin()">Gäste-Login</button>
     <button (click)="authService.logout()">Test-Logout</button>
   </div>
+  <span *ngIf="email.invalid || pwd.invalid">WRONG EMAIL OR PASSWORD</span>
 </form>
