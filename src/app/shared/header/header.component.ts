@@ -7,7 +7,7 @@ import { EditProfileComponent } from '../../edit-profile/edit-profile.component'
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, EditUserAndLogoutPopupComponent, EditProfileComponent],
+  imports: [CommonModule, EditUserAndLogoutPopupComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
