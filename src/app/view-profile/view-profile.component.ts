@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-view-profile',
   standalone: true,
@@ -10,5 +11,10 @@ import { Component } from '@angular/core';
 export class ViewProfileComponent {
   closeViewProfile() {
     
+  }
+
+
+  editProfile() {
+
   }
 }

@@ -1,1 +1,38 @@
-<p>edit-profile works!</p>
+<div class="edit-profile">
+    <div class="edit-header">
+        <p>Dein Profil bearbeiten</p>
+
+        <div class="bounding-box" (click)="closeViewProfile()">
+            <img src="assets/icons/close.svg">
+        </div>
+    </div>
+
+    <div class="profile-img">
+        <img src="assets/img/avatar.png">
+    </div>
+
+    <form action="" class="edit-name-mail-container">
+        <div class="edit-name-mail">
+            <div class="icon-label">
+                <img src="assets/icons/account_circle.png">
+                <label for="name">Vollständiger Name</label>
+            </div>
+    
+            <input type="text" id="name" placeholder="Frederik Beck">
+        </div>
+
+        <div class="edit-name-mail">
+            <div class="icon-label">
+                <img src="assets/icons/mail.png">
+                <label for="mail">E-Mail-Adresse</label>
+            </div>
+    
+            <input type="text" id="mail" placeholder="fred.beck@email.com">
+        </div>
+    </form>
+
+    <div class="buttons-container">
+        <button>Abbrechen</button>
+        <button>Speichern</button>
+    </div>
+</div>
