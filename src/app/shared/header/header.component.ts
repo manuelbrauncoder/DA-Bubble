@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditUserAndLogoutPopupComponent } from './edit-user-and-logout-popup/edit-user-and-logout-popup.component';
-import { EditProfileComponent } from '../../edit-profile/edit-profile.component';
 
 
 @Component({
