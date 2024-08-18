@@ -5,12 +5,12 @@
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input type="email" placeholder="beispielname@email.com">
+      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email">
     </div>
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" placeholder="Passwort">
+      <input type="password" placeholder="Passwort" [(ngModel)]="pwd" name="password">
     </div>
   </div>
   <a href="">Passwort vergessen?</a>
@@ -24,7 +24,8 @@
     <span>Anmelden mit Google</span>
   </button>
   <div class="btn-wrapper">
-    <button>Anmelden</button>
-    <button>Gäste-Login</button>
+    <button (click)="login()">Anmelden</button>
+    <button (click)="guestLogin()">Gäste-Login</button>
+    <button (click)="authService.logout()">Test-Logout</button>
   </div>
 </form>

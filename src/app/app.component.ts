@@ -6,11 +6,12 @@ import { FirestoreService } from './services/firestore.service';
 import { UserService } from './services/user.service';
 import { User } from './models/user.class';
 import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
+import { LoginComponent } from './userManagement/login/login.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent],
+  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
-  testMode: boolean = true;
+  testMode: boolean = false;
 
   unsubUsersList;
 
