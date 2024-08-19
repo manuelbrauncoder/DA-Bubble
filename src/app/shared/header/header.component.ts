@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EditUserAndLogoutPopupComponent } from './edit-user-and-logout-popup/edit-user-and-logout-popup.component';
+import { EditUserAndLogoutPopupComponent } from '../../popups/edit-user-and-logout-popup/edit-user-and-logout-popup.component';
 import { UiService } from '../../services/ui.service';
+import { FirebaseAuthService } from '../../services/firebase-auth.service';
 
 
 @Component({
@@ -13,5 +14,5 @@ import { UiService } from '../../services/ui.service';
 })
 export class HeaderComponent {
   uiService = inject(UiService);
-  
+  authService = inject(FirebaseAuthService);
 }

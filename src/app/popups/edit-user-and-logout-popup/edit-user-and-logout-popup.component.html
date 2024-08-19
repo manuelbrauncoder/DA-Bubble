@@ -2,3 +2,5 @@
     <button (click)="viewProfile()">Profil</button>
     <button (click)="logout()">Log out</button>
 </div>
+
+<app-view-profile *ngIf="uiService.showViewProfilePopup"></app-view-profile>

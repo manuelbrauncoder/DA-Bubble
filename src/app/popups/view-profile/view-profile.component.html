@@ -2,7 +2,7 @@
     <div class="profile-header">
         <p>Profil</p>
 
-        <div class="bounding-box" (click)="closeViewProfile()">
+        <div class="bounding-box" *ngIf="uiService.showViewProfilePopup" (click)="closeViewProfile()">
             <img src="assets/icons/close.svg">
         </div>
     </div>
