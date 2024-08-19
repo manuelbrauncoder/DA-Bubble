@@ -1,6 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiService } from '../../services/ui.service';
+import { FirestoreService } from '../../services/firestore.service';
+import { FirebaseAuthService } from '../../services/firebase-auth.service';
 
 
 @Component({
@@ -12,6 +14,8 @@ import { UiService } from '../../services/ui.service';
 })
 export class EditProfileComponent {
   uiService = inject(UiService);
+  firestoreService = inject(FirestoreService);
+  authService = inject(FirebaseAuthService);
 
   
   closeEditProfile() {

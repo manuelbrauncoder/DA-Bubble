@@ -18,7 +18,7 @@
                 <label for="name">Vollständiger Name</label>
             </div>
 
-            <input type="text" id="name" name="name" placeholder="Frederik Beck">
+            <input type="text" id="name" name="name" placeholder="{{ authService.currentUserSig()?.username }}">
         </div>
 
         <div class="edit-name-mail" style="margin-top: 1rem">
@@ -27,7 +27,7 @@
                 <label for="mail">E-Mail-Adresse</label>
             </div>
 
-            <input type="email" id="mail" name="mail" placeholder="fred.beck@email.com">
+            <input type="email" id="mail" name="mail" placeholder="{{ authService.currentUserSig()?.email }}">
         </div>
 
         <div class="buttons-container">

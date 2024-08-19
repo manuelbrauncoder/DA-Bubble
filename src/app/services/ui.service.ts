@@ -30,6 +30,8 @@ export class UiService {
 
   toggleEditUserAndLogoutPopup() {
     this.showEditUserAndLogoutPopup = !this.showEditUserAndLogoutPopup;
+    this.showViewProfilePopup = false;
+    this.showEditProfilePopup = false;
   }
 
   toggleViewProfile() {

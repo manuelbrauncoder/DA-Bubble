@@ -13,7 +13,7 @@
 
     <div class="name-editBtn-onlineStatus">
         <div class="name-editBtn">
-            <p>Frederik Beck</p>
+            <p>{{ authService.currentUserSig()?.username }}</p>
             <p (click)="editProfile()">Bearbeiten</p>
         </div>
 
@@ -28,9 +28,11 @@
 
         <div class="address">
             <p>E-Mail-Adresse</p>
-            <p>fred.beck&#64;email.com</p>
+            <p>{{ authService.currentUserSig()?.email }}</p>
         </div>
     </div>
 </div>
 
-<app-edit-profile *ngIf="uiService.showEditProfilePopup"></app-edit-profile>
+@if (uiService.showEditProfilePopup) {
+    <app-edit-profile></app-edit-profile>
+}
