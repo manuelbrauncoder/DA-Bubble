@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ChannelService } from '../../services/channel.service';
 
 @Component({
   selector: 'app-chat',
@@ -8,5 +9,6 @@ import { Component } from '@angular/core';
   styleUrl: './chat.component.scss'
 })
 export class ChatComponent {
+  channelService = inject(ChannelService);
 
 }

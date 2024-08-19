@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class UiService {
 
   showWorkspaceMenu = true;
-  showDirectMessages = true;
+  showDirectMessages = false;
   showChannels: boolean = true;
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;

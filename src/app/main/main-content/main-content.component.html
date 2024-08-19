@@ -1,10 +1,13 @@
+<main>
+    @if (uiService.showWorkspaceMenu) {
+        <app-workspace-menu></app-workspace-menu>
+    }
+    <app-chat></app-chat>
+    
+    <div class="workspace-btn-wrapper">
+        <app-workspace-menu-button></app-workspace-menu-button>
+    </div>
+</main>
 
-@if (uiService.showWorkspaceMenu) {
-    <app-workspace-menu></app-workspace-menu>
-}
-
-<div class="workspace-btn-wrapper">
-    <app-workspace-menu-button></app-workspace-menu-button>
-</div>
 
 

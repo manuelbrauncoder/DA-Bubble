@@ -1,14 +1,12 @@
 <app-header></app-header>
-<div class="wrapper">
-  
-  <router-outlet></router-outlet>
-</div>
+
+<router-outlet></router-outlet>
 
 @if (testMode) {
-  <button class="test-btn" (click)="userService.resetUsersInFirebase()">reset firestore</button>
-  <button class="test-btn" (click)="authService.guestLogin()">guest login</button>
-  <button class="test-btn" (click)="authService.guestSignUp()">guest sign up</button>
-  <button class="test-btn" (click)="authService.deleteUserAccount()">Delete Account</button>
-  <button class="test-btn" (click)="authService.logout()">Log out</button>
-  <button class="test-btn" (click)="authService.signInWithGoogle()">Sign in with google</button>
+<button class="test-btn" (click)="userService.resetUsersInFirebase()">reset firestore</button>
+<button class="test-btn" (click)="authService.guestLogin()">guest login</button>
+<button class="test-btn" (click)="authService.guestSignUp()">guest sign up</button>
+<button class="test-btn" (click)="authService.deleteUserAccount()">Delete Account</button>
+<button class="test-btn" (click)="authService.logout()">Log out</button>
+<button class="test-btn" (click)="authService.signInWithGoogle()">Sign in with google</button>
 }
