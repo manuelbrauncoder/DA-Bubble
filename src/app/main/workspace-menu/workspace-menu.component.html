@@ -55,6 +55,9 @@
         @if (uiService.showChannels) {
             <div class="channel-list">
                 <!-- Space for channel list -->
+                 @for (channel of fireService.channels; track $index; let index = $index) {
+                    <span># {{ channel.name }}</span>
+                 }
             </div>
             <div class="add-channel">
                 <!-- add channel btn -->

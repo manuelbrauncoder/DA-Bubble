@@ -4,6 +4,7 @@ import { orderBy } from '@firebase/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class FirestoreService {
 
 
   users: User[] = []; // all users stored here
+  channels: Channel[] = []; // all channels stored here
+
+
   exampleUsers: User[] = [];
 
   constructor() { }
@@ -86,6 +90,32 @@ export class FirestoreService {
         this.logChanges(change);
       })
     })
+  }
+
+  getChannelList() {
+    const q = query(this.getCollectionRef('channels'), orderBy('name'));
+    return onSnapshot(q, (list) => {
+      this.channels = [];
+      list.forEach((element) => {
+        const channel = this.setChannelObject(element.data(), element.id);
+        this.channels.push(channel);
+      });      
+      list.docChanges().forEach((change) => {
+        this.logChanges(change);
+      })
+    })
+  }
+
+  setChannelObject(channel: any, id: string): Channel{
+    return {
+      id: id || '',
+      name: channel.name || '',
+      users: channel.users || [],
+      messages: channel.messages || [],
+      comments: channel.comments || [],
+      reactions: channel.reactions || [],
+      data: channel.data || []
+    }
   }
 
   /**

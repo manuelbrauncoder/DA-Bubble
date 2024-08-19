@@ -24,9 +24,11 @@ export class AppComponent implements OnInit, OnDestroy {
   testMode: boolean = false;
 
   unsubUsersList;
+  unsubChannelList;
 
   constructor() {
     this.unsubUsersList = this.fireService.getUsersList();
+    this.unsubChannelList = this.fireService.getChannelList();
   }
 
   ngOnInit(): void {
@@ -37,6 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubUsersList();
+    this.unsubChannelList();
   }
 
   /**
