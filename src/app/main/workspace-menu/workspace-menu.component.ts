@@ -3,6 +3,7 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { CommonModule } from '@angular/common';
 import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
+import { ChannelService } from '../../services/channel.service';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -15,6 +16,7 @@ export class WorkspaceMenuComponent{
   authService = inject(FirebaseAuthService);
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
+  channelService = inject(ChannelService);
 
   currentUser = this.authService.auth.currentUser?.displayName;
 

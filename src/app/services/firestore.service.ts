@@ -92,6 +92,10 @@ export class FirestoreService {
     })
   }
 
+  /**
+   * Called in app-components.ts for subscribing updates from firestore
+   * @returns the channel list from firestore
+   */
   getChannelList() {
     const q = query(this.getCollectionRef('channels'), orderBy('name'));
     return onSnapshot(q, (list) => {
@@ -106,6 +110,10 @@ export class FirestoreService {
     })
   }
 
+  /**
+   * Returns a Object with Class Channel
+   * used in getChannelList() 
+   */
   setChannelObject(channel: any, id: string): Channel{
     return {
       id: id || '',
@@ -114,7 +122,8 @@ export class FirestoreService {
       messages: channel.messages || [],
       comments: channel.comments || [],
       reactions: channel.reactions || [],
-      data: channel.data || []
+      data: channel.data || [],
+      channelActive: channel.channelActive || false
     }
   }
 

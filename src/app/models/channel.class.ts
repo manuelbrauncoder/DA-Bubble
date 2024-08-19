@@ -8,6 +8,7 @@ export class Channel {
     comments: string[];
     reactions: string[];
     data: any[];
+    channelActive: boolean;
 
     /**
      * Constructs a new channel instance
@@ -22,6 +23,7 @@ export class Channel {
         this.comments = obj?.comments ?? [];
         this.reactions = obj?.reactions ?? [];
         this.data = obj?.data ?? [];
+        this.channelActive = obj?.channelActive ?? false;
     }
 
 }

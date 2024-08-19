@@ -118,18 +118,22 @@ header {
     cursor: pointer;
     padding-left: 2.188rem;
     @include dFlex($g: 0.938rem, $jc: flex-start);
+
     span {
         font-size: 1.125rem;
         font-weight: 400;
         line-height: 1.534rem;
     }
-    &:hover{
-        span{
+
+    &:hover {
+        span {
             color: blue;
         }
-        svg{
+
+        svg {
             transform: scale(1.05);
-            path{
+
+            path {
                 fill: blue;
             }
         }
@@ -139,4 +143,19 @@ header {
 .channel-list {
     padding-left: 2.188rem;
     @include dFlex($fd: column, $ai: flex-start);
+}
+
+.channel {
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.534rem;
+    padding: 4px 20px;
+    border-radius: 100vw;
+    margin-bottom: 1.563rem;
+    cursor: pointer;
+}
+
+.channel-active{
+    background-color: $color-active-channel;
+    color: $color-purple-3;
 }
