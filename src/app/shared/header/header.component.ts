@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EditUserAndLogoutPopupComponent } from './edit-user-and-logout-popup/edit-user-and-logout-popup.component';
+import { UiService } from '../../services/ui.service';
 
 
 @Component({
@@ -11,10 +12,6 @@ import { EditUserAndLogoutPopupComponent } from './edit-user-and-logout-popup/ed
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-  isActive = false;
-
-
-  togglePopup() {
-    this.isActive = !this.isActive;
-  }
+  uiService = inject(UiService);
+  
 }

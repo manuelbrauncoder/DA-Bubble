@@ -122,14 +122,24 @@
     background-color: white;
     border: solid 0.063rem #797ef3;
     color: #444df2;
+    transition: ease-in-out 250ms;
+
+    &:hover {
+      background-color: #444df2;
+      color: white;
+      transition: ease-in-out 250ms;
+    }
   }
 
   :last-child {
     background-color: #444df2;
     color: #ffffff;
+    transition: ease-in-out 250ms;
 
     &:hover {
       border: none;
+      background-color: #797ef3;
+      transition: ease-in-out 250ms;
     }
   }
 }

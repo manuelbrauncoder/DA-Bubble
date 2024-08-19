@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
+import { UiService } from '../../../services/ui.service';
 
 
 @Component({
@@ -11,6 +12,7 @@ import { FirebaseAuthService } from '../../../services/firebase-auth.service';
   styleUrl: './edit-user-and-logout-popup.component.scss'
 })
 export class EditUserAndLogoutPopupComponent {
+  uiService = inject(UiService);
   authService = inject(FirebaseAuthService);
 
 

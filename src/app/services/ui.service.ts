@@ -11,7 +11,7 @@ export class UiService {
   showWorkspaceMenu = true;
   showDirectMessages = true;
   showChannels: boolean = true;
-
+  showEditUserAndLogoutPopup = false;
 
 
   toggleWorkspaceMenu(){
@@ -24,6 +24,10 @@ export class UiService {
 
   toggleChannels(){
     this.showChannels = !this.showChannels;
+  }
+
+  toggleEditUserAndLogoutPopup() {
+    this.showEditUserAndLogoutPopup = !this.showEditUserAndLogoutPopup;
   }
 
   constructor() { }
