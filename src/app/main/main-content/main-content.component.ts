@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { WorkspaceMenuComponent } from "../workspace-menu/workspace-menu.component";
 import { WorkspaceMenuButtonComponent } from "../workspace-menu-button/workspace-menu-button.component";
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-main-content',
@@ -10,6 +11,7 @@ import { WorkspaceMenuButtonComponent } from "../workspace-menu-button/workspace
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
-  showWorkspaceMenu = true;
+  uiService = inject(UiService);
+  
 
 }

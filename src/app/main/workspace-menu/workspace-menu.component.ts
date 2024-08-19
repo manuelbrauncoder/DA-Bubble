@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { CommonModule } from '@angular/common';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -11,14 +12,10 @@ import { CommonModule } from '@angular/common';
 })
 export class WorkspaceMenuComponent{
   authService = inject(FirebaseAuthService);
+  uiService = inject(UiService);
 
   currentUser = this.authService.auth.currentUser?.displayName;
 
-  showChannels: boolean = false;
-  showDirectMessages: boolean = true;
-
-  toggleDirectMessages(){
-    this.showDirectMessages = !this.showDirectMessages;
-  }
+  
 
 }

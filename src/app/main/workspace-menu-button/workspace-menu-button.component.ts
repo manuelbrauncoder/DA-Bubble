@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-workspace-menu-button',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './workspace-menu-button.component.scss'
 })
 export class WorkspaceMenuButtonComponent {
-
+  uiService = inject(UiService);
 }
