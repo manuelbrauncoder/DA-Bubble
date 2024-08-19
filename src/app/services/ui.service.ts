@@ -10,7 +10,7 @@ export class UiService {
 
   showWorkspaceMenu = true;
   showDirectMessages = true;
-  showChannels: boolean = false;
+  showChannels: boolean = true;
 
 
 
