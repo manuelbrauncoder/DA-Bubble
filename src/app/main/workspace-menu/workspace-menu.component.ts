@@ -18,7 +18,6 @@ export class WorkspaceMenuComponent{
   fireService = inject(FirestoreService);
   channelService = inject(ChannelService);
 
-  currentUser = this.authService.auth.currentUser?.displayName;
 
   
 

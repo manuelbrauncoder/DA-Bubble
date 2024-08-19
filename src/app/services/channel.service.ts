@@ -7,6 +7,7 @@ import { Channel } from '../models/channel.class';
 })
 export class ChannelService {
   fireService = inject(FirestoreService);
+  currentChannel: Channel = new Channel;
 
   constructor() { }
 
@@ -15,6 +16,7 @@ export class ChannelService {
     this.fireService.channels.forEach((channel) => {
       if (activeChannel.name === channel.name) {
         channel.channelActive = true;
+        this.currentChannel = new Channel(activeChannel);
       } else {
         channel.channelActive = false;
       }

@@ -1,1 +1,5 @@
-<p>chat works!</p>
+<h1>Current Channel: {{ channelService.currentChannel.name }}</h1>
+@if (!channelService.currentChannel.name) {
+    <span>choose a channel in the workspace menu!</span>
+
+}
