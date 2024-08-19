@@ -12,6 +12,8 @@ import {
   signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
+  updateEmail,
+  updatePassword,
   updateProfile,
   user,
 } from '@angular/fire/auth';
@@ -165,7 +167,7 @@ export class FirebaseAuthService {
    */
   guestLogin() {
     const guestEmail = 'guest@gmail.com';
-    const guestPw = '555555'
+    const guestPw = '123456'
     this.login(guestEmail, guestPw);
   }
 
@@ -175,7 +177,7 @@ export class FirebaseAuthService {
    */
   guestSignUp() {
     const guestEmail = 'guest@gmail.com';
-    const guestPw = '555555'
+    const guestPw = '123456'
     const userName = 'Guest'
     this.register(guestEmail, userName, guestPw);
   }
@@ -209,6 +211,46 @@ export class FirebaseAuthService {
         this.fireService.deleteDocument(user.id, 'users');
       } 
     })
+  }
+
+  /**
+   * Call this method to update the email
+   * The User has to be logged in
+   * Only the current logged in User can change the password
+   * @param newEmail 
+   */
+  // updateUserEmail(newEmail: string){
+  //   const currentUser = this.auth.currentUser;
+  //   if (currentUser) {
+  //     updateEmail(currentUser, newEmail).then(()=>{
+  //       this.fireService.users.forEach((user) => {
+  //         if (currentUser.uid === user.uid) {
+  //           user.email = newEmail;
+  //           this.fireService.updateUser(user);
+  //         }
+  //       })
+  //     }).catch((err) => {
+  //       console.warn('Error updating User Email', err);
+  //     });
+  //   }
+  // }
+
+  /**!! Error handling, re-authenticate user before changing password!!!
+   * Call this method to update the Password
+   * The User has to be logged in
+   * Only the current logged in User can change the password
+   * @param newPw 
+   */
+  updateUserPassword(newPw: string) {
+    const currentUser = this.auth.currentUser;
+    if (currentUser) {
+      updatePassword(currentUser, newPw).then(() => {
+        // add things todo after password changed
+        console.log('Password from User updated:', currentUser);
+      }).catch((err) => {
+        console.warn('Error updating Password', err);
+      })
+    }
   }
 
 }
