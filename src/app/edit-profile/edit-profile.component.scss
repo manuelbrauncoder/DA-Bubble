@@ -6,7 +6,7 @@
   border-radius: 1.875rem;
   padding: 2.5rem;
   gap: 2.813rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0rem 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
 }
 
 .edit-header {
@@ -17,15 +17,15 @@
 
   p {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 1.5rem;
   }
 
   .bounding-box {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 100%;
     background-color: transparent;
     transition: ease-in-out 250ms;

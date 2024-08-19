@@ -17,13 +17,13 @@ input {
   background-image: url("/assets/icons/search.png");
   background-repeat: no-repeat;
   background-position: calc(100% - 1.5rem) center;
-  padding: 17.5px 45px 17.5px 45px;
+  padding: 1.094rem 2.813rem 1.094rem 2.813rem;
 }
 
 .profile-menu {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem;
   transition: ease-in-out 250ms;
 
   &:hover {
