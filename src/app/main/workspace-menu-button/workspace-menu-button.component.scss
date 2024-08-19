@@ -11,14 +11,29 @@ main {
     border-radius: 0 30px 30px 0;
     padding: 23px 14px;
     @include dFlex($fd: column, $g: 10px);
-}
+    
 
-h3 {
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    font-family: Nunito;
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 1.5;
-    text-align: left;
+    h3 {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        font-family: Nunito;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: left;
+        transition-duration: 125ms;
+    }
+
+    &:hover h3 {
+        color: blue;
+        transform: scale(1.05) rotate(180deg);
+    }
+
+    &:hover svg {
+        path,
+        rect {
+            stroke: blue;
+        }
+    }
+
 }
