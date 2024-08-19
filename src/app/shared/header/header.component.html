@@ -15,6 +15,13 @@
     <img src="assets/icons/arrowDown.svg" class="arrow-down">
 </div>
 
-<div class="popup-overlay" *ngIf="uiService.showEditUserAndLogoutPopup" (click)="uiService.toggleEditUserAndLogoutPopup()">
+<!-- <div class="popup-overlay" *ngIf="uiService.showEditUserAndLogoutPopup" (click)="uiService.toggleEditUserAndLogoutPopup()">
+    <app-edit-user-and-logout-popup (click)="$event.stopPropagation()"></app-edit-user-and-logout-popup>
+</div> -->
+
+
+
+
+<div class="popup-overlay" *ngIf="uiService.showEditUserAndLogoutPopup" (click)="openPopup()">
     <app-edit-user-and-logout-popup (click)="$event.stopPropagation()"></app-edit-user-and-logout-popup>
 </div>

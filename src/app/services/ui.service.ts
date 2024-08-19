@@ -13,6 +13,7 @@ export class UiService {
   showChannels: boolean = true;
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
+  showEditProfilePopup: boolean = false;
 
 
   toggleWorkspaceMenu(){
@@ -33,6 +34,10 @@ export class UiService {
 
   toggleViewProfile() {
     this.showViewProfilePopup = !this.showViewProfilePopup;
+  }
+
+  toggleEditProfile() {
+    this.showEditProfilePopup = !this.showEditProfilePopup;
   }
 
   constructor() { }

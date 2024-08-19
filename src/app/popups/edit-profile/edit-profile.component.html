@@ -2,7 +2,7 @@
     <div class="edit-header">
         <p>Dein Profil bearbeiten</p>
 
-        <div class="bounding-box" (click)="closeViewProfile()">
+        <div class="bounding-box" (click)="closeEditProfile()">
             <img src="assets/icons/close.svg">
         </div>
     </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="buttons-container">
-            <input type="reset" value="Abbrechen">
+            <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
             <input type="submit" value="Speichern">
         </div>
     </form>

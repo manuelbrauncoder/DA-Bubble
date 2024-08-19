@@ -15,4 +15,9 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 export class HeaderComponent {
   uiService = inject(UiService);
   authService = inject(FirebaseAuthService);
+
+
+  openPopup() {
+    this.uiService.toggleEditUserAndLogoutPopup();
+  }
 }
