@@ -8,23 +8,24 @@
     <div>
       <label for="name"></label>
       <img src="../assets/icons/login/person_grey.png" alt="name">
-      <input type="text" placeholder="Name und Nachname" [(ngModel)]="username" name="username">
+      <input type="text" placeholder="Name und Nachname" [(ngModel)]="username" name="username" required>
     </div>
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email">
+      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email" required>
     </div>
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" placeholder="Passwort" [(ngModel)]="pwd" name="pwd">
+      <input type="password" placeholder="Passwort" [(ngModel)]="pwd" name="pwd" required>
     </div>
   </div>
   <div class="privacy-wrapper">
-    <input type="checkbox">
+    <input type="checkbox" [(ngModel)]="privacy" name="privacy" required>
     <p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
   </div>
+  <span *ngIf="">WRONG EMAIL OR PASSWORD</span>
   <div class="btn-wrapper">
     <button (click)="register()">Weiter</button>
   </div>

@@ -14,9 +14,13 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
+  isFormValid: boolean = false;
 
-  email: any = '';
-  pwd: any = '';
+  loginData = {
+    email: '',
+    pwd: ''
+  }
+
 
 
     /**
@@ -25,7 +29,7 @@ export class LoginComponent {
    */
   login() {
     try {
-      this.authService.login(this.email, this.pwd);
+      this.authService.login(this.loginData.email, this.loginData.pwd);
       // this.router.navigate(['/']);
     } catch (error) {
       console.error(error);

@@ -18,6 +18,7 @@ export class RegistrationComponent {
   username: any = '';
   email: any = '';
   pwd: any = '';
+  privacy: boolean = false;
 
     /**
    * Login for user. Checks if email and pwd is in the database
@@ -25,8 +26,8 @@ export class RegistrationComponent {
    */
   register() {
     try {
-      this.authService.register(this.email, this.username, this.pwd);
-      // this.router.navigate(['/']);
+      // this.authService.register(this.email, this.username, this.pwd);
+      this.router.navigate(['/profilePic']);
     } catch (error) {
       console.error(error);
     }

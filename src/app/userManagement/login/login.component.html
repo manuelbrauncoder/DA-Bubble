@@ -1,16 +1,16 @@
-<form action="">
+<form #loginForm="ngForm">
   <h2>Anmeldung</h2>
   <p>Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>
   <div class="input-wrapper">
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email">
+      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="loginData.email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
     </div>
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" placeholder="Passwort" [(ngModel)]="pwd" name="password">
+      <input type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.pwd" name="password" required>
     </div>
   </div>
   <a href="">Passwort vergessen?</a>
@@ -24,9 +24,11 @@
     <span>Anmelden mit Google</span>
   </button>
   <div class="btn-wrapper">
-    <button (click)="login()">Anmelden</button>
+    <button (click)="login()" [ngClass]="{'disabled-button': loginForm.invalid}" [disabled]="!isFormValid" >Anmelden</button>
     <button (click)="guestLogin()">Gäste-Login</button>
     <button (click)="authService.logout()">Test-Logout</button>
   </div>
-  <span *ngIf="email.invalid || pwd.invalid">WRONG EMAIL OR PASSWORD</span>
+  <span *ngIf="loginForm.invalid || loginForm.invalid">WRONG EMAIL OR PASSWORD</span>
+
+  <div *ngIf="loginForm.invalid">Form is invalid</div>
 </form>
