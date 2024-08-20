@@ -56,8 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.authService.currentUserSig.set({
           email: user.email!,
           username: user.displayName!,
-          uid: user.uid!,
-          avatar: user.photoURL!
+          uid: user.uid!
         })
       } else {
         this.authService.currentUserSig.set(null);

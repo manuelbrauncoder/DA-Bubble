@@ -112,8 +112,7 @@ export class FirebaseAuthService {
       this.currentUserSig.set({
         email: response.user.email!,
         username: response.user.displayName!,
-        uid: response.user.uid!,
-        avatar: response.user.photoURL!
+        uid: response.user.uid!
       })
     })
     .catch((err) => {

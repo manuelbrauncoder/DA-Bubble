@@ -17,7 +17,7 @@ export class FirestoreService {
 
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here
-
+  
 
   exampleUsers: User[] = [];
 

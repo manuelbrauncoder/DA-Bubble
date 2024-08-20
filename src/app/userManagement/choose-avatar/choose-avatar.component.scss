@@ -24,6 +24,7 @@ form {
     align-items: center;
 
     >img {
+      height: 10.5rem;
       padding: .3rem;
       border-radius: 50%;
       &:hover {
@@ -36,6 +37,14 @@ form {
       font-weight: 700;
       font-size: 2rem;
     }
+  }
+
+  .text-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    font-weight: 400;
+    font-size: 1.2rem;
   }
 
   .char-wrapper{
@@ -60,6 +69,8 @@ form {
     justify-content: space-between;
     width: 100%;
     gap: 2rem;
+    font-weight: 400;
+    font-size: 1.2rem;
 
     >button {
       border: .1rem solid #444DF2;

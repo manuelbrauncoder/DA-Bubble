@@ -15,6 +15,7 @@ export class ChooseAvatarComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
   selectedAvatar: string = '';
+  avatarIsSelected: boolean = false;
 
   regData = this.authService.getStoredRegistrationData();
 
