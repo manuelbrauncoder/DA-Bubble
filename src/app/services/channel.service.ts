@@ -12,6 +12,11 @@ export class ChannelService {
   constructor() { }
 
 
+  /**
+   * This method toggles the active Channel
+   * Call in Workspace-menu-component
+   * @param activeChannel 
+   */
   toggleActiveChannel(activeChannel: Channel) {
     this.fireService.channels.forEach((channel) => {
       if (activeChannel.name === channel.name) {
@@ -22,4 +27,5 @@ export class ChannelService {
       }
     })
   }
+
 }

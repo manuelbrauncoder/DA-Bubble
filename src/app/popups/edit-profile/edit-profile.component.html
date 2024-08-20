@@ -11,7 +11,7 @@
         <img src="assets/img/avatar.png">
     </div>
 
-    <form action="" class="edit-name-mail-container" #editProfileForm="ngForm">
+    <form action="" class="edit-name-mail-form" #editProfileForm="ngForm">
         <div class="edit-name-mail">
             <div class="icon-label">
                 <img src="assets/icons/account_circle.png">
@@ -38,7 +38,7 @@
 
         <div class="buttons-container">
             <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
-            <input type="submit" value="Speichern" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
+            <input type="submit" value="Speichern" (click)="saveEdit(profileData.email)" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
         </div>
     </form>
 </div>

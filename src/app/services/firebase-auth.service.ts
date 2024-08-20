@@ -36,9 +36,8 @@ export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
 
-  currentUserSig = signal<AuthUser | null | undefined>(undefined);
+  currentUserSig = signal<AuthUser | null | undefined>(undefined);  
 
-  //currentUser = this.auth.currentUser;
 
   constructor() { 
   }
@@ -60,9 +59,6 @@ export class FirebaseAuthService {
   clearStoredRegistrationData() {
     this.tempRegData = null;
   }
-
-
-  
 
   /**
    * not working yet
@@ -314,7 +310,7 @@ export class FirebaseAuthService {
         // add things todo after password changed
         console.log('Password from User updated:', this.auth.currentUser);
       }).catch((err) => {
-        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN
+        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN // evtl schon vorher abfragen um fehler zu vermeiden!!
         if (code) {
           console.log('Login again before change password');
           // add popup to reAuthentcateUser();

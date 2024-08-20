@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
-  testMode: boolean = true;
+  testMode: boolean = false;
 
   unsubUsersList;
   unsubChannelList;
