@@ -11,7 +11,7 @@ export const routes: Routes = [
   { path: '', component: MainContentComponent},
   { path: 'login', component: LoginComponent },
   { path: 'registration', component: RegistrationComponent },
-  { path: 'profilePic', component: ChooseAvatarComponent },
+  { path: 'avatar', component: ChooseAvatarComponent },
   { path: 'pwdReset', component: SendMailComponent }
 
 ];

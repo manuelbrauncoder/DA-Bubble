@@ -5,5 +5,5 @@ export interface UserInterface {
     firstName: string;
     lastName: string;
     date: string;
-    img: [];
+    avatar: [];
 }

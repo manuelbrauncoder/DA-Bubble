@@ -138,6 +138,7 @@ export class FirestoreService {
       email: user.email,
       username: user.username,
       currentlyLoggedIn: user.currentlyLoggedIn || false,
+      avatar: user.avatar
     };
   }
 
@@ -154,7 +155,7 @@ export class FirestoreService {
       email: user.email || '',
       username: user.username || '',
       createdAt: user.createdAt || 0,
-      img: user.img || '',
+      avatar: user.avatar || '',
       currentlyLoggedIn: user.currentlyLoggedIn || false
     }
   }

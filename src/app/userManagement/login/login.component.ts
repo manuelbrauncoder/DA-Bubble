@@ -19,7 +19,7 @@ export class LoginComponent {
 
   loginData = {
     email: '',
-    pwd: ''
+    password: ''
   }
 
     /**
@@ -28,7 +28,7 @@ export class LoginComponent {
    */
   async login() {
     this.loginFailed = false;
-    this.authService.login(this.loginData.email, this.loginData.pwd)
+    this.authService.login(this.loginData.email, this.loginData.password)
       .pipe(
         catchError((error) => {
           console.error('Login error in LoginComponent:', error);

@@ -1,4 +1,4 @@
-<form action="">
+<form #avatarForm="ngForm">
   <div class="header-wrapper">
     <a href="#" onclick="history.back(); return false;"><img src="../assets/icons/login/arrow_back_black.png" alt="arrow"></a>
     <h2>Wähle deinen Avatar</h2>
@@ -10,12 +10,12 @@
 
   <span>Aus der Liste wählen</span>
   <div class="char-wrapper">
-    <img src="./assets/img/chars/char1.png" alt="character">
-    <img src="./assets/img/chars/char2.png" alt="character">
-    <img src="./assets/img/chars/char3.png" alt="character">
-    <img src="./assets/img/chars/char4.png" alt="character">
-    <img src="./assets/img/chars/char5.png" alt="character">
-    <img src="./assets/img/chars/char6.png" alt="character">
+    <img src="./assets/img/chars/char1.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char1.png'">
+    <img src="./assets/img/chars/char2.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char2.png'">
+    <img src="./assets/img/chars/char3.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char3.png'">
+    <img src="./assets/img/chars/char4.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char4.png'">
+    <img src="./assets/img/chars/char5.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char5.png'">
+    <img src="./assets/img/chars/char6.png" alt="character" (click)="selectedAvatar = './assets/img/chars/char6.png'">
   </div>
 
   <div class="load-img-wrapper">
@@ -23,6 +23,6 @@
     <button>Datei hochladen</button>
   </div>
   <div class="btn-wrapper">
-    <button>Weiter</button>
+    <button (click)="completeRegistration()" [ngClass]="{'disabled-button': avatarForm.invalid}" [disabled]="avatarForm.invalid">Weiter</button>
   </div>
 </form>
