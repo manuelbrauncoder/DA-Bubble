@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { ChannelService } from '../../services/channel.service';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -18,7 +19,19 @@ export class WorkspaceMenuComponent{
   fireService = inject(FirestoreService);
   channelService = inject(ChannelService);
 
-
+  /**
+   * set user avatar img
+   * fallback to placeholder, if no img set
+   * @param user 
+   * @returns 
+   */
+  setAvatarImg(user: User){
+    if (user.avatar !== '') {
+      return user.avatar;
+    } else {
+      return 'assets/img/chars/profile_placeholder.png';
+    }
+  }
   
 
 }
