@@ -104,7 +104,7 @@
                     <div class="user">
                         <div class="img-wrapper">
                             <hr class="online-state">
-                            <img class="profile-img" src="assets/img/chars/char1.png" alt="">
+                            <img class="profile-img" [src]="userService.getCurrentUsersAvatar()" alt="">
                         </div>
                         <span class="user-name">{{ authService.currentUserSig()?.username }} (Du)</span>
                     </div>

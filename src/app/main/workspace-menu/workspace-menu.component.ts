@@ -5,6 +5,7 @@ import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { ChannelService } from '../../services/channel.service';
 import { User } from '../../models/user.class';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -18,6 +19,7 @@ export class WorkspaceMenuComponent{
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
   channelService = inject(ChannelService);
+  userService = inject(UserService);
 
   /**
    * set user avatar img

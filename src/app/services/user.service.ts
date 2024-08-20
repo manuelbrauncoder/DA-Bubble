@@ -11,7 +11,23 @@ export class UserService {
 
   constructor() { }
 
- 
+
+  /**
+   * this method returns the img path for the avatar
+   * of the current logged in user
+   * returns a fallback img if user has no avatar
+   */
+  getCurrentUsersAvatar(): string {
+    if (this.authService.auth.currentUser) {
+      const currentUserUid = this.authService.auth.currentUser.uid;
+      const user = this.fireService.users.find(user => user.uid === currentUserUid);
+      
+      if (user && user.avatar) {
+        return user.avatar;
+      }
+    }
+    return 'assets/img/chars/profile_placeholder.png';
+  }
 
   /**
    * Call this method to delete all data in 'users'
