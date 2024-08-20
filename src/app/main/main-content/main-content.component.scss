@@ -1,4 +1,17 @@
 main{
     height: calc(100% - 120px);
     display: flex;
+    gap: 16px;
+}
+
+.workspace-wrapper{
+    width: 25%;
+}
+
+.chat-wrapper{
+    width: 50%;
+}
+
+.thread-wrapper{
+    width: 25%;
 }

@@ -7,7 +7,7 @@ main {
     border-radius: 1.875rem;
     @include dFlex($fd: column, $g: 1.563rem, $ai: flex-start, $jc: flex-start);
     min-height: 100%;
-    max-width: fit-content;
+    max-width: 100%;
 }
 
 header {

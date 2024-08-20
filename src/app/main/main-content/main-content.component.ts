@@ -3,11 +3,12 @@ import { WorkspaceMenuComponent } from "../workspace-menu/workspace-menu.compone
 import { WorkspaceMenuButtonComponent } from "../workspace-menu-button/workspace-menu-button.component";
 import { UiService } from '../../services/ui.service';
 import { ChatComponent } from "../chat/chat.component";
+import { ThreadComponent } from '../thread/thread.component';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent],
+  imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent, ThreadComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })

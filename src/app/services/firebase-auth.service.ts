@@ -36,9 +36,8 @@ export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
 
-  currentUserSig = signal<AuthUser | null | undefined>(undefined);
+  currentUserSig = signal<AuthUser | null | undefined>(undefined);  
 
-  //currentUser = this.auth.currentUser;
 
   constructor() { 
   }
@@ -60,9 +59,6 @@ export class FirebaseAuthService {
   clearStoredRegistrationData() {
     this.tempRegData = null;
   }
-
-
-  
 
   /**
    * not working yet

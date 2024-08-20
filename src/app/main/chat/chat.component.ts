@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ChannelService } from '../../services/channel.service';
 
 @Component({
@@ -11,4 +11,5 @@ import { ChannelService } from '../../services/channel.service';
 export class ChatComponent {
   channelService = inject(ChannelService);
 
+  
 }
