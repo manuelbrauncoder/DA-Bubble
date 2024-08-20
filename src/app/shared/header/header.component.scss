@@ -10,7 +10,8 @@ a {
 }
 
 input {
-  width: 61.813rem;
+  max-width: 61.813rem;
+  width: 100%;
   height: 4.375rem;
   background-color: white;
   border-radius: 2.625rem;
@@ -18,6 +19,18 @@ input {
   background-repeat: no-repeat;
   background-position: calc(100% - 1.5rem) center;
   padding: 1.094rem 2.813rem 1.094rem 2.813rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+
+  &:hover {
+    border: none;
+    outline: .1rem solid #686868;
+  }
+
+  &:focus {
+    border: none;
+    outline: .1rem solid #444DF2;
+  }
 }
 
 .profile-menu {

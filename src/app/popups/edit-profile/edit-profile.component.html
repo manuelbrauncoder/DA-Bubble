@@ -11,28 +11,34 @@
         <img src="assets/img/avatar.png">
     </div>
 
-    <form action="" class="edit-name-mail-container">
+    <form action="" class="edit-name-mail-container" #editProfileForm="ngForm">
         <div class="edit-name-mail">
             <div class="icon-label">
                 <img src="assets/icons/account_circle.png">
                 <label for="name">Vollständiger Name</label>
             </div>
 
-            <input type="text" id="name" name="name" placeholder="{{ authService.currentUserSig()?.username }}">
+            <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="profileData.name" value="" placeholder="{{ authService.currentUserSig()?.username }}" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
+            @if (name.invalid && (name.dirty || name.touched)) {
+                <span>Bitte ein Vor- und Nachname eingeben</span>
+            }
         </div>
 
         <div class="edit-name-mail" style="margin-top: 1rem">
             <div class="icon-label">
                 <img src="assets/icons/mail.png">
-                <label for="mail">E-Mail-Adresse</label>
+                <label for="email">E-Mail-Adresse</label>
             </div>
 
-            <input type="email" id="mail" name="mail" placeholder="{{ authService.currentUserSig()?.email }}">
+            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="profileData.email" value="" placeholder="{{ authService.currentUserSig()?.email }}" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+            @if (email.invalid && (email.dirty || email.touched)) {
+                <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
+            }
         </div>
 
         <div class="buttons-container">
             <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
-            <input type="submit" value="Speichern">
+            <input type="submit" value="Speichern" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
         </div>
     </form>
 </div>
