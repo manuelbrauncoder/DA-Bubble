@@ -6,10 +6,6 @@
   margin: 0;
 }
 
-body {
-  background-color: #ECEEFE;
-}
-
 html, body, p, h1, h2, h3 , h4 {
   padding: 0;
 }
@@ -18,18 +14,9 @@ html, body, app-root {
   height: 100%;
 }
 
-a {
-  text-decoration: none;
-  cursor: pointer;
-  color: #797EF3;
-  padding: 0.2rem;
-  border-radius: 1.5rem;
-
-  &:hover {
-    font-weight: 700;
-    background-color: #ECEEFE;
-    color: #444DF2;
-  }
+body {
+  background-color: #ECEEFE;
+  padding: 1.3rem 1.2rem;
 }
 
 img {

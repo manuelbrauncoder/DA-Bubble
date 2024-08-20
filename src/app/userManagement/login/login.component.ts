@@ -51,7 +51,7 @@ export class LoginComponent {
       await this.authService.guestLogin();
       this.router.navigate(['/']);
     } catch (error) {
-      console.error(error);
+      console.error('Guest login error in LoginComponent:', error);
     }
   }
 }

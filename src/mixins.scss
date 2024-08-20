@@ -31,6 +31,22 @@
   }
 }
 
+@mixin linkUserM {
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #797EF3;
+    padding: 0.2rem;
+    border-radius: 1.5rem;
+  
+    &:hover {
+      font-weight: 700;
+      background-color: #ECEEFE;
+      color: #444DF2;
+    }
+  }
+}
+
 @mixin dFlex($fd: row, $jc: center, $ai: center, $g: 0){
   display: flex;
   flex-direction: $fd;

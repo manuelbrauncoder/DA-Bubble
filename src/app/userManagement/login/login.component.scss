@@ -1,9 +1,15 @@
 @use './../../../mixins.scss' as *;
 
+@include linkUserM;
 
 form {
   >p {
     font-size: 1.2rem;
+  }
+
+  >span {
+    font-size: 1.2rem;
+    color: #ED1E79;
   }
 
   .input-wrapper {
