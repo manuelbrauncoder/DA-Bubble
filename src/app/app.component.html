@@ -9,6 +9,8 @@
 <button class="test-btn" (click)="authService.deleteUserAccount()">Delete Account</button>
 <button class="test-btn" (click)="authService.logout()">Log out</button>
 <!-- <button class="test-btn" (click)="authService.signInWithGoogle()">Sign in with google</button> -->
- <!-- <button class="test-btn" (click)="authService.updateUserEmail('info@manuel-braun.net')">Update Email</button> -->
- <button class="test-btn" (click)="authService.updateUserPassword('666666')">Update Password</button>
+ <button class="test-btn" (click)="authService.updateUserEmail('contact@manuel-braun.net')">Update Email</button>
+ <button class="test-btn" (click)="authService.updateUserPassword('654321')">Update Password</button>
+ <button class="test-btn" (click)="authService.verifyUsersEmail()">verifyEmail</button>
+ <button class="test-btn" (click)="authService.reAuthenticateUser('info@manuel-braun.net', '654321')">Re-authenticate</button>
 }

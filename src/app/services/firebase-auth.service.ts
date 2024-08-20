@@ -5,10 +5,14 @@
 import { inject, Injectable, signal } from '@angular/core';
 import {
   Auth,
+  AuthErrorCodes,
   createUserWithEmailAndPassword,
   deleteUser,
+  EmailAuthProvider,
   getRedirectResult,
   GoogleAuthProvider,
+  reauthenticateWithCredential,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithRedirect,
   signOut,
@@ -34,7 +38,7 @@ export class FirebaseAuthService {
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
-  currentUser = this.auth.currentUser;
+  //currentUser = this.auth.currentUser;
 
   constructor() { 
   }
@@ -219,41 +223,80 @@ export class FirebaseAuthService {
     })
   }
 
-  /**
-   * Call this method to update the email
-   * The User has to be logged in
-   * Only the current logged in User can change the password
+   /**
+   * This method is for updating the users email
+   * If the last login was too long ago, the user has to be re-authenticate
+   * We need a popup, where the user can log in again
+   * in this popup, call the reAuthenticateUser() method
+   * after that, the user can update his email
    * @param newEmail 
    */
-  // updateUserEmail(newEmail: string){
-  //   const currentUser = this.auth.currentUser;
-  //   if (currentUser) {
-  //     updateEmail(currentUser, newEmail).then(()=>{
-  //       this.fireService.users.forEach((user) => {
-  //         if (currentUser.uid === user.uid) {
-  //           user.email = newEmail;
-  //           this.fireService.updateUser(user);
-  //         }
-  //       })
-  //     }).catch((err) => {
-  //       console.warn('Error updating User Email', err);
-  //     });
-  //   }
-  // }
+  updateUserEmail(newEmail: string){
+    const currentUser = this.auth.currentUser;
+    if (currentUser) {
+      updateEmail(currentUser, newEmail).then(()=>{
+        this.fireService.users.forEach((user) => {
+          if (currentUser.uid === user.uid) {
+            user.email = newEmail;
+            this.fireService.updateUser(user);
+          }
+        })
+      }).catch((err) => {
+        let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
+        if (code) {
+          //this.verifyUsersEmail();
+          alert('Please verify your email before updating it');
+          
+        }
+        console.log(err);
+        
+      });
+    }
+  }
 
-  /**!! Error handling, re-authenticate user before changing password!!!
-   * Call this method to update the Password
-   * The User has to be logged in
-   * Only the current logged in User can change the password
+  /**
+   * This method sends a Email to the current User
+   * If the user clicks on the link in it, his email is verified
+   */
+  verifyUsersEmail(){
+    if (this.auth.currentUser) {
+      sendEmailVerification(this.auth.currentUser).then(()=>{
+        console.log('email sent!');  
+      }).catch((err)=>{
+        console.warn('Error sending Email', err);
+      })
+    }
+  }
+
+  /**
+   * This method is for reauthenticate the user
+   */
+  reAuthenticateUser(email: string, password: string){
+    const credential = EmailAuthProvider.credential(email, password);
+    if (this.auth.currentUser) {
+      reauthenticateWithCredential(this.auth.currentUser, credential).then(()=>{}).catch((err)=>{console.warn('Error', err)});
+    }
+  }
+
+  /**
+   * This method is for updating the users password
+   * If the last login was too long ago, the user has to be re-authenticate
+   * We need a popup, where the user can log in again
+   * in this popup, call the reAuthenticateUser() method
+   * after that, the user can update his password
    * @param newPw 
    */
   updateUserPassword(newPw: string) {
-    const currentUser = this.auth.currentUser;
-    if (currentUser) {
-      updatePassword(currentUser, newPw).then(() => {
+    if (this.auth.currentUser) {
+      updatePassword(this.auth.currentUser, newPw).then(() => {
         // add things todo after password changed
-        console.log('Password from User updated:', currentUser);
+        console.log('Password from User updated:', this.auth.currentUser);
       }).catch((err) => {
+        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN
+        if (code) {
+          console.log('Login again before change password');
+          // add popup to reAuthentcateUser();
+        }
         console.warn('Error updating Password', err);
       })
     }
