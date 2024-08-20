@@ -26,8 +26,8 @@ export class RegistrationComponent {
    */
   register() {
     try {
-      // this.authService.register(this.email, this.username, this.pwd);
-      this.router.navigate(['/profilePic']);
+      this.authService.register(this.email, this.username, this.pwd);
+      // this.router.navigate(['/profilePic']);
     } catch (error) {
       console.error(error);
     }

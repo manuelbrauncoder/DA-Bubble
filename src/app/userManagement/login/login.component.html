@@ -5,16 +5,20 @@
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input type="email" placeholder="beispielname@email.com" [(ngModel)]="loginData.email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+      <input #email="ngModel" type="email" placeholder="beispielname@email.com" [(ngModel)]="loginData.email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+      <span *ngIf="email.invalid && (email.dirty || email.touched)">*Diese E-Mail-Adresse ist leider ungültig.</span>
     </div>
+    
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.pwd" name="password" required>
+      <input #password="ngModel" type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.pwd" name="password" required>
+      <span *ngIf="password.invalid && (password.dirty || password.touched)">*Bitte geben Sie ein gültiges Passwort ein.</span>
     </div>
+    
   </div>
-  <a href="">Passwort vergessen?</a>
-  <div class="or-wrapper">
+  <a [routerLink]="'/pwdReset'">Passwort vergessen?</a>
+  <div class="or-wrapper"> 
     <div></div>
     <span>ODER</span>
     <div></div>
@@ -23,12 +27,11 @@
     <img src="../assets/icons/login/google.png" alt="google">
     <span>Anmelden mit Google</span>
   </button>
+  <span *ngIf="loginFailed">Falsches Passwort oder E-Mail...Bitte noch einmal versuchen.</span>
   <div class="btn-wrapper">
-    <button (click)="login()" [ngClass]="{'disabled-button': loginForm.invalid}" [disabled]="!isFormValid" >Anmelden</button>
+    <button (click)="login()" [ngClass]="{'disabled-button': loginForm.invalid}" [disabled]="loginForm.invalid">Anmelden</button>
     <button (click)="guestLogin()">Gäste-Login</button>
     <button (click)="authService.logout()">Test-Logout</button>
   </div>
-  <span *ngIf="loginForm.invalid || loginForm.invalid">WRONG EMAIL OR PASSWORD</span>
-
-  <div *ngIf="loginForm.invalid">Form is invalid</div>
+ 
 </form>

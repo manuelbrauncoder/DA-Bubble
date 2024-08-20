@@ -124,9 +124,15 @@ export class FirebaseAuthService {
   * @returns {Observable<void>} An observable that completes when the login process is successful.
   */
   login(email: string, password: string): Observable<void> {
-    const promise = signInWithEmailAndPassword(this.auth, email, password).then((response) => {
-      this.changeLoginState(true, response.user.uid);
-    });
+    const promise = signInWithEmailAndPassword(this.auth, email, password)
+      .then((response) => {
+        this.changeLoginState(true, response.user.uid);
+      })
+      .catch((error) => {
+        console.error('Login failed in FirebaseAuthService:', error);
+        throw error;
+      });
+  
     return from(promise);
   }
 

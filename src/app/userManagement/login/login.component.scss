@@ -14,9 +14,7 @@ form {
 
     >div {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flexCenter;
 
       >img {
         position: absolute;
@@ -25,7 +23,14 @@ form {
       }
 
       >input {
-        width: 100%;
+        width: 110%;
+      }
+
+      >span {
+        position: absolute;
+        color: #ED1E79;
+        top: 100%;
+        left: 1rem;
       }
     }
   }
