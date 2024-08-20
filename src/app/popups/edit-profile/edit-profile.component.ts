@@ -19,8 +19,14 @@ export class EditProfileComponent {
   authService = inject(FirebaseAuthService);
 
   profileData = {
-    name: '',
+    name:  '',
     email: ''
+  }
+
+
+  saveEdit(newEmail: string) {
+    this.authService.updateUserEmail(newEmail);
+    console.log(this.profileData);
   }
 
   
