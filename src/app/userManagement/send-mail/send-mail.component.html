@@ -1,4 +1,4 @@
-<form action="">
+<form #mailForm="ngForm">
   <div class="header-wrapper">
     <a href="#" onclick="history.back(); return false;"><img src="../assets/icons/login/arrow_back_black.png" alt="arrow"></a>
     <h2>Passwort zurücksetzen</h2>
@@ -6,14 +6,15 @@
   <p>Bitte geben Sie Ihre E-Mail-Adresse ein.</p>
   <div class="input-wrapper">
     <div>
-      <label for="password"></label>
-      <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input type="password" placeholder="Passwort">
+      <label for="email"></label>
+      <img src="../assets/icons/login/mail_grey.png" alt="mail">
+      <input #email="ngModel" type="email" placeholder="beispielname@email.com" [(ngModel)]="email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" required>
+      <span *ngIf="email.invalid && (email.dirty || email.touched)">*Diese E-Mail-Adresse ist leider ungültig.</span>
     </div>
   </div>
   <span>Wir senden Ihnen eine E-Mail, über die 
     Sie Ihr Passwort ändern können.</span>
   <div class="btn-wrapper">
-    <button>E-Mail senden</button>
+    <button (click)="sendMail()" [ngClass]="{'disabled-button': mailForm.invalid}" [disabled]="mailForm.invalid">E-mail senden</button>
   </div>
 </form>

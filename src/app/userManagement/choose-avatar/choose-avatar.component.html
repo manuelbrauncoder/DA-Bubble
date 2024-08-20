@@ -10,12 +10,12 @@
 
   <div class="text-wrapper"><span>Aus der Liste wählen</span></div>
   <div class="char-wrapper">
-    <img src="./assets/img/chars/char1.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar1.png'">
-    <img src="./assets/img/chars/char2.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar2.png'">
-    <img src="./assets/img/chars/char3.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar3.png'">
-    <img src="./assets/img/chars/char4.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar4.png'">
-    <img src="./assets/img/chars/char5.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar5.png'">
-    <img src="./assets/img/chars/char6.png" alt="character" (click)="selectedAvatar = './assets/img/avatars/avatar6.png'">
+    <img src="./assets/img/chars/char1.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar1.png'">
+    <img src="./assets/img/chars/char2.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar2.png'">
+    <img src="./assets/img/chars/char3.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar3.png'">
+    <img src="./assets/img/chars/char4.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar4.png'">
+    <img src="./assets/img/chars/char5.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar5.png'">
+    <img src="./assets/img/chars/char6.png" alt="avatar" (click)="selectedAvatar = './assets/img/avatars/avatar6.png'">
   </div>
 
   <div class="load-img-wrapper">
@@ -23,6 +23,6 @@
     <button>Datei hochladen</button>
   </div>
   <div class="btn-wrapper">
-    <button (click)="completeRegistration()" [ngClass]="{'disabled-button': avatarForm.invalid}" [disabled]="!avatarIsSelected">Weiter</button>
+    <button (click)="completeRegistration()" [ngClass]="{'disabled-button': !selectedAvatar}" [disabled]="!selectedAvatar">Weiter</button>
   </div>
 </form>

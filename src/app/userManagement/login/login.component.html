@@ -6,7 +6,7 @@
     <div>
       <label for="email"></label>
       <img src="../assets/icons/login/mail_grey.png" alt="mail">
-      <input #email="ngModel" type="email" placeholder="beispielname@email.com" [(ngModel)]="loginData.email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" required>
+      <input #email="ngModel" type="email" placeholder="beispielname@email.com" [(ngModel)]="loginData.email" name="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" required>
       <span *ngIf="email.invalid && (email.dirty || email.touched)">*Diese E-Mail-Adresse ist leider ungültig.</span>
     </div>
     
@@ -18,7 +18,7 @@
     </div>
     
   </div>
-  <a [routerLink]="'/pwdReset'">Passwort vergessen?</a>
+  <a [routerLink]="'/sendmail'">Passwort vergessen?</a>
   <div class="or-wrapper"> 
     <div></div>
     <span>ODER</span>
