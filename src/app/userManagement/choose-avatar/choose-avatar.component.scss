@@ -65,5 +65,10 @@ form {
         background-color: #797EF3;
       }
     }
+
+    button.disabled-button {
+      background-color: #686868;
+      cursor: not-allowed;
+    }
   }
 }

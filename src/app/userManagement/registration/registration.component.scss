@@ -1,5 +1,7 @@
 @use './../../../mixins.scss' as *;
 
+@include linkUserM;
+
 form {
   >.header-wrapper {
     position: relative;
@@ -36,23 +38,34 @@ form {
       >input {
         width: 100%;
       }
+
+      >span {
+        position: absolute;
+        color: #ED1E79;
+        top: 100%;
+        left: 1rem;
+      }
     }
   }
 
   >.privacy-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 1rem;
     width: 100%;
 
-    >input {
-      
-    }
-
     >p {
       >a {
         padding: 0 0.2rem;
       }
+    }
+
+    >span {
+      position: absolute;
+      color: #ED1E79;
+      top: 100%;
+      left: 1rem;
     }
   }
 
@@ -68,6 +81,11 @@ form {
       &:hover {
         background-color: #797EF3;
       }
+    }
+
+    button.disabled-button {
+      background-color: #686868;
+      cursor: not-allowed;
     }
   }
 }

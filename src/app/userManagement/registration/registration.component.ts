@@ -15,22 +15,31 @@ export class RegistrationComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
 
-  username: any = '';
-  email: any = '';
-  pwd: any = '';
-  privacy: boolean = false;
+  regData = {
+    username: '',
+    email: '',
+    password: '',
+    privacy: false
+  }
+
 
     /**
    * Login for user. Checks if email and pwd is in the database
    * and link to the main page.
    */
-  register() {
-    try {
-      this.authService.register(this.email, this.username, this.pwd);
-      // this.router.navigate(['/profilePic']);
-    } catch (error) {
-      console.error(error);
-    }
+  // register() {
+  //   try {
+  //     this.authService.register(this.regData.email, this.regData.username, this.regData.pwd);
+  //     
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+
+
+  confirm() {
+    this.authService.storeRegistrationData(this.regData.email, this.regData.username, this.regData.password);
+    this.router.navigate(['/avatar']);
   }
 
 }

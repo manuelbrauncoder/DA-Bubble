@@ -4,7 +4,7 @@ export class User {
     email: string;
     username: string;
     createdAt: number | string; // timestamp
-    img: string;
+    avatar: string;
     currentlyLoggedIn: boolean;
 
     constructor(obj?: Partial<User>){
@@ -13,7 +13,7 @@ export class User {
         this.email = obj?.email ?? '';
         this.username = obj?.username ?? '';
         this.createdAt = obj?.createdAt ?? 0;
-        this.img = obj?.img ?? '';
+        this.avatar = obj?.avatar ?? '';
         this.currentlyLoggedIn = obj?.currentlyLoggedIn ?? false;
     }
 }

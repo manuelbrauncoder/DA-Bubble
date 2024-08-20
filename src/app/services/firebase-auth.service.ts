@@ -39,6 +39,25 @@ export class FirebaseAuthService {
   constructor() { 
   }
 
+
+   /**
+   * Store Data from Registration Form 
+   */
+  private tempRegData: { email: string; username: string; password: string } | null = null;
+
+  storeRegistrationData(email: string, username: string, password: string) {
+    this.tempRegData = { email, username, password };
+  }
+
+  getStoredRegistrationData() {
+    return this.tempRegData;
+  }
+
+  clearStoredRegistrationData() {
+    this.tempRegData = null;
+  }
+
+
   
 
   /**
@@ -82,14 +101,15 @@ export class FirebaseAuthService {
    * @param {string} password 
    * @returns {Observable<void>} An observable that completes when the user is successfully registered and the profile is updated.
    */
-  register(email: string, username: string, password: string): Observable<void> {
+  register(email: string, username: string, password: string, avatar:string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
       updateProfile(response.user, { displayName: username });
-      this.saveNewUserInFirestore(email, username, response.user.uid);
+      this.saveNewUserInFirestore(email, username, response.user.uid, avatar);
       this.currentUserSig.set({
         email: response.user.email!,
         username: response.user.displayName!,
-        uid: response.user.uid!
+        uid: response.user.uid!,
+        avatar: response.user.photoURL!
       })
     })
     .catch((err) => {
@@ -98,13 +118,14 @@ export class FirebaseAuthService {
     return from(promise);
   }
 
-  saveNewUserInFirestore(email: string, username: string, uid: string) {
+  saveNewUserInFirestore(email: string, username: string, uid: string, avatar: string) {
     let newUser = {
       uid: uid,
       username: username,
       email: email,
       createdAt: this.getCurrentTimestamp(),
-      currentlyLoggedIn: true
+      currentlyLoggedIn: true,
+      avatar: avatar
     }
     this.fireService.addUser(newUser);
   }
@@ -183,9 +204,11 @@ export class FirebaseAuthService {
    */
   guestSignUp() {
     const guestEmail = 'guest@gmail.com';
-    const guestPw = '123456'
-    const userName = 'Guest'
-    this.register(guestEmail, userName, guestPw);
+    const guestPw = '123456';
+    const userName = 'Guest';
+    const guestAvatar = './assets/img/chars/profile_placeholder.png';
+
+    this.register(guestEmail, userName, guestPw, guestAvatar);
   }
 
   /**

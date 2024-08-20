@@ -13,7 +13,7 @@
     <div>
       <label for="password"></label>
       <img src="../assets/icons/login/lock_grey.png" alt="lock">
-      <input #password="ngModel" type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.pwd" name="password" required>
+      <input #password="ngModel" type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.password" name="password" required>
       <span *ngIf="password.invalid && (password.dirty || password.touched)">*Bitte geben Sie ein gültiges Passwort ein.</span>
     </div>
     
@@ -32,7 +32,6 @@
   <div class="btn-wrapper">
     <button (click)="login()" [ngClass]="{'disabled-button': loginForm.invalid}" [disabled]="loginForm.invalid">Anmelden</button>
     <button (click)="guestLogin()">Gäste-Login</button>
-    <button (click)="authService.logout()">Test-Logout</button>
   </div>
  
 </form>
