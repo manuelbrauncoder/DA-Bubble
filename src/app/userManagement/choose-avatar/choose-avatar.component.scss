@@ -22,6 +22,20 @@ form {
   .profile-wrapper {
     @include flexColumn;
     align-items: center;
+
+    >img {
+      padding: .3rem;
+      border-radius: 50%;
+      &:hover {
+        background-color: #ECEEFE;
+      }
+    }
+
+    >h3 {
+      padding: 1rem;
+      font-weight: 700;
+      font-size: 2rem;
+    }
   }
 
   .char-wrapper{
@@ -29,6 +43,14 @@ form {
     flex-wrap: wrap;
     align-items: center;
     gap: 1rem;
+    
+    >img {
+      padding: .3rem;
+      border-radius: 50%;
+      &:hover {
+        background-color: #ECEEFE;
+      }
+    }
   }
 
 

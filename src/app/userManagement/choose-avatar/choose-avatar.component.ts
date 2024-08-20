@@ -16,11 +16,11 @@ export class ChooseAvatarComponent {
   router = inject(Router);
   selectedAvatar: string = '';
 
-  completeRegistration() {
-    const regData = this.authService.getStoredRegistrationData();
+  regData = this.authService.getStoredRegistrationData();
 
-    if (regData) {
-      this.authService.register(regData.email, regData.username, regData.password, this.selectedAvatar).subscribe(() => {
+  completeRegistration() {
+    if (this.regData) {
+      this.authService.register(this.regData.email, this.regData.username, this.regData.password, this.selectedAvatar).subscribe(() => {
         console.log('Registration complete with avatar:', this.selectedAvatar);
         this.authService.clearStoredRegistrationData();
         this.router.navigate(['/login']);

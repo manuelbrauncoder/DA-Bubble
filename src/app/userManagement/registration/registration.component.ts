@@ -36,7 +36,10 @@ export class RegistrationComponent {
   //   }
   // }
 
-
+    /**
+   * Save the data from input fields and save them in the authService.
+   * Links to the avatar selection.
+   */
   confirm() {
     this.authService.storeRegistrationData(this.regData.email, this.regData.username, this.regData.password);
     this.router.navigate(['/avatar']);
