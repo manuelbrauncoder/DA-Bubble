@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-verify-password',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, EditProfileComponent],
   templateUrl: './verify-password.component.html',
   styleUrl: './verify-password.component.scss'
 })
@@ -17,7 +17,6 @@ export class VerifyPasswordComponent {
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
-  editProfileComponent = inject(EditProfileComponent);
 
   verifyPasswordData = {
     name:  '',
@@ -28,7 +27,7 @@ export class VerifyPasswordComponent {
 
   confirmPassword(name: string, email: string, password: string) {
     this.authService.reAuthenticateUser(email, password);
-    this.editProfileComponent.saveNewEmailAddress(this.editProfileComponent.newEmailAddress);
+    this.authService.updateUserEmail(this.authService.newEmailAddress);
     this.closeVerifyPassword();
     this.uiService.toggleEditUserAndLogoutPopup();
   }

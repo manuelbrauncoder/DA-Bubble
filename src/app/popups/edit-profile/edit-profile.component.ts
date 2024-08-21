@@ -24,13 +24,11 @@ export class EditProfileComponent {
     email: ''
   }
 
-  newEmailAddress: string = this.editProfileData.email;
 
 
   // this function is not working yet
   saveEdit(newName: string, newEmail: string) {
-    this.saveNewName(newName);
-    this.saveNewEmailAddress(newEmail);
+    this.saveNewEmailAddress(newEmail);    
   }
 
 
@@ -40,9 +38,8 @@ export class EditProfileComponent {
 
 
   saveNewEmailAddress(newEmail: string) {
-    this.newEmailAddress = newEmail;
+    this.authService.newEmailAddress = newEmail;
     this.authService.updateUserEmail(newEmail);
-    this.newEmailAddress = '';
   }
 
   
