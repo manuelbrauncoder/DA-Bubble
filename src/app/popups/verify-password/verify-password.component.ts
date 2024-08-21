@@ -17,7 +17,6 @@ export class VerifyPasswordComponent {
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
-  // editProfileComponent = inject(EditProfileComponent);
 
   verifyPasswordData = {
     name:  '',
