@@ -18,7 +18,7 @@
                 <label for="name">Vollständiger Name</label>
             </div>
 
-            <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="profileData.name" value="" placeholder="{{ authService.currentUserSig()?.username }}" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
+            <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="editProfileData.name" value="" placeholder="Vorname Nachname" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
             @if (name.invalid && (name.dirty || name.touched)) {
                 <span>Bitte ein Vor- und Nachname eingeben</span>
             }
@@ -30,7 +30,7 @@
                 <label for="email">E-Mail-Adresse</label>
             </div>
 
-            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="profileData.email" value="" placeholder="{{ authService.currentUserSig()?.email }}" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" required>
+            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="editProfileData.email" value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" required>
             @if (email.invalid && (email.dirty || email.touched)) {
                 <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
             }
@@ -38,7 +38,11 @@
 
         <div class="buttons-container">
             <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
-            <input type="submit" value="Speichern" (click)="saveEdit(profileData.email)" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
+            <input type="submit" value="Speichern" (click)="saveEdit(editProfileData.name, editProfileData.email)" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
         </div>
     </form>
 </div>
+
+@if (this.uiService.showVerifyPasswordPopup) {
+    <app-verify-password></app-verify-password>
+}

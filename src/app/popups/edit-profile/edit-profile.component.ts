@@ -4,12 +4,13 @@ import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
+import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, VerifyPasswordComponent],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
@@ -18,15 +19,30 @@ export class EditProfileComponent {
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
 
-  profileData = {
+  editProfileData = {
     name:  '',
     email: ''
   }
 
+  newEmailAddress: string = this.editProfileData.email;
 
-  saveEdit(newEmail: string) {
+
+  // this function is not working yet
+  saveEdit(newName: string, newEmail: string) {
+    this.saveNewName(newName);
+    this.saveNewEmailAddress(newEmail);
+  }
+
+
+  saveNewName(newName: string) {
+
+  }
+
+
+  saveNewEmailAddress(newEmail: string) {
+    this.newEmailAddress = newEmail;
     this.authService.updateUserEmail(newEmail);
-    console.log(this.profileData);
+    this.newEmailAddress = '';
   }
 
   

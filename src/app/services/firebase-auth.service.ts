@@ -26,6 +26,7 @@ import { AuthUser } from '../interfaces/auth-user';
 import { FirestoreService } from './firestore.service';
 import { UserInterface } from '../interfaces/user-interface';
 import { User } from '../models/user.class';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class FirebaseAuthService {
   provider = new GoogleAuthProvider;
   auth = inject(Auth);
   user$ = user(this.auth);
+  uiService = inject(UiService);
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);  
 
@@ -263,8 +265,8 @@ export class FirebaseAuthService {
         let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
           //this.verifyUsersEmail();
-          alert('Please verify your email before updating it');
-          
+          // alert('Please verify your email before updating it');
+          this.uiService.showVerifyPasswordPopup = !this.uiService.showVerifyPasswordPopup;
         }
         console.log(err);
         

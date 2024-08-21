@@ -15,6 +15,8 @@ export class UiService {
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;
+  showVerifyPasswordPopup: boolean = false;
+
 
 
   toggleWorkspaceMenu(){
@@ -41,6 +43,10 @@ export class UiService {
 
   toggleEditProfile() {
     this.showEditProfilePopup = !this.showEditProfilePopup;
+  }
+
+  toggleVerifyPassword() {
+    this.showVerifyPasswordPopup = !this.showVerifyPasswordPopup;
   }
 
   constructor() { }
