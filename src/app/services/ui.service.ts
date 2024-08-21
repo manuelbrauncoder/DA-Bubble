@@ -12,12 +12,16 @@ export class UiService {
   showDirectMessages: boolean = false;
   showChannels: boolean = true;
   showThread: boolean = true;
+  showAddChannelPopup: boolean = false;
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
 
 
+  toggleAddChannelPopup(){
+    this.showAddChannelPopup = !this.showAddChannelPopup;
+  }
 
   toggleWorkspaceMenu(){
     this.showWorkspaceMenu = !this.showWorkspaceMenu;

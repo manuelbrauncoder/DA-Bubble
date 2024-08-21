@@ -1,4 +1,5 @@
 @use './fonts.scss' as *;
+@import './mixins.scss';
 
 * {
   box-sizing: border-box;
@@ -131,3 +132,42 @@ $color-online-green: #92C83E;
 $color-offline-gray: #686868;
 $color-purple-3: #535AF1;
 $color-active-channel: #ECEEFE;
+$color-main-bg: #ECEEFE;
+$color-purple-1: #444DF2;
+$color-purple-2: #797EF3;
+$color-purple-light: #ADB0D9;
+
+
+// input fields for channel
+
+.channel-input{
+  border: 1px solid $color-purple-light;
+  padding: 18px 20px;
+  background-color: white;
+  border-radius: 100vw;
+  &:hover{
+    border-color: $color-purple-2;
+  }
+}
+
+
+// blue btn primary
+
+.primary-btn {
+  background-color: $color-purple-1;
+  padding: 12px 25px;
+  border-radius: 25px;
+  border: unset;
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24.55px;
+  @include dFlex();
+  animation-duration: 100ms;
+  &:hover{
+      background-color: $color-purple-2;
+      animation-duration: 100ms;
+  }
+}
+
+

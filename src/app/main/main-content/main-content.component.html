@@ -20,6 +20,13 @@
     <div class="workspace-btn-wrapper">
         <app-workspace-menu-button></app-workspace-menu-button>
     </div>
+
+    @if (uiService.showAddChannelPopup) {
+        <div class="popup-wrapper">
+            <app-add-channel-popup></app-add-channel-popup>
+        </div>
+        <div (click)="uiService.toggleAddChannelPopup()" class="popup-background"></div>
+    }
 </main>
 
 

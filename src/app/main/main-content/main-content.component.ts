@@ -4,16 +4,17 @@ import { WorkspaceMenuButtonComponent } from "../workspace-menu-button/workspace
 import { UiService } from '../../services/ui.service';
 import { ChatComponent } from "../chat/chat.component";
 import { ThreadComponent } from '../thread/thread.component';
+import { AddChannelPopupComponent } from '../add-channel-popup/add-channel-popup.component';
 
 @Component({
   selector: 'app-main-content',
   standalone: true,
-  imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent, ThreadComponent],
+  imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent, ThreadComponent, AddChannelPopupComponent],
   templateUrl: './main-content.component.html',
   styleUrl: './main-content.component.scss'
 })
 export class MainContentComponent {
   uiService = inject(UiService);
-  
+
 
 }
