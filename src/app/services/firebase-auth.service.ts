@@ -41,16 +41,16 @@ export class FirebaseAuthService {
 
 
 
-  currentUserSig = signal<AuthUser | null | undefined>(undefined);  
+  currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
 
-  constructor() { 
+  constructor() {
   }
 
 
-   /**
-   * Store Data from Registration Form 
-   */
+  /**
+  * Store Data from Registration Form 
+  */
   private tempRegData: { email: string; username: string; password: string } | null = null;
 
   storeRegistrationData(email: string, username: string, password: string) {
@@ -106,7 +106,7 @@ export class FirebaseAuthService {
    * @param {string} password 
    * @returns {Observable<void>} An observable that completes when the user is successfully registered and the profile is updated.
    */
-  register(email: string, username: string, password: string, avatar:string): Observable<void> {
+  register(email: string, username: string, password: string, avatar: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
       updateProfile(response.user, { displayName: username });
       this.saveNewUserInFirestore(email, username, response.user.uid, avatar);
@@ -116,9 +116,9 @@ export class FirebaseAuthService {
         uid: response.user.uid!
       })
     })
-    .catch((err) => {
-      console.error('Error register new User', err);
-    });
+      .catch((err) => {
+        console.error('Error register new User', err);
+      });
     return from(promise);
   }
 
@@ -157,7 +157,7 @@ export class FirebaseAuthService {
         console.error('Login failed in FirebaseAuthService:', error);
         throw error;
       });
-  
+
     return from(promise);
   }
 
@@ -219,18 +219,18 @@ export class FirebaseAuthService {
    * this method deletes the currently logged in user account.
    * then it deletes the user in firestore
    */
-  deleteUserAccount(){
+  deleteUserAccount() {
     const currentUser = this.auth.currentUser;
     if (currentUser) {
-      deleteUser(currentUser).then(()=>{
+      deleteUser(currentUser).then(() => {
         console.log('User deleted', currentUser);
         this.deleteUserInFirestore(currentUser.uid);
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log('Error deleting User', err);
       });
     } else {
       console.log('No user is currently logged in.');
-      
+
     }
   }
 
@@ -238,26 +238,26 @@ export class FirebaseAuthService {
    * deletes the user with uid in firestore
    * @param uid 
    */
-  deleteUserInFirestore(uid: string){
+  deleteUserInFirestore(uid: string) {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
         this.fireService.deleteDocument(user.id, 'users');
-      } 
+      }
     })
   }
 
-   /**
-   * This method is for updating the users email
-   * If the last login was too long ago, the user has to be re-authenticate
-   * We need a popup, where the user can log in again
-   * in this popup, call the reAuthenticateUser() method
-   * after that, the user can update his email
-   * @param newEmail 
-   */
-  updateUserEmail(newEmail: string){
+  /**
+  * This method is for updating the users email
+  * If the last login was too long ago, the user has to be re-authenticate
+  * We need a popup, where the user can log in again
+  * in this popup, call the reAuthenticateUser() method
+  * after that, the user can update his email
+  * @param newEmail 
+  */
+  updateUserEmail(newEmail: string) {
     const currentUser = this.auth.currentUser;
     if (currentUser) {
-      updateEmail(currentUser, newEmail).then(()=>{
+      updateEmail(currentUser, newEmail).then(() => {
         this.fireService.users.forEach((user) => {
           if (currentUser.uid === user.uid) {
             user.email = newEmail;
@@ -272,7 +272,7 @@ export class FirebaseAuthService {
           this.uiService.showVerifyPasswordPopup = !this.uiService.showVerifyPasswordPopup;
         }
         console.log(err);
-        
+
       });
     }
   }
@@ -281,11 +281,11 @@ export class FirebaseAuthService {
    * This method sends a Email to the current User
    * If the user clicks on the link in it, his email is verified
    */
-  verifyUsersEmail(){
+  verifyUsersEmail() {
     if (this.auth.currentUser) {
-      sendEmailVerification(this.auth.currentUser).then(()=>{
-        console.log('email sent!');  
-      }).catch((err)=>{
+      sendEmailVerification(this.auth.currentUser).then(() => {
+        console.log('email sent!');
+      }).catch((err) => {
         console.warn('Error sending Email', err);
       })
     }
@@ -294,10 +294,15 @@ export class FirebaseAuthService {
   /**
    * This method is for reauthenticate the user
    */
-  reAuthenticateUser(email: string, password: string){
+  reAuthenticateUser(email: string, password: string) {
     const credential = EmailAuthProvider.credential(email, password);
     if (this.auth.currentUser) {
-      reauthenticateWithCredential(this.auth.currentUser, credential).then(()=>{}).catch((err)=>{console.warn('Error', err)});
+      reauthenticateWithCredential(this.auth.currentUser, credential).then(() => {
+        console.log('User reauthenticated', email, password, credential);
+        
+      }).catch((err) => {
+        console.warn('Error', err)
+      });
     }
   }
 
@@ -326,22 +331,22 @@ export class FirebaseAuthService {
   }
 
 
-    /**
-   * Sends an email to the user to reset the password
-   * @param {string} email
-   */
+  /**
+ * Sends an email to the user to reset the password
+ * @param {string} email
+ */
   sendPasswordResetMail(email: string) {
-    sendPasswordResetEmail(this.auth, email) 
-    .then(() => {
-      console.log('Password reset email sent!')
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
+    sendPasswordResetEmail(this.auth, email)
+      .then(() => {
+        console.log('Password reset email sent!')
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
 
-      console.error('Error Code:', errorCode);
-      console.error('Error Message:', errorMessage);
-    });
+        console.error('Error Code:', errorCode);
+        console.error('Error Message:', errorMessage);
+      });
   }
 
 }
