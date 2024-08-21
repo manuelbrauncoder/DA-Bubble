@@ -40,11 +40,7 @@ export class FirebaseAuthService {
   uiService = inject(UiService);
   newEmailAddress: string = '';
 
-
-
-
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
-
 
   constructor() {
   }

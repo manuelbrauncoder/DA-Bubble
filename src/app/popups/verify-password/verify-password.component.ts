@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './verify-password.component.html',
   styleUrl: './verify-password.component.scss'
 })
-export class VerifyPasswordComponent {
+export class VerifyPasswordComponent implements OnInit{
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
@@ -22,6 +22,11 @@ export class VerifyPasswordComponent {
     name:  '',
     email: '',
     password: ''
+  }
+
+  ngOnInit(): void {
+    this.verifyPasswordData.name = this.authService.auth.currentUser?.displayName!;
+    this.verifyPasswordData.email = this.authService.auth.currentUser?.email!;
   }
 
 

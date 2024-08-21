@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
@@ -14,7 +14,7 @@ import { VerifyPasswordComponent } from '../verify-password/verify-password.comp
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit{
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
@@ -24,7 +24,10 @@ export class EditProfileComponent {
     email: ''
   }
 
-
+  ngOnInit(): void {
+    this.editProfileData.name = this.authService.auth.currentUser?.displayName!;
+    this.editProfileData.email = this.authService.auth.currentUser?.email!;
+  }
 
   // this function is not working yet
   saveEdit(newName: string, newEmail: string) {
