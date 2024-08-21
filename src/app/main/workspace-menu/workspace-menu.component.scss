@@ -25,7 +25,7 @@ header {
         cursor: pointer;
 
         &:hover {
-            background-color: lightblue;
+            background-color: $color-active-channel;
             scale: 1.1;
         }
 

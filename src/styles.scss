@@ -136,6 +136,8 @@ $color-main-bg: #ECEEFE;
 $color-purple-1: #444DF2;
 $color-purple-2: #797EF3;
 $color-purple-light: #ADB0D9;
+$color-disabled-grey: #686868;
+
 
 
 // input fields for channel
@@ -145,8 +147,12 @@ $color-purple-light: #ADB0D9;
   padding: 18px 20px;
   background-color: white;
   border-radius: 100vw;
+  outline: none;
   &:hover{
-    border-color: $color-purple-2;
+    border: 1px solid $color-purple-2;
+  }
+  &:focus{
+    border: 1px solid $color-purple-3;
   }
 }
 
@@ -168,6 +174,28 @@ $color-purple-light: #ADB0D9;
       background-color: $color-purple-2;
       animation-duration: 100ms;
   }
+  &:disabled{
+      background-color: $color-disabled-grey;
+      cursor: not-allowed;
+  }
+}
+
+.icon{
+  
+    @include dFlex();
+    border-radius: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-active-channel;
+        scale: 1.1;
+    }
+
+    &:hover path {
+        fill: $color-purple-3;
+
+    }
+
 }
 
 

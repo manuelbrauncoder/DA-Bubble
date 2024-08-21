@@ -2,6 +2,7 @@ import { User } from "./user.class";
 
 export class Channel {
     id: string;
+    description: string;
     name: string;
     users: User[];
     messages: string[];
@@ -17,6 +18,7 @@ export class Channel {
      */
     constructor(obj?: Partial<Channel>){
         this.id = obj?.id ?? '';
+        this.description = obj?.description ?? '';
         this.name = obj?.name ?? '';
         this.users = obj?.users ?? [];
         this.messages = obj?.messages ?? [];

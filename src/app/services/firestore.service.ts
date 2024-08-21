@@ -117,6 +117,7 @@ export class FirestoreService {
   setChannelObject(channel: any, id: string): Channel{
     return {
       id: id || '',
+      description: channel.description || '',
       name: channel.name || '',
       users: channel.users || [],
       messages: channel.messages || [],
@@ -124,6 +125,13 @@ export class FirestoreService {
       reactions: channel.reactions || [],
       data: channel.data || [],
       channelActive: channel.channelActive || false
+    }
+  }
+
+  getCleanChannelJson(channel: Channel) {
+    return {
+      name: channel.name,
+      description: channel.description
     }
   }
 
@@ -168,6 +176,12 @@ export class FirestoreService {
   async addUser(user: any) {
     await addDoc(this.getCollectionRef('users'), this.getCleanUserJson(user)).catch((err) => {
       console.log('Error adding User to Firebase', err);
+    })
+  }
+
+  async addChannel(channel: any) {
+    await addDoc(this.getCollectionRef('channels'), this.getCleanChannelJson(channel)).catch((err) => {
+      console.log('Error adding new Channel to Firebase', err); 
     })
   }
 
