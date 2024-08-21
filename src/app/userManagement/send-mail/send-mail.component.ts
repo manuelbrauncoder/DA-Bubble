@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { FirebaseAuthService } from '../../services/firebase-auth.service';
 
 @Component({
   selector: 'app-send-mail',
@@ -10,11 +11,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './send-mail.component.scss'
 })
 export class SendMailComponent {
-
+  authService = inject(FirebaseAuthService);
 
   email: string = '';
 
   sendMail() {
-
+    this.authService.sendPasswordResetMail(this.email);
   }
 }

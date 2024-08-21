@@ -57,11 +57,16 @@ form {
     gap: 2rem;
 
     button {
-      background-color: #686868;
+      background-color: #444DF2;
+
+      &:hover {
+        background-color: #797EF3;
+      }
     }
 
-    button.active {
-      background-color: #444DF2;
+    button.disabled-button {
+      background-color: #686868;
+      cursor: not-allowed;
     }
   }
 }

@@ -20,6 +20,7 @@ import {
   updatePassword,
   updateProfile,
   user,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
@@ -37,6 +38,8 @@ export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
   uiService = inject(UiService);
+
+
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);  
 
@@ -114,7 +117,7 @@ export class FirebaseAuthService {
       })
     })
     .catch((err) => {
-      console.log('Error register new User', err);
+      console.error('Error register new User', err);
     });
     return from(promise);
   }
@@ -322,4 +325,25 @@ export class FirebaseAuthService {
     }
   }
 
+
+    /**
+   * Sends an email to the user to reset the password
+   * @param {string} email
+   */
+  sendPasswordResetMail(email: string) {
+    sendPasswordResetEmail(this.auth, email) 
+    .then(() => {
+      console.log('Password reset email sent!')
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+
+      console.error('Error Code:', errorCode);
+      console.error('Error Message:', errorMessage);
+    });
+  }
+
 }
+
+
