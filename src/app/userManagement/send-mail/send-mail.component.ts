@@ -16,6 +16,10 @@ export class SendMailComponent {
   email: string = '';
 
   sendMail() {
-    this.authService.sendPasswordResetMail(this.email);
+    try {
+      this.authService.sendPasswordResetMail(this.email);
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 }
