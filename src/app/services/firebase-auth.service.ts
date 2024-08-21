@@ -38,6 +38,8 @@ export class FirebaseAuthService {
   auth = inject(Auth);
   user$ = user(this.auth);
   uiService = inject(UiService);
+  newEmailAddress: string = '';
+
 
 
 
