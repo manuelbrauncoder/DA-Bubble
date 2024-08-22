@@ -119,6 +119,7 @@ export class FirestoreService {
       id: id || '',
       description: channel.description || '',
       name: channel.name || '',
+      creator: channel.creator || '',
       users: channel.users || [],
       messages: channel.messages || [],
       comments: channel.comments || [],
@@ -131,7 +132,8 @@ export class FirestoreService {
   getCleanChannelJson(channel: Channel) {
     return {
       name: channel.name,
-      description: channel.description
+      description: channel.description,
+      creator: channel.creator
     }
   }
 
@@ -169,8 +171,8 @@ export class FirestoreService {
   }
 
   /**
-   * Add user to Firestore Collection 'users'
-   * UserInterface has to converted into a clean json
+   * Add new user to Firestore Collection 'users'
+   * convert class to clean json before pushing to firebase
    * @param user 
    */
   async addUser(user: any) {
@@ -179,6 +181,11 @@ export class FirestoreService {
     })
   }
 
+  /**
+   * Add new channel to Firestore Collection 'channels'
+   * convert class to clean json before pushing to firebase
+   * @param channel 
+   */
   async addChannel(channel: any) {
     await addDoc(this.getCollectionRef('channels'), this.getCleanChannelJson(channel)).catch((err) => {
       console.log('Error adding new Channel to Firebase', err); 
@@ -188,7 +195,7 @@ export class FirestoreService {
   /**
    * delete document from collection with id
    * @param docId document id
-   * @param collection to delete from
+   * @param collection collection id
    */
   async deleteDocument(docId: string, collection: string) {
     let docRef = doc(this.getCollectionRef(collection), docId);
