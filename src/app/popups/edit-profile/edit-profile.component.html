@@ -31,7 +31,7 @@
                 <label for="email">E-Mail-Adresse</label>
             </div>
 
-            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="editProfileData.email" value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}" required>
+            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="editProfileData.email" value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required>
             @if (email.invalid && (email.dirty || email.touched)) {
                 <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
             }
