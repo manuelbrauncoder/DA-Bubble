@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { FirebaseAuthService } from './firebase-auth.service';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,20 @@ export class UserService {
       }
     }
     return 'assets/img/chars/profile_placeholder.png';
+  }
+
+   /**
+   * set user avatar img
+   * fallback to placeholder, if no img set
+   * @param user 
+   * @returns 
+   */
+   setAvatarImg(user: User){
+    if (user.avatar !== '') {
+      return user.avatar;
+    } else {
+      return 'assets/img/chars/profile_placeholder.png';
+    }
   }
 
   /**

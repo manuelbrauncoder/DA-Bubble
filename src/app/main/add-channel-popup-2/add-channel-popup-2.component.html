@@ -15,47 +15,76 @@
         </svg>
     </div>
 
-   
 
-        <div (click)="chooseAllUsers()" class="input-wrapper">
-            @if(users === 'all'){
-            <div class="checked">
-                <div class="custom-check-border"></div>
-                <div class="custom-check-inline"></div>
+
+    <div (click)="chooseAllUsers()" class="input-wrapper">
+        @if(users === 'all'){
+        <div class="checked">
+            <div class="custom-check-border"></div>
+            <div class="custom-check-inline"></div>
+        </div>
+        }
+        @if (users === 'certain') {
+        <div class="unchecked">
+            <div class="custom-check-border"></div>
+            <div class="custom-check-inline"></div>
+        </div>
+        }
+        <div class="channel">Alle Mitglieder von <span class="channel-name">{{ newChannel.name }}</span> hinzufügen
+        </div>
+    </div>
+
+    <div (click)="chooseCertainUsers()" class="input-wrapper">
+        @if (users === 'all') {
+        <div class="unchecked">
+            <div class="custom-check-border"></div>
+            <div class="custom-check-inline"></div>
+        </div>
+        }
+        @if (users === 'certain') {
+        <div class="checked">
+            <div class="custom-check-border"></div>
+            <div class="custom-check-inline"></div>
+        </div>
+        }
+
+        <span class="channel">Bestimmte Leute hinzufügen</span>
+    </div>
+
+    <form>
+        @if (uiService.channelPopup2Searchbar) {
+            <div class="selected-users">
+                @for (user of newChannel.users; track $index) {
+                    <div class="selected-user">
+                        <div class="img-wrapper">
+                            <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                        </div>
+                    <span>{{ user.username }}</span>
+                    </div>
+                }
+            </div>
+        <div class="search-input-wrapper">
+            <input [(ngModel)]="searchInput" name="searchInput" type="text" class="channel-input">
+            @if (searchInput) {
+            <div class="users">
+                @for (user of searchUsers(); track $index) {
+                    <div (click)="selectUser(user)" class="user">
+                        <div class="img-wrapper">
+                            <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                        </div>
+                    <span>{{ user.username }}</span>
+                    </div>
+                    
+                }
             </div>
             }
-            @if (users === 'certain') {
-            <div class="unchecked">
-                <div class="custom-check-border"></div>
-                <div class="custom-check-inline"></div>
-            </div>
-            }
-            <div class="channel">Alle Mitglieder von <span class="channel-name">{{ newChannel.name }}</span> hinzufügen
-            </div>
+
         </div>
 
-        <div (click)="chooseCertainUsers()" class="input-wrapper">
-            @if (users === 'all') {
-            <div class="unchecked">
-                <div class="custom-check-border"></div>
-                <div class="custom-check-inline"></div>
-            </div>
-            }
-            @if (users === 'certain') {
-            <div class="checked">
-                <div class="custom-check-border"></div>
-                <div class="custom-check-inline"></div>
-            </div>
-            }
+        }
+        <button (click)="onSubmit()" [disabled]="!usersSelected()" type="button" class="primary-btn">Erstellen</button>
 
-            <span class="channel">Bestimmte Leute hinzufügen</span>
-        </div>
-
-        <form>
-            @if (uiService.channelPopup2Searchbar) {
-            <input type="text" class="channel-input">
-            }
-            <button (click)="onSubmit()" [disabled]="!usersSelected()" type="button" class="primary-btn">Erstellen</button>
-
-        </form>
+    </form>
 </main>

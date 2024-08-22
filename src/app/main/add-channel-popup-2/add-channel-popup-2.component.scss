@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 @import '../../../mixins.scss';
 
-main{
+main {
     @include dFlex($fd: column, $g: 20px, $ai: flex-start);
     width: 700px;
 }
@@ -24,14 +24,15 @@ button {
     margin-left: auto;
 }
 
-.channel-name{
+.channel-name {
     color: $color-purple-3;
 }
 
-form{
+form {
     padding: 0;
     width: 100%;
-    input{
+
+    input {
         width: 100%;
     }
 }
@@ -104,4 +105,95 @@ form{
             border: 1px solid $color-purple-2;
         }
     }
+}
+
+.search-input-wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.users {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    @include dFlex($fd: column, $ai: flex-start, $g: 15px, $jc: flex-start);
+    border: 1px solid $color-purple-light;
+    border-radius: 0 20px 20px 20px;
+    padding: 20px 25px;
+    box-shadow: 0px 2px 10px 0px #00000014;
+    z-index: 2;
+    background-color: white;
+}
+
+.online-state {
+    @extend .state-icon;
+    background-color: $color-online-green;
+}
+
+.offline-state {
+    @extend .state-icon;
+    background-color: $color-offline-gray;
+}
+
+.selected-users {
+    @include dFlex($jc: flex-start, $ai: flex-start, $g: 4px);
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.selected-user {
+    width: fit-content;
+    padding: 3px 20px;
+    border-radius: 100vw;
+    @include dFlex($jc: flex-start, $g: 15px);
+    cursor: pointer;
+    background-color: $color-active-channel;
+
+    span {
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24.55px;
+        text-align: left;
+
+    }
+}
+
+.user {
+    width: fit-content;
+    padding: 4px 20px;
+    border-radius: 100vw;
+    @include dFlex($jc: flex-start, $g: 15px);
+    cursor: pointer;
+
+    span {
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24.55px;
+    }
+
+    &:hover {
+        background-color: $color-active-channel;
+    }
+}
+
+.img-wrapper {
+    position: relative;
+}
+
+.state-icon {
+    position: absolute;
+    bottom: 7px;
+    right: 0px;
+    height: 14px;
+    width: 14px;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+.profile-img {
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 100%;
 }

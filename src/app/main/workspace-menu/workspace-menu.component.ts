@@ -21,19 +21,7 @@ export class WorkspaceMenuComponent{
   channelService = inject(ChannelService);
   userService = inject(UserService);
 
-  /**
-   * set user avatar img
-   * fallback to placeholder, if no img set
-   * @param user 
-   * @returns 
-   */
-  setAvatarImg(user: User){
-    if (user.avatar !== '') {
-      return user.avatar;
-    } else {
-      return 'assets/img/chars/profile_placeholder.png';
-    }
-  }
+ 
   
 
 }

@@ -6,6 +6,7 @@ import { FirestoreService } from '../../services/firestore.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChannelService } from '../../services/channel.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-add-channel-popup-2',
@@ -18,7 +19,9 @@ export class AddChannelPopup2Component implements OnInit {
   @Input() currentChannel = new Channel();
   newChannel = new Channel();
   uiService = inject(UiService);
+  userService = inject(UserService);
   channelService = inject(ChannelService);
+  searchInput = '';
 
   users: 'all' | 'certain' = 'all';
 
@@ -26,16 +29,32 @@ export class AddChannelPopup2Component implements OnInit {
     this.newChannel = new Channel(this.currentChannel);
   }
 
-  async onSubmit(){
-    if (this.usersSelected()) {
+  searchUsers() {
+    if (!this.searchInput) {
+      return this.channelService.fireService.users;
+    } else {
+      return this.channelService.fireService.users.filter((user) =>
+        user.username.toLowerCase().includes(this.searchInput));
+    }
+  }
+
+  selectUser(user: User) {
+    this.newChannel.users.push(user);
+  }
+
+  async onSubmit() {
+    if (this.usersSelected() && this.users === 'all') {
       this.addAllUsersToChannel();
+    } else {
       await this.channelService.fireService.addChannel(this.newChannel);
       this.uiService.toggleAddChannelPopup();
       this.channelService.toggleActiveChannel(this.newChannel);
     }
+
+
   }
 
-  addAllUsersToChannel(){
+  addAllUsersToChannel() {
     this.newChannel.users = [];
     this.channelService.fireService.users.forEach(user => {
       this.newChannel.users.push(user);
@@ -46,7 +65,7 @@ export class AddChannelPopup2Component implements OnInit {
    * 
    * @returns true if 'all' or selected array lenght > 0
    */
-  usersSelected(){
+  usersSelected() {
     if (this.users === 'all' || this.newChannel.users.length > 0) {
       return true;
     } else {
@@ -57,7 +76,7 @@ export class AddChannelPopup2Component implements OnInit {
   /**
    * hide searchbar and select 'all'
    */
-  chooseAllUsers(){
+  chooseAllUsers() {
     this.users = 'all';
     this.uiService.channelPopup2Searchbar = false;
   }
@@ -65,7 +84,7 @@ export class AddChannelPopup2Component implements OnInit {
   /**
    * show searchbar and select 'certain'
    */
-  chooseCertainUsers(){
+  chooseCertainUsers() {
     this.users = 'certain';
     this.uiService.channelPopup2Searchbar = true;
   }
