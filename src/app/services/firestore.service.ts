@@ -133,7 +133,8 @@ export class FirestoreService {
     return {
       name: channel.name,
       description: channel.description,
-      creator: channel.creator
+      creator: channel.creator,
+      users: channel.users
     }
   }
 

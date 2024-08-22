@@ -4,11 +4,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Channel } from '../../models/channel.class';
 import { ChannelService } from '../../services/channel.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
+import { AddChannelPopup2Component } from "../add-channel-popup-2/add-channel-popup-2.component";
 
 @Component({
   selector: 'app-add-channel-popup',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, AddChannelPopup2Component],
   templateUrl: './add-channel-popup.component.html',
   styleUrl: './add-channel-popup.component.scss'
 })
@@ -16,7 +17,7 @@ export class AddChannelPopupComponent {
   uiService = inject(UiService);
   channelService = inject(ChannelService);
   authService = inject(FirebaseAuthService);
-  newChannel: Channel = new Channel;
+  newChannel: Channel = new Channel();
 
   /**
    * When form is valide and submitted,
@@ -27,9 +28,7 @@ export class AddChannelPopupComponent {
   async onSubmit(ngForm: NgForm){
     if (ngForm.valid && ngForm.submitted) {
       this.newChannel.creator = this.addCurrentUserAsChannelCreator();
-      await this.channelService.fireService.addChannel(this.newChannel);
-      this.channelService.toggleActiveChannel(this.newChannel);
-      this.uiService.toggleAddChannelPopup();
+      this.uiService.openAddChannelPopup2();
     }    
   }
 

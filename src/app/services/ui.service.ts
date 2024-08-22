@@ -12,15 +12,29 @@ export class UiService {
   showDirectMessages: boolean = false;
   showChannels: boolean = true;
   showThread: boolean = true;
-  showAddChannelPopup: boolean = false;
+  showAddChannelPopup: boolean = false; // add new channel popup
+  showAddChannelInlinePopup1: boolean = false; // name and description
+  showAddChannelInlinePopup2: boolean = true;  // users
+  channelPopup2Searchbar: boolean = false // search users for channel
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
 
+  /**
+   * Close Popup for adding Channel Name and Description
+   * Open Popup for adding Users to Channel
+   */
+  openAddChannelPopup2(){
+    this.showAddChannelInlinePopup2 = !this.showAddChannelInlinePopup2;
+    this.showAddChannelInlinePopup1 = !this.showAddChannelInlinePopup1;
+  }
+
 
   toggleAddChannelPopup(){
     this.showAddChannelPopup = !this.showAddChannelPopup;
+    this.showAddChannelInlinePopup2 = false;
+    this.showAddChannelInlinePopup1 = true;
   }
 
   toggleWorkspaceMenu(){

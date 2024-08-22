@@ -1,0 +1,107 @@
+@import '../../../styles.scss';
+@import '../../../mixins.scss';
+
+main{
+    @include dFlex($fd: column, $g: 20px, $ai: flex-start);
+    width: 700px;
+}
+
+.title {
+    width: 100%;
+    @include dFlex($jc: space-between);
+
+    h3 {
+        font-family: Nunito;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32.74px;
+        text-align: left;
+    }
+}
+
+
+button {
+    margin-left: auto;
+}
+
+.channel-name{
+    color: $color-purple-3;
+}
+
+form{
+    padding: 0;
+    width: 100%;
+    input{
+        width: 100%;
+    }
+}
+
+.input-wrapper {
+    @include dFlex($jc: flex-start, $g: 20px);
+    cursor: pointer;
+}
+
+.channel {
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.55px;
+    cursor: pointer;
+}
+
+
+
+.checked {
+    position: relative;
+    margin-right: 20px;
+
+    .custom-check-border {
+        z-index: 1;
+        transform: translate(-4px, -50%);
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin: 0;
+        height: 20px;
+        width: 20px;
+        border-radius: 100%;
+        border: 1px solid $color-purple-light;
+        cursor: default;
+    }
+
+    .custom-check-inline {
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        position: absolute;
+        margin: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 100%;
+        background-color: $color-purple-1;
+        border: unset;
+    }
+}
+
+.unchecked {
+    position: relative;
+    margin-right: 20px;
+
+    .custom-check-border {
+        z-index: 1;
+        transform: translate(-4px, -50%);
+        position: absolute;
+        left: 0;
+        top: 50%;
+        margin: 0;
+        height: 20px;
+        width: 20px;
+        border-radius: 100%;
+        border: 1px solid $color-purple-light;
+        cursor: pointer;
+
+        &:hover {
+            border: 1px solid $color-purple-2;
+        }
+    }
+}

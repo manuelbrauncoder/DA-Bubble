@@ -7,6 +7,7 @@ main {
     border-radius: 30px;
     padding: 40px;
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 20px);
+    width: 100%;
 }
 
 .title {
