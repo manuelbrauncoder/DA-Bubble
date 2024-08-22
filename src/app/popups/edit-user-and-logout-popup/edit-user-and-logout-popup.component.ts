@@ -23,6 +23,6 @@ export class EditUserAndLogoutPopupComponent {
 
 
   logout() {
-    // this.authService.logout()
+    this.authService.logout()
   }
 }

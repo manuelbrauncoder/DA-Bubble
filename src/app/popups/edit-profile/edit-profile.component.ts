@@ -5,6 +5,7 @@ import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -18,21 +19,29 @@ export class EditProfileComponent implements OnInit{
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
+  userService = inject(UserService);
 
   editProfileData = {
     name:  '',
     email: ''
   }
 
+  
   ngOnInit(): void {
     this.editProfileData.name = this.authService.auth.currentUser?.displayName!;
     this.editProfileData.email = this.authService.auth.currentUser?.email!;
   }
 
-  // this function is not working yet
+  
   saveEdit(newName: string, newEmail: string) {
-    // this.saveNewName(newName: string)
+    // this.changeAvatar(); // this function is not working yet
+    // this.saveNewName(newName: string); // this function is not working yet
     this.saveNewEmailAddress(newEmail);    
+  }
+
+
+  changeAvatar() {
+
   }
 
 

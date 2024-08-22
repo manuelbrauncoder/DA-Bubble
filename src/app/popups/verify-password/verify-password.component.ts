@@ -5,6 +5,8 @@ import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { FormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+
 
 @Component({
   selector: 'app-verify-password',
@@ -17,12 +19,14 @@ export class VerifyPasswordComponent implements OnInit{
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
+  userService = inject(UserService);
 
   verifyPasswordData = {
     name:  '',
     email: '',
     password: ''
   }
+  
 
   ngOnInit(): void {
     this.verifyPasswordData.name = this.authService.auth.currentUser?.displayName!;

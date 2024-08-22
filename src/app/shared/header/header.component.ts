@@ -4,6 +4,7 @@ import { EditUserAndLogoutPopupComponent } from '../../popups/edit-user-and-logo
 import { UiService } from '../../services/ui.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FirestoreService } from '../../services/firestore.service';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class HeaderComponent {
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
+  userService = inject(UserService);
 
 
   openPopup() {
