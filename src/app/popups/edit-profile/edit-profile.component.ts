@@ -31,6 +31,7 @@ export class EditProfileComponent implements OnInit{
 
   // this function is not working yet
   saveEdit(newName: string, newEmail: string) {
+    // this.saveNewName(newName: string)
     this.saveNewEmailAddress(newEmail);    
   }
 

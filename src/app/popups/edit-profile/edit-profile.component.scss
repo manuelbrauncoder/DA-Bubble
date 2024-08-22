@@ -57,10 +57,42 @@
 .profile-img {
   width: 12.5rem;
   height: 12.5rem;
+  border-radius: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: all ease-in-out 250ms;
+
+  &:hover {
+    opacity: 0.8;
+    transition: all ease-in-out 250ms;
+
+    span {
+      transform: translateY(2.5rem);
+      opacity: 1;
+      transition: all ease-in-out 250ms;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
 
   img {
     width: 100%;
-    cursor: default;
+    height: 100%;
+    border-radius: 100%;
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  span {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(1, 1, 1, 0.5);
+    padding: 0.5rem;
+    border-radius: 1rem;
+    color: white;
+    opacity: 0;
+    transition: all ease-in-out 250ms;
   }
 }
 
@@ -106,6 +138,11 @@
       &:hover {
         border: solid 0.063rem #444df2;
         transition: ease-in-out 125ms;
+      }
+
+      &:focus {
+        border: solid 0.063rem #444df2;
+        outline: none;
       }
     }
 
