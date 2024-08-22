@@ -4,13 +4,16 @@
 
 form {
   >.header-wrapper {
-    position: relative;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
 
     @include arrowBack;
+
+    >h2 {
+      margin: auto;
+    }
   }
 
   >p {
@@ -93,7 +96,7 @@ form {
 [type="checkbox"] {
   position: relative;
   left: 0px;
-  top: -18px;
+  top: -13px;
   z-index: 0;
   -webkit-appearance: none;
   cursor: pointer;
