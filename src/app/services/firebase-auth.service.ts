@@ -39,6 +39,7 @@ export class FirebaseAuthService {
   user$ = user(this.auth);
   uiService = inject(UiService);
   newEmailAddress: string = '';
+  updateEmail: boolean = false;
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
@@ -265,8 +266,6 @@ export class FirebaseAuthService {
       }).catch((err) => {
         let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
-          //this.verifyUsersEmail();
-          // alert('Please verify your email before updating it');
           this.uiService.showVerifyPasswordPopup = !this.uiService.showVerifyPasswordPopup;
         }
         console.log(err);
@@ -297,7 +296,9 @@ export class FirebaseAuthService {
     if (this.auth.currentUser) {
       reauthenticateWithCredential(this.auth.currentUser, credential).then(() => {
         console.log('User reauthenticated', email, password, credential);
-        
+        if (this.updateEmail) {
+          this.updateUserEmail(this.newEmailAddress);
+        }
       }).catch((err) => {
         console.warn('Error', err)
       });
