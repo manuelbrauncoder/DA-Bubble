@@ -9,20 +9,86 @@ header {
     padding: 25px 45px;
     width: 100%;
     border-radius: 1.875rem 1.875rem 0 0;
+    @include dFlex($jc: space-between);
 
     .title {
+        @include dFlex($g: 10px, $jc: flex-start);
+        cursor: pointer;
+        padding: 6px 10px;
+        border-radius: 100vw;
+        transition: ease-in 150ms;
+
         h4 {
             font-family: Nunito;
             font-size: 24px;
             font-weight: 700;
             line-height: 32.74px;
         }
-    }
-    .user-options {
-        .users{
 
+        &:hover {
+            background-color: $color-active-channel;
+            transition: ease-in 150ms;
+            color: $color-purple-3;
+        }
+
+        &:hover svg {
+            path {
+                fill: $color-purple-3;
+
+            }
+        }
+    }
+
+    .user-options {
+        @include dFlex($g: 10px, $jc: flex-start);
+
+        .users {
+            cursor: pointer;
+            @include dFlex($jc: flex-start);
+            border-radius: 100vw;
+            padding: 6px 10px 6px 18px;
+            transition: ease-in 150ms;
+
+            .profile-img {
+                margin-left: -8px;
+                width: 40px;
+                height: 40px;
+                border-radius: 100%;
+                border: 2px solid white;
+            }
+
+            .user-number {
+                margin-left: 10px;
+                font-family: Nunito;
+                font-size: 20px;
+                font-weight: 600;
+                line-height: 27.28px;
+            }
+            &:hover {
+                background-color: $color-active-channel;
+                transition: ease-in 150ms;
+                color: $color-purple-3;
+            }
         }
         
+
+        .add-user {
+            padding: 4px;
+            background-color: $color-active-channel;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            cursor: pointer;
+            transition: ease-in 150ms;
+
+            &:hover path,
+            rect {
+                fill: $color-purple-3;
+                scale: 1.05;
+                transition: ease-in 150ms;
+            }
+        }
+
     }
 }
 

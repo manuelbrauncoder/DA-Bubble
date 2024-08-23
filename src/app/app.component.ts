@@ -8,11 +8,12 @@ import { User } from './models/user.class';
 import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
 import { LoginComponent } from './userManagement/login/login.component';
 import { FooterComponent } from "./shared/footer/footer.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

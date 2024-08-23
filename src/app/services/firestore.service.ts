@@ -13,6 +13,8 @@ export class FirestoreService {
   firestore = inject(Firestore);
   private http = inject(HttpClient);
   exampleUserDataUrl = 'assets/data/exampleUsers.json';
+  private isDefaultChannelset = false;
+  currentChannel: Channel = new Channel();
 
 
   users: User[] = []; // all users stored here
@@ -103,11 +105,31 @@ export class FirestoreService {
       list.forEach((element) => {
         const channel = this.setChannelObject(element.data(), element.id);
         this.channels.push(channel);
-      });      
+      });
+      this.setActiveChannel();
       list.docChanges().forEach((change) => {
         this.logChanges(change);
       })
     })
+  }
+
+  /**
+   * set first channel as active on first time loading channels
+   */
+  setActiveChannel(){
+    if (this.channels.length > 0 && !this.isDefaultChannelset) {
+      this.channels.forEach((channel)=>{
+        if (this.channels[0].name === channel.name) {
+          this.isDefaultChannelset = true;
+          channel.channelActive = true;
+          this.currentChannel = new Channel(this.channels[0]);
+          
+        } else {
+          channel.channelActive = false;
+        }
+      })
+
+    }
   }
 
   /**
