@@ -38,7 +38,7 @@ export class LoginComponent {
       )
       .subscribe(() => {
         if (!this.loginFailed) {
-          this.router.navigate(['/']);
+          this.router.navigate(['/dabubble']);
         }
       });
   }
@@ -49,7 +49,7 @@ export class LoginComponent {
   async guestLogin() {
     try {
       await this.authService.guestLogin();
-      this.router.navigate(['/']);
+      this.router.navigate(['/dabubble']);
     } catch (error) {
       console.error('Guest login error in LoginComponent:', error);
     }
