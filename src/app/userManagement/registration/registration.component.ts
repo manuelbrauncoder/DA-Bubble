@@ -22,21 +22,7 @@ export class RegistrationComponent {
     privacy: false
   }
 
-
-    /**
-   * Login for user. Checks if email and pwd is in the database
-   * and link to the main page.
-   */
-  // register() {
-  //   try {
-  //     this.authService.register(this.regData.email, this.regData.username, this.regData.pwd);
-  //     
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-
-    /**
+  /**
    * Save the data from input fields and save them in the authService.
    * Links to the avatar selection.
    */

@@ -12,13 +12,14 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 })
 export class SendMailComponent {
   authService = inject(FirebaseAuthService);
-
   email: string = '';
+  showPopup: boolean = false;
 
   async sendMail() {
     try {
       await this.authService.sendPasswordResetMail(this.email);
-      alert('Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.');
+      this.showPopup = true;
+      setTimeout(() => this.showPopup = false, 3000);
     } catch (error) {
       console.error('Error:', error);
     }

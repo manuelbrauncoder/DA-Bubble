@@ -16,6 +16,7 @@ export class ChooseAvatarComponent {
   router = inject(Router);
   selectedAvatar: string = '';
   avatarIsSelected: boolean = false;
+  showPopup: boolean = false;
 
   regData = this.authService.getStoredRegistrationData();
 
@@ -24,6 +25,7 @@ export class ChooseAvatarComponent {
       this.authService.register(this.regData.email, this.regData.username, this.regData.password, this.selectedAvatar).subscribe(() => {
         console.log('Registration complete with avatar:', this.selectedAvatar);
         this.authService.clearStoredRegistrationData();
+        this.showPopup = true;
         this.router.navigate(['/login']);
       });
     } else {

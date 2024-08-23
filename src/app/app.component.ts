@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
@@ -7,11 +7,12 @@ import { UserService } from './services/user.service';
 import { User } from './models/user.class';
 import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
 import { LoginComponent } from './userManagement/login/login.component';
+import { FooterComponent } from "./shared/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent],
+  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -26,10 +27,12 @@ export class AppComponent implements OnInit, OnDestroy {
   unsubUsersList;
   unsubChannelList;
 
-  constructor() {
+  constructor(private router: Router) {
     this.unsubUsersList = this.fireService.getUsersList();
     this.unsubChannelList = this.fireService.getChannelList();
   }
+
+  private footerRoutes: string[] = ['/login', '/registration', '/avatar', 'sendmail', 'resetpwd', 'privacy_policy', 'imprint'];
 
   ngOnInit(): void {
     this.subLoginState();
@@ -39,6 +42,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubUsersList();
     this.unsubChannelList();
+  }
+
+  shouldShowFooter(): boolean {
+    return this.footerRoutes.includes(this.router.url);
   }
 
   /**

@@ -26,3 +26,7 @@
     <button (click)="completeRegistration()" [ngClass]="{'disabled-button': !selectedAvatar}" [disabled]="!selectedAvatar">Weiter</button>
   </div>
 </form>
+
+<div class="confirmPopup" *ngIf="showPopup">
+  <span>Konto erfolgreich erstellt!</span> 
+</div>

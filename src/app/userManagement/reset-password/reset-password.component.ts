@@ -20,6 +20,7 @@ export class ResetPasswordComponent {
   secondPassword: string = '';
   oobCode: string = '';
   errorMessage: string = '';
+  showPopup: boolean = false;
 
 
     /**
@@ -53,7 +54,7 @@ export class ResetPasswordComponent {
       try {
         await this.authService.verifyPasswordResetCode(this.oobCode);
         await this.authService.confirmPasswordReset(this.oobCode, this.firstPassword);
-        alert('Passwort erfolgreich geändert.');
+        this.showPopup = true;
         this.router.navigate(['/login']);
       } catch (error) {
         this.errorMessage = 'Fehler beim Zurücksetzen des Passworts.';

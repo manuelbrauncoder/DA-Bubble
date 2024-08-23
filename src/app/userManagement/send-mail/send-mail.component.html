@@ -19,6 +19,7 @@
   </div>
 </form>
 
-<div *ngIf="sendMail()" class="popup">
-  E-Mail gesendet
+<div class="confirmPopup" *ngIf="showPopup">
+  <img src="./assets/icons/login/send.png" alt="send">
+  <span>E-Mail gesendet</span> 
 </div>
