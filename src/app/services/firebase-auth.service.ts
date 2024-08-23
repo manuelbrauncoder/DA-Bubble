@@ -20,7 +20,8 @@ import {
   updatePassword,
   updateProfile,
   user,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  confirmPasswordReset
 } from '@angular/fire/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
@@ -348,6 +349,25 @@ export class FirebaseAuthService {
       });
   }
 
+  /**
+ * Confirm the password reset with a token called oobCode
+ * @param {string} newPassword
+ * @param {string} oobCode
+ */
+  confirmPasswordReset(oobCode: string, newPassword: string) {
+    return confirmPasswordReset(this.auth, oobCode, newPassword)
+      .then(() => {
+        console.log('Password has been reset successfully');
+      })
+      .catch((error) => {
+        console.error('Error resetting password:', error);
+        throw error;
+      });
+  }
+
+
+
+  
 }
 
 

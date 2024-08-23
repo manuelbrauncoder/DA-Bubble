@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -14,10 +14,16 @@ import { Router } from '@angular/router';
 export class ResetPasswordComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
   firstPassword: any = '';
   secondPassword: string = '';
+  oobCode: string | null = null;
 
+
+  ngOnInit() {
+    this.oobCode = this.route.snapshot.queryParamMap.get('oobCode');
+  }
 
   isFormValid(): boolean {
     return this.firstPassword.length >= 6 && this.secondPassword.length >= 6 && this.firstPassword === this.secondPassword;
@@ -31,7 +37,6 @@ export class ResetPasswordComponent {
       } catch (error) {
         console.error('Error:', error);
       }
-      
     }
   }
 }
