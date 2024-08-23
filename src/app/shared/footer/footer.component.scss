@@ -1,0 +1,8 @@
+@use './../../../mixins.scss' as *;
+
+div {
+  display: flex;
+  gap: 1rem;
+}
+
+@include linkUserM;

@@ -8,14 +8,22 @@ import { Injectable } from '@angular/core';
 })
 export class UiService {
 
-  showWorkspaceMenu: boolean = true;
-  showDirectMessages: boolean = false;
-  showChannels: boolean = true;
-  showThread: boolean = true;
+  showWorkspaceMenu: boolean = true; // workspace menu in main-content
+  showDirectMessages: boolean = false; // user list in workspace menu
+  showChannels: boolean = true; // channel list in workspace menu
+
+  showChannelEditPopup: boolean = false; // opens in channel-chat-component
+
+  showChannelChat: boolean = true;
+  showNewMessage: boolean = false;
+  showDirectMessage: boolean = false;
+
+  showThread: boolean = true; // thread window in main-content
   showAddChannelPopup: boolean = false; // add new channel popup
   showAddChannelInlinePopup1: boolean = true; // name and description
   showAddChannelInlinePopup2: boolean = false;  // users
   channelPopup2Searchbar: boolean = false // search users for channel
+
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;

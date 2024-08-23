@@ -15,9 +15,10 @@ export class SendMailComponent {
 
   email: string = '';
 
-  sendMail() {
+  async sendMail() {
     try {
-      this.authService.sendPasswordResetMail(this.email);
+      await this.authService.sendPasswordResetMail(this.email);
+      alert('Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.');
     } catch (error) {
       console.error('Error:', error);
     }

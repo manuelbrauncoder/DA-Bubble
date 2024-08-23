@@ -1,9 +1,14 @@
 
 <main>
-    <h1>Current Channel: {{ channelService.currentChannel.name }}</h1>
-@if (!channelService.currentChannel.name) {
-    <span>choose a channel in the workspace menu!</span>
-
-}
+ @if (uiService.showChannelChat) {
+     <app-channel-chat></app-channel-chat>
+ }
+ @if (uiService.showNewMessage) {
+    <app-new-message></app-new-message>
+ }
+ @if (uiService.showDirectMessage) {
+    <app-direct-message></app-direct-message>
+ }
 </main>
+
 

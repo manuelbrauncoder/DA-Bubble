@@ -1,0 +1,29 @@
+@import '../../../../mixins.scss';
+@import '../../../../styles.scss';
+
+
+
+
+header {
+    box-shadow: 0px 2px 10px 0px #00000014;
+    padding: 25px 45px;
+    width: 100%;
+    border-radius: 1.875rem 1.875rem 0 0;
+
+    .title {
+        h4 {
+            font-family: Nunito;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32.74px;
+        }
+    }
+    .user-options {
+        .users{
+
+        }
+        
+    }
+}
+
+main {}
