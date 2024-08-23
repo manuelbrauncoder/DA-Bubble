@@ -1,0 +1,35 @@
+
+
+
+    <header>
+        <div class="title">
+            <h4># {{ channelService.currentChannel.name }}</h4>
+            <!-- drop down arrow -->
+             <!-- fn for opening edit window -->
+        </div>
+        <div class="user-options">
+            <div class="users">
+                <!-- chat users avatar max 3 avatars and number of members -->
+            </div>
+            <!-- icon add user -->
+        </div>
+    </header>
+    
+    <main>
+        <!-- room for chat -->
+    </main>
+    
+    <div class="input-wrapper">
+        <!-- input field for messages -->
+    </div>
+
+    @if (uiService.showChannelEditPopup) {
+        <div class="popup-background">
+            <div class="edit-channel-popup">
+    
+            </div>
+        </div>
+    }
+   
+
+

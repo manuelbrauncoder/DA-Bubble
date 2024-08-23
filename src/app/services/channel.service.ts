@@ -11,6 +11,10 @@ export class ChannelService {
 
   constructor() { }
 
+  setDefaultChannel(){
+   let firstInList = this.fireService.channels[0];
+   this.toggleActiveChannel(firstInList);
+  }
 
   /**
    * This method toggles the active Channel

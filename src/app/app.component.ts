@@ -34,7 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
-    //this.authService.handleGoogleSignInRedirect();
   }
 
   ngOnDestroy(): void {
