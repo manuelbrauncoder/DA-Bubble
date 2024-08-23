@@ -10,6 +10,7 @@ import { LoginComponent } from './userManagement/login/login.component';
 import { FooterComponent } from "./shared/footer/footer.component";
 import { CommonModule } from '@angular/common';
 import { HeaderForUsermanagementComponent } from "./shared/header-for-usermanagement/header-for-usermanagement.component";
+import { UiService } from './services/ui.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
+  uiService = inject(UiService);
   testMode: boolean = false;
   showFooterAndHeader: boolean = false;
 
@@ -71,6 +73,7 @@ export class AppComponent implements OnInit, OnDestroy {
         })
       } else {
         this.authService.currentUserSig.set(null);
+        this.uiService.showEditUserAndLogoutPopup = false;
         this.router.navigate(['']);
       }
       console.log('currently logged in user:', this.authService.currentUserSig());
