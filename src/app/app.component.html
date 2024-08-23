@@ -1,8 +1,10 @@
-<app-header></app-header>
+<app-header *ngIf="!showFooterAndHeader"></app-header>
+
+<app-header-for-usermanagement *ngIf="showFooterAndHeader"></app-header-for-usermanagement>
 
 <router-outlet></router-outlet>
 
-<app-footer *ngIf="shouldShowFooter()"></app-footer>
+<app-footer *ngIf="showFooterAndHeader"></app-footer>
 
 @if (testMode) {
 <button class="test-btn" (click)="userService.resetUsersInFirebase()">reset firestore</button>

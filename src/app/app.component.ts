@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
@@ -8,11 +8,13 @@ import { User } from './models/user.class';
 import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
 import { LoginComponent } from './userManagement/login/login.component';
 import { FooterComponent } from "./shared/footer/footer.component";
+import { CommonModule } from '@angular/common';
+import { HeaderForUsermanagementComponent } from "./shared/header-for-usermanagement/header-for-usermanagement.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent],
+  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -23,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   fireService = inject(FirestoreService);
   userService = inject(UserService);
   testMode: boolean = false;
+  showFooterAndHeader: boolean = false;
 
   unsubUsersList;
   unsubChannelList;
@@ -37,6 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subLoginState();
     this.subExampleUsers();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showFooterAndHeader = this.footerRoutes.includes(event.urlAfterRedirects);
+      }
+    });
   }
 
   ngOnDestroy(): void {
