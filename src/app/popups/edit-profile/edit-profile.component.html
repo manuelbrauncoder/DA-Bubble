@@ -8,7 +8,7 @@
     </div>
 
     <div class="profile-img" (click)="changeAvatar()">
-        <img [src]="userService.getCurrentUsersAvatar()">
+        <img [src]="currentUsersAvatar">
         <span>Avatar ändern</span>
     </div>
 
@@ -43,6 +43,10 @@
         </div>
     </form>
 </div>
+
+@if (this.uiService.showChangeAvatarPopup) {
+    <app-change-avatar></app-change-avatar>
+}
 
 @if (this.uiService.showVerifyPasswordPopup) {
     <app-verify-password></app-verify-password>

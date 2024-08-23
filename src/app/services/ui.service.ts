@@ -19,6 +19,7 @@ export class UiService {
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;
+  showChangeAvatarPopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
 
   /**
@@ -53,6 +54,7 @@ export class UiService {
     this.showEditUserAndLogoutPopup = !this.showEditUserAndLogoutPopup;
     this.showViewProfilePopup = false;
     this.showEditProfilePopup = false;
+    this.showVerifyPasswordPopup = false;
   }
 
   toggleViewProfile() {
@@ -61,6 +63,10 @@ export class UiService {
 
   toggleEditProfile() {
     this.showEditProfilePopup = !this.showEditProfilePopup;
+  }
+
+  toggleChangeAvatar() {
+    this.showChangeAvatarPopup = !this.showChangeAvatarPopup;
   }
 
   toggleVerifyPassword() {

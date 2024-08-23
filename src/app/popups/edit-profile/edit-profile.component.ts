@@ -6,12 +6,13 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
+import { ChangeAvatarComponent } from "../change-avatar/change-avatar.component";
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, VerifyPasswordComponent],
+  imports: [CommonModule, FormsModule, VerifyPasswordComponent, ChangeAvatarComponent],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss'
 })
@@ -20,6 +21,7 @@ export class EditProfileComponent implements OnInit{
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
+  currentUsersAvatar = this.userService.getCurrentUsersAvatar();
 
   editProfileData = {
     name:  '',
@@ -36,12 +38,12 @@ export class EditProfileComponent implements OnInit{
   saveEdit(newName: string, newEmail: string) {
     // this.changeAvatar(); // this function is not working yet
     // this.saveNewName(newName: string); // this function is not working yet
-    this.saveNewEmailAddress(newEmail);    
+    this.saveNewEmailAddress(newEmail);
   }
 
 
   changeAvatar() {
-
+    this.uiService.toggleChangeAvatar();
   }
 
 
