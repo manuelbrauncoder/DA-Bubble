@@ -3,6 +3,8 @@
 @include linkUserM;
 
 form {
+  max-width: 41rem;
+
   >p {
     font-size: 1.2rem;
   }

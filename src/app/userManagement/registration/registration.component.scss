@@ -3,6 +3,8 @@
 @include linkUserM;
 
 form {
+  max-width: 41rem;
+
   >.header-wrapper {
     display: flex;
     align-items: center;

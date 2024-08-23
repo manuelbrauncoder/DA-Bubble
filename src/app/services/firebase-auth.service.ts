@@ -58,10 +58,16 @@ export class FirebaseAuthService {
     this.tempRegData = { email, username, password };
   }
 
+  /**
+  * Get the stored data
+  */
   getStoredRegistrationData() {
     return this.tempRegData;
   }
 
+  /**
+  * Delete the stored data 
+  */
   clearStoredRegistrationData() {
     this.tempRegData = null;
   }

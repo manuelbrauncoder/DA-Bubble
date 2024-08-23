@@ -18,3 +18,7 @@
     <button (click)="sendMail()" [ngClass]="{'disabled-button': mailForm.invalid}" [disabled]="mailForm.invalid">E-mail senden</button>
   </div>
 </form>
+
+<div *ngIf="sendMail()" class="popup">
+  E-Mail gesendet
+</div>

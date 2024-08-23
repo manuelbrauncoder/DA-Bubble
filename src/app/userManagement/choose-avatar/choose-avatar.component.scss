@@ -1,6 +1,8 @@
 @use './../../../mixins.scss' as *;
 
 form {
+  max-width: 41rem;
+
   >.header-wrapper {
     position: relative;
     display: flex;

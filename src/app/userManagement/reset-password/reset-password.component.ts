@@ -22,6 +22,10 @@ export class ResetPasswordComponent {
   errorMessage: string = '';
 
 
+    /**
+   * This method is used to get the oobCode from Firebase and gives an error
+   * if there is no code.
+   */
   ngOnInit() {
     this.oobCode = this.route.snapshot.queryParamMap.get('oobCode') || '';
     if (!this.oobCode) {
@@ -29,10 +33,21 @@ export class ResetPasswordComponent {
     }
   }
 
+    /**
+   * This method is used to check if the form is valid. Both inputs over 6
+   * fields long and the first input matches the second one
+   */
   isFormValid(): boolean {
     return this.firstPassword.length >= 6 && this.secondPassword.length >= 6 && this.firstPassword === this.secondPassword;
   }
 
+    /**
+   * This method is used for actually submit the new password. If the Form is
+   * valid the method uses two firebase methods to check if the oobCode is 
+   * legit and then resets the pwd. Throws an error if something went wrong
+   * @param oobCode 
+   * @param firstPassword
+   */
   async changePassword() {
     if (this.isFormValid()) {
       try {
