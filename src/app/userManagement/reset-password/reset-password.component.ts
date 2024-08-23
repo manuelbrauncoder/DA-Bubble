@@ -18,23 +18,30 @@ export class ResetPasswordComponent {
 
   firstPassword: any = '';
   secondPassword: string = '';
-  oobCode: string | null = null;
+  oobCode: string = '';
+  errorMessage: string = '';
 
 
   ngOnInit() {
-    this.oobCode = this.route.snapshot.queryParamMap.get('oobCode');
+    this.oobCode = this.route.snapshot.queryParamMap.get('oobCode') || '';
+    if (!this.oobCode) {
+      this.errorMessage = 'Ungültiger oder fehlender Code. Bitte überprüfen Sie den Link in Ihrer E-Mail.';
+    }
   }
 
   isFormValid(): boolean {
     return this.firstPassword.length >= 6 && this.secondPassword.length >= 6 && this.firstPassword === this.secondPassword;
   }
 
-  changePassword() {
-    if (this.firstPassword === this.secondPassword) {
+  async changePassword() {
+    if (this.isFormValid()) {
       try {
-        this.authService.updateUserPassword(this.firstPassword);
+        await this.authService.verifyPasswordResetCode(this.oobCode);
+        await this.authService.confirmPasswordReset(this.oobCode, this.firstPassword);
+        alert('Passwort erfolgreich geändert.');
         this.router.navigate(['/login']);
       } catch (error) {
+        this.errorMessage = 'Fehler beim Zurücksetzen des Passworts.';
         console.error('Error:', error);
       }
     }

@@ -21,7 +21,8 @@ import {
   updateProfile,
   user,
   sendPasswordResetEmail,
-  confirmPasswordReset
+  confirmPasswordReset,
+  verifyPasswordResetCode
 } from '@angular/fire/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
@@ -64,6 +65,7 @@ export class FirebaseAuthService {
   clearStoredRegistrationData() {
     this.tempRegData = null;
   }
+
 
   /**
    * not working yet
@@ -354,20 +356,30 @@ export class FirebaseAuthService {
  * @param {string} newPassword
  * @param {string} oobCode
  */
-  confirmPasswordReset(oobCode: string, newPassword: string) {
-    return confirmPasswordReset(this.auth, oobCode, newPassword)
-      .then(() => {
-        console.log('Password has been reset successfully');
-      })
-      .catch((error) => {
-        console.error('Error resetting password:', error);
-        throw error;
-      });
+  async confirmPasswordReset(oobCode: string, newPassword: string): Promise<void> {
+    try {
+      await confirmPasswordReset(this.auth, oobCode, newPassword);
+      console.log('Password has been reset successfully');
+    } catch (error) {
+      console.error('Error resetting password:', error);
+      throw error;
+    }
+  }
+
+  /**
+ * Verifies the passwordresetcode 
+ * @param {string} oobCode
+ */
+  async verifyPasswordResetCode(oobCode: string): Promise<void> {
+    try {
+      await verifyPasswordResetCode(this.auth, oobCode);
+    } catch (error) {
+      console.error('Error verifying password reset code:', error);
+      throw error;
+    }
   }
 
 
-
-  
 }
 
 
