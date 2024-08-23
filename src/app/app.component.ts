@@ -35,7 +35,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubChannelList = this.fireService.getChannelList();
   }
 
-  private footerRoutes: string[] = ['/login', '/registration', '/avatar', 'sendmail', 'resetpwd', 'privacy_policy', 'imprint'];
+  private showNoFooterRoutes: string[] = ['/dabubble'];
 
   ngOnInit(): void {
     this.subLoginState();
@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showFooterAndHeader = this.footerRoutes.includes(event.urlAfterRedirects);
+        this.showFooterAndHeader = this.showNoFooterRoutes.includes(event.urlAfterRedirects);
       }
     });
   }
@@ -51,10 +51,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubUsersList();
     this.unsubChannelList();
-  }
-
-  shouldShowFooter(): boolean {
-    return this.footerRoutes.includes(this.router.url);
   }
 
   /**
