@@ -15,7 +15,7 @@ export class UiService {
   showAddChannelPopup: boolean = false; // add new channel popup
   showAddChannelInlinePopup1: boolean = true; // name and description
   showAddChannelInlinePopup2: boolean = false;  // users
-  channelPopup2Searchbar: boolean = true // search users for channel
+  channelPopup2Searchbar: boolean = false // search users for channel
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;

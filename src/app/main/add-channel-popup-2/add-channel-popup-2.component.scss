@@ -26,6 +26,7 @@ button {
 
 .channel-name {
     color: $color-purple-3;
+    cursor: default;
 }
 
 form {
@@ -123,6 +124,8 @@ form {
     box-shadow: 0px 2px 10px 0px #00000014;
     z-index: 2;
     background-color: white;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .online-state {
@@ -156,6 +159,14 @@ form {
         line-height: 24.55px;
         text-align: left;
 
+    }
+}
+
+.remove-user-icon:hover{
+    scale: 1.05;
+    cursor: pointer;
+    rect, path{
+        fill: $color-purple-3;
     }
 }
 
