@@ -11,8 +11,8 @@ import { ImprintComponent } from './imprint/imprint.component';
 
 
 export const routes: Routes = [
-  { path: '', component: MainContentComponent},
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent},
+  { path: 'dabubble', component: MainContentComponent},
   { path: 'registration', component: RegistrationComponent },
   { path: 'avatar', component: ChooseAvatarComponent },
   { path: 'sendmail', component: SendMailComponent },
