@@ -28,7 +28,7 @@ export class ChangeAvatarComponent {
 
   // not working yet
   confirmNewSelectedAvatar() {
-
+    
   }
 
 
