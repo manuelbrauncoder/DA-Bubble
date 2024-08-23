@@ -7,3 +7,9 @@ main{
     background-color: white;
     border-radius: 1.875rem;
 }
+
+app-channel-chat{
+    @include dFlex($fd: column);
+    height: 100%;
+    width: 100%;
+}
