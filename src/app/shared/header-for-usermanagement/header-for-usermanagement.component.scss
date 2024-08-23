@@ -1,0 +1,9 @@
+@use './../../../mixins.scss' as *;
+
+@include linkUserM;
+
+div {
+  @include flexColumn;
+  align-items: end;
+  gap: 1rem;
+}
