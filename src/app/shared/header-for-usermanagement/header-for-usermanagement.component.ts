@@ -12,7 +12,7 @@ import { NavigationEnd, Router, RouterModule } from '@angular/router';
 export class HeaderForUsermanagementComponent {
   showHeaderLink: boolean = false;
 
-  private headerRoute: string[] = ['/registration', '/avatar', 'sendmail', 'resetpwd', 'privacy_policy', 'imprint'];
+  private headerRoute: string[] = ['/registration', '/avatar', '/sendmail', '/resetpwd', '/privacy_policy', '/imprint'];
 
   constructor(private router: Router) {}
 
