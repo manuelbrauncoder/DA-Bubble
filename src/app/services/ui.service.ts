@@ -27,8 +27,8 @@ export class UiService {
   showEditUserAndLogoutPopup: boolean = false;
   showViewProfilePopup: boolean = false;
   showEditProfilePopup: boolean = false;
-  showChangeAvatarPopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
+  showChangeAvatarContainer: boolean = false;
 
   /**
    * Close Popup for adding Channel Name and Description
@@ -63,6 +63,7 @@ export class UiService {
     this.showViewProfilePopup = false;
     this.showEditProfilePopup = false;
     this.showVerifyPasswordPopup = false;
+    this.showChangeAvatarContainer = false;
   }
 
   toggleViewProfile() {
@@ -73,8 +74,8 @@ export class UiService {
     this.showEditProfilePopup = !this.showEditProfilePopup;
   }
 
-  toggleChangeAvatar() {
-    this.showChangeAvatarPopup = !this.showChangeAvatarPopup;
+  toggleChangeAvatarContainer() {
+    this.showChangeAvatarContainer = !this.showChangeAvatarContainer;
   }
 
   toggleVerifyPassword() {

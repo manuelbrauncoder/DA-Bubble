@@ -6,50 +6,77 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
-import { ChangeAvatarComponent } from "../change-avatar/change-avatar.component";
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, VerifyPasswordComponent, ChangeAvatarComponent],
+  imports: [CommonModule, FormsModule, VerifyPasswordComponent],
   templateUrl: './edit-profile.component.html',
-  styleUrl: './edit-profile.component.scss'
+  styleUrl: './edit-profile.component.scss',
 })
-export class EditProfileComponent implements OnInit{
+export class EditProfileComponent implements OnInit {
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
   currentUsersAvatar = this.userService.getCurrentUsersAvatar();
+  selectedAvatar: string = '';
+  newSelectedAvatar: boolean = false;
 
   editProfileData = {
-    name:  '',
-    email: ''
-  }
+    name: '',
+    email: '',
+  };
 
-  
+
   ngOnInit(): void {
     this.editProfileData.name = this.authService.auth.currentUser?.displayName!;
     this.editProfileData.email = this.authService.auth.currentUser?.email!;
   }
 
-  
+
   saveEdit(newName: string, newEmail: string) {
-    // this.changeAvatar(); // this function is not working yet
+    // this.saveNewAvatar(); // this function is not working yet
     // this.saveNewName(newName: string); // this function is not working yet
     this.saveNewEmailAddress(newEmail);
   }
 
 
+  uploadOwnPicture() {}
+
+
   changeAvatar() {
-    this.uiService.toggleChangeAvatar();
+    this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
+    this.uiService.toggleChangeAvatarContainer();
   }
 
 
-  saveNewName(newName: string) {
-
+  selectNewAvatar(imgPath: string) {
+    this.newSelectedAvatar = true;
+    this.selectedAvatar = imgPath;
+    this.currentUsersAvatar = imgPath;
   }
+
+
+  closeChangeAvatar() {
+    this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
+    this.uiService.toggleChangeAvatarContainer();
+  }
+
+
+  confirmNewSelectedAvatar() {
+    this.uiService.toggleChangeAvatarContainer();
+  }
+
+
+  // not working yet
+  // saveNewAvatar() {
+  //   this.userService.setAvatarImg();
+  // }
+
+
+  saveNewName(newName: string) {}
 
 
   saveNewEmailAddress(newEmail: string) {
@@ -57,7 +84,7 @@ export class EditProfileComponent implements OnInit{
     this.authService.updateUserEmail(newEmail);
   }
 
-  
+
   closeEditProfile() {
     this.uiService.toggleEditProfile();
     this.uiService.toggleViewProfile();

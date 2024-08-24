@@ -1,52 +1,83 @@
 <div class="edit-profile">
-    <div class="edit-header">
-        <p>Dein Profil bearbeiten</p>
+    <div class="popup-top">
+        <div class="edit-header">
+            <p>Dein Profil bearbeiten</p>
 
-        <div class="bounding-box" (click)="closeEditProfile()">
-            <img src="assets/icons/close.svg">
+            <div class="bounding-box" (click)="closeEditProfile()">
+                <img src="assets/icons/close.svg">
+            </div>
+        </div>
+
+        <div class="profile-img" (click)="changeAvatar()">
+            <img [src]="currentUsersAvatar">
+            <span>Avatar ändern</span>
         </div>
     </div>
 
-    <div class="profile-img" (click)="changeAvatar()">
-        <img [src]="currentUsersAvatar">
-        <span>Avatar ändern</span>
+    <div class="popup-bottom">
+        @if (this.uiService.showChangeAvatarContainer) {
+            <div class="change-avatar-container">
+                <div class="span-avatarList">
+                    <span>Aus der Liste wählen</span>
+
+                    <div class="avatarList">
+                        <img src="assets/img/chars/char1.png" (click)="selectNewAvatar('assets/img/chars/char1.png')">
+                        <img src="assets/img/chars/char2.png" (click)="selectNewAvatar('assets/img/chars/char2.png')">
+                        <img src="assets/img/chars/char3.png" (click)="selectNewAvatar('assets/img/chars/char3.png')">
+                        <img src="assets/img/chars/char4.png" (click)="selectNewAvatar('assets/img/chars/char4.png')">
+                        <img src="assets/img/chars/char5.png" (click)="selectNewAvatar('assets/img/chars/char5.png')">
+                        <img src="assets/img/chars/char6.png" (click)="selectNewAvatar('assets/img/chars/char6.png')">
+                    </div>
+                </div>
+
+                <div class="upload-your-own-picture">
+                    <span>eigenes Bild verwenden</span>
+                    <button (click)="uploadOwnPicture()">Datei hochladen</button>
+                </div>
+
+                <div class="change-avatar-buttons-container">
+                    <button (click)="closeChangeAvatar()">Abbrechen</button>
+                    <button (click)="confirmNewSelectedAvatar()">Bestätigen</button>
+                </div>
+            </div>
+        }
+
+        <form action="" class="edit-name-mail-form" #editProfileForm="ngForm">
+            <div class="edit-name-mail">
+                <div class="icon-label">
+                    <img src="assets/icons/account_circle.png">
+                    <label for="name">Vollständiger Name</label>
+                </div>
+
+                <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="editProfileData.name" value=""
+                    placeholder="Vorname Nachname" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
+                @if (name.invalid && (name.dirty || name.touched)) {
+                    <span>Bitte ein Vor- und Nachname eingeben</span>
+                }
+            </div>
+
+            <div class="edit-name-mail" style="margin-top: 1rem">
+                <div class="icon-label">
+                    <img src="assets/icons/mail.png">
+                    <label for="email">E-Mail-Adresse</label>
+                </div>
+
+                <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="editProfileData.email"
+                    value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
+                    required>
+                @if (email.invalid && (email.dirty || email.touched)) {
+                    <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
+                }
+            </div>
+
+            <div class="buttons-container">
+                <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
+                <input type="submit" value="Speichern" (click)="saveEdit(editProfileData.name, editProfileData.email)"
+                    [disabled]="!editProfileForm.valid || editProfileForm.submitted">
+            </div>
+        </form>
     </div>
-
-    <form action="" class="edit-name-mail-form" #editProfileForm="ngForm">
-        <div class="edit-name-mail">
-            <div class="icon-label">
-                <img src="assets/icons/account_circle.png">
-                <label for="name">Vollständiger Name</label>
-            </div>
-
-            <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="editProfileData.name" value="" placeholder="Vorname Nachname" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
-            @if (name.invalid && (name.dirty || name.touched)) {
-                <span>Bitte ein Vor- und Nachname eingeben</span>
-            }
-        </div>
-
-        <div class="edit-name-mail" style="margin-top: 1rem">
-            <div class="icon-label">
-                <img src="assets/icons/mail.png">
-                <label for="email">E-Mail-Adresse</label>
-            </div>
-
-            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="editProfileData.email" value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" required>
-            @if (email.invalid && (email.dirty || email.touched)) {
-                <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
-            }
-        </div>
-
-        <div class="buttons-container">
-            <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
-            <input type="submit" value="Speichern" (click)="saveEdit(editProfileData.name, editProfileData.email)" [disabled]="!editProfileForm.valid || editProfileForm.submitted">
-        </div>
-    </form>
 </div>
-
-@if (this.uiService.showChangeAvatarPopup) {
-    <app-change-avatar></app-change-avatar>
-}
 
 @if (this.uiService.showVerifyPasswordPopup) {
     <app-verify-password></app-verify-password>
