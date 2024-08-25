@@ -283,6 +283,8 @@
 
 .change-avatar-buttons-container {
   display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
   gap: 2rem;
 
   button {

@@ -23,7 +23,9 @@ export class EditProfileComponent implements OnInit {
   userService = inject(UserService);
   currentUsersAvatar = this.userService.getCurrentUsersAvatar();
   selectedAvatar: string = '';
-  newSelectedAvatar: boolean = false;
+  avatarIsChanged: boolean = false;
+  nameIsChanged: boolean = false;
+  emailIsChanged: boolean = false;
 
   updatedUser: User = new User();
 
@@ -40,33 +42,34 @@ export class EditProfileComponent implements OnInit {
 
 
   saveEdit(newName: string, newEmail: string) {
-    this.saveNewAvatar(); // this function is not working yet
-    // this.saveNewName(newName: string); // this function is not working yet
+    this.saveNewAvatar();
+    // this.saveNewName(newName: string);  // this function is not working yet
     this.saveNewEmailAddress(newEmail);
+    this.closeEditProfile();
+    
   }
 
 
   uploadOwnPicture() {}
 
 
-  changeAvatar() {
+  openChangeAvatarContainer() {
     this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
     this.uiService.toggleChangeAvatarContainer();
   }
 
 
   selectNewAvatar(imgPath: string) {
-    this.newSelectedAvatar = true;
+    this.avatarIsChanged = true;
     this.selectedAvatar = imgPath;
     this.currentUsersAvatar = imgPath;
     this.updatedUser = new User(this.userService.getCurrentUser());
     this.updatedUser.avatar = imgPath;
     console.log(this.updatedUser);
-    
   }
 
 
-  closeChangeAvatar() {
+  closeChangeAvatarContainer() {
     this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
     this.uiService.toggleChangeAvatarContainer();
   }
@@ -78,16 +81,37 @@ export class EditProfileComponent implements OnInit {
 
 
   saveNewAvatar() {
-    this.firestoreService.updateUser(this.updatedUser);
+    if (this.avatarIsChanged) {
+      this.firestoreService.updateUser(this.updatedUser);
+      this.avatarIsChanged = false;
+    }
   }
 
 
-  saveNewName(newName: string) {}
+  onNameChange() {
+    this.nameIsChanged = true;
+  }
+
+
+  // // this function is not working yet
+  // saveNewName(newName: string) {
+  //   if (this.nameIsChanged) {
+  //     this.nameIsChanged = false;
+  //   }
+  // }
+
+
+  onEmailChange() {
+    this.emailIsChanged = true;
+  }
 
 
   saveNewEmailAddress(newEmail: string) {
-    this.authService.newEmailAddress = newEmail;
-    this.authService.updateUserEmail(newEmail);
+    if (this.emailIsChanged) {
+      this.authService.newEmailAddress = newEmail;
+      this.authService.updateUserEmail(newEmail);
+      this.emailIsChanged = false;
+    }
   }
 
 
