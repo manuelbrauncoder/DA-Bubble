@@ -1,4 +1,4 @@
 <main>
-    <input type="text" class="channel-input">
-    <button class="primary-btn">Send Message</button>
+    <input [(ngModel)]="content" type="text" class="channel-input">
+    <button type="button" (click)="createMessage()" class="primary-btn">Send Message</button>
 </main>

@@ -12,6 +12,16 @@ export class UserService {
 
   constructor() { }
 
+  getCurrentUser() {
+    let currentUser: User = new User;
+    if (this.authService.auth.currentUser) {
+      const uid = this.authService.auth.currentUser.uid;
+      const user = this.fireService.users.find(user => user.uid === uid);
+      currentUser = new User(user);
+    }
+      return currentUser;
+  }
+
 
   /**
    * this method returns the img path for the avatar

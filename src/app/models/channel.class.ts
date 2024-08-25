@@ -1,3 +1,4 @@
+import { Message } from "./message.class";
 import { User } from "./user.class";
 
 export class Channel {
@@ -6,7 +7,7 @@ export class Channel {
     name: string;
     creator: string;
     users: User[];
-    messages: string[];
+    messages: Message[];
     comments: string[];
     reactions: string[];
     data: any[];
