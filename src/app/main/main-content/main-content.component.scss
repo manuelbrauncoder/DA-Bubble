@@ -2,17 +2,20 @@
 @import '../../../styles.scss';
 
 main{
-    height: calc(100% - 120px);
+    height: 100%;
+    width: 100%;
     display: flex;
     gap: 16px;
 }
 
 .workspace-wrapper{
     width: 25%;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .chat-wrapper{
-    width: 50%;
+    flex-grow: 2;
 }
 
 .thread-wrapper{

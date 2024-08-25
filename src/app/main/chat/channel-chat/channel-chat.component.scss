@@ -121,6 +121,10 @@ header {
     }
 }
 
+// Chat Window
+
 .input-wrapper {
     margin-top: auto;
+    @include dFlex($jc: space-around);
+    width: 100%;
 }
