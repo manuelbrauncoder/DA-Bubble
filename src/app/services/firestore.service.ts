@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -156,7 +157,18 @@ export class FirestoreService {
       name: channel.name,
       description: channel.description,
       creator: channel.creator,
-      users: channel.users
+      users: channel.users.map(user => this.getCleanUserJson(user)),
+      messages: channel.messages.map(message => this.getCleanMessageJson(message))
+    }
+  }
+
+  getCleanMessageJson(message: Message) {
+    return {
+      time: message.time,
+      sender: this.getCleanUserJson(message.sender),
+      content: message.content,
+      data: message.data,
+      reactions: message.reactions
     }
   }
 
@@ -235,6 +247,14 @@ export class FirestoreService {
     let docRef = doc(this.getCollectionRef('users'), user.id);
     await updateDoc(docRef, this.getCleanUserJson(user)).catch((err)=>{
       console.log('Error updating User', err);  
+    })
+  }
+
+  async updateChannel(channel: Channel) {
+    let docRef = doc(this.getCollectionRef('channels'), channel.id);
+    await updateDoc(docRef, this.getCleanChannelJson(channel)).catch((err)=>{
+      console.log('Error updating Channel', err);
+      
     })
   }
 }

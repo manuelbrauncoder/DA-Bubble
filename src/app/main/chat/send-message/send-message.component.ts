@@ -25,16 +25,10 @@ export class SendMessageComponent implements OnInit {
     this.copyRecipient();
   }
 
-  addMessageToRecipient(){
-    if (this.currentRecipient instanceof Channel) {
-      
-    } else {
-      // User stuff
-    }
-  }
+  
 
-  createMessage(){
-    let message: Message = {
+  async createMessage(){
+    let message = {
       time: this.authService.getCurrentTimestamp(),
       sender: this.userService.getCurrentUser(),
       content: this.content,
@@ -42,14 +36,17 @@ export class SendMessageComponent implements OnInit {
       reactions: []
     }
 
-    let newMessage = new Message(message);
+    this.currentRecipient = new Channel(this.currentRecipient);
+    this.currentRecipient.messages.push(message);
 
-    console.log(newMessage);
-    console.log(this.currentRecipient);
+    // console.log(message);
+    // console.log(this.currentRecipient);
+    
+    
+    this.userService.fireService.updateChannel(this.currentRecipient);
   
   }
 
-  // next: push new message to current channel and update channel in firestore!!
 
   /**
    * create of copy of User or Channel

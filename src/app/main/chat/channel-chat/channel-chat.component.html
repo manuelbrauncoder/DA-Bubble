@@ -16,16 +16,16 @@
                 <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
                 }
                 <span class="user-number">{{ channelService.fireService.currentChannel.users.length }}</span>
-                
+
             </div>
             @if (uiService.showChannelUsersPopup) {
-                <div class="popup-relative">
-                    <app-popup-channel-users></app-popup-channel-users>
-                </div>
+            <div class="popup-relative">
+                <app-popup-channel-users></app-popup-channel-users>
+            </div>
             }
         </div>
-        
-        
+
+
         <div class="add-user-btn-wrapper">
             <svg (click)="uiService.toggleAddUserToChannelPopup()" class="add-user" width="20" height="20"
                 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,11 +51,18 @@
 
 <main>
     <!-- space for chat -->
+    @for (message of channelService.fireService.currentChannel.messages; track $index) {
+    <div class="message">
+        <h3>from:{{ message.sender.username }}</h3>
+        <span>content: {{ message.content }}</span>
+    </div>
+
+    }
 </main>
 
 <div class="input-wrapper">
     <app-send-message [currentRecipient]="channelService.fireService.currentChannel"></app-send-message>
-    
+
 </div>
 
 
@@ -69,5 +76,5 @@
 <div (click)="uiService.toggleAddUserToChannelPopup()" class="popup-background"></div>
 }
 @if (uiService.showChannelUsersPopup) {
-    <div (click)="uiService.toggleChannelUsersPopup()" class="popup-background"></div>
+<div (click)="uiService.toggleChannelUsersPopup()" class="popup-background"></div>
 }
