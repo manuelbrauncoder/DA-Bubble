@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ChannelService } from '../../../services/channel.service';
+import { UiService } from '../../../services/ui.service';
 
 @Component({
   selector: 'app-popup-edit-channel',
@@ -8,5 +10,6 @@ import { Component } from '@angular/core';
   styleUrl: './popup-edit-channel.component.scss'
 })
 export class PopupEditChannelComponent {
-
+  channelService = inject(ChannelService);
+  uiService = inject(UiService);
 }

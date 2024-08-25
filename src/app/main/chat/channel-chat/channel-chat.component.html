@@ -15,7 +15,8 @@
             <span class="user-number">{{ channelService.fireService.currentChannel.users.length }}</span>
         </div>
         <div class="add-user-btn-wrapper">
-            <svg (click)="uiService.toggleAddUserToChannelPopup()" class="add-user" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg (click)="uiService.toggleAddUserToChannelPopup()" class="add-user" width="20" height="20"
+                viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_72590_15841" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">
                     <rect width="24" height="24" fill="#D9D9D9" />
@@ -27,12 +28,12 @@
                 </g>
             </svg>
             @if (uiService.showAddUserToChannelPopup) {
-                <div class="popup-add-user">
-                    <app-popup-add-user></app-popup-add-user>
-                </div>
+            <div class="popup-add-user">
+                <app-popup-add-user></app-popup-add-user>
+            </div>
             }
         </div>
-        
+
     </div>
 </header>
 
@@ -46,14 +47,9 @@
 </div>
 
 @if (uiService.showChannelEditPopup) {
-<div (click)="uiService.toggleEditChannelPopup()" class="popup-background">
-    <div class="popup-edit-channel">
-        <app-popup-edit-channel></app-popup-edit-channel>
-    </div>
-</div>
+<div (click)="uiService.toggleEditChannelPopup()" class="popup-background"></div>
+<div class="popup-edit-channel"><app-popup-edit-channel></app-popup-edit-channel></div>
 }
 @if (uiService.showAddUserToChannelPopup) {
-    <div (click)="uiService.toggleAddUserToChannelPopup()" class="popup-background"></div>
-    }
-
-    
+<div (click)="uiService.toggleAddUserToChannelPopup()" class="popup-background"></div>
+}

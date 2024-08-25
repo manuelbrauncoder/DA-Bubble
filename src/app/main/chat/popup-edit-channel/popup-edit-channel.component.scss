@@ -1,0 +1,42 @@
+@import '../../../../mixins.scss';
+@import '../../../../styles.scss';
+
+main {
+    box-shadow: 0px 6px 10px 0px #00000033;
+    background-color: white;
+    border-radius: 0 30px 30px 30px;
+    padding: 40px;
+    @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 20px);
+}
+
+.title {
+    @include dFlex($jc: space-between);
+    width: 100%;
+}
+
+.head {
+    @include dFlex($jc: space-between);
+    width: 100%;
+}
+
+.channel-name,
+.channel-description {
+    border: 1px solid $color-purple-light;
+    border-radius: 20px;
+    padding: 20px;
+    @include dFlex($fd: column, $g: 20px, $jc: flex-start, $ai: flex-start);
+    width: 100%;
+}
+
+h4 {
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24.55px;
+    text-align: left;
+
+}
+
+button{
+    margin-left: auto;
+}
