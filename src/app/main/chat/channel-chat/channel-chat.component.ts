@@ -2,12 +2,13 @@ import { Component, inject, OnChanges, OnInit, SimpleChanges } from '@angular/co
 import { ChannelService } from '../../../services/channel.service';
 import { UiService } from '../../../services/ui.service';
 import { UserService } from '../../../services/user.service';
-import { Channel } from '../../../models/channel.class';
+import { PopupAddUserComponent } from "../popup-add-user/popup-add-user.component";
+import { PopupEditChannelComponent } from "../popup-edit-channel/popup-edit-channel.component";
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
-  imports: [],
+  imports: [PopupAddUserComponent, PopupEditChannelComponent],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })

@@ -13,6 +13,7 @@ export class UiService {
   showChannels: boolean = true; // channel list in workspace menu
 
   showChannelEditPopup: boolean = false; // opens in channel-chat-component
+  showAddUserToChannelPopup: boolean = false;
 
   showChannelChat: boolean = true;
   showNewMessage: boolean = false;
@@ -29,6 +30,14 @@ export class UiService {
   showEditProfilePopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
+
+  toggleAddUserToChannelPopup(){
+    this.showAddUserToChannelPopup = !this.showAddUserToChannelPopup;
+  }
+
+  toggleEditChannelPopup(){
+    this.showChannelEditPopup = !this.showChannelEditPopup;
+  }
 
   /**
    * Close Popup for adding Channel Name and Description

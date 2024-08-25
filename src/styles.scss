@@ -7,11 +7,19 @@
   margin: 0;
 }
 
-html, body, p, h1, h2, h3 , h4 {
+html,
+body,
+p,
+h1,
+h2,
+h3,
+h4 {
   padding: 0;
 }
 
-html, body, app-root {
+html,
+body,
+app-root {
   height: 100%;
 }
 
@@ -29,7 +37,8 @@ app-root {
   gap: .8rem;
 }
 
-app-header, app-header-for-usermanagement {
+app-header,
+app-header-for-usermanagement {
   display: flex;
   justify-content: space-between;
   padding-bottom: 2rem;
@@ -162,21 +171,39 @@ $color-purple-1: #444DF2;
 $color-purple-2: #797EF3;
 $color-purple-light: #ADB0D9;
 $color-disabled-grey: #686868;
+$color-popup-bg: #eceefe80;
 
 
 
 // input fields for channel
 
-.channel-input{
+.channel-form {
+  background-color: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: unset;
+  gap: 20px;
+  padding: unset;
+}
+
+.channel-input {
+  font-family: Nunito;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24.55px;
+  text-align: left;
   border: 1px solid $color-purple-light;
   padding: 18px 20px;
   background-color: white;
   border-radius: 100vw;
   outline: none;
-  &:hover{
+
+  &:hover {
     border: 1px solid $color-purple-2;
   }
-  &:focus{
+
+  &:focus {
     border: 1px solid $color-purple-3;
   }
 }
@@ -195,32 +222,32 @@ $color-disabled-grey: #686868;
   line-height: 24.55px;
   @include dFlex();
   animation-duration: 100ms;
-  &:hover{
-      background-color: $color-purple-2;
-      animation-duration: 100ms;
+
+  &:hover {
+    background-color: $color-purple-2;
+    animation-duration: 100ms;
   }
-  &:disabled{
-      background-color: $color-disabled-grey;
-      cursor: not-allowed;
+
+  &:disabled {
+    background-color: $color-disabled-grey;
+    cursor: not-allowed;
   }
 }
 
-.icon{
-  
-    @include dFlex();
-    border-radius: 100%;
-    cursor: pointer;
+.icon {
 
-    &:hover {
-        background-color: $color-active-channel;
-        scale: 1.05;
-    }
+  @include dFlex();
+  border-radius: 100%;
+  cursor: pointer;
 
-    &:hover path {
-        fill: $color-purple-3;
+  &:hover {
+    background-color: $color-active-channel;
+    scale: 1.05;
+  }
 
-    }
+  &:hover path {
+    fill: $color-purple-3;
+
+  }
 
 }
-
-
