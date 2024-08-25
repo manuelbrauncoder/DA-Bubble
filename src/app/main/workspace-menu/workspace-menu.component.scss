@@ -20,7 +20,7 @@ header {
 
     svg {
         @include dFlex();
-        padding: 4px;
+        padding: 0.25rem;
         border-radius: 100%;
         cursor: pointer;
 
@@ -37,7 +37,6 @@ header {
 
 .channels {
     width: 100%;
-
 }
 
 .head {
@@ -83,11 +82,12 @@ header {
 
 .user {
     width: fit-content;
-    padding: 4px 20px;
+    padding: 0.25rem 1.25rem;
     border-radius: 100vw;
-    @include dFlex($jc: flex-start, $g: 8px);
+    @include dFlex($jc: flex-start, $g: 0.5rem);
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background-color: $color-active-channel;
     }
 }
@@ -104,12 +104,12 @@ header {
 
 .state-icon {
     position: absolute;
-    bottom: 7px;
-    right: 0px;
-    height: 14px;
-    width: 14px;
+    bottom: 0.4375rem;
+    right: 0;
+    height: 0.875rem;
+    width: 0.875rem;
     border-radius: 100%;
-    border: 2px solid white;
+    border: 0.125rem solid white;
 }
 
 .online-state {
@@ -157,13 +157,13 @@ header {
     font-size: 1.125rem;
     font-weight: 700;
     line-height: 1.534rem;
-    padding: 4px 20px;
+    padding: 0.25rem 1.25rem;
     border-radius: 100vw;
     margin-bottom: 1.563rem;
     cursor: pointer;
 }
 
-.channel-active{
+.channel-active {
     background-color: $color-active-channel;
     color: $color-purple-3;
 }

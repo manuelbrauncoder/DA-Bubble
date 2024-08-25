@@ -2,11 +2,11 @@
 @import '../../../../styles.scss';
 
 main {
-    box-shadow: 0px 6px 10px 0px #00000033;
+    box-shadow: 0rem 0.375rem 0.625rem 0rem #00000033;
     background-color: white;
-    border-radius: 0 30px 30px 30px;
-    padding: 40px;
-    @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 20px);
+    border-radius: 0 1.875rem 1.875rem 1.875rem;
+    padding: 2.5rem;
+    @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 1.25rem);
 }
 
 .title {
@@ -15,9 +15,9 @@ main {
 
     h2 {
         font-family: Nunito;
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: 700;
-        line-height: 32.74px;
+        line-height: 2.04625rem;
         text-align: left;
         color: black;
     }
@@ -30,30 +30,28 @@ main {
 
 .channel-name,
 .channel-description {
-    border: 1px solid $color-purple-light;
-    border-radius: 20px;
-    padding: 20px;
-    @include dFlex($fd: column, $g: 20px, $jc: flex-start, $ai: flex-start);
+    border: 0.0625rem solid $color-purple-light;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
+    @include dFlex($fd: column, $g: 1.25rem, $jc: flex-start, $ai: flex-start);
     width: 100%;
 }
 
 h3,
 .description {
     font-family: Nunito;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 400;
-    line-height: 24.55px;
+    line-height: 1.534rem;
     text-align: left;
-
 }
 
 h4 {
     font-family: Nunito;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 700;
-    line-height: 24.55px;
+    line-height: 1.534rem;
     text-align: left;
-
 }
 
 button {
@@ -63,15 +61,15 @@ button {
 .text-btn {
     cursor: pointer;
     font-family: Nunito;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
-    line-height: 24.55px;
+    line-height: 1.534rem;
     text-align: left;
     color: $color-purple-3;
-    animation-duration: 100ms;
+    animation-duration: 0.1s;
 
     &:hover {
-        animation-duration: 100ms;
+        animation-duration: 0.1s;
         font-weight: 700;
     }
 }
@@ -79,9 +77,9 @@ button {
 .creator {
     h3 {
         font-family: Nunito;
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: 400;
-        line-height: 32.74px;
+        line-height: 2.04625rem;
         text-align: left;
         color: $color-purple-3;
     }

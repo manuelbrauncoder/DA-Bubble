@@ -2,7 +2,7 @@
 @import '../../../../styles.scss';
 
 
-.popup-background{
+.popup-background {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -12,7 +12,7 @@
     background-color: $color-popup-bg;
 }
 
-.popup-edit-channel{
+.popup-edit-channel {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -20,111 +20,107 @@
     z-index: 3;
 }
 
-.add-user-btn-wrapper{
+.add-user-btn-wrapper {
     position: relative;
-    
 }
 
-.popup-relative{
+.popup-relative {
     position: absolute;
     z-index: 3;
     right: 0;
-    top: 45px;
+    top: 2.8125rem;
 }
 
 header {
-    box-shadow: 0px 2px 10px 0px #00000014;
-    padding: 25px 45px;
+    box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
+    padding: 1.5625rem 2.8125rem;
     width: 100%;
     border-radius: 1.875rem 1.875rem 0 0;
     @include dFlex($jc: space-between);
 
     .title {
-        @include dFlex($g: 10px, $jc: flex-start);
+        @include dFlex($g: 0.625rem, $jc: flex-start);
         cursor: pointer;
-        padding: 6px 10px;
+        padding: 0.375rem 0.625rem;
         border-radius: 100vw;
-        transition: ease-in 150ms;
+        transition: ease-in 0.15s;
 
         h4 {
             font-family: Nunito;
-            font-size: 24px;
+            font-size: 1.5rem;
             font-weight: 700;
-            line-height: 32.74px;
+            line-height: 2.04625rem;
         }
 
         &:hover {
             background-color: $color-active-channel;
-            transition: ease-in 150ms;
+            transition: ease-in 0.15s;
             color: $color-purple-3;
         }
 
         &:hover svg {
             path {
                 fill: $color-purple-3;
-
             }
         }
     }
 
-    .users-wrapper{
+    .users-wrapper {
         position: relative;
     }
 
     .user-options {
-        @include dFlex($g: 10px, $jc: flex-start);
+        @include dFlex($g: 0.625rem, $jc: flex-start);
 
         .users {
             cursor: pointer;
             @include dFlex($jc: flex-start);
             border-radius: 100vw;
-            padding: 6px 10px 6px 18px;
-            transition: ease-in 150ms;
+            padding: 0.375rem 0.625rem 0.375rem 1.125rem;
+            transition: ease-in 0.15s;
 
             .profile-img {
-                margin-left: -8px;
-                width: 40px;
-                height: 40px;
+                margin-left: -0.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
                 border-radius: 100%;
-                border: 2px solid white;
+                border: 0.125rem solid white;
             }
 
             .user-number {
-                margin-left: 10px;
+                margin-left: 0.625rem;
                 font-family: Nunito;
-                font-size: 20px;
+                font-size: 1.25rem;
                 font-weight: 600;
-                line-height: 27.28px;
+                line-height: 1.705rem;
             }
+
             &:hover {
                 background-color: $color-active-channel;
-                transition: ease-in 150ms;
+                transition: ease-in 0.15s;
                 color: $color-purple-3;
             }
         }
-        
 
         .add-user {
-            padding: 4px;
+            padding: 0.25rem;
             background-color: $color-active-channel;
-            width: 40px;
-            height: 40px;
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 100%;
             cursor: pointer;
-            transition: ease-in 150ms;
+            transition: ease-in 0.15s;
 
             &:hover path,
             rect {
                 fill: $color-purple-3;
                 scale: 1.05;
-                transition: ease-in 150ms;
+                transition: ease-in 0.15s;
             }
         }
-
     }
 }
 
-
-.input-wrapper{
+.input-wrapper {
     margin-top: auto;
 }
