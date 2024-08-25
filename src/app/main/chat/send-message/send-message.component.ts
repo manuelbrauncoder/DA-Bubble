@@ -25,6 +25,14 @@ export class SendMessageComponent implements OnInit {
     this.copyRecipient();
   }
 
+  addMessageToRecipient(){
+    if (this.currentRecipient instanceof Channel) {
+      
+    } else {
+      // User stuff
+    }
+  }
+
   createMessage(){
     let message: Message = {
       time: this.authService.getCurrentTimestamp(),
@@ -34,7 +42,9 @@ export class SendMessageComponent implements OnInit {
       reactions: []
     }
 
-    console.log(message);
+    let newMessage = new Message(message);
+
+    console.log(newMessage);
     console.log(this.currentRecipient);
   
   }

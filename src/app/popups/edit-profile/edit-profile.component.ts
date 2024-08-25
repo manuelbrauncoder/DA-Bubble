@@ -6,6 +6,7 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.class';
 
 
 @Component({
@@ -24,6 +25,8 @@ export class EditProfileComponent implements OnInit {
   selectedAvatar: string = '';
   newSelectedAvatar: boolean = false;
 
+  updatedUser: User = new User();
+
   editProfileData = {
     name: '',
     email: '',
@@ -37,7 +40,7 @@ export class EditProfileComponent implements OnInit {
 
 
   saveEdit(newName: string, newEmail: string) {
-    // this.saveNewAvatar(); // this function is not working yet
+    this.saveNewAvatar(); // this function is not working yet
     // this.saveNewName(newName: string); // this function is not working yet
     this.saveNewEmailAddress(newEmail);
   }
@@ -56,6 +59,10 @@ export class EditProfileComponent implements OnInit {
     this.newSelectedAvatar = true;
     this.selectedAvatar = imgPath;
     this.currentUsersAvatar = imgPath;
+    this.updatedUser = new User(this.userService.getCurrentUser());
+    this.updatedUser.avatar = imgPath;
+    console.log(this.updatedUser);
+    
   }
 
 
@@ -70,10 +77,9 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-  // not working yet
-  // saveNewAvatar() {
-  //   this.userService.setAvatarImg();
-  // }
+  saveNewAvatar() {
+    this.firestoreService.updateUser(this.updatedUser);
+  }
 
 
   saveNewName(newName: string) {}
