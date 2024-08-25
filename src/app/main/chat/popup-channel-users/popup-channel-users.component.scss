@@ -1,0 +1,105 @@
+@import '../../../../mixins.scss';
+@import '../../../../styles.scss';
+
+
+
+.user-wrapper{
+    @include dFlex($fd: column, $g: 20px);
+    box-shadow: 0px 6px 10px 0px #00000033;
+    background-color: white;
+    border-radius: 30px 0 30px 30px;
+    padding: 40px;
+}
+
+.title {
+    width: 100%;
+    @include dFlex($jc: space-between);
+}
+
+.users {
+    @include dFlex($fd: column, $g: 0.813rem, $ai: flex-start, $jc: flex-start);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.user-name {
+    font-family: Nunito;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 1.534rem;
+    white-space: nowrap;
+}
+
+.user {
+    width: fit-content;
+    padding: 4px 20px;
+    border-radius: 100vw;
+    @include dFlex($jc: flex-start, $g: 8px);
+    cursor: pointer;
+
+    &:hover {
+        background-color: $color-active-channel;
+    }
+}
+
+.profile-img {
+    width: 3.125rem;
+    height: 3.125rem;
+    border-radius: 100%;
+}
+
+.img-wrapper {
+    position: relative;
+}
+
+.state-icon {
+    position: absolute;
+    bottom: 7px;
+    right: 0px;
+    height: 14px;
+    width: 14px;
+    border-radius: 100%;
+    border: 2px solid white;
+}
+
+.online-state {
+    @extend .state-icon;
+    background-color: $color-online-green;
+}
+
+.offline-state {
+    @extend .state-icon;
+    background-color: $color-offline-gray;
+}
+
+.add-user {
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.55px;
+    text-align: left;
+    white-space: nowrap;
+
+}
+
+.add-btn{
+    cursor: pointer;
+    padding: 12px 29px;
+    border-radius: 100vw;
+    transition: ease-in 150ms;
+    @include dFlex($g: 15px, $jc: flex-start);
+
+    .svg-wrapper{
+        @include dFlex();
+        width: 30px;
+        height: 30px;
+        border-radius: 100vw;
+        background-color: $color-active-channel;
+        transition: ease-in 150ms;
+    }
+    &:hover {
+        background-color: $color-active-channel;
+        transition: ease-in 150ms;
+    }
+}
+

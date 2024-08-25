@@ -1,6 +1,6 @@
 <main>
     <div class="title">
-        <h3># {{ channelService.fireService.currentChannel.name }}</h3>
+        <h2># {{ channelService.fireService.currentChannel.name }}</h2>
         <svg (click)="uiService.toggleEditChannelPopup()" class="icon" width="50" height="50" viewBox="0 0 40 40"
                 fill="none" xmlns="http://www.w3.org/2000/svg">
                 <mask id="mask0_72825_6602" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24"
@@ -27,7 +27,7 @@
             <span class="text-btn">Bearbeiten</span>
         </div>
         <div class="description">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, nostrum necessitatibus ex atque quos voluptatem et itaque soluta molestias consequuntur consequatur ab amet officia, nulla fuga est doloribus, numquam non.
+            <span>{{ channelService.fireService.currentChannel.description }}</span>
         </div>
         <div class="creator">
             <h4>Erstellt von</h4>

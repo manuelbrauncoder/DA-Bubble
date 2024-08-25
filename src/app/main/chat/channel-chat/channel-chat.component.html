@@ -1,4 +1,5 @@
 <header>
+
     <div (click)="uiService.toggleEditChannelPopup()" class="title">
         <h4># {{ channelService.fireService.currentChannel.name }}</h4>
         <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7,13 +8,24 @@
                 fill="black" />
         </svg>
     </div>
+
     <div class="user-options">
-        <div class="users">
-            @for (user of channelService.fireService.currentChannel.users.slice(0, 3); track $index) {
-            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+        <div class="users-wrapper">
+            <div (click)="uiService.toggleChannelUsersPopup()" class="users">
+                @for (user of channelService.fireService.currentChannel.users.slice(0, 3); track $index) {
+                <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                }
+                <span class="user-number">{{ channelService.fireService.currentChannel.users.length }}</span>
+                
+            </div>
+            @if (uiService.showChannelUsersPopup) {
+                <div class="popup-relative">
+                    <app-popup-channel-users></app-popup-channel-users>
+                </div>
             }
-            <span class="user-number">{{ channelService.fireService.currentChannel.users.length }}</span>
         </div>
+        
+        
         <div class="add-user-btn-wrapper">
             <svg (click)="uiService.toggleAddUserToChannelPopup()" class="add-user" width="20" height="20"
                 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +40,7 @@
                 </g>
             </svg>
             @if (uiService.showAddUserToChannelPopup) {
-            <div class="popup-add-user">
+            <div class="popup-relative">
                 <app-popup-add-user></app-popup-add-user>
             </div>
             }
@@ -46,10 +58,16 @@
     <!-- input field for messages -->
 </div>
 
+
+<!-- Popups -->
+
 @if (uiService.showChannelEditPopup) {
 <div (click)="uiService.toggleEditChannelPopup()" class="popup-background"></div>
 <div class="popup-edit-channel"><app-popup-edit-channel></app-popup-edit-channel></div>
 }
 @if (uiService.showAddUserToChannelPopup) {
 <div (click)="uiService.toggleAddUserToChannelPopup()" class="popup-background"></div>
+}
+@if (uiService.showChannelUsersPopup) {
+    <div (click)="uiService.toggleChannelUsersPopup()" class="popup-background"></div>
 }

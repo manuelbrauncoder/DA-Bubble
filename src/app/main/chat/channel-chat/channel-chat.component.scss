@@ -22,11 +22,14 @@
 
 .add-user-btn-wrapper{
     position: relative;
-    .popup-add-user{
-        position: absolute;
-        z-index: 3;
-        right: 0;
-    }
+    
+}
+
+.popup-relative{
+    position: absolute;
+    z-index: 3;
+    right: 0;
+    top: 45px;
 }
 
 header {
@@ -62,6 +65,10 @@ header {
 
             }
         }
+    }
+
+    .users-wrapper{
+        position: relative;
     }
 
     .user-options {

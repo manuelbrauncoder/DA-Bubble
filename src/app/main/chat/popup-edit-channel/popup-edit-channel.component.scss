@@ -12,6 +12,15 @@ main {
 .title {
     @include dFlex($jc: space-between);
     width: 100%;
+
+    h2 {
+        font-family: Nunito;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32.74px;
+        text-align: left;
+        color: black;
+    }
 }
 
 .head {
@@ -28,6 +37,16 @@ main {
     width: 100%;
 }
 
+h3,
+.description {
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24.55px;
+    text-align: left;
+
+}
+
 h4 {
     font-family: Nunito;
     font-size: 18px;
@@ -37,6 +56,33 @@ h4 {
 
 }
 
-button{
+button {
     margin-left: auto;
+}
+
+.text-btn {
+    cursor: pointer;
+    font-family: Nunito;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24.55px;
+    text-align: left;
+    color: $color-purple-3;
+    animation-duration: 100ms;
+
+    &:hover {
+        animation-duration: 100ms;
+        font-weight: 700;
+    }
+}
+
+.creator {
+    h3 {
+        font-family: Nunito;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 32.74px;
+        text-align: left;
+        color: $color-purple-3;
+    }
 }

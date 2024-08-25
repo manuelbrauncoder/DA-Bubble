@@ -14,6 +14,9 @@ export class UiService {
 
   showChannelEditPopup: boolean = false; // opens in channel-chat-component
   showAddUserToChannelPopup: boolean = false;
+  showChannelUsersPopup: boolean = false;
+  showChannelUsersAddUser: boolean = false;
+  showChannelUsers: boolean = true;
 
   showChannelChat: boolean = true;
   showNewMessage: boolean = false;
@@ -31,8 +34,23 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
 
+  showAddUserInChannelUser(){
+    this.showChannelUsersAddUser = true;
+    this.showChannelUsers = false;
+  }
+
+  toggleChannelUsersPopup(){
+    this.showChannelUsersPopup = !this.showChannelUsersPopup;
+    this.showChannelUsersAddUser = false;
+    this.showChannelUsers = true;
+  }
+
   toggleAddUserToChannelPopup(){
-    this.showAddUserToChannelPopup = !this.showAddUserToChannelPopup;
+    if (this.showChannelUsersAddUser) {
+      this.toggleChannelUsersPopup();
+    } else {
+      this.showAddUserToChannelPopup = !this.showAddUserToChannelPopup;
+    }
   }
 
   toggleEditChannelPopup(){
