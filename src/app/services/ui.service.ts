@@ -86,6 +86,11 @@ export class UiService {
     this.showChannels = !this.showChannels;
   }
 
+  /**
+   * Toggles the visibility of the popup for editing the user profile and logging out.
+   * Resets other related popups to their hidden state.
+   */
+
   toggleEditUserAndLogoutPopup() {
     this.showEditUserAndLogoutPopup = !this.showEditUserAndLogoutPopup;
     this.showViewProfilePopup = false;
@@ -94,22 +99,38 @@ export class UiService {
     this.showChangeAvatarContainer = false;
   }
 
+  /**
+   * Toggles the visibility of the popup for viewing the user profile.
+   */
   toggleViewProfile() {
     this.showViewProfilePopup = !this.showViewProfilePopup;
   }
 
+  /**
+   * Toggles the visibility of the popup for editing the user profile.
+   */
   toggleEditProfile() {
     this.showEditProfilePopup = !this.showEditProfilePopup;
   }
 
+  /**
+   * Toggles the visibility of the container for changing the user's avatar.
+   */
   toggleChangeAvatarContainer() {
     this.showChangeAvatarContainer = !this.showChangeAvatarContainer;
   }
 
+  /**
+   * Toggles the visibility of the popup for verifying the user's password.
+   */
   toggleVerifyPassword() {
     this.showVerifyPasswordPopup = !this.showVerifyPasswordPopup;
   }
 
+  /**
+   * Toggles the visibility of the confirmation popup for profile changes.
+   * The variable "showProfileChangeConfirmationPopup" will automatically set to false after 4.5 seconds.
+   */
   toggleProfileChangeConfirmationPopup() {
     this.showProfileChangeConfirmationPopup = !this.showProfileChangeConfirmationPopup;
     

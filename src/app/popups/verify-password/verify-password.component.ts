@@ -28,12 +28,22 @@ export class VerifyPasswordComponent implements OnInit{
   }
   
 
+  /**
+   * Initializes the component, setting the current user's name and email.
+   */
   ngOnInit(): void {
     this.verifyPasswordData.name = this.authService.auth.currentUser?.displayName!;
     this.verifyPasswordData.email = this.authService.auth.currentUser?.email!;
   }
 
 
+  /**
+   * Confirms the user's password for re-authentication.
+   * Updates the email if the password is correct, then closes the verify password view and toggles the Edit User and Logout Popup.
+   * @param name - The user's name.
+   * @param email - The user's email address.
+   * @param password - The user's password.
+   */
   confirmPassword(name: string, email: string, password: string) {
     this.authService.updateEmail = true;
     this.authService.reAuthenticateUser(email, password);
@@ -42,6 +52,9 @@ export class VerifyPasswordComponent implements OnInit{
   }
 
   
+  /**
+   * Closes the verify password view.
+   */
   closeVerifyPassword() {
     this.uiService.toggleVerifyPassword();
   }

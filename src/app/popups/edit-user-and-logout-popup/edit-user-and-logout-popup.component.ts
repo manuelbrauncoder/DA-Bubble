@@ -18,11 +18,19 @@ export class EditUserAndLogoutPopupComponent {
   authService = inject(FirebaseAuthService);
 
 
+  /**
+   * Toggles the visibility of the user's profile view.
+   * This method is called when the user wants to view their profile.
+   */
   viewProfile() {
     this.uiService.toggleViewProfile();
   }
 
 
+  /**
+   * Logs the user out of the application.
+   * This method is called when the user chooses to log out.
+   */
   logout() {
     this.authService.logout()
   }

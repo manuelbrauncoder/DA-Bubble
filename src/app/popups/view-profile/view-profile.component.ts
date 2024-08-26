@@ -21,11 +21,18 @@ export class ViewProfileComponent {
   userService = inject(UserService);
 
 
+  /**
+   * Closes the view profile popup.
+   * This method is called when the user wants to close their profile view.
+   */
   closeViewProfile() {
     this.uiService.toggleViewProfile();
   }
 
-
+/**
+   * Opens the edit profile view.
+   * This method is called when the user wants to edit their profile.
+   */
   editProfile() {
     this.uiService.toggleEditProfile();
   }

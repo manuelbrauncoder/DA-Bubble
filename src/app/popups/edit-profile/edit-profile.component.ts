@@ -36,12 +36,21 @@ export class EditProfileComponent implements OnInit {
   };
 
 
+  /**
+   * Initializes the component, setting the current user's name and email.
+   */
   ngOnInit(): void {
     this.editProfileData.name = this.authService.auth.currentUser?.displayName!;
     this.editProfileData.email = this.authService.auth.currentUser?.email!;
   }
 
 
+  /**
+   * Saves changes to the profile if any edits have been made.
+   * Updates the avatar, name, and email, then closes the edit profile view and shows a confirmation popup.
+   * @param newName - The new name entered by the user.
+   * @param newEmail - The new email entered by the user.
+   */
   saveEdit(newName: string, newEmail: string) {
     if (this.avatarIsChanged || this.nameIsChanged || this.emailIsChanged) {
       this.saveNewAvatar();
@@ -53,15 +62,25 @@ export class EditProfileComponent implements OnInit {
   }
 
 
+  /**
+   * Placeholder method for uploading a custom profile picture.
+   */
   uploadOwnPicture() {}
 
 
+  /**
+   * Opens the container for changing the user's avatar.
+   */
   openChangeAvatarContainer() {
     this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
     this.uiService.toggleChangeAvatarContainer();
   }
 
 
+  /**
+   * Selects a new avatar for the user and updates the relevant data.
+   * @param imgPath - The file path of the selected avatar image.
+   */
   selectNewAvatar(imgPath: string) {
     this.avatarIsChanged = true;
     this.selectedAvatar = imgPath;
@@ -72,17 +91,28 @@ export class EditProfileComponent implements OnInit {
   }
 
 
+  /**
+   * Closes the avatar change container without saving changes.
+   */
   closeChangeAvatarContainer() {
     this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
     this.uiService.toggleChangeAvatarContainer();
   }
 
 
+  /**
+   * Confirms the selected avatar and closes the avatar change container.
+   * But the selected avatar is not saved yet at this point.
+   */
   confirmNewSelectedAvatar() {
     this.uiService.toggleChangeAvatarContainer();
   }
 
 
+  /**
+   * Saves the new avatar if it has been changed.
+   * Updates the user data in Firestore.
+   */
   saveNewAvatar() {
     if (this.avatarIsChanged) {
       this.firestoreService.updateUser(this.updatedUser);
@@ -91,6 +121,9 @@ export class EditProfileComponent implements OnInit {
   }
 
 
+  /**
+   * Marks the user's name as changed.
+   */
   onNameChange() {
     this.nameIsChanged = true;
   }
@@ -104,11 +137,19 @@ export class EditProfileComponent implements OnInit {
   // }
 
 
+  /**
+   * Marks the user's email as changed.
+   */
   onEmailChange() {
     this.emailIsChanged = true;
   }
 
 
+  /**
+   * Saves the new email address if it has been changed.
+   * Updates the user's email in Firebase Authentication.
+   * @param newEmail - The new email address entered by the user.
+   */
   saveNewEmailAddress(newEmail: string) {
     if (this.emailIsChanged) {
       this.authService.newEmailAddress = newEmail;
@@ -118,6 +159,9 @@ export class EditProfileComponent implements OnInit {
   }
 
 
+  /**
+   * Closes the edit profile view and reopens the view profile view.
+   */
   closeEditProfile() {
     this.uiService.toggleEditProfile();
     this.uiService.toggleViewProfile();
