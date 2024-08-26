@@ -6,11 +6,12 @@ import { PopupAddUserComponent } from "../popup-add-user/popup-add-user.componen
 import { PopupEditChannelComponent } from "../popup-edit-channel/popup-edit-channel.component";
 import { PopupChannelUsersComponent } from "../popup-channel-users/popup-channel-users.component";
 import { SendMessageComponent } from "../send-message/send-message.component";
+import { SingleMessageComponent } from "../single-message/single-message.component";
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
-  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent],
+  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
