@@ -33,6 +33,7 @@ export class UiService {
   showEditProfilePopup: boolean = false;
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
+  showProfileChangeConfirmationPopup: boolean = false;
 
   showAddUserInChannelUser(){
     this.showChannelUsersAddUser = true;
@@ -107,6 +108,14 @@ export class UiService {
 
   toggleVerifyPassword() {
     this.showVerifyPasswordPopup = !this.showVerifyPasswordPopup;
+  }
+
+  toggleProfileChangeConfirmationPopup() {
+    this.showProfileChangeConfirmationPopup = !this.showProfileChangeConfirmationPopup;
+    
+    setTimeout(() => {
+      this.showProfileChangeConfirmationPopup = false;
+    }, 4500);
   }
 
   constructor() { }

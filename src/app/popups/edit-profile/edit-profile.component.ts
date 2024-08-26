@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.class';
+// import { ProfileChangeConfirmationComponent } from '../profile-change-confirmation/profile-change-confirmation.component';
 
 
 @Component({
@@ -42,11 +43,13 @@ export class EditProfileComponent implements OnInit {
 
 
   saveEdit(newName: string, newEmail: string) {
-    this.saveNewAvatar();
-    // this.saveNewName(newName: string);  // this function is not working yet
-    this.saveNewEmailAddress(newEmail);
-    this.closeEditProfile();
-    
+    if (this.avatarIsChanged || this.nameIsChanged || this.emailIsChanged) {
+      this.saveNewAvatar();
+      // this.saveNewName(newName: string);  // this function is not working yet
+      this.saveNewEmailAddress(newEmail);
+      this.closeEditProfile();
+      this.uiService.toggleProfileChangeConfirmationPopup();
+    }
   }
 
 

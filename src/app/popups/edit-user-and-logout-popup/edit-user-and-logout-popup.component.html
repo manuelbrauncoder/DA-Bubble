@@ -6,3 +6,7 @@
 @if (uiService.showViewProfilePopup) {
     <app-view-profile></app-view-profile>
 }
+
+@if (this.uiService.showProfileChangeConfirmationPopup) {
+    <app-profile-change-confirmation></app-profile-change-confirmation>
+}
