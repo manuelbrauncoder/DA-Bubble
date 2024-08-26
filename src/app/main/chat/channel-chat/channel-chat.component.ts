@@ -7,6 +7,7 @@ import { PopupEditChannelComponent } from "../popup-edit-channel/popup-edit-chan
 import { PopupChannelUsersComponent } from "../popup-channel-users/popup-channel-users.component";
 import { SendMessageComponent } from "../send-message/send-message.component";
 import { SingleMessageComponent } from "../single-message/single-message.component";
+import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 
 @Component({
   selector: 'app-channel-chat',
@@ -19,7 +20,7 @@ export class ChannelChatComponent {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
-
+  authService = inject(FirebaseAuthService);
 
   
   
