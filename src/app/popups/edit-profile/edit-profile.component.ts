@@ -56,8 +56,8 @@ export class EditProfileComponent implements OnInit {
       this.saveNewAvatar();
       // this.saveNewName(newName: string);  // this function is not working yet
       this.saveNewEmailAddress(newEmail);
-      this.closeEditProfile();
-      this.uiService.toggleProfileChangeConfirmationPopup();
+      //this.closeEditProfile();
+      //this.uiService.toggleProfileChangeConfirmationPopup();
     }
   }
 
