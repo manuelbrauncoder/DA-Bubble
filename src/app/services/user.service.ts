@@ -12,6 +12,10 @@ export class UserService {
 
   constructor() { }
 
+  /**
+   * 
+   * @returns the current logged in User
+   */
   getCurrentUser() {
     let currentUser: User = new User;
     if (this.authService.auth.currentUser) {
