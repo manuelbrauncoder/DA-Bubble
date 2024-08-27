@@ -48,7 +48,8 @@ export class VerifyPasswordComponent implements OnInit{
     this.authService.updateEmail = true;
     this.authService.reAuthenticateUser(email, password);
     this.closeVerifyPassword();
-    this.uiService.toggleEditUserAndLogoutPopup();
+    this.uiService.toggleEditProfile();
+    this.uiService.toggleViewProfile();
   }
 
   
