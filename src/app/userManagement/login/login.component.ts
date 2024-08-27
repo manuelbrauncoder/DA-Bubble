@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,14 @@ export class LoginComponent {
     password: ''
   }
 
+  // ngOnInit() {
+  //   this.authService.handleGoogleSignInRedirect();
+  // }
+
+  // googleLogin() {
+  //   this.authService.googleLoginRedirect();
+  // }
+
     /**
    * Login for user. Checks if email and pwd is in the database
    * and link to the main page.
@@ -43,7 +51,7 @@ export class LoginComponent {
       });
   }
 
-    /**
+  /**
    * Guestlogin. Links to the main page.
    */
   async guestLogin() {
@@ -54,4 +62,18 @@ export class LoginComponent {
       console.error('Guest login error in LoginComponent:', error);
     }
   }
+
+  /**
+   * Googlelogin. Uses Method from Authservice. After login links to the main page.
+   */
+  async googleLogin() {
+    try {
+      await this.authService.googleLogin();
+      this.router.navigate(['/dabubble']);
+    } catch (error) {
+      console.error('Google login error in LoginComponent:', error);
+      this.loginFailed = true;
+    }
+  }
+
 }

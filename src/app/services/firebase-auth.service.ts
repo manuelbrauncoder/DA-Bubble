@@ -22,7 +22,8 @@ import {
   user,
   sendPasswordResetEmail,
   confirmPasswordReset,
-  verifyPasswordResetCode
+  verifyPasswordResetCode,
+  signInWithPopup
 } from '@angular/fire/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
@@ -30,6 +31,9 @@ import { FirestoreService } from './firestore.service';
 import { UserInterface } from '../interfaces/user-interface';
 import { User } from '../models/user.class';
 import { UiService } from './ui.service';
+import { Router } from '@angular/router';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { Firestore } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +49,7 @@ export class FirebaseAuthService {
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
-  constructor() {
+  constructor(private router: Router, private firestore: Firestore) {
   }
 
 
@@ -72,34 +76,68 @@ export class FirebaseAuthService {
     this.tempRegData = null;
   }
 
-
   /**
-   * not working yet
+   * Google Login with a popup
+   * Checks if user is already in the database or not
+   * If not then saves a new user. If yes then update the data.
    */
-  signInWithGoogle() {
-    signInWithRedirect(this.auth, this.provider)
+  googleLogin() {
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(this.auth, provider).then(async (result) => {
+      const user = result.user;
+      if (user) {
+        const userRef = doc(this.firestore, `users/${user.uid}`);
+        const userDoc = await getDoc(userRef);
+
+        if (userDoc.exists()) {
+          await setDoc(userRef, {
+            username: user.displayName,
+            email: user.email,
+            avatar: user.photoURL || 'default-avatar-url'
+          }, { merge: true });
+        } else {
+          this.saveNewUserInFirestore(
+            user.email!,
+            user.displayName!,
+            user.uid,
+            user.photoURL || 'default-avatar-url'
+          );
+        }
+      }
+    }).catch((error) => {
+      console.error('Google sign-in error:', error);
+    });
   }
 
   /**
-   * not working yet
+   * Google Login with a redirect
+   */
+  googleLoginRedirect() {
+    const provider = new GoogleAuthProvider();
+    return signInWithRedirect(this.auth, provider);
+  }
+
+  /**
+   * Google login with a redirect to the main page
    */
   handleGoogleSignInRedirect() {
-
-    getRedirectResult(this.auth).then((result) => {
-      if (result) {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential?.accessToken;
-        const user = result.user;
-        console.log(credential, token, user);
-
-      }
-    }).catch((err) => {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      const email = err.customData.email;
-      const credential = GoogleAuthProvider.credentialFromError(err);
-      console.warn(errorCode, errorMessage, email, credential);
-    })
+    return getRedirectResult(this.auth)
+      .then(result => {
+        if (result) {
+          const credential = GoogleAuthProvider.credentialFromResult(result);
+          const token = credential?.accessToken;
+          const user = result.user;
+          console.log(credential, token, user);
+          this.router.navigate(['/dabubble']);
+        }
+      })
+      .catch(err => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        const email = err.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(err);
+        console.warn(errorCode, errorMessage, email, credential);
+      });
   }
 
   /**
@@ -126,6 +164,7 @@ export class FirebaseAuthService {
     })
       .catch((err) => {
         console.error('Error register new User', err);
+        throw err;
       });
     return from(promise);
   }
