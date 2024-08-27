@@ -314,7 +314,7 @@ export class FirebaseAuthService {
       }).catch((err) => {
         let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
-          this.uiService.showVerifyPasswordPopup = !this.uiService.showVerifyPasswordPopup;
+          this.uiService.toggleVerifyPassword();
         }
         console.log(err);
 

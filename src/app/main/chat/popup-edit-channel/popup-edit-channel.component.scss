@@ -7,6 +7,7 @@ main {
     border-radius: 0 1.875rem 1.875rem 1.875rem;
     padding: 2.5rem;
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 1.25rem);
+    min-width: 30rem;
 }
 
 .title {
@@ -30,10 +31,21 @@ main {
 
 .channel-name,
 .channel-description {
-    border: 0.0625rem solid $color-purple-light;
     border-radius: 1.25rem;
-    padding: 1.25rem;
     @include dFlex($fd: column, $g: 1.25rem, $jc: flex-start, $ai: flex-start);
+    width: 100%;
+}
+
+.show-border{
+    border: 0.0625rem solid $color-purple-light;
+    padding: 1.25rem;
+}
+
+.hide-border{
+    border: unset;
+}
+
+input{
     width: 100%;
 }
 
@@ -44,6 +56,10 @@ h3,
     font-weight: 400;
     line-height: 1.534rem;
     text-align: left;
+}
+
+.description{
+    width: 100%;
 }
 
 h4 {

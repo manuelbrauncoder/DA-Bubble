@@ -1,4 +1,6 @@
 <main>
+
+    <!-- Channel Header -->
     <div class="title">
         <h2># {{ channelService.fireService.currentChannel.name }}</h2>
         <svg (click)="uiService.toggleEditChannelPopup()" class="icon" width="50" height="50" viewBox="0 0 40 40"
@@ -14,25 +16,52 @@
                 </g>
             </svg>
     </div>
-    <div class="channel-name">
+
+    <!-- Channel Name -->
+    <div [ngClass]="showNameInput ? 'hide-border' : 'show-border'" class="channel-name">
         <div class="head">
             <h4>Channel-Name</h4>
-            <span class="text-btn">Bearbeiten</span>
+            @if (!showNameInput) {
+                <span (click)="toggleNameInput()" class="text-btn">Bearbeiten</span>
+            }
+            @if (showNameInput) {
+                <span (click)="saveNewChannelName()" class="text-btn">Speichern</span>
+            }
         </div>
-        <h3># {{ channelService.fireService.currentChannel.name }}</h3>
+        @if (!showNameInput) {
+            <h3># {{ channelService.fireService.currentChannel.name }}</h3>
+        }
+        @if (showNameInput) {
+            <input [(ngModel)]="nameInput" name="nameInput" type="text" placeholder="{{ channelService.fireService.currentChannel.name }}" class="channel-input">
+        }
     </div>
-    <div class="channel-description">
+
+
+    <!-- Channel Description -->
+    <div [ngClass]="showDescriptionInput ? 'hide-border' : 'show-border'" class="channel-description">
         <div class="head">
             <h4>Beschreibung</h4>
-            <span class="text-btn">Bearbeiten</span>
+            @if (!showDescriptionInput) {
+                <span (click)="toggleDescriptionInput()" class="text-btn">Bearbeiten</span>
+            }
+            @if (showDescriptionInput) {
+                <span (click)="saveNewChannelDescription()" class="text-btn">Speichern</span>
+            }
         </div>
         <div class="description">
-            <span>{{ channelService.fireService.currentChannel.description }}</span>
+            @if (!showDescriptionInput) {
+                <span>{{ channelService.fireService.currentChannel.description }}</span>
+            }
+            @if (showDescriptionInput) {
+                <input [(ngModel)]="descriptionInput" type="text" placeholder="Dein Text hier" class="channel-input">
+            }
         </div>
         <div class="creator">
             <h4>Erstellt von</h4>
             <h3>{{ channelService.fireService.currentChannel.creator }}</h3>
         </div>
     </div>
+
+
     <button type="button" class="primary-btn">Channel verlassen</button>
 </main>
