@@ -100,3 +100,12 @@ button {
         color: $color-purple-3;
     }
 }
+
+.divider{
+    width: 100%;
+    height: 1px;
+    background-color: $color-purple-light;
+    border: unset;
+    margin: 0;
+    padding: 0;
+}
