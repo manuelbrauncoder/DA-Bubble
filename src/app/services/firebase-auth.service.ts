@@ -46,6 +46,8 @@ export class FirebaseAuthService {
   uiService = inject(UiService);
   newEmailAddress: string = '';
   updateEmail: boolean = false;
+  googleUser: boolean = false;
+  guestUser: boolean = false;
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
@@ -85,6 +87,7 @@ export class FirebaseAuthService {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.auth, provider).then(async (result) => {
       const user = result.user;
+      this.googleUser = true;
       if (user) {
         const userRef = doc(this.firestore, `users/${user.uid}`);
         const userDoc = await getDoc(userRef);
@@ -233,9 +236,10 @@ export class FirebaseAuthService {
     const currentUserUid = this.currentUserSig()?.uid;
     const promise = signOut(this.auth).then(() => {
       this.changeLoginState(false, currentUserUid!);
+      this.guestUser = false;
+      this.googleUser = false;
     }).catch((err) => {
       console.log('Error logging User out', err);
-
     });
     return from(promise);
   }
@@ -247,6 +251,7 @@ export class FirebaseAuthService {
     const guestEmail = 'guest@gmail.com';
     const guestPw = '123456'
     this.login(guestEmail, guestPw);
+    this.guestUser = true;
   }
 
   /**
