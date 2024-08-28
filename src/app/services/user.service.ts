@@ -62,24 +62,24 @@ export class UserService {
    * Call this method to delete all data in 'users'
    * then push example users to 'users' collection in firebase
    */
-  async resetUsersInFirebase(){
-    if (confirm('Delete all Users, and replace with example Users?')) {
-      await this.deleteAllUsers();
-      await this.addExampleUsersToFirebase();
-    }
-  }
+  // async resetUsersInFirebase(){
+  //   if (confirm('Delete all Users, and replace with example Users?')) {
+  //     await this.deleteAllUsers();
+  //     await this.addExampleUsersToFirebase();
+  //   }
+  // }
 
-  async addExampleUsersToFirebase(){
-    for (let i = 0; i < this.fireService.exampleUsers.length; i++) {
-      const user = this.fireService.exampleUsers[i];
-      await this.fireService.addUser(user);
-    }
-  }
+  // async addExampleUsersToFirebase(){
+  //   for (let i = 0; i < this.fireService.exampleUsers.length; i++) {
+  //     const user = this.fireService.exampleUsers[i];
+  //     await this.fireService.addUser(user);
+  //   }
+  // }
 
-  async deleteAllUsers(){
-    while (this.fireService.users.length > 0) {
-      const id = this.fireService.users[0].id;
-      await this.fireService.deleteDocument(id, 'users');
-    }
-  }
+  // async deleteAllUsers(){
+  //   while (this.fireService.users.length > 0) {
+  //     const id = this.fireService.users[0].id;
+  //     await this.fireService.deleteDocument(id, 'users');
+  //   }
+  // }
 }

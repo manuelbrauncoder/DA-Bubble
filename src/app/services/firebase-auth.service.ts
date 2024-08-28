@@ -131,7 +131,6 @@ export class FirebaseAuthService {
   
         this.fireService.users.forEach((firestoreUser) => {
           const userData = {
-            id: firestoreUser.id,
             uid: user.uid,
             username: user.displayName || 'No Username',
             email: user.email || 'No Email',
@@ -141,7 +140,7 @@ export class FirebaseAuthService {
           };
 
           if (user.uid === firestoreUser.uid) {
-            this.fireService.updateUser(userData);
+            this.fireService.addUser(userData);
             userExists = true;
           }
         });
@@ -274,7 +273,7 @@ export class FirebaseAuthService {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
         user.currentlyLoggedIn = loggedInState;
-        this.fireService.updateUser(user);
+        this.fireService.addUser(user);
       }
     })
   }
@@ -345,7 +344,7 @@ export class FirebaseAuthService {
   deleteUserInFirestore(uid: string) {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
-        this.fireService.deleteDocument(user.id, 'users');
+        this.fireService.deleteDocument(user.uid, 'users');
       }
     })
   }
@@ -366,7 +365,7 @@ export class FirebaseAuthService {
         this.fireService.users.forEach((user) => {
           if (currentUser.uid === user.uid) {
             user.email = newEmail;
-            this.fireService.updateUser(user);
+            this.fireService.addUser(user);
           }
         })
       }).catch((err) => {

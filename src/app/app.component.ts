@@ -43,7 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subLoginState();
-    this.subExampleUsers();
+    //this.subExampleUsers();
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

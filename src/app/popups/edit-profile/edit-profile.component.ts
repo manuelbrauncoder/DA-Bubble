@@ -125,7 +125,7 @@ export class EditProfileComponent implements OnInit {
    */
   saveNewAvatar() {
     if (this.avatarIsChanged) {
-      this.firestoreService.updateUser(this.updatedUser);
+      this.firestoreService.addUser(this.updatedUser);
       this.avatarIsChanged = false;
     }
   }

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, setDoc, updateDoc } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -88,7 +88,7 @@ export class FirestoreService {
     return onSnapshot(q, (list) => {
       this.users = [];
       list.forEach((element) => {
-        const user = this.setUserObject(element.data(), element.id);
+        const user = this.setUserObject(element.data());
         this.users.push(user);
       });      
       list.docChanges().forEach((change) => {
@@ -231,9 +231,8 @@ export class FirestoreService {
    * @param id firebase id
    * @returns a UserInterface Object
    */
-  setUserObject(user: any, id: string): User {
+  setUserObject(user: any): User {
     return {
-      id: id || '',
       uid: user.uid || '',
       email: user.email || '',
       username: user.username || '',
@@ -242,18 +241,19 @@ export class FirestoreService {
       currentlyLoggedIn: user.currentlyLoggedIn || false
     }
   }
-
-  /**
-   * Add new user to Firestore Collection 'users'
-   * convert class to clean json before pushing to firebase
-   * @param user 
-   */
+  
   async addUser(user: any) {
-    await addDoc(this.getCollectionRef('users'), this.getCleanUserJson(user)).catch((err) => {
+    const userid = user.uid;
+    const userRef = doc(this.firestore, 'users', userid);
+    const userData = this.getCleanUserJson(user);
+
+    await setDoc(userRef, userData).catch((err) => {
       console.log('Error adding User to Firebase', err);
+      
     })
   }
 
+  
   /**
    * Add new channel to Firestore Collection 'channels'
    * convert class to clean json before pushing to firebase
@@ -272,6 +272,7 @@ export class FirestoreService {
   }
 
   /**
+   * Do not user for delete User!!
    * delete document from collection with id
    * @param docId document id
    * @param collection collection id
@@ -283,16 +284,6 @@ export class FirestoreService {
     })
   }
 
-  /**
-   * update user data
-   * @param user 
-   */
-  async updateUser(user: User){
-    let docRef = doc(this.getCollectionRef('users'), user.id);
-    await updateDoc(docRef, this.getCleanUserJson(user)).catch((err)=>{
-      console.log('Error updating User', err);  
-    })
-  }
 
   async updateChannel(channel: Channel) {
     let docRef = doc(this.getCollectionRef('channels'), channel.id);

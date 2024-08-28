@@ -7,7 +7,6 @@
 <app-footer *ngIf="!showFooterAndHeader"></app-footer>
 
 @if (testMode) {
-<button class="test-btn" (click)="userService.resetUsersInFirebase()">reset firestore</button>
 <button class="test-btn" (click)="authService.guestLogin()">guest login</button>
 <button class="test-btn" (click)="authService.guestSignUp()">guest sign up</button>
 <button class="test-btn" (click)="authService.deleteUserAccount()">Delete Account</button>
