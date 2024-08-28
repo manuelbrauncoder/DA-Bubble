@@ -74,31 +74,6 @@ button {
   font-weight: 700;
 }
 
-input {
-  cursor: pointer;
-  background-color: #ECEEFE;
-  border: none;
-  padding: 1.1rem 3rem;
-  border-radius: 1.5rem;
-  color: black;
-  font-size: 1.1rem;
-  font-weight: 500;
-
-  &:hover {
-    border: .1rem solid #686868;
-  }
-
-  &:focus {
-    border: none;
-    outline: .1rem solid #444DF2;
-    color: black;
-  }
-}
-
-input::placeholder {
-  color: #686868;
-}
-
 form {
   background-color: white;
   display: flex;
