@@ -23,6 +23,7 @@
     <button>Datei hochladen</button>
   </div>
   <div class="btn-wrapper">
+    <span *ngIf="registrationFailed">{{ errorMassage }}</span> 
     <button (click)="completeRegistration()" [ngClass]="{'disabled-button': !selectedAvatar}" [disabled]="!selectedAvatar">Weiter</button>
   </div>
 </form>

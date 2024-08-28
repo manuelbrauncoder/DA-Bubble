@@ -17,19 +17,33 @@ export class ChooseAvatarComponent {
   selectedAvatar: string = '';
   avatarIsSelected: boolean = false;
   showPopup: boolean = false;
+  registrationFailed: boolean = false;
+  errorMassage: String = '';
 
   regData = this.authService.getStoredRegistrationData();
 
   completeRegistration() {
     if (this.regData) {
-      this.authService.register(this.regData.email, this.regData.username, this.regData.password, this.selectedAvatar).subscribe(() => {
-        console.log('Registration complete with avatar:', this.selectedAvatar);
-        this.authService.clearStoredRegistrationData();
-        this.showPopup = true;
-        this.router.navigate(['/login']);
+      this.authService.register(this.regData.email, this.regData.username, this.regData.password, this.selectedAvatar).subscribe({
+        next: () => {
+          console.log('Registration complete with avatar:', this.selectedAvatar);
+          this.authService.clearStoredRegistrationData();
+          this.showPopup = true;
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('Registration failed:', err);
+          if (err.code === 'auth/email-already-in-use') {
+            this.registrationFailed = true;
+            this.errorMassage = 'Email existiert bereits!';
+          } else {
+            this.registrationFailed = true;
+            this.errorMassage = 'Irgendetwas ist schief gelaufen!';
+          }
+        }
       });
-    } else {
-      console.error('No registration data found!');
-    }
+    } 
   }
+
+
 }
