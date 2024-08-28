@@ -31,10 +31,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   unsubUsersList;
   unsubChannelList;
+  unsubConversationList;
 
   constructor(private router: Router) {
     this.unsubUsersList = this.fireService.getUsersList();
     this.unsubChannelList = this.fireService.getChannelList();
+    this.unsubConversationList = this.fireService.getConversationList();
   }
 
   private showNoFooterRoutes: string[] = ['/dabubble'];
@@ -53,6 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubUsersList();
     this.unsubChannelList();
+    this.unsubConversationList();
   }
 
   /**

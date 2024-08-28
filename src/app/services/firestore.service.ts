@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
+import { Conversation, Participants } from '../models/conversation.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,11 @@ export class FirestoreService {
   exampleUserDataUrl = 'assets/data/exampleUsers.json';
   private isDefaultChannelset = false;
   currentChannel: Channel = new Channel();
-
+  currentConversation: Conversation = new Conversation();
 
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here
+  conversations: Conversation[] = []; // all conversations stored here
   
 
   exampleUsers: User[] = [];
@@ -114,6 +116,28 @@ export class FirestoreService {
     })
   }
 
+  getConversationList(){
+    return onSnapshot(this.getCollectionRef('conversations'), (list) => {
+      this.conversations = [];
+      list.forEach((element) => {
+        const conversation = this.setConversationObject(element.data(), element.id);
+        this.conversations.push(conversation);
+      });
+      list.docChanges().forEach((change) => {
+        this.logChanges(change);
+      })
+    })
+  }
+
+  setConversationObject(conversation: any, id: string): Conversation{
+    return {
+      id: id || '',
+      participants: conversation.participants || new Participants,
+      messages: conversation.messages || [],
+      active: conversation.active || false
+    }
+  }
+
   /**
    * set first channel as active on first time loading channels
    */
@@ -149,6 +173,20 @@ export class FirestoreService {
       reactions: channel.reactions || [],
       data: channel.data || [],
       channelActive: channel.channelActive || false
+    }
+  }
+
+  getCleanConversationJson(conversation: Conversation) {
+    return {
+      participants: this.getCleanParticipantsJson(conversation.participants),
+      messages: conversation.messages.map(message => this.getCleanMessageJson(message))
+    }
+  }
+
+  getCleanParticipantsJson(participant: Participants) {
+    return {
+      first: this.getCleanUserJson(participant.first),
+      second: this.getCleanUserJson(participant.second)
     }
   }
 
@@ -224,6 +262,12 @@ export class FirestoreService {
   async addChannel(channel: any) {
     await addDoc(this.getCollectionRef('channels'), this.getCleanChannelJson(channel)).catch((err) => {
       console.log('Error adding new Channel to Firebase', err); 
+    })
+  }
+
+  async addConversation(conversation: any) {
+    await addDoc(this.getCollectionRef('conversations'), this.getCleanConversationJson(conversation)).catch((err) => {
+      console.log('Error adding new Conversation to Firebase', err);
     })
   }
 

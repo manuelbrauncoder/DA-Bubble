@@ -33,6 +33,10 @@ export class UiService {
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
 
+  changeMainContent(content: 'channelChat' | 'newMessage' | 'directMessage'){
+    this.mainContent = content;
+  }
+
   showAddUserInChannelUser(){
     this.showChannelUsersAddUser = true;
     this.showChannelUsers = false;
