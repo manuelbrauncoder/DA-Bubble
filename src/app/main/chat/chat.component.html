@@ -1,12 +1,12 @@
 
 <main>
- @if (uiService.showChannelChat) {
+ @if (uiService.mainContent === 'channelChat') {
      <app-channel-chat></app-channel-chat>
  }
- @if (uiService.showNewMessage) {
+ @if (uiService.mainContent === 'newMessage') {
     <app-new-message></app-new-message>
  }
- @if (uiService.showDirectMessage) {
+ @if (uiService.mainContent === 'directMessage') {
     <app-direct-message></app-direct-message>
  }
 </main>

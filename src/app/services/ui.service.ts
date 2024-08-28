@@ -18,11 +18,9 @@ export class UiService {
   showChannelUsersAddUser: boolean = false;
   showChannelUsers: boolean = true;
 
-  showChannelChat: boolean = true;
-  showNewMessage: boolean = false;
-  showDirectMessage: boolean = false;
+  mainContent: 'channelChat' | 'newMessage' | 'directMessage' = 'channelChat';
 
-  showThread: boolean = true; // thread window in main-content
+  showThread: boolean = false; // thread window in main-content
   showAddChannelPopup: boolean = false; // add new channel popup
   showAddChannelInlinePopup1: boolean = true; // name and description
   showAddChannelInlinePopup2: boolean = false;  // users
