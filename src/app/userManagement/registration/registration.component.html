@@ -29,7 +29,7 @@
       <input type="checkbox" #privacy="ngModel" type="checkbox" [(ngModel)]="regData.privacy" name="privacy" required/>
       <span></span>
     </label>
-    <p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
+    <p>Ich stimme der <a [routerLink]="'/privacy_policy'">Datenschutzerklärung</a> zu.</p>
     <span *ngIf="privacy.invalid && (privacy.dirty || privacy.touched)">*Bitte akzeptiere unsere Datenschutzerklärung.</span>
   </div>
   <span *ngIf="">WRONG EMAIL OR PASSWORD</span>

@@ -83,28 +83,70 @@ export class FirebaseAuthService {
    * Checks if user is already in the database or not
    * If not then saves a new user. If yes then update the data.
    */
+  // googleLogin() {
+  //   const provider = new GoogleAuthProvider();
+  //   return signInWithPopup(this.auth, provider).then(async (result) => {
+  //     const user = result.user;
+  //     this.googleUser = true;
+  
+  //     if (user) {
+  //       const userRef = doc(this.firestore, `users/${user.uid}`);
+  //       const userDoc = await getDoc(userRef);
+  
+  //       const userData = {
+  //         uid: user.uid,
+  //         username: user.displayName || 'No Username',
+  //         email: user.email || 'No Email',
+  //         avatar: user.photoURL || 'default-avatar-url',
+  //         currentlyLoggedIn: true,
+  //         createdAt: this.getCurrentTimestamp(),
+  //       };
+  
+  //       if (userDoc.exists()) {
+  //         // Update existing user data
+  //         this.fireService.updateUser(userData);
+  //       } else {
+  //         // Add new user
+  //         this.fireService.addUser(userData);
+  //       }
+  //     }
+  //   }).catch((error) => {
+  //     console.error('Google sign-in error:', error);
+  //   });
+  // }
+
+
   googleLogin() {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(this.auth, provider).then(async (result) => {
       const user = result.user;
       this.googleUser = true;
+  
       if (user) {
         const userRef = doc(this.firestore, `users/${user.uid}`);
         const userDoc = await getDoc(userRef);
-
-        if (userDoc.exists()) {
-          await setDoc(userRef, {
-            username: user.displayName,
-            email: user.email,
-            avatar: user.photoURL || 'default-avatar-url'
-          }, { merge: true });
-        } else {
-          this.saveNewUserInFirestore(
-            user.email!,
-            user.displayName!,
-            user.uid,
-            user.photoURL || 'default-avatar-url'
-          );
+  
+        const userData = {
+          id: '',
+          uid: user.uid,
+          username: user.displayName || 'No Username',
+          email: user.email || 'No Email',
+          avatar: user.photoURL || 'default-avatar-url',
+          currentlyLoggedIn: true,
+          createdAt: this.getCurrentTimestamp(),
+        };
+  
+        let userExists = false;
+  
+        this.fireService.users.forEach((firestoreUser) => {
+          if (user.uid === firestoreUser.uid) {
+            this.fireService.updateUser(userData);
+            userExists = true;
+          }
+        });
+  
+        if (!userExists) {
+          this.fireService.addUser(userData);
         }
       }
     }).catch((error) => {

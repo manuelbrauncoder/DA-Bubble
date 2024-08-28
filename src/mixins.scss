@@ -44,15 +44,25 @@
   .confirmPopup {
     position: fixed;
     bottom: 2rem;
-    right: 2rem;
+    right: -100%;
     display: flex;
     gap: .5rem;
-    background-color:#444DF2;
+    background-color: #444DF2;
     color: white;
     border-radius: 2rem 2rem 0 2rem;
     padding: 3rem;
     font-weight: 700;
     font-size: 2.2rem;
+    animation: slideIn 1s forwards;
+}
+
+  @keyframes slideIn {
+    from {
+        right: -100%;
+    }
+    to {
+        right: 2rem;
+    }
   }
 }
 

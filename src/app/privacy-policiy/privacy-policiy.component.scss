@@ -1,0 +1,36 @@
+@use './../../mixins.scss' as *;
+
+h2 {
+  color: #444DF2;
+  font-size: 2.8rem;
+  font-weight: 700;
+  padding-bottom: .8rem;
+}
+
+h3 {
+  color: #444DF2;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding-bottom: .5rem;
+}
+
+img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.privacy-wrapper {
+  @include arrowBack;
+
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 2rem;
+  padding: 3.1rem;
+
+  >div {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+  }
+}
