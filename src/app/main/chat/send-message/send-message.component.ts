@@ -61,6 +61,7 @@ export class SendMessageComponent implements OnInit {
         time: this.authService.getCurrentTimestamp(),
         sender: this.userService.getCurrentUser(),
         content: content,
+        thread: [],
         data: [],
         reactions: []
     });

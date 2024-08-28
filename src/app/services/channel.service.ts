@@ -21,14 +21,14 @@ export class ChannelService {
     return channel.users.some(u => u.uid === user.uid);
   }
 
-  /**
-   * set default channel
-   * this method is only called once when the app launches
-   */
-  setDefaultChannel(){
-   let firstInList = this.fireService.channels[0];
-   this.toggleActiveChannel(firstInList);
-  }
+  // /**
+  //  * set default channel
+  //  * this method is only called once when the app launches
+  //  */
+  // setDefaultChannel(){
+  //  let firstInList = this.fireService.channels[0];
+  //  this.toggleActiveChannel(firstInList);
+  // }
 
   /**
    * This method toggles the active Channel
