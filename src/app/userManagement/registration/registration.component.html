@@ -25,7 +25,10 @@
     </div>
   </div>
   <div class="privacy-wrapper">
-    <input #privacy="ngModel" type="checkbox" [(ngModel)]="regData.privacy" name="privacy" required>
+    <label class="custom-checkbox">
+      <input type="checkbox" #privacy="ngModel" type="checkbox" [(ngModel)]="regData.privacy" name="privacy" required/>
+      <span></span>
+    </label>
     <p>Ich stimme der <a href="">Datenschutzerklärung</a> zu.</p>
     <span *ngIf="privacy.invalid && (privacy.dirty || privacy.touched)">*Bitte akzeptiere unsere Datenschutzerklärung.</span>
   </div>
@@ -34,3 +37,4 @@
     <button (click)="confirm()" [ngClass]="{'disabled-button': regForm.invalid}" [disabled]="regForm.invalid">Weiter</button>
   </div>
 </form>
+

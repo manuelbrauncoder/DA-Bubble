@@ -1,6 +1,7 @@
 @use './../../../mixins.scss' as *;
 
 @include linkUserM;
+@include inputForm;
 
 form {
   max-width: 41rem;
@@ -64,6 +65,7 @@ form {
     color: #444DF2;
     font-size: 1rem;
     font-weight: 400;
+    border: .1rem solid #ECEEFE;
         
     &:hover {
       border: .1rem solid #444DF2;
