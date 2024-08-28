@@ -46,13 +46,12 @@ export class SendMessageComponent implements OnInit {
    * push message to messages array in channel
    * update channel in firestore
    */
-  // async handleChannelMessage() {
-  //   debugger;
-  //   this.currentRecipient = new Channel(this.currentRecipient);
-  //   const message = this.createMessage(this.content);
-  //   this.currentRecipient.messages.push(message);
-  //   await this.userService.fireService.updateChannel(this.currentRecipient);
-  // }
+  async handleChannelMessage() {
+    this.currentRecipient = new Channel(this.currentRecipient as Channel);
+    const message = this.createMessage(this.content);
+    this.currentRecipient.messages.push(message);
+    await this.userService.fireService.updateChannel(this.currentRecipient);
+  }
 
   /**
    * 
@@ -81,11 +80,11 @@ export class SendMessageComponent implements OnInit {
    * handle differtent recipients (channel or direct message)
    */
   saveNewMessage() {
-    // if (this.currentRecipient instanceof Channel) {
-    //   this.handleChannelMessage();
-    // } else {
-    //   this.handleDirectMessage();
-    // }
+    if (this.currentRecipient instanceof Channel) {
+      this.handleChannelMessage();
+    } else {
+      this.handleDirectMessage();
+    }
   }
 
 }
