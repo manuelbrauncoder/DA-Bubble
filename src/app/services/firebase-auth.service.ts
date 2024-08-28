@@ -126,19 +126,20 @@ export class FirebaseAuthService {
         const userRef = doc(this.firestore, `users/${user.uid}`);
         const userDoc = await getDoc(userRef);
   
-        const userData = {
-          id: '',
-          uid: user.uid,
-          username: user.displayName || 'No Username',
-          email: user.email || 'No Email',
-          avatar: user.photoURL || 'default-avatar-url',
-          currentlyLoggedIn: true,
-          createdAt: this.getCurrentTimestamp(),
-        };
   
         let userExists = false;
   
         this.fireService.users.forEach((firestoreUser) => {
+          const userData = {
+            id: firestoreUser.id,
+            uid: user.uid,
+            username: user.displayName || 'No Username',
+            email: user.email || 'No Email',
+            avatar: user.photoURL || 'default-avatar-url',
+            currentlyLoggedIn: true,
+            createdAt: this.getCurrentTimestamp(),
+          };
+
           if (user.uid === firestoreUser.uid) {
             this.fireService.updateUser(userData);
             userExists = true;
@@ -146,6 +147,15 @@ export class FirebaseAuthService {
         });
   
         if (!userExists) {
+          const userData = {
+            uid: user.uid,
+            username: user.displayName || 'No Username',
+            email: user.email || 'No Email',
+            avatar: user.photoURL || 'default-avatar-url',
+            currentlyLoggedIn: true,
+            createdAt: this.getCurrentTimestamp(),
+          };
+
           this.fireService.addUser(userData);
         }
       }
