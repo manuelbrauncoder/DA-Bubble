@@ -305,6 +305,7 @@ export class FirebaseAuthService {
     const currentUser = this.auth.currentUser;
     if (currentUser) {
       updateEmail(currentUser, newEmail).then(() => {
+        this.uiService.toggleProfileChangeConfirmationPopup();
         this.fireService.users.forEach((user) => {
           if (currentUser.uid === user.uid) {
             user.email = newEmail;

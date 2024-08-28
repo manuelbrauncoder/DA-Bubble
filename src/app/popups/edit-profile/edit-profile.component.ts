@@ -51,7 +51,7 @@ export class EditProfileComponent implements OnInit {
    * @param newName - The new name entered by the user.
    * @param newEmail - The new email entered by the user.
    */
-  saveEdit(newName: string, newEmail: string) {
+  saveEdit_OLD(newName: string, newEmail: string) {
     if (this.avatarIsChanged || this.nameIsChanged || this.emailIsChanged) {
       this.saveNewAvatar();
       // this.saveNewName(newName: string);  // this function is not working yet
@@ -61,11 +61,21 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  saveEdit(newName: string, newEmail: string) {
+    if (this.avatarIsChanged) {
+      this.saveNewAvatar();
+      this.uiService.toggleProfileChangeConfirmationPopup();
+    } else if (this.emailIsChanged) {
+      this.saveNewAvatar();
+      this.saveNewEmailAddress(newEmail);
+    }
+  }
+
 
   /**
    * Placeholder method for uploading a custom profile picture.
    */
-  uploadOwnPicture() {}
+  uploadOwnPicture() { }
 
 
   /**
