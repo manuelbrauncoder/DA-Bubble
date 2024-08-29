@@ -60,7 +60,7 @@ export class SendMessageComponent implements OnInit {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
     const message = this.createMessage(this.content);
     this.currentRecipient.messages.push(message);
-    await this.userService.fireService.updateConversation(this.currentRecipient);
+    await this.userService.fireService.addConversation(this.currentRecipient);
   }
 
   /**

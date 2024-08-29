@@ -29,7 +29,7 @@
                             </div>
                         }
                         @for (user of channelService.fireService.currentChannel.users; track $index) {
-                            @if (user.username !== authService.auth.currentUser?.displayName) {
+                            @if (user.uid !== authService.auth.currentUser?.uid) {
                                 <div class="user">
                                     <div class="img-wrapper">
                                         <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">

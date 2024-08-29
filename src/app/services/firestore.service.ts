@@ -174,7 +174,7 @@ export class FirestoreService {
     return onSnapshot(this.getCollectionRef('conversations'), (list) => {
       this.conversations = [];
       list.forEach((element) => {
-        const conversation = this.setConversationObject(element.data(), element.id);
+        const conversation = this.setConversationObject(element.data());
         this.conversations.push(conversation);
       });
       list.docChanges().forEach((change) => {
@@ -184,23 +184,32 @@ export class FirestoreService {
   }
 
   async addConversation(conversation: any) {
+    const conversationId = conversation.id;
+    const conversationRef = doc(this.firestore, 'conversations', conversationId);
+    const conversationData = this.getCleanConversationJson(conversation);
+    await setDoc(conversationRef, conversationData).catch((err)=>{
+      console.log('Error adding Conversation to firebase', err);
+    })
+  }
+
+  async addConversation_OLD(conversation: any) {
     await addDoc(this.getCollectionRef('conversations'), this.getCleanConversationJson(conversation)).catch((err) => {
       console.log('Error adding new Conversation to Firebase', err);
     })
   }
 
-  async updateConversation(conversation: Conversation) {
-    let docRef = doc(this.getCollectionRef('conversations'), conversation.id);
-    await updateDoc(docRef, this.getCleanConversationJson(conversation)).catch((err) => {
-      console.log('Error updating Conversation', err);
-    })
-  }
+  // async updateConversation(conversation: Conversation) {
+  //   let docRef = doc(this.getCollectionRef('conversations'), conversation.id);
+  //   await updateDoc(docRef, this.getCleanConversationJson(conversation)).catch((err) => {
+  //     console.log('Error updating Conversation', err);
+  //   })
+  // }
 
   // ================= Return Json Methods ========================
 
-  setConversationObject(conversation: any, id: string): Conversation {
+  setConversationObject(conversation: any): Conversation {
     return {
-      id: id || '',
+      id: conversation.id || '',
       participants: conversation.participants || new Participants,
       messages: conversation.messages || [],
       active: conversation.active || false
@@ -209,6 +218,7 @@ export class FirestoreService {
 
   getCleanConversationJson(conversation: Conversation) {
     return {
+      id: conversation.id,
       participants: this.getCleanParticipantsJson(conversation.participants),
       messages: conversation.messages.map(message => this.getCleanMessageJson(message))
     }

@@ -87,16 +87,5 @@ export class ConversationService {
     this.fireService.currentConversation.participants.first = firstUser;
     this.fireService.currentConversation.participants.second = secondUser;
     await this.fireService.addConversation(this.fireService.currentConversation);
-    this.reSetConversation(firstUser, secondUser);
   }
-
-  reSetConversation(firstUser: User, secondUser: User) {
-    const conversation = this.findConversation(firstUser, secondUser);
-    if (conversation) {
-      this.fireService.currentConversation = conversation;
-    }
-  }
-
-  // nachdem die neue conversation auf firebase geladen wurde,
-  // muss sie neu als currentConversation gesetzt werden, damit die id vorhanden ist
 }

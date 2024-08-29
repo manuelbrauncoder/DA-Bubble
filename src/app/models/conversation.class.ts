@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Message } from "./message.class";
 import { User } from "./user.class";
 
@@ -8,7 +9,7 @@ export class Conversation {
     active: boolean;
 
     constructor(obj?: Partial<Conversation>) {
-        this.id = obj?.id ?? '';
+        this.id = obj?.id ?? uuidv4();
         this.participants = obj?.participants ?? new Participants;
         this.messages = obj?.messages ?? [];
         this.active = obj?.active ?? false;
