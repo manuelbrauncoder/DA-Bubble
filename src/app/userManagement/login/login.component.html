@@ -1,3 +1,7 @@
+<div *ngIf="showStartScreen" class="startScreen" [class.animate-logo]="showStartScreen">
+  <img src="./assets/img/Logo.png" alt="LOGO">
+</div>
+
 <form #loginForm="ngForm">
   <h2>Anmeldung</h2>
   <p *ngIf="!loginFailed">Wir empfehlen dir, die E-Mail-Adresse zu nutzen, die du bei der Arbeit verwendest.</p>

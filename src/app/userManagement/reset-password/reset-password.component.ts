@@ -55,7 +55,9 @@ export class ResetPasswordComponent {
         await this.authService.verifyPasswordResetCode(this.oobCode);
         await this.authService.confirmPasswordReset(this.oobCode, this.firstPassword);
         this.showPopup = true;
-        this.router.navigate(['/login']);
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
       } catch (error) {
         this.errorMessage = 'Fehler beim Zurücksetzen des Passworts.';
         console.error('Error:', error);

@@ -29,7 +29,11 @@ export class ChooseAvatarComponent {
           console.log('Registration complete with avatar:', this.selectedAvatar);
           this.authService.clearStoredRegistrationData();
           this.showPopup = true;
-          this.router.navigate(['/login']);
+
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 2000);
+          
         },
         error: (err) => {
           console.error('Registration failed:', err);

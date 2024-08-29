@@ -3,6 +3,44 @@
 @include linkUserM;
 @include inputForm;
 
+.startScreen {
+  z-index: 900;
+  position: fixed;
+  background: linear-gradient(#ECEEFE ,#444DF2);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+
+  >img {
+    position: absolute;
+    height: 10rem;
+    width: 10rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 1s ease-in-out;
+  }
+
+  &.animate-logo img {
+    animation: moveLogo 1s 1s forwards;
+  }
+}
+
+@keyframes moveLogo {
+  0% {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    top: -.7rem;
+    left: -.7rem;
+    transform: translate(0, 0) scale(0.45);
+  }
+}
+
 form {
   max-width: 41rem;
 

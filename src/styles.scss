@@ -54,6 +54,11 @@ app-main-content {
   height: 100%;
 }
 
+app-footer {
+  position: fixed;
+  bottom: 1%;
+}
+
 img {
   cursor: pointer;
 }
@@ -223,4 +228,30 @@ $color-popup-bg: #eceefe80;
   &:hover path {
     fill: $color-purple-3;
   }
+}
+
+
+*::-webkit-scrollbar {
+  width: .5rem; /* Breite des Scrollbalkens */
+  max-height: .5rem;
+  background: #FFFCF3;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #FFFCF3;/* Hintergrundfarbe des Scrollbalkens */
+  border: 1px solid #444DF2;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  min-height: 30px;
+  border: 1px solid black;
+  background: #444DF2; /* Farbe des Griffs des Scrollbalkens */
+  border-radius: 4px; /* Radius des Griffs des Scrollbalkens */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #797EF3; /* Farbe des Griffs des Scrollbalkens bei Hover */
 }

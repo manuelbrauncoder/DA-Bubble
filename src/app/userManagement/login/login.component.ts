@@ -16,10 +16,22 @@ export class LoginComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
   loginFailed: boolean = false;
+  showStartScreen: boolean = true;
+  logoState: 'center' | 'corner' = 'center';
+
 
   loginData = {
     email: '',
     password: ''
+  }
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.logoState = 'corner';
+      setTimeout(() => {
+        this.showStartScreen = false;
+      }, 3000);
+    }, 1000);
   }
 
   // ngOnInit() {
