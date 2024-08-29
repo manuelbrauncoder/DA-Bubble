@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { SingleMessageComponent } from '../single-message/single-message.component';
 import { SendMessageComponent } from '../send-message/send-message.component';
 import { ConversationService } from '../../../services/conversation.service';
-import { Message } from '../../../models/message.class';
 
 @Component({
   selector: 'app-direct-message',

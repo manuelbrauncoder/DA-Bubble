@@ -86,8 +86,10 @@ export class SendMessageComponent implements OnInit {
   saveNewMessage() {
     if (this.currentRecipient instanceof Channel) {
       this.handleChannelMessage();
+      this.content = '';
     } else {
       this.handleDirectMessage();
+      this.content = '';
     }
   }
 

@@ -1,0 +1,23 @@
+@import '../../../../styles.scss';
+@import '../../../../mixins.scss';
+
+
+
+// text field | just for testing
+
+.input-wrapper {
+    margin-top: auto;
+    @include dFlex($jc: space-around);
+    width: 100%;
+    padding: 16px;
+}
+
+// chat section | just for testing
+
+main{
+    .message{
+        border: 1px solid black;
+        @include dFlex($g: 8px);
+        padding: 8px;
+    }
+}

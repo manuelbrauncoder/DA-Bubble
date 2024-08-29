@@ -8,7 +8,7 @@ main{
     border-radius: 1.875rem;
 }
 
-app-channel-chat{
+app-channel-chat, app-direct-message, app-new-message{
     @include dFlex($fd: column);
     height: 100%;
     width: 100%;
