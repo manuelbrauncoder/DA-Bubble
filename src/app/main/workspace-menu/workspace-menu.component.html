@@ -110,8 +110,8 @@
                     </div>
                 }
                 @for (user of authService.fireService.users; track $index) {
-                    @if (user.username !== authService.auth.currentUser?.displayName) {
-                        <div (click)="openConversation(user)" class="user">
+                    @if (user.uid !== authService.auth.currentUser?.uid) {
+                        <div (click)="conversationService.openConversation(user)" class="user">
                             <div class="img-wrapper">
                                 <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
                                 <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">

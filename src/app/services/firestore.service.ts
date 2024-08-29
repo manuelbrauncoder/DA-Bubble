@@ -292,4 +292,11 @@ export class FirestoreService {
       
     })
   }
+
+  async updateConversation(conversation: Conversation) {
+    let docRef = doc(this.getCollectionRef('conversations'), conversation.id);
+    await updateDoc(docRef,this.getCleanConversationJson(conversation)).catch((err) => {
+      console.log('Error updating Conversation');
+    })
+  }
 }

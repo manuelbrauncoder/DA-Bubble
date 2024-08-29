@@ -1,1 +1,14 @@
-<p>direct-message works!</p>
+<main>
+    @for (message of conversationService.fireService.currentConversation.messages; track $index) {
+        <div class="message">
+            <app-single-message [currentMessage]="message"></app-single-message>  
+        </div>
+    }
+    
+
+    
+</main>
+
+<div class="input-wrapper">
+    <app-send-message [currentRecipient]="conversationService.fireService.currentConversation"></app-send-message>
+</div>

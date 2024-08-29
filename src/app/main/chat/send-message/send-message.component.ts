@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { UserService } from '../../../services/user.service';
 import { Message } from '../../../models/message.class';
+import { Conversation } from '../../../models/conversation.class';
 
 @Component({
   selector: 'app-send-message',
@@ -18,23 +19,21 @@ export class SendMessageComponent implements OnInit {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
 
-  @Input() currentRecipient: User | Channel = new Channel; // Empfänger der Nachricht 
+  @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht 
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
 
 
   ngOnInit(): void {
-    this.copyRecipient();
-    console.log(this.currentRecipient);
-    
+    this.copyRecipient(); 
   }
 
   /**
    * create of copy of User or Channel
    */
   copyRecipient() {
-    if (this.currentRecipient instanceof User) {
-      this.currentRecipient = new User(this.currentRecipient);
+    if (this.currentRecipient instanceof Conversation) {
+      this.currentRecipient = new Conversation(this.currentRecipient);
     } else {
       this.currentRecipient = new Channel(this.currentRecipient);
     }
@@ -54,6 +53,16 @@ export class SendMessageComponent implements OnInit {
   }
 
   /**
+   * code for sending direct message
+   */
+  async handleDirectMessage() {
+    this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
+    const message = this.createMessage(this.content);
+    this.currentRecipient.messages.push(message);
+    await this.userService.fireService.updateConversation(this.currentRecipient);
+  }
+
+  /**
    * 
    * @param content from the message
    * @returns a Message Object
@@ -69,12 +78,7 @@ export class SendMessageComponent implements OnInit {
     });
 }
 
-  /**
-   * code for sending direct message
-   */
-  handleDirectMessage() {
-
-  }
+  
 
   /**
    * handle differtent recipients (channel or direct message)
