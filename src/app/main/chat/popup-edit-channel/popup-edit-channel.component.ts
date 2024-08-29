@@ -53,7 +53,7 @@ export class PopupEditChannelComponent {
   async saveNewChannelName(){
     this.updatedChannel = new Channel(this.channelService.fireService.currentChannel);
     this.updatedChannel.name = this.nameInput;
-    await this.channelService.fireService.updateChannel(this.updatedChannel);
+    await this.channelService.fireService.addChannel(this.updatedChannel);
     this.channelService.toggleActiveChannel(this.updatedChannel);
     this.toggleNameInput();
   }
@@ -64,7 +64,7 @@ export class PopupEditChannelComponent {
   async saveNewChannelDescription(){
     this.updatedChannel = new Channel(this.channelService.fireService.currentChannel);
     this.updatedChannel.description = this.descriptionInput;
-    await this.channelService.fireService.updateChannel(this.updatedChannel);
+    await this.channelService.fireService.addChannel(this.updatedChannel);
     this.channelService.toggleActiveChannel(this.updatedChannel);
     this.toggleDescriptionInput();
   }

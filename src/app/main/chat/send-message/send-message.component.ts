@@ -50,7 +50,7 @@ export class SendMessageComponent implements OnInit {
     this.currentRecipient = new Channel(this.currentRecipient as Channel);
     const message = this.createMessage(this.content);
     this.currentRecipient.messages.push(message);
-    await this.userService.fireService.updateChannel(this.currentRecipient);
+    await this.userService.fireService.addChannel(this.currentRecipient);
   }
 
   /**

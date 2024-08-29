@@ -38,13 +38,13 @@ export class ConversationService {
    * 
    * @param secondUser is the User you want to chat with
    */
-  setCurrentConversation(secondUser: User) {
+  async setCurrentConversation(secondUser: User) {
     let firstUser = this.userService.getCurrentUser();
     let conversation = this.findConversation(firstUser, secondUser);
     if (conversation) {
       this.fireService.currentConversation = new Conversation(conversation);
     } else {
-      this.createNewConversation(firstUser, secondUser);
+      await this.createNewConversation(firstUser, secondUser);
     }
   }
 
@@ -82,11 +82,21 @@ export class ConversationService {
    * @param firstUser 
    * @param secondUser 
    */
-  createNewConversation(firstUser: User, secondUser: User) {
+  async createNewConversation(firstUser: User, secondUser: User) {
     this.fireService.currentConversation = new Conversation();
     this.fireService.currentConversation.participants.first = firstUser;
     this.fireService.currentConversation.participants.second = secondUser;
-    this.fireService.addConversation(this.fireService.currentConversation);
+    await this.fireService.addConversation(this.fireService.currentConversation);
+    this.reSetConversation(firstUser, secondUser);
   }
 
+  reSetConversation(firstUser: User, secondUser: User) {
+    const conversation = this.findConversation(firstUser, secondUser);
+    if (conversation) {
+      this.fireService.currentConversation = conversation;
+    }
+  }
+
+  // nachdem die neue conversation auf firebase geladen wurde,
+  // muss sie neu als currentConversation gesetzt werden, damit die id vorhanden ist
 }

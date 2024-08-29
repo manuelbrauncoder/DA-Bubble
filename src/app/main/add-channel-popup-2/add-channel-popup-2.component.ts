@@ -74,7 +74,7 @@ export class AddChannelPopup2Component implements OnInit {
     if (this.users === 'all') {
       this.addAllUsersToChannel();
       await this.saveChannelAndClose();
-    } else if(this.users === 'certain' && this.selectedUsers.length > 0) {
+    } else if (this.users === 'certain' && this.selectedUsers.length > 0) {
       this.newChannel.users = [...this.selectedUsers];
       await this.saveChannelAndClose()
     }
@@ -84,10 +84,10 @@ export class AddChannelPopup2Component implements OnInit {
    * save new channel in firebase and
    * close popups
    */
-  async saveChannelAndClose(){
+  async saveChannelAndClose() {
     await this.channelService.fireService.addChannel(this.newChannel);
-      this.uiService.toggleAddChannelPopup();
-      this.channelService.toggleActiveChannel(this.newChannel);
+    this.uiService.toggleAddChannelPopup();
+    this.channelService.toggleActiveChannel(this.newChannel);
   }
 
   /**

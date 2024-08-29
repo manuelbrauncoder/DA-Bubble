@@ -127,7 +127,7 @@ export class FirestoreService {
     return onSnapshot(q, (list) => {
       this.channels = [];
       list.forEach((element) => {
-        const channel = this.setChannelObject(element.data(), element.id);
+        const channel = this.setChannelObject(element.data());
         this.channels.push(channel);
       });
       this.setActiveChannel();
@@ -137,13 +137,7 @@ export class FirestoreService {
     })
   }
 
-  async updateChannel(channel: Channel) {
-    let docRef = doc(this.getCollectionRef('channels'), channel.id);
-    await updateDoc(docRef, this.getCleanChannelJson(channel)).catch((err) => {
-      console.log('Error updating Channel', err);
-    })
-  }
-
+  
   /**
    * set first channel as active on first time loading channels
    */
@@ -161,14 +155,14 @@ export class FirestoreService {
     }
   }
 
-  /**
-   * Add new channel to Firestore Collection 'channels'
-   * convert class to clean json before pushing to firebase
-   * @param channel 
-   */
+  
+
   async addChannel(channel: any) {
-    await addDoc(this.getCollectionRef('channels'), this.getCleanChannelJson(channel)).catch((err) => {
-      console.log('Error adding new Channel to Firebase', err);
+    const channelId = channel.id;
+    const channelRef = doc(this.firestore, 'channels', channelId);
+    const channelData = this.getCleanChannelJson(channel);
+    await setDoc(channelRef, channelData).catch((err) => {
+      console.log('Error adding Channel to Firebase', err);
     })
   }
 
@@ -229,6 +223,7 @@ export class FirestoreService {
 
   getCleanChannelJson(channel: Channel) {
     return {
+      id: channel.id,
       name: channel.name,
       description: channel.description,
       creator: channel.creator,
@@ -239,6 +234,7 @@ export class FirestoreService {
 
   getCleanMessageJson(message: Message) {
     return {
+      id: message.id,
       time: message.time,
       sender: this.getCleanUserJson(message.sender),
       content: message.content,
@@ -266,9 +262,9 @@ export class FirestoreService {
    * Returns a Object with Class Channel
    * used in getChannelList() 
    */
-  setChannelObject(channel: any, id: string): Channel {
+  setChannelObject(channel: any): Channel {
     return {
-      id: id || '',
+      id: channel.id || '',
       description: channel.description || '',
       name: channel.name || '',
       creator: channel.creator || '',

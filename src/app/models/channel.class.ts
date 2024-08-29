@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Message } from "./message.class";
 import { User } from "./user.class";
 
@@ -19,7 +20,7 @@ export class Channel {
      * @param obj 
      */
     constructor(obj?: Partial<Channel>){
-        this.id = obj?.id ?? '';
+        this.id = obj?.id ?? uuidv4();
         this.description = obj?.description ?? '';
         this.name = obj?.name ?? '';
         this.creator = obj?.creator ?? '';
