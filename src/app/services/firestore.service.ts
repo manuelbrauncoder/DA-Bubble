@@ -5,6 +5,7 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { Message } from '../models/message.class';
 import { Conversation, Participants } from '../models/conversation.class';
+import { Thread } from '../models/thread.class ';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class FirestoreService {
 
   currentChannel: Channel = new Channel();
   currentConversation: Conversation = new Conversation();
+  currentThread: Thread = new Thread();
 
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here

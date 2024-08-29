@@ -7,6 +7,7 @@ import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { UserService } from '../../../services/user.service';
 import { Message } from '../../../models/message.class';
 import { Conversation } from '../../../models/conversation.class';
+import { Thread } from '../../../models/thread.class ';
 
 @Component({
   selector: 'app-send-message',
@@ -72,7 +73,7 @@ export class SendMessageComponent implements OnInit {
         time: this.authService.getCurrentTimestamp(),
         sender: this.userService.getCurrentUser(),
         content: content,
-        thread: [],
+        thread: new Thread,
         data: [],
         reactions: []
     });
