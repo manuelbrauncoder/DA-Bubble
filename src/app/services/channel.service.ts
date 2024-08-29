@@ -2,12 +2,14 @@ import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Channel } from '../models/channel.class';
 import { User } from '../models/user.class';
+import { UiService } from './ui.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChannelService {
   fireService = inject(FirestoreService);
+  uiService = inject(UiService);
 
   constructor() { }
 
@@ -40,6 +42,7 @@ export class ChannelService {
       if (activeChannel.name === channel.name) {
         channel.channelActive = true;
         this.fireService.currentChannel = new Channel(activeChannel);
+        this.uiService.changeMainContent('channelChat');
       } else {
         channel.channelActive = false;
       }
