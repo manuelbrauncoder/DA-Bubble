@@ -43,8 +43,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subLoginState();
-    //this.subExampleUsers();
-
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showFooterAndHeader = this.showNoFooterRoutes.includes(event.urlAfterRedirects);
@@ -83,22 +81,4 @@ export class AppComponent implements OnInit, OnDestroy {
     })
   }
 
-  /**
-   * uses http client to get data form assets/data/exampleUsers.json
-   */
-  subExampleUsers() {
-    this.fireService.fetchExampleUsers().subscribe((data: User[]) => {
-      this.fireService.exampleUsers = data;
-    })
-  }
-
-  /**
-   * Just for Testing
-   */
-  logAfter5000Ms() {
-    setTimeout(() => {
-      console.log('users:', this.fireService.users);
-      //console.log('example data, fetched local', this.fireService.exampleUsers);
-    }, 5000);
-  }
 }
