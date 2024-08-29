@@ -22,9 +22,6 @@ export class FirestoreService {
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here
 
-
-  exampleUsers: User[] = [];
-
   constructor() { }
 
   // ================= Helper Methods ========================
@@ -78,7 +75,7 @@ export class FirestoreService {
     })
   }
 
-  // User Methods
+  // ================= User Methods ========================
 
   /** Call this method in app-components.ts
    *  unsubscribe it with ngOnDestroy
@@ -137,7 +134,6 @@ export class FirestoreService {
     })
   }
 
-  
   /**
    * set first channel as active on first time loading channels
    */
@@ -155,8 +151,9 @@ export class FirestoreService {
     }
   }
 
-  
-
+  /**
+   * Call this method to add or update a Channel
+   */
   async addChannel(channel: any) {
     const channelId = channel.id;
     const channelRef = doc(this.firestore, 'channels', channelId);
@@ -165,8 +162,6 @@ export class FirestoreService {
       console.log('Error adding Channel to Firebase', err);
     })
   }
-
-
 
   // ================= Conversation Methods ======================== 
 
@@ -183,6 +178,9 @@ export class FirestoreService {
     })
   }
 
+  /**
+   * Call this method to add or update a Conversation
+   */
   async addConversation(conversation: any) {
     const conversationId = conversation.id;
     const conversationRef = doc(this.firestore, 'conversations', conversationId);
@@ -191,19 +189,6 @@ export class FirestoreService {
       console.log('Error adding Conversation to firebase', err);
     })
   }
-
-  async addConversation_OLD(conversation: any) {
-    await addDoc(this.getCollectionRef('conversations'), this.getCleanConversationJson(conversation)).catch((err) => {
-      console.log('Error adding new Conversation to Firebase', err);
-    })
-  }
-
-  // async updateConversation(conversation: Conversation) {
-  //   let docRef = doc(this.getCollectionRef('conversations'), conversation.id);
-  //   await updateDoc(docRef, this.getCleanConversationJson(conversation)).catch((err) => {
-  //     console.log('Error updating Conversation', err);
-  //   })
-  // }
 
   // ================= Return Json Methods ========================
 
