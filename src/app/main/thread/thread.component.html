@@ -13,9 +13,16 @@
             <app-single-message [threadMessage]="true" [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
         </div>
     </main>
-    <div class="input-wrapper">
-        <app-send-message [threadMessage]="true" [currentRecipient]="fireService.currentConversation"></app-send-message>
-    </div>
+    @if (uiService.mainContent === 'directMessage') {
+        <div class="input-wrapper">
+            <app-send-message [threadMessage]="true" [currentRecipient]="fireService.currentConversation"></app-send-message>
+        </div>
+    } @else if (uiService.mainContent === 'channelChat') {
+        <div class="input-wrapper">
+            <app-send-message [threadMessage]="true" [currentRecipient]="fireService.currentChannel"></app-send-message>
+        </div>
+    }
+    
 </div>
 
 

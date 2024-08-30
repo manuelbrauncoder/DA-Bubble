@@ -24,7 +24,7 @@ export class SendMessageComponent implements OnInit {
 
   @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
   @Input() threadMessage = false;
-  
+
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
 
@@ -54,18 +54,21 @@ export class SendMessageComponent implements OnInit {
     this.currentRecipient = new Channel(this.currentRecipient as Channel);
     const message = this.createMessage(this.content);
     if (!this.threadMessage) {
-
       this.currentRecipient.messages.push(message);
     } else {
       console.log('thread channel message!');
-
+      this.userService.fireService.currentThread.messages.push(message);
+      console.log(this.userService.fireService.currentThread);
+      const messageIndex = this.findChannelMessageToUpdate();
+      this.userService.fireService.currentChannel.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
+      console.log(this.userService.fireService.currentChannel);
     }
-    await this.userService.fireService.addChannel(this.currentRecipient);
+    await this.userService.fireService.addChannel(this.userService.fireService.currentChannel);
 
   }
 
   /**
-   * code for sending direct message
+   * 
    */
   async handleDirectMessage() {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
@@ -75,7 +78,7 @@ export class SendMessageComponent implements OnInit {
     } else {
       this.userService.fireService.currentThread.messages.push(message);
       console.log(this.userService.fireService.currentThread);
-      const messageIndex = this.findMessageToUpdate();
+      const messageIndex = this.findConversationMessageToUpdate();
       this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
       console.log(this.userService.fireService.currentConversation);
     }
@@ -83,7 +86,11 @@ export class SendMessageComponent implements OnInit {
 
   }
 
-  findMessageToUpdate() {
+  findChannelMessageToUpdate(){
+    return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+  }
+
+  findConversationMessageToUpdate() {
     return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
   }
 
@@ -109,8 +116,6 @@ export class SendMessageComponent implements OnInit {
    * handle differtent recipients (channel or direct message)
    */
   saveNewMessage() {
-    
-    
     if (this.currentRecipient instanceof Channel) {
       this.handleChannelMessage();
       this.content = '';

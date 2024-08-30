@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { SingleMessageComponent } from "../chat/single-message/single-message.component";
 import { SendMessageComponent } from "../chat/send-message/send-message.component";
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-thread',
@@ -12,4 +13,5 @@ import { SendMessageComponent } from "../chat/send-message/send-message.componen
 })
 export class ThreadComponent {
   fireService = inject(FirestoreService);
+  uiService = inject(UiService);
 }
