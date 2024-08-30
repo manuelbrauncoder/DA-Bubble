@@ -1,3 +1,5 @@
-<h3>from: {{ currentMessage.sender.username }}</h3>
+<h3>{{ currentMessage.sender.username }}: </h3><br>
 <span>content: {{ currentMessage.content }}</span><br>
-<span (click)="answer()">antworten</span>
+@if (!threadMessage) {
+    <span (click)="answer()">antworten</span>
+}

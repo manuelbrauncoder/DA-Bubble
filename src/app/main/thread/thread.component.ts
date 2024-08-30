@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FirestoreService } from '../../services/firestore.service';
+import { SingleMessageComponent } from "../chat/single-message/single-message.component";
+import { SendMessageComponent } from "../chat/send-message/send-message.component";
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [],
+  imports: [SingleMessageComponent, SendMessageComponent],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })
 export class ThreadComponent {
-
+  fireService = inject(FirestoreService);
 }

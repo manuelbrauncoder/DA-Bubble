@@ -1,10 +1,24 @@
 @import '../../../styles.scss';
 @import '../../../mixins.scss';
 
-main{
+.thread-wrapper{
     height: 100%;
     width: 100%;
     background-color: white;
     border-radius: 1.875rem;
     padding: 2rem 1.875rem;
+    @include dFlex($fd: column, $g: 1rem, $jc: flex-end, $ai: flex-start);
+}
+
+.input-wrapper{
+    margin-top: auto;
+}
+
+.root-message {
+    margin-top: auto;
+}
+
+main{
+    @include dFlex($fd: column, $jc: flex-end, $ai: flex-start, $g: 1rem);
+    flex-grow: 2;
 }

@@ -2,5 +2,5 @@
 @import '../../../../styles.scss';
 
 main{
-    @include dFlex();
+    @include dFlex($fd: column, $ai: flex-start, $g: 8px);
 }

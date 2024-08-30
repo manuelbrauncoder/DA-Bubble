@@ -15,6 +15,7 @@ export class SingleMessageComponent implements OnInit {
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
   @Input() currentMessage: Message = new Message();
+  @Input() threadMessage: boolean = false;
 
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
@@ -23,6 +24,7 @@ export class SingleMessageComponent implements OnInit {
   answer(){
     this.uiService.showThread = true;
     this.setCurrentThread();
+    this.fireService.currentMessage = new Message(this.currentMessage);
     console.log(this.fireService.currentThread);
     
   }

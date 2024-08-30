@@ -20,13 +20,14 @@ export class SendMessageComponent implements OnInit {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
 
-  @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht 
+  @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
+  @Input() threadMessage = false;
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
 
 
   ngOnInit(): void {
-    this.copyRecipient(); 
+    this.copyRecipient();
   }
 
   /**
@@ -59,8 +60,14 @@ export class SendMessageComponent implements OnInit {
   async handleDirectMessage() {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
     const message = this.createMessage(this.content);
-    this.currentRecipient.messages.push(message);
+    if (!this.threadMessage) {
+      this.currentRecipient.messages.push(message);
+    } 
     await this.userService.fireService.addConversation(this.currentRecipient);
+  }
+
+  findMessageId(message: Message) {
+    return this.userService.fireService.currentConversation.messages.findIndex(m => m.id === message.id);
   }
 
   /**
@@ -70,16 +77,16 @@ export class SendMessageComponent implements OnInit {
    */
   createMessage(content: string): Message {
     return new Message({
-        time: this.authService.getCurrentTimestamp(),
-        sender: this.userService.getCurrentUser(),
-        content: content,
-        thread: new Thread,
-        data: [],
-        reactions: []
+      time: this.authService.getCurrentTimestamp(),
+      sender: this.userService.getCurrentUser(),
+      content: content,
+      thread: new Thread,
+      data: [],
+      reactions: []
     });
-}
+  }
 
-  
+
 
   /**
    * handle differtent recipients (channel or direct message)

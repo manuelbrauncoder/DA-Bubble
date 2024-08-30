@@ -1,5 +1,21 @@
-<main>
-    <p>thread works!</p>
+<div class="thread-wrapper">
+    <header>
+        <h3>Thread</h3>
+        <span># {{ fireService.currentChannel.name }}</span>
+    </header>
+    <main>
+        @for (message of fireService.currentThread.messages; track $index) {
+            <div class="message-wrapper">
+                <app-single-message [currentMessage]="message"></app-single-message>
+            </div>
+        }
+        <div class="message-wrapper root-message">
+            <app-single-message [threadMessage]="true" [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
+        </div>
+    </main>
+    <div class="input-wrapper">
+        <app-send-message [threadMessage]="true" [currentRecipient]="fireService.currentConversation"></app-send-message>
+    </div>
+</div>
 
-</main>
 
