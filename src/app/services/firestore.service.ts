@@ -19,6 +19,8 @@ export class FirestoreService {
   currentThread: Thread = new Thread();
   currentMessage: Message = new Message();
 
+
+
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here

@@ -8,6 +8,7 @@ import { UserService } from '../../../services/user.service';
 import { Message } from '../../../models/message.class';
 import { Conversation } from '../../../models/conversation.class';
 import { Thread } from '../../../models/thread.class ';
+import { UiService } from '../../../services/ui.service';
 
 @Component({
   selector: 'app-send-message',
@@ -19,9 +20,11 @@ import { Thread } from '../../../models/thread.class ';
 export class SendMessageComponent implements OnInit {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
+  uiService = inject(UiService);
 
   @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
   @Input() threadMessage = false;
+  
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
 
@@ -50,8 +53,15 @@ export class SendMessageComponent implements OnInit {
   async handleChannelMessage() {
     this.currentRecipient = new Channel(this.currentRecipient as Channel);
     const message = this.createMessage(this.content);
-    this.currentRecipient.messages.push(message);
+    if (!this.threadMessage) {
+
+      this.currentRecipient.messages.push(message);
+    } else {
+      console.log('thread channel message!');
+
+    }
     await this.userService.fireService.addChannel(this.currentRecipient);
+
   }
 
   /**
@@ -63,25 +73,18 @@ export class SendMessageComponent implements OnInit {
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
-        this.userService.fireService.currentThread.messages.push(message);
-        console.log(this.userService.fireService.currentThread);
-        const messageIndex = this.findMessageToUpdate();
-        this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
-        console.log(this.userService.fireService.currentConversation);
+      this.userService.fireService.currentThread.messages.push(message);
+      console.log(this.userService.fireService.currentThread);
+      const messageIndex = this.findMessageToUpdate();
+      this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
+      console.log(this.userService.fireService.currentConversation);
     }
     await this.userService.fireService.addConversation(this.userService.fireService.currentConversation);
-    
+
   }
-
-  
-
-  // findMessageId(message: Message) {
-  //   return this.currentRecipient.messages.findIndex(m => m.id === message.id);
-  // }
 
   findMessageToUpdate() {
     return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
-     
   }
 
   /**
@@ -106,6 +109,8 @@ export class SendMessageComponent implements OnInit {
    * handle differtent recipients (channel or direct message)
    */
   saveNewMessage() {
+    
+    
     if (this.currentRecipient instanceof Channel) {
       this.handleChannelMessage();
       this.content = '';
