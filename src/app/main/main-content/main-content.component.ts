@@ -6,8 +6,13 @@ import { ChatComponent } from "../chat/chat.component";
 import { ThreadComponent } from '../thread/thread.component';
 import { AddChannelPopupComponent } from '../add-channel-popup/add-channel-popup.component';
 
+import { popupAnimation } from '../../shared/animations';
+
+
+
 @Component({
   selector: 'app-main-content',
+  animations: [popupAnimation],
   standalone: true,
   imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent, ThreadComponent, AddChannelPopupComponent],
   templateUrl: './main-content.component.html',
