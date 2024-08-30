@@ -65,8 +65,9 @@ export class EditProfileComponent implements OnInit {
     if (this.avatarIsChanged) {
       this.saveNewAvatar();
       this.uiService.toggleProfileChangeConfirmationPopup();
-    } else if (this.emailIsChanged) {
+    } else if (this.nameIsChanged || this.emailIsChanged) {
       this.saveNewAvatar();
+      this.saveNewName();
       this.saveNewEmailAddress(newEmail);
     }
   }
@@ -139,12 +140,16 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-  // // this function is not working yet
-  // saveNewName(newName: string) {
-  //   if (this.nameIsChanged) {
-  //     this.nameIsChanged = false;
-  //   }
-  // }
+  // this function is not working yet
+  saveNewName() {
+    if (this.nameIsChanged) {
+      this.updatedUser = new User(this.userService.getCurrentUser());
+      this.updatedUser.username = this.editProfileData.name;
+      this.firestoreService.addUser(this.updatedUser);
+      console.log(this.updatedUser);
+      this.nameIsChanged = false;
+    }
+  }
 
 
   /**

@@ -177,6 +177,7 @@
     font-weight: 700;
     font-size: 1.125rem;
     outline: none;
+    cursor: pointer;
   }
 
   :first-child {
@@ -193,12 +194,13 @@
   }
 
   :last-child {
+    border: solid 0.063rem #444df2;
     background-color: #444df2;
     color: #ffffff;
     transition: ease-in-out 250ms;
 
     &:hover {
-      border: none;
+      border: solid 0.063rem #797ef3;
       background-color: #797ef3;
       transition: ease-in-out 250ms;
     }
