@@ -1,4 +1,5 @@
-<h3>{{ currentMessage.sender.username }}: </h3><br>
+<span>{{ getFormattedDate() }}</span>
+<h3>{{ currentMessage.sender.username }}: </h3> <span>{{ getFormattedTime() }}</span><br>
 <span>content: {{ currentMessage.content }}</span><br>
 @if (!threadMessage) {
     <span class="answer-btn" (click)="answer()">antworten</span>

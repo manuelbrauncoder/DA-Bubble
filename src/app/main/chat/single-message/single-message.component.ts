@@ -17,8 +17,32 @@ export class SingleMessageComponent implements OnInit {
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
+  months = [
+    "Januar", "Februar", "März", "April",
+    "Mai", "Juni", "Juli", "August",
+    "September", "Oktober", "November", "Dezember"
+  ];
+
+  weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
+  }
+
+  getFormattedDate() {
+    const date = new Date(this.currentMessage.time);
+    const weekday = this.weekdays[date.getDay()];
+    const month = this.months[(date.getMonth())];
+    const day = date.getDate()
+    return `${weekday}, ${day} ${month}`;
+  }
+
+  getFormattedTime() {
+    const date = new Date(this.currentMessage.time);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} Uhr`;
+    return formattedTime;
   }
 
   /**
@@ -32,20 +56,20 @@ export class SingleMessageComponent implements OnInit {
       this.fireService.currentMessage = new Message(this.currentMessage);
       console.log(this.fireService.currentThread);
     } else if (this.uiService.mainContent === 'channelChat') {
-      this.setCurrentThreadForChannel(); 
+      this.setCurrentThreadForChannel();
       this.fireService.currentMessage = new Message(this.currentMessage);
       console.log(this.fireService.currentChannel);
-           
+
     } else {
       console.log('no option choosed');
-      
+
     }
 
   }
 
-  setCurrentThreadForChannel(){
+  setCurrentThreadForChannel() {
     if (this.currentMessage.thread) {
-      if (this.currentMessage.thread.rootMessage.content !== '') {
+      if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
         this.fireService.currentThread = new Thread(this.currentMessage.thread)
       } else {
@@ -98,7 +122,7 @@ export class SingleMessageComponent implements OnInit {
     this.fireService.addConversation(this.fireService.currentConversation);
   }
 
-  saveUpdatedChannel(){
+  saveUpdatedChannel() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentChannel.messages.findIndex(message => message.id === currentMessageId);
     this.fireService.currentChannel.messages[updateId] = this.currentMessage;
