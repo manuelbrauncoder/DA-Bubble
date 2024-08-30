@@ -21,27 +21,44 @@ export class SingleMessageComponent implements OnInit {
     this.currentMessage = new Message(this.currentMessage);
   }
 
-  answer(){
+  answer() {
     this.uiService.showThread = true;
     this.setCurrentThread();
     this.fireService.currentMessage = new Message(this.currentMessage);
     console.log(this.fireService.currentThread);
-    
+
   }
 
-  setCurrentThread(){
+
+  setCurrentThread() {
     if (this.currentMessage.thread) {
-      this.fireService.currentThread = this.currentMessage.thread;
+      if (this.currentMessage.thread.messages.length > 0) {
+        console.log('Thread gefunden');
+
+        this.fireService.currentThread = new Thread(this.currentMessage.thread)
+      } else {
+        console.log('Keinen Thread gefunden, erstelle neuen');
+
+        this.fireService.currentThread = this.createThread();
+        this.currentMessage.thread = this.fireService.currentThread;
+        this.saveUpdatedConversation();
+      }
     }
-    this.fireService.currentThread = this.createThread();
-    this.currentMessage.thread = this.fireService.currentThread;
+
   }
 
-  createThread(): Thread{
+  createThread(): Thread {
     return new Thread({
       id: '',
       rootMessage: new Message(this.currentMessage),
       messages: []
     })
+  }
+
+  saveUpdatedConversation() {
+    const curentMessageId = this.currentMessage.id;
+    const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === curentMessageId);
+    this.fireService.currentConversation.messages[updateId] = this.currentMessage;
+    this.fireService.addConversation(this.fireService.currentConversation);
   }
 }

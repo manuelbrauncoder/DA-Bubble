@@ -1,5 +1,5 @@
 <h3>{{ currentMessage.sender.username }}: </h3><br>
 <span>content: {{ currentMessage.content }}</span><br>
 @if (!threadMessage) {
-    <span (click)="answer()">antworten</span>
+    <span class="answer-btn" (click)="answer()">antworten</span>
 }

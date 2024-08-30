@@ -229,15 +229,29 @@ export class FirestoreService {
   }
 
   getCleanMessageJson(message: Message) {
-    return {
+    const cleanMessage: any = {
       id: message.id,
       time: message.time,
       sender: this.getCleanUserJson(message.sender),
       content: message.content,
       data: message.data,
       reactions: message.reactions
+    };
+    if (message.thread) {
+      cleanMessage.thread = this.getCleanThreadJson(message.thread)
+    }
+    return cleanMessage;
+  }
+
+  getCleanThreadJson(thread: Thread) {
+    return {
+      id: thread.id,
+      rootMessage: this.getCleanMessageJson(thread.rootMessage),
+      messages: thread.messages.map(message => this.getCleanMessageJson(message))
     }
   }
+
+  
 
   /**
    * 

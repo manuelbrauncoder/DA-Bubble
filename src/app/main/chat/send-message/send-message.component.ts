@@ -62,12 +62,26 @@ export class SendMessageComponent implements OnInit {
     const message = this.createMessage(this.content);
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
-    } 
-    await this.userService.fireService.addConversation(this.currentRecipient);
+    } else {
+        this.userService.fireService.currentThread.messages.push(message);
+        console.log(this.userService.fireService.currentThread);
+        const messageIndex = this.findMessageToUpdate();
+        this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
+        console.log(this.userService.fireService.currentConversation);
+    }
+    await this.userService.fireService.addConversation(this.userService.fireService.currentConversation);
+    
   }
 
-  findMessageId(message: Message) {
-    return this.userService.fireService.currentConversation.messages.findIndex(m => m.id === message.id);
+  
+
+  // findMessageId(message: Message) {
+  //   return this.currentRecipient.messages.findIndex(m => m.id === message.id);
+  // }
+
+  findMessageToUpdate() {
+    return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+     
   }
 
   /**

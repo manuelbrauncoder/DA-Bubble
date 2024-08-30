@@ -6,7 +6,7 @@
     <main>
         @for (message of fireService.currentThread.messages; track $index) {
             <div class="message-wrapper">
-                <app-single-message [currentMessage]="message"></app-single-message>
+                <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
             </div>
         }
         <div class="message-wrapper root-message">

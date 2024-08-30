@@ -7,7 +7,7 @@ export class Message{
     time: number;
     sender: User;
     content: string;
-    thread: Thread | null;
+    thread?: Thread;
     data: any[];
     reactions: any[];
 
@@ -16,8 +16,11 @@ export class Message{
         this.time = obj?.time ?? 0;
         this.sender = obj?.sender ?? new User;
         this.content = obj?.content ?? '';
-        this.thread = obj?.thread ?? null;
+        this.thread = obj?.thread;
         this.data = obj?.data ?? [];
         this.reactions = obj?.reactions ?? [];
     }
+
+   
+     
 }
