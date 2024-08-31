@@ -1,21 +1,24 @@
 <main>
     
+    @if (uiService.showWorkspaceMenu) {
     <div class="workspace-wrapper">
-        @if (uiService.showWorkspaceMenu) {
             <app-workspace-menu></app-workspace-menu>
-        }
-    </div>
+        </div>
+    }
 
+
+    @if (uiService.showChat) {
     <div class="chat-wrapper">
             <app-chat></app-chat>
-        
-    </div>
+        </div>
+    }
+    
 
+    @if (uiService.showThread) {
     <div class="thread-wrapper">
-        @if (uiService.showThread) {
             <app-thread></app-thread>
-        }
-    </div>
+        </div>
+    }
     
     
     <div class="workspace-btn-wrapper">

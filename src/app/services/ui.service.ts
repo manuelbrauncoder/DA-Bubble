@@ -20,6 +20,7 @@ export class UiService {
 
   mainContent: 'channelChat' | 'newMessage' | 'directMessage' = 'channelChat';
 
+  showChat: boolean = true; // chat window in main-content
   showThread: boolean = false; // thread window in main-content
   showAddChannelPopup: boolean = false; // add new channel popup
   showAddChannelInlinePopup1: boolean = true; // name and description

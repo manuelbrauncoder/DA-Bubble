@@ -11,6 +11,7 @@ import { FooterComponent } from "./shared/footer/footer.component";
 import { CommonModule } from '@angular/common';
 import { HeaderForUsermanagementComponent } from "./shared/header-for-usermanagement/header-for-usermanagement.component";
 import { UiService } from './services/ui.service';
+import { BreakpointObserverService } from './services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,7 @@ import { UiService } from './services/ui.service';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'da-bubble';
 
+  breakpointService = inject(BreakpointObserverService);
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
@@ -42,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private showNoFooterRoutes: string[] = ['/dabubble'];
 
   ngOnInit(): void {
+    this.breakpointService.initObserver();
     this.subLoginState();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
