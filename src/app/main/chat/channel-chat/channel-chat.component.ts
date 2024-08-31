@@ -8,10 +8,12 @@ import { PopupChannelUsersComponent } from "../popup-channel-users/popup-channel
 import { SendMessageComponent } from "../send-message/send-message.component";
 import { SingleMessageComponent } from "../single-message/single-message.component";
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
+import { fadeIn } from "../../../shared/animations";
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
+  animations: [fadeIn],
   imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'

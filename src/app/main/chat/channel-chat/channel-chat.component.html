@@ -22,7 +22,7 @@
     
                 </div>
                 @if (uiService.showChannelUsersPopup) {
-                <div class="popup-relative">
+                <div @fadeIn class="popup-relative">
                     <app-popup-channel-users></app-popup-channel-users>
                 </div>
                 }
@@ -43,7 +43,7 @@
                     </g>
                 </svg>
                 @if (uiService.showAddUserToChannelPopup) {
-                <div class="popup-relative">
+                <div @fadeIn class="popup-relative">
                     <app-popup-add-user></app-popup-add-user>
                 </div>
                 }
@@ -76,7 +76,7 @@
 
 @if (uiService.showChannelEditPopup) {
 <div (click)="uiService.toggleEditChannelPopup()" class="popup-background"></div>
-<div class="popup-edit-channel"><app-popup-edit-channel></app-popup-edit-channel></div>
+<div @fadeIn class="popup-edit-channel"><app-popup-edit-channel></app-popup-edit-channel></div>
 }
 @if (uiService.showAddUserToChannelPopup) {
 <div (click)="uiService.toggleAddUserToChannelPopup()" class="popup-background"></div>
