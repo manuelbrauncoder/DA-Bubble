@@ -1,6 +1,63 @@
-@import '../../../../mixins.scss';
-@import '../../../../styles.scss';
+@import "../../../../mixins.scss";
+@import "../../../../styles.scss";
 
-main{
-    @include dFlex($fd: column, $ai: flex-start, $g: 8px);
+.send-message-container {
+  position: relative;
+  border: solid 0.063rem #adb0d9;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+}
+
+textarea {
+  width: 100%;
+  font-weight: 400;
+  font-size: 1.125rem;
+  color: #686868;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-elements {
+  display: flex;
+  align-items: center;
+  gap: 0.313rem;
+
+  hr {
+    width: 0.063rem;
+    height: 2.5rem;
+  }
+}
+
+.bounding-box {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  transition: all ease-in-out 250ms;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eceefe;
+
+    img {
+      filter: invert(55%) sepia(95%) saturate(7471%) hue-rotate(236deg)
+        brightness(98%) contrast(94%);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.send-btn:hover {
+  opacity: 0.7;
+  transform: scale(1.05);
+  transition: all ease-in-out 250ms;
 }

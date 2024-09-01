@@ -121,11 +121,7 @@ header {
     }
 }
 
-// text field | just for testing
-
-.input-wrapper {
-    margin-top: auto;
-    @include dFlex($jc: space-around);
+app-send-message {
     width: 100%;
 }
 

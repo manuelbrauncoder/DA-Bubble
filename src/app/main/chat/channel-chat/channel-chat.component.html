@@ -52,7 +52,7 @@
         </div>
     </header>
     
-    <main>
+    <main style="overflow-y: auto;"> <!-- this inline-style is just for testing -->
         <!-- space for chat -->
         @for (message of channelService.fireService.currentChannel.messages; track $index) {
         <div class="message">
@@ -61,10 +61,8 @@
     
         }
     </main>
-    
-    <div class="input-wrapper">
-        <app-send-message [currentRecipient]="channelService.fireService.currentChannel"></app-send-message>
-    </div>  
+
+    <app-send-message [currentRecipient]="channelService.fireService.currentChannel"></app-send-message>
 } @else {
     <h1>You are not a channel member!!</h1>
     <h3>Anfrage für Channel Beitritt an Ersteller senden?</h3>
