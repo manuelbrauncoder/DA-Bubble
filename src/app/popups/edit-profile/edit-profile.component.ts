@@ -45,29 +45,15 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-  /**
-   * Saves changes to the profile if any edits have been made.
-   * Updates the avatar, name, and email, then closes the edit profile view and shows a confirmation popup.
-   * @param newName - The new name entered by the user.
-   * @param newEmail - The new email entered by the user.
-   */
-  saveEdit_OLD(newName: string, newEmail: string) {
-    if (this.avatarIsChanged || this.nameIsChanged || this.emailIsChanged) {
-      this.saveNewAvatar();
-      // this.saveNewName(newName: string);  // this function is not working yet
-      this.saveNewEmailAddress(newEmail);
-      // this.closeEditProfile();
-      // this.uiService.toggleProfileChangeConfirmationPopup();
-    }
-  }
+  
 
-  saveEdit(newName: string, newEmail: string) {
+  async saveEdit(newName: string, newEmail: string) {
     if (this.avatarIsChanged) {
       this.saveNewAvatar();
       this.uiService.toggleProfileChangeConfirmationPopup();
     } else if (this.nameIsChanged || this.emailIsChanged) {
       this.saveNewAvatar();
-      this.saveNewName();
+      await this.saveNewName();
       this.saveNewEmailAddress(newEmail);
     }
   }
@@ -140,12 +126,16 @@ export class EditProfileComponent implements OnInit {
   }
 
 
-  // this function is not working yet
-  saveNewName() {
+  /**
+   * save new username in firebase and
+   * in authentication
+   */
+  async saveNewName() {
     if (this.nameIsChanged) {
       this.updatedUser = new User(this.userService.getCurrentUser());
       this.updatedUser.username = this.editProfileData.name;
-      this.firestoreService.addUser(this.updatedUser);
+      await this.firestoreService.addUser(this.updatedUser);  // await hinzugefügt damit funktion abgeschlossen ist
+      this.authService.updateUsername(this.editProfileData.name); // Funktion aus dem authService
       console.log(this.updatedUser);
       this.nameIsChanged = false;
     }

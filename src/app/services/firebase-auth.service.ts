@@ -23,7 +23,8 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
   verifyPasswordResetCode,
-  signInWithPopup
+  signInWithPopup,
+  getAuth
 } from '@angular/fire/auth';
 import { from, Observable, Subscription } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
@@ -192,6 +193,25 @@ export class FirebaseAuthService {
   getCurrentTimestamp() {
     const now = new Date();
     return now.getTime();
+  }
+
+  /**
+   * Call this method for updating the username
+   * @param newName new username
+   */
+  updateUsername(newName: string) {
+    const currentUser = this.auth.currentUser; // aktuell eingeloggter user
+    if (currentUser) {  // Abfrage ob der user auch existiert
+      updateProfile(currentUser, {displayName: newName}).then(()=>{ // firebase auth function parameter: eingeloggter user und neuer username
+        this.currentUserSig.set({ // manuelles aktualisieren des user signals ( nicht unbedingt nötig, so sieht man aber gleich die Änderung)
+          username: newName,
+          email: currentUser.email!,
+          uid: currentUser.uid
+        })
+      }).catch((err)=>{ // error handling im catch block
+        console.log('Error updating Username', err);
+      }) 
+    }
   }
 
   /**
