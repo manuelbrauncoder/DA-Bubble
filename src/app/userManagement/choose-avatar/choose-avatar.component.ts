@@ -3,6 +3,7 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FireStorageService } from '../../services/fire-storage.service';
 
 @Component({
   selector: 'app-choose-avatar',
@@ -13,14 +14,23 @@ import { FormsModule } from '@angular/forms';
 })
 export class ChooseAvatarComponent {
   authService = inject(FirebaseAuthService);
+  storageService = inject(FireStorageService);
   router = inject(Router);
   selectedAvatar: string = '';
   avatarIsSelected: boolean = false;
   showPopup: boolean = false;
   registrationFailed: boolean = false;
   errorMassage: String = '';
+  selectedFile: File | null = null;
 
   regData = this.authService.getStoredRegistrationData();
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
 
   completeRegistration() {
     if (this.regData) {
