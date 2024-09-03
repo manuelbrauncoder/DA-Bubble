@@ -1,7 +1,4 @@
 
-<!-- @if (!threadMessage) {
-    <span class="answer-btn" (click)="answer()">antworten</span>
-} -->
 
 <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="message-container">
     <img class="avatar" [src]="currentMessage.sender.avatar" alt="">

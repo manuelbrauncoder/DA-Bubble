@@ -6,24 +6,26 @@
     width: 100%;
     background-color: white;
     border-radius: 1.875rem;
-    padding: 2rem 1.875rem;
     @include dFlex($fd: column, $g: 1rem, $jc: flex-end, $ai: flex-start);
 }
 
 .input-wrapper{
     width: 100%;
+    padding: 2rem 2.5rem;
 }
 
-.root-message {
-    margin-top: auto;
+.message-wrapper {
+    width: 100%;
 }
 
-main{
-    @include dFlex($fd: column, $jc: flex-end, $ai: flex-start, $g: 1rem);
-    flex-grow: 2;
+app-single-message{
+    width: 100%;
 }
 
 .messages{
+    @include dFlex($fd: column, $jc: flex-end, $ai: flex-start, $g: 1rem);
+    flex-grow: 2;
+    padding: 2rem 2.5rem;
     width: 100%;
     height: 100%;
     display: flex;
@@ -35,4 +37,10 @@ main{
 header{
     width: 100%;
     @include dFlex($jc: space-between);
+    box-shadow: 0px 2px 10px 0px #00000014;
+    padding: 2rem 2.5rem;
+    >div{
+        @include dFlex($g: 0.313rem);
+        flex-wrap: wrap;
+    }
 }

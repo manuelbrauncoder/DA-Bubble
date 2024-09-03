@@ -18,20 +18,23 @@
             </g>
         </svg>
     </header>
-    <main>
-        <div class="messages">
-            @for (message of fireService.currentThread.messages; track $index) {
-            <div class="message-wrapper">
-                <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
-            </div>
-            }
-        </div>
 
-        <div class="message-wrapper root-message">
+
+
+    <div class="messages">
+        <!-- <div class="message-wrapper"> -->
             <app-single-message [threadMessage]="true"
                 [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
-        </div>
-    </main>
+        <!-- </div> -->
+        @for (message of fireService.currentThread.messages; track $index) {
+        <!-- <div class="message-wrapper"> -->
+            <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
+        <!-- </div> -->
+        }
+    </div>
+
+
+
     @if (uiService.mainContent === 'directMessage') {
     <div class="input-wrapper">
         <app-send-message [threadMessage]="true"
