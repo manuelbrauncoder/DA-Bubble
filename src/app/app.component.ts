@@ -79,6 +79,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.authService.currentUserSig.set(null);
         this.uiService.showEditUserAndLogoutPopup = false;
         this.router.navigate(['']);
+        this.uiService.closeThreadWindow();
       }
       console.log('currently logged in user:', this.authService.currentUserSig());
     })
