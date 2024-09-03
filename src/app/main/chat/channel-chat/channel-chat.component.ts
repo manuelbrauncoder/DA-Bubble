@@ -9,12 +9,13 @@ import { SendMessageComponent } from "../send-message/send-message.component";
 import { SingleMessageComponent } from "../single-message/single-message.component";
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { fadeIn } from "../../../shared/animations";
+import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
   animations: [fadeIn],
-  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent],
+  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent, FormatDateForListPipe],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
@@ -24,6 +25,6 @@ export class ChannelChatComponent {
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
 
-  
-  
+
+
 }

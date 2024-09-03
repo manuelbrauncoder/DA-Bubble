@@ -138,7 +138,30 @@ app-send-message {
     height: 100%;
 }
 
-.messages-date {
-    text-align: center;
-}
+.date-divider {
+    @include dFlex();
 
+    .messages-date {
+        padding: 0.313rem 0.938rem;
+        border: 1px solid $color-purple-light;
+        border-radius: 100vw;
+        width: fit-content;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.534rem;
+        color: black;
+    }
+
+    .line-wrapper {
+        flex-grow: 2;
+        @include dFlex();
+
+        .line {
+            border: unset;
+            height: 1px;
+            width: 100%;
+            background-color: $color-purple-light;
+        }
+    }
+}
