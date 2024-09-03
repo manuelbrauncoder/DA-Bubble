@@ -2,7 +2,10 @@
 
 <app-header-for-usermanagement *ngIf="!showFooterAndHeader"></app-header-for-usermanagement>
 
-<router-outlet></router-outlet>
+<div class="router-outlet-wrapper">
+    <router-outlet></router-outlet>
+
+</div>
 
 <app-footer *ngIf="!showFooterAndHeader"></app-footer>
 
