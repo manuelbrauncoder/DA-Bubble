@@ -36,6 +36,7 @@ export class ChannelService {
         this.fireService.currentChannel = new Channel(activeChannel);
         this.uiService.changeMainContent('channelChat');
         this.fireService.getMessagesPerDay();
+        this.uiService.showThread = false;
       } else {
         channel.channelActive = false;
       }

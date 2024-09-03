@@ -29,6 +29,7 @@ export class ConversationService {
   openConversation(secondUser: User) {
     this.setCurrentConversation(secondUser);
     this.uiService.changeMainContent('directMessage');
+    this.uiService.showThread = false;
   }
 
   /**
