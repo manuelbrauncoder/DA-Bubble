@@ -24,3 +24,13 @@ export class Message{
    
      
 }
+
+export class DateMessages {
+    date: string;
+    messages: Message[];
+
+    constructor(obj?: Partial<DateMessages>) {
+        this.date = obj?.date ?? '';
+        this.messages = obj?.messages ?? [];
+    }
+}

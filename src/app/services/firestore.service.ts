@@ -3,7 +3,7 @@ import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Fires
 import { orderBy } from '@firebase/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
-import { Message } from '../models/message.class';
+import { DateMessages, Message } from '../models/message.class';
 import { Conversation, Participants } from '../models/conversation.class';
 import { Thread } from '../models/thread.class ';
 
@@ -25,7 +25,56 @@ export class FirestoreService {
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here
 
+  messagesPerDay: any = [];
+
   constructor() { }
+
+   getFormattedDate(timestamp: number): string {
+    const date = new Date(timestamp);
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+  }
+
+
+/**
+ * Organizes messages by the day they were sent.
+ * 
+ * This function processes all messages in the current channel and groups them by the date they were sent.
+ * Each group is represented by a `DateMessages` object, which contains a date and the corresponding list of messages sent on that date.
+ * The result is stored in the `messagesPerDay` array, sorted by date.
+ * 
+ * The function relies on the `getFormattedDate()` method to convert a timestamp from
+ * each message into a consistent date string format (`YYYY-MM-DD`).
+ * 
+ */
+  getMessagesPerDay() {
+    this.messagesPerDay = [];
+    let dayMap = new Map<string, Message[]>();
+
+    this.currentChannel.messages.forEach((message) => {
+    let messageDate = this.getFormattedDate(message.time);
+    let messages = dayMap.get(messageDate);
+    if (!messages) {
+      messages = [];
+      dayMap.set(messageDate, messages);
+    }
+    messages.push(message);
+    });
+    this.messagesPerDay = Array.from(
+      dayMap,
+      ([date, messages]) => 
+        new DateMessages({
+          date,
+          messages
+        })
+    );
+    console.log(this.messagesPerDay);
+    
+  }
 
   // ================= Helper Methods ========================
 
@@ -56,12 +105,15 @@ export class FirestoreService {
   logChanges(change: DocumentChange<DocumentData>) {
     if (change.type === 'added') {
       console.log('New Data ', change.doc.data());
+      this.getMessagesPerDay();      
     }
     if (change.type === 'modified') {
       console.log('Modified Data: ', change.doc.data());
+      this.getMessagesPerDay();
     }
     if (change.type === 'removed') {
       console.log('Removed Data: ', change.doc.data());
+      this.getMessagesPerDay();
     }
   }
 

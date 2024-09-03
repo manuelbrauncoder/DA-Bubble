@@ -29,11 +29,13 @@ export class ChannelService {
    * @param activeChannel 
    */
   toggleActiveChannel(activeChannel: Channel) {
+    
     this.fireService.channels.forEach((channel) => {
       if (activeChannel.name === channel.name) {
         channel.channelActive = true;
         this.fireService.currentChannel = new Channel(activeChannel);
         this.uiService.changeMainContent('channelChat');
+        this.fireService.getMessagesPerDay();
       } else {
         channel.channelActive = false;
       }
