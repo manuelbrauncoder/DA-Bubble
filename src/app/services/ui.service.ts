@@ -34,6 +34,10 @@ export class UiService {
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
 
+  closeThreadWindow() {
+    this.showThread = false;
+  }
+
   changeMainContent(content: 'channelChat' | 'newMessage' | 'directMessage'){
     this.mainContent = content;
   }

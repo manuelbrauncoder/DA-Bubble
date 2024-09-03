@@ -3,21 +3,23 @@
 
 
 
-// text field | just for testing
 
-.input-wrapper {
-    margin-top: auto;
-    @include dFlex($jc: space-around);
+
+
+.messages {
+    flex-grow: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 1rem;
     width: 100%;
-    padding: 16px;
+    padding: 1rem;
+    overflow-y: auto;
+    height: 100%;
 }
 
-// chat section | just for testing
-
-main{
-    .message{
-        border: 1px solid black;
-        @include dFlex($g: 8px);
-        padding: 8px;
-    }
+app-send-message {
+    width: 100%;
+    height: fit-content;
+    padding: 0 2.188rem 2.5rem 2.188rem;
 }

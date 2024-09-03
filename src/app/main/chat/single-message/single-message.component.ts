@@ -3,17 +3,20 @@ import { Message } from '../../../models/message.class';
 import { UiService } from '../../../services/ui.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Thread } from '../../../models/thread.class ';
+import { UserService } from '../../../services/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
 export class SingleMessageComponent implements OnInit {
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
+  userService = inject(UserService);
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
@@ -37,12 +40,53 @@ export class SingleMessageComponent implements OnInit {
     return `${weekday}, ${day} ${month}`;
   }
 
-  getFormattedTime() {
-    const date = new Date(this.currentMessage.time);
+  /**
+   * 
+   * @param timeStamp unix timestamp
+   * @returns formatted time 
+   */
+  getFormattedTime(timeStamp: number) {
+    const date = new Date(timeStamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
     const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} Uhr`;
     return formattedTime;
+  }
+
+  /**
+   * 
+   * @returns formatted time of last answer
+   */
+  getTimeOfLastAnswer(){
+    if (this.currentMessage.thread) {
+      if (this.currentMessage.thread.messages.length > 0) {
+        return this.getFormattedTime(this.currentMessage.thread.messages[this.currentMessage.thread.messages.length - 1].time);
+      }
+    }
+    return;
+  }
+
+  /**
+   * 
+   * @returns true if the message is from currentUser
+   */
+  isMessageFromCurrentUser(): boolean{
+    const currentUser = this.userService.getCurrentUser();
+    if (currentUser) {
+      if (currentUser.uid === this.currentMessage.sender.uid) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  messageHasAnswers(){
+    if (this.currentMessage.thread) {
+      if (this.currentMessage.thread.messages.length > 0) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -67,6 +111,12 @@ export class SingleMessageComponent implements OnInit {
 
   }
 
+  /**
+   * if the message already has a thread,
+   * set this thread as currentThread.
+   * if not, create a new Thread and set it
+   * as currentThread and save it in firebase
+   */
   setCurrentThreadForChannel() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
@@ -83,8 +133,10 @@ export class SingleMessageComponent implements OnInit {
 
 
   /**
-   * open thread window with existing thread,
-   * or create a new thread and save in firebase
+   * if the message already has a thread,
+   * set this thread as currentThread.
+   * if not, create a new Thread and set it
+   * as currentThread and save it in firebase
    */
   setCurrentThreadForDm() {
     if (this.currentMessage.thread) {

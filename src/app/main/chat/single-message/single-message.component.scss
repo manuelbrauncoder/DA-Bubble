@@ -2,7 +2,97 @@
 @import '../../../../mixins.scss';
 
 
-.answer-btn{
-    color: blue;
-    cursor: pointer;
+.message-container {
+    width: 100%;
+    display: flex;
+    gap: 1.875rem;
+}
+
+.avatar {
+    width: 4.375rem;
+    height: 4.375rem;
+    border-radius: 100%;
+    background-color: white;
+}
+
+.message {
+    @include dFlex($fd: column, $ai: flex-start, $g: 0.5rem);
+}
+
+.name-and-time {
+    @include dFlex($jc: flex-start, $g: 1.25rem);
+    width: 100%;
+    h3 {
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.534rem;
+        text-align: left;
+        color: black;
+    }
+
+    span {
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.194rem;
+        text-align: left;
+        color: $color-disabled-grey;
+    }
+}
+
+.answers {
+    @include dFlex($jc: flex-start, $g: 1.25rem);
+    .answer-counter {
+        cursor: pointer;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.534rem;
+        text-align: left;
+        color: $color-purple-3;
+        transition: ease 225ms;
+        &:hover{
+            transition: ease 225ms;
+            transform: scale(1.05);
+        }
+    }
+    .last-answer {
+        font-family: Nunito;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.194rem;
+        text-align: left;
+        color: $color-disabled-grey;
+    }
+}
+
+.current-user-content{
+    background-color: $color-purple-3;
+    border-radius: 1.875rem 0 1.875rem 1.875rem;
+    padding: 0.938rem;
+    span{
+        color: white;
+    }
+}
+
+.user-content {
+    background-color: $color-active-channel;
+    border-radius: 0 1.875rem 1.875rem 1.875rem;
+    padding: 0.938rem;
+    span{
+        color: black;
+    }
+}
+
+.content {
+    display: flex;
+    justify-content: flex-start;
+    span{
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.534rem;
+        text-align: left;
+    }
 }

@@ -52,12 +52,11 @@
         </div>
     </header>
     
-    <main style="overflow-y: auto;"> <!-- this inline-style is just for testing -->
-        <!-- space for chat -->
+    <main class="messages"> 
         @for (message of channelService.fireService.currentChannel.messages; track $index) {
-        <div class="message">
+        
             <app-single-message [currentMessage]="message"></app-single-message>  
-        </div>
+        
     
         }
     </main>

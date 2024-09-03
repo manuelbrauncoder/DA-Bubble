@@ -1,6 +1,24 @@
-<span>{{ getFormattedDate() }}</span>
-<h3>{{ currentMessage.sender.username }}: </h3> <span>{{ getFormattedTime() }}</span><br>
-<span>content: {{ currentMessage.content }}</span><br>
-@if (!threadMessage) {
+
+<!-- @if (!threadMessage) {
     <span class="answer-btn" (click)="answer()">antworten</span>
-}
+} -->
+
+<div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="message-container">
+    <img class="avatar" [src]="currentMessage.sender.avatar" alt="">
+    <div [ngStyle]="{'align-items': isMessageFromCurrentUser() ? 'flex-end' : 'flex-start'}" class="message">
+        <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="name-and-time">
+            <h3>{{ currentMessage.sender.username }}</h3>
+            <span>{{ getFormattedTime(currentMessage.time) }}</span>
+        </div>
+        <div [ngClass]="isMessageFromCurrentUser() ? 'current-user-content' : 'user-content'" class="content">
+            <span>{{ currentMessage.content }}</span>
+        </div>
+        @if (!threadMessage && messageHasAnswers()) {
+            <div class="answers">
+                <span (click)="answer()" class="answer-counter">{{ currentMessage.thread?.messages?.length}} Antworten</span>
+                <span class="last-answer">Letzte Antwort {{ getTimeOfLastAnswer() }}</span>
+            </div>
+        }
+        
+    </div>
+</div>
