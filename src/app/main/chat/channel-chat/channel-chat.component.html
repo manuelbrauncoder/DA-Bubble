@@ -53,11 +53,19 @@
     </header>
     
     <main class="messages"> 
-        @for (message of channelService.fireService.currentChannel.messages; track $index) {
+        <!-- @for (message of channelService.fireService.currentChannel.messages; track $index) {
         
             <app-single-message [currentMessage]="message"></app-single-message>  
         
     
+        } -->
+
+        @for (day of channelService.fireService.messagesPerDay; track $index) {
+            <h3 class="messages-date">{{ day.date}} </h3>
+
+            @for (message of day.messages; track $index) {
+                <app-single-message [currentMessage]="message"></app-single-message>
+            }
         }
     </main>
 
