@@ -46,6 +46,7 @@ export class ConversationService {
     } else {
       await this.createNewConversation(firstUser, secondUser);
     }
+    this.fireService.getMessagesPerDayForConversation();
   }
 
   /**

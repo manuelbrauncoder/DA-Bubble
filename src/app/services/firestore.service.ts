@@ -25,7 +25,8 @@ export class FirestoreService {
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here
 
-  messagesPerDay: any = [];
+  messagesPerDay: any = []; // for channels
+  messagesPerDayConversation: any = []; // for conversations
 
   constructor() { }
 
@@ -50,11 +51,11 @@ export class FirestoreService {
  * The function relies on the `getFormattedDate()` method to convert a timestamp from
  * each message into a consistent date string format (`YYYY-MM-DD`).
  * 
+ * @param messagesArr currentConversation or currentChannel
  */
   getMessagesPerDay() {
     this.messagesPerDay = [];
     let dayMap = new Map<string, Message[]>();
-
     this.currentChannel.messages.forEach((message) => {
     let messageDate = this.getFormattedDate(message.time);
     let messages = dayMap.get(messageDate);
@@ -73,6 +74,30 @@ export class FirestoreService {
         })
     );
     console.log(this.messagesPerDay);
+    
+  }
+
+  getMessagesPerDayForConversation() {
+    this.messagesPerDayConversation = [];
+    let dayMap = new Map<string, Message[]>();
+    this.currentConversation.messages.forEach((message) => {
+    let messageDate = this.getFormattedDate(message.time);
+    let messages = dayMap.get(messageDate);
+    if (!messages) {
+      messages = [];
+      dayMap.set(messageDate, messages);
+    }
+    messages.push(message);
+    });
+    this.messagesPerDayConversation = Array.from(
+      dayMap,
+      ([date, messages]) => 
+        new DateMessages({
+          date,
+          messages
+        })
+    );
+    console.log(this.messagesPerDayConversation);
     
   }
 
@@ -105,15 +130,12 @@ export class FirestoreService {
   logChanges(change: DocumentChange<DocumentData>) {
     if (change.type === 'added') {
       console.log('New Data ', change.doc.data());
-      this.getMessagesPerDay();      
     }
     if (change.type === 'modified') {
       console.log('Modified Data: ', change.doc.data());
-      this.getMessagesPerDay();
     }
     if (change.type === 'removed') {
       console.log('Removed Data: ', change.doc.data());
-      this.getMessagesPerDay();
     }
   }
 
@@ -185,6 +207,7 @@ export class FirestoreService {
       this.setActiveChannel();
       list.docChanges().forEach((change) => {
         this.logChanges(change);
+        this.getMessagesPerDay();
       })
     })
   }
@@ -229,6 +252,7 @@ export class FirestoreService {
       });
       list.docChanges().forEach((change) => {
         this.logChanges(change);
+        this.getMessagesPerDayForConversation();
       })
     })
   }
