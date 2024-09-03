@@ -57,7 +57,7 @@ export class FirebaseAuthService {
 
 
   /**
-  * Store Data from Registration Form 
+  * Stored Data from Registration Form 
   */
   private tempRegData: { email: string; username: string; password: string } | null = null;
 

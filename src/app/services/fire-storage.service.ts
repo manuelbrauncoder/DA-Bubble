@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
@@ -20,7 +20,13 @@ export class FireStorageService {
   }
 
   constructor() {
-    const firebaseApp = initializeApp(this.firebaseConfig);
+    let firebaseApp;
+    if (!getApps().length) {
+      firebaseApp = initializeApp(this.firebaseConfig);
+    } else {
+      firebaseApp = getApps()[0];
+    }
+
     this.storage = getStorage(firebaseApp);
     this.auth = getAuth(firebaseApp);
   }
