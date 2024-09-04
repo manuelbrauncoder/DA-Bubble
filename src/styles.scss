@@ -20,17 +20,19 @@ h4 {
 html,
 body,
 app-root {
-  height: 100%;
+  //height: 100%;
 }
 
 body {
   background-color: #ECEEFE;
-  padding: 2rem;
+  //padding: 2rem;
   max-width: 1920px;
-  height: 100vh;
+  //height: 100vh;
 }
 
 app-root {
+  padding: 2rem;
+  height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -52,7 +54,7 @@ app-header-for-usermanagement {
 
 app-main-content {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 102px);
 }
 
 app-footer {

@@ -2,7 +2,7 @@
 @import '../../../mixins.scss';
 
 main{
-    //height: 100%;
+    height: 100%;
     width: 100%;
     background-color: white;
     border-radius: 1.875rem;
@@ -10,7 +10,7 @@ main{
 
 app-channel-chat, app-direct-message, app-new-message{
     @include dFlex($fd: column);
-    //height: 100%;
+    height: 100%;
     width: 100%;
-    overflow-y: auto;
+    //overflow-y: auto;
 }
