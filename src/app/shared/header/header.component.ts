@@ -5,10 +5,12 @@ import { UiService } from '../../services/ui.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { UserService } from '../../services/user.service';
+import { fadeIn } from '../animations';
 
 
 @Component({
   selector: 'app-header',
+  animations: [fadeIn],
   standalone: true,
   imports: [CommonModule, EditUserAndLogoutPopupComponent],
   templateUrl: './header.component.html',

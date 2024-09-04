@@ -47,6 +47,7 @@ export class FirebaseAuthService {
   uiService = inject(UiService);
   newEmailAddress: string = '';
   updateEmail: boolean = false;
+  loginTooLongAgo: boolean = false;
   googleUser: boolean = false;
   guestUser: boolean = false;
 
@@ -345,6 +346,7 @@ export class FirebaseAuthService {
       }).catch((err) => {
         let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
+          this.loginTooLongAgo = true;
           this.uiService.toggleVerifyPassword();
         }
         console.log(err);
