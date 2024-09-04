@@ -23,10 +23,12 @@ header {
         padding: 0.25rem;
         border-radius: 100%;
         cursor: pointer;
+        transition: ease-in 0.15s;
 
         &:hover {
             background-color: $color-active-channel;
             scale: 1.1;
+            transition: ease-in 0.15s;
         }
 
         &:hover path {
@@ -86,9 +88,11 @@ header {
     border-radius: 100vw;
     @include dFlex($jc: flex-start, $g: 0.5rem);
     cursor: pointer;
+    transition: ease-in 0.15s;
 
     &:hover {
         background-color: $color-active-channel;
+        transition: ease-in 0.15s;
     }
 }
 
@@ -126,6 +130,7 @@ header {
     cursor: pointer;
     padding-left: 2.188rem;
     @include dFlex($g: 0.938rem, $jc: flex-start);
+    transition: ease-in 0.15s;
 
     span {
         font-size: 1.125rem;
@@ -136,13 +141,16 @@ header {
     &:hover {
         span {
             color: $color-purple-3;
+            transition: ease-in 0.15s;
         }
 
         svg {
             transform: scale(1.05);
+            transition: ease-in 0.15s;
 
             path {
                 fill: $color-purple-3;
+                transition: ease-in 0.15s;
             }
         }
     }
@@ -161,6 +169,12 @@ header {
     border-radius: 100vw;
     margin-bottom: 1.563rem;
     cursor: pointer;
+    transition: ease-in 0.15s;
+
+    &:hover {
+        background-color: $color-active-channel;
+        transition: ease-in 0.15s;
+    }
 }
 
 .channel-active {

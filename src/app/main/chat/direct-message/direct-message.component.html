@@ -1,24 +1,28 @@
 <header>
+    <div>
+        <img [src]="conversationService.fireService.currentConversation.participants.second.avatar" alt="">
+        <h3>{{ conversationService.fireService.currentConversation.participants.second.username }}</h3>
+    </div>
 
 </header>
 
 <main class="messages">
-    
-    @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
-        <div class="date-divider">
-            <div class="line-wrapper">
-                <hr class="line">
-            </div>
-            <h3 class="messages-date">{{ day.messages[0].time | formatDateForList}} </h3>
-            <div class="line-wrapper">
-                <hr class="line">
-            </div>
 
+    @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
+    <div class="date-divider">
+        <div class="line-wrapper">
+            <hr class="line">
+        </div>
+        <h3 class="messages-date">{{ day.messages[0].time | formatDateForList}} </h3>
+        <div class="line-wrapper">
+            <hr class="line">
         </div>
 
-        @for (message of day.messages; track $index) {
-            <app-single-message [currentMessage]="message"></app-single-message>
-        }
+    </div>
+
+    @for (message of day.messages; track $index) {
+    <app-single-message [currentMessage]="message"></app-single-message>
+    }
     }
 
 

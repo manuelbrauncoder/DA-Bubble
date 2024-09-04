@@ -3,6 +3,7 @@ import { SingleMessageComponent } from '../single-message/single-message.compone
 import { SendMessageComponent } from '../send-message/send-message.component';
 import { ConversationService } from '../../../services/conversation.service';
 import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-direct-message',
@@ -13,4 +14,5 @@ import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe'
 })
 export class DirectMessageComponent {
   conversationService = inject(ConversationService);
+  userService = inject(UserService);
 }

@@ -17,17 +17,15 @@ h4 {
   padding: 0;
 }
 
-html,
-body,
-app-root {
-  //height: 100%;
-}
+// html,
+// body,
+// app-root {
+//   //height: 100%;
+// }
 
 body {
   background-color: #ECEEFE;
-  //padding: 2rem;
   max-width: 1920px;
-  //height: 100vh;
 }
 
 app-root {
@@ -54,7 +52,7 @@ app-header-for-usermanagement {
 
 app-main-content {
   width: 100%;
-  height: calc(100vh - 102px);
+  height: calc(100vh - 200px);
 }
 
 app-footer {

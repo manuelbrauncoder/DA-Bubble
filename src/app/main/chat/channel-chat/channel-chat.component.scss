@@ -125,14 +125,12 @@ header {
 app-send-message {
     height: 182px;
     width: 100%;
-    height: fit-content;
     padding: 0 2.188rem 2.5rem 2.188rem;
 }
 
 .messages {
     display: flex;
     flex-direction: column;
-    //justify-content: flex-end;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
