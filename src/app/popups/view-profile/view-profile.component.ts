@@ -5,12 +5,10 @@ import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { UserService } from '../../services/user.service';
-import { fadeIn } from '../../shared/animations';
 
 
 @Component({
   selector: 'app-view-profile',
-  animations: [fadeIn],
   standalone: true,
   imports: [CommonModule, EditProfileComponent],
   templateUrl: './view-profile.component.html',

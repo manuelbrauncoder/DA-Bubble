@@ -17,7 +17,7 @@
 </div>
 
 @if (uiService.showEditUserAndLogoutPopup) {
-    <div @fadeIn class="popup-overlay" (click)="openPopup()">
+    <div class="popup-overlay" (click)="openPopup()">
         <app-edit-user-and-logout-popup (click)="$event.stopPropagation()"></app-edit-user-and-logout-popup>
     </div>
 }
