@@ -3,24 +3,37 @@
 
 
 
-header{
+header {
     height: 102px;
     box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
     padding: 1.5625rem 2.8125rem;
     width: 100%;
     border-radius: 1.875rem 1.875rem 0 0;
     @include dFlex($jc: flex-start);
-    >div{
+
+    >div {
         padding: 0.25rem 0.5rem;
         border-radius: 100vw;
         transition: ease-in 0.15s;
         @include dFlex($g: 1rem);
         cursor: pointer;
-        img{
+
+        img {
             width: 50px;
             height: 50px;
+            border-radius: 100%;
         }
-        &:hover{
+
+        h3 {
+            font-family: Nunito;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32.74px;
+            text-align: left;
+            color: black;
+        }
+
+        &:hover {
             background-color: $color-active-channel;
             transition: ease-in 0.15s;
         }
@@ -31,12 +44,11 @@ header{
 .messages {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     gap: 1rem;
     width: 100%;
     padding: 1rem;
     overflow-y: auto;
-    height: 100%;
+    height: calc(100% - 502.5px);
 }
 
 .date-divider {
@@ -67,8 +79,53 @@ header{
     }
 }
 
+.message-recipient {
+    @include dFlex($fd: column, $ai: flex-start, $g: 1.5rem);
+    padding: 2.188rem;
+    margin-right: auto;
+
+    .name {
+        @include dFlex($g: 1.563rem, $ai: flex-end);
+        img{
+            border-radius: 100%;
+            height: 100px;
+            width: 100px;
+        }
+
+        h3 {
+            font-family: Nunito;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 32.74px;
+            text-align: left;
+            color: black;
+        }
+    }
+
+    .info {
+        span {
+            font-family: Nunito;
+            font-size: 20px;
+            font-weight: 400;
+            line-height: 27.28px;
+            text-align: left;
+            color: $color-offline-gray;
+
+            .user-name {
+                color: $color-purple-3;
+                cursor: pointer;
+                transition: ease-in 0.15s;
+                &:hover{
+                    font-weight: 700;
+                    transition: ease-in 0.15s;
+                }
+            }
+        }
+    }
+}
+
 app-send-message {
+    height: 182px;
     width: 100%;
-    height: fit-content;
     padding: 0 2.188rem 2.5rem 2.188rem;
 }

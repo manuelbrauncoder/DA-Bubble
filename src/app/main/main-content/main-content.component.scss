@@ -10,8 +10,6 @@ main{
 
 .workspace-wrapper{
     max-width: 25%;
-    //height: 100%;
-    //overflow-y: auto;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;
@@ -20,14 +18,10 @@ main{
 
 .chat-wrapper{
     flex-grow: 2;
-    //height: 100%;
-    //overflow-y: auto;
 }
 
 .thread-wrapper{
     max-width: 35%;
-    //height: 100%;
-    //overflow-y: auto;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;
