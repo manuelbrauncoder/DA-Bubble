@@ -22,28 +22,31 @@
 
 
     <div class="messages">
-        <!-- <div class="message-wrapper"> -->
-            <app-single-message [threadMessage]="true"
-                [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
-        <!-- </div> -->
+            <app-single-message [threadMessage]="true"[currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
+            @if (fireService.currentThread.messages.length > 0) {
+                <div class="answer-counter">
+                    <span>{{fireService.currentThread.messages.length}} {{formatAnswerCount()}}</span>
+                    <div class="line-wrapper">
+                        <hr class="counter-line">
+                    </div>
+                </div>
+            }
         @for (message of fireService.currentThread.messages; track $index) {
-        <!-- <div class="message-wrapper"> -->
             <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
-        <!-- </div> -->
         }
     </div>
 
 
 
     @if (uiService.mainContent === 'directMessage') {
-    <div class="input-wrapper">
+    <!-- <div class="input-wrapper"> -->
         <app-send-message [threadMessage]="true"
             [currentRecipient]="fireService.currentConversation"></app-send-message>
-    </div>
+    <!-- </div> -->
     } @else if (uiService.mainContent === 'channelChat') {
-    <div class="input-wrapper">
+    <!-- <div class="input-wrapper"> -->
         <app-send-message [threadMessage]="true" [currentRecipient]="fireService.currentChannel"></app-send-message>
-    </div>
+    <!-- </div> -->
     }
 
 </div>

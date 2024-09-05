@@ -14,4 +14,8 @@ import { UiService } from '../../services/ui.service';
 export class ThreadComponent {
   fireService = inject(FirestoreService);
   uiService = inject(UiService);
+
+  formatAnswerCount(){
+    return this.fireService.currentThread.messages.length === 1 ?  'Antwort' : 'Antworten';
+  }
 }

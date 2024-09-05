@@ -25,6 +25,6 @@ export class ChannelChatComponent {
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
 
-
+  
 
 }

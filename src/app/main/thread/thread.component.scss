@@ -1,14 +1,15 @@
 @import '../../../styles.scss';
 @import '../../../mixins.scss';
 
-.thread-wrapper{
+.thread-wrapper {
+    height: 100%;
     width: 100%;
     background-color: white;
     border-radius: 1.875rem;
-    @include dFlex($fd: column, $g: 1rem, $jc: flex-end, $ai: flex-start);
+    @include dFlex($fd: column, $g: 1rem, $ai: flex-start);
 }
 
-.input-wrapper{
+.input-wrapper {
     width: 100%;
     padding: 2rem 2.5rem;
 }
@@ -17,28 +18,57 @@
     width: 100%;
 }
 
-app-single-message{
+app-single-message {
     width: 100%;
 }
 
-.messages{
-    @include dFlex($fd: column, $jc: flex-end, $ai: flex-start, $g: 1rem);
-    flex-grow: 2;
+app-send-message {
+    height: 182px;
+    width: 100%;
+    padding: 1rem 2.188rem 2.5rem 2.188rem;
+}
+
+.answer-counter {
+    @include dFlex($jc: flex-start, $g: 20px);
+    width: 100%;
+    span {
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24.55px;
+        text-align: left;
+        color: $color-purple-light;
+    }
+
+    .line-wrapper {
+        flex-grow: 2;
+
+        .counter-line {
+            height: 1px;
+            border: unset;
+            background-color: $color-purple-light;
+            width: 100%;
+        }
+    }
+}
+
+.messages {
     padding: 2rem 2.5rem;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 282.5px);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    gap: 1rem;
     overflow-y: auto;
 }
 
-header{
+header {
     width: 100%;
     @include dFlex($jc: space-between);
     box-shadow: 0px 2px 10px 0px #00000014;
     padding: 2rem 2.5rem;
-    >div{
+
+    >div {
         @include dFlex($g: 0.313rem);
         flex-wrap: wrap;
     }

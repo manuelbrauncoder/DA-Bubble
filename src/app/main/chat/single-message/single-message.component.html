@@ -15,7 +15,7 @@
         </div>
         @if (!threadMessage && messageHasAnswers()) {
             <div class="answers">
-                <span (click)="answer()" class="answer-counter">{{ currentMessage.thread?.messages?.length}} Antworten</span>
+                <span (click)="answer()" class="answer-counter">{{ currentMessage.thread?.messages?.length}} {{ formatAnswerCount() }}</span>
                 <span class="last-answer">Letzte Antwort {{ getTimeOfLastAnswer() }}</span>
             </div>
         }

@@ -32,6 +32,10 @@ export class SingleMessageComponent implements OnInit {
     this.currentMessage = new Message(this.currentMessage);
   }
 
+  formatAnswerCount(){
+    return this.currentMessage.thread?.messages.length === 1 ?  'Antwort' : 'Antworten';
+  }
+
   getFormattedDate() {
     const date = new Date(this.currentMessage.time);
     const weekday = this.weekdays[date.getDay()];
