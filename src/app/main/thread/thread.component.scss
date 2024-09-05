@@ -59,11 +59,12 @@ app-send-message {
 .answer-counter {
     @include dFlex($jc: flex-start, $g: 20px);
     width: 100%;
+
     span {
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
+        line-height: 1.534375rem;
         text-align: left;
         color: $color-purple-light;
     }
