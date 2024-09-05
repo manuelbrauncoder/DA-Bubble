@@ -11,18 +11,19 @@ export class BreakpointObserverService {
 
   breakpointsToObserve = [Breakpoints.TabletPortrait, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape];
 
-  isMobilePortrait: boolean = false;
+  isMobile: boolean = false;
   isHandsetLandscape: boolean = false;
+
 
   constructor(private responsive: BreakpointObserver) { }
 
   initObserver(){
     this.responsive.observe(this.breakpointsToObserve).subscribe((result) => {
       if (result.breakpoints[Breakpoints.TabletPortrait] || result.breakpoints[Breakpoints.HandsetPortrait]) {
-        this.isMobilePortrait = true;
+        this.isMobile = true;
         this.hideInMobilePortrait();       
       } else if (!result.breakpoints[Breakpoints.TabletPortrait] || !result.breakpoints[Breakpoints.HandsetPortrait]) {
-        this.isMobilePortrait = false;
+        this.isMobile = false;
         this.showInDesktopMode();
       }
       if (result.breakpoints[Breakpoints.HandsetLandscape]) {

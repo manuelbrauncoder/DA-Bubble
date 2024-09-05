@@ -1,12 +1,15 @@
 /**
  * This Service File is for opening and closing UI Elements
  */
-import { Injectable } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { inject, Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UiService {
+
+  observerService = inject(BreakpointObserver);
 
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
   showDirectMessages: boolean = false; // user list in workspace menu
@@ -33,6 +36,25 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
+
+  openChatMobile(content: 'channelChat' | 'newMessage' | 'directMessage'){
+    this.mainContent = content;
+    this.showWorkspaceMenu = false;
+    this.showThread = false;
+    this.showChat = true;
+  }
+
+  openThreadMobile(){
+    this.showWorkspaceMenu = false;
+    this.showThread = true;
+    this.showChat = false;
+  }
+
+  openWorkspaceMenuMobile(){
+    this.showWorkspaceMenu = true;
+    this.showThread = false;
+    this.showChat = false;
+  }
 
   closeThreadWindow() {
     this.showThread = false;

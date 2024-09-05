@@ -8,6 +8,7 @@ import { User } from '../models/user.class';
 import { FirestoreService } from './firestore.service';
 import { UserService } from './user.service';
 import { Conversation, Participants } from '../models/conversation.class';
+import { BreakpointObserverService } from './breakpoint-observer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class ConversationService {
   fireService = inject(FirestoreService);
   uiService = inject(UiService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
 
 
   constructor() { }
@@ -28,8 +30,16 @@ export class ConversationService {
    */
   openConversation(secondUser: User) {
     this.setCurrentConversation(secondUser);
-    this.uiService.changeMainContent('directMessage');
-    this.uiService.showThread = false;
+    this.showChannelContent();
+  }
+
+  showChannelContent() {
+    if (this.observerService.isMobile) {
+      this.uiService.openChatMobile('directMessage');
+    } else {
+      this.uiService.changeMainContent('directMessage');
+      this.uiService.showThread = false;
+    }
   }
 
   /**
