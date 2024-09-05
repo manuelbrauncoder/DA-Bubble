@@ -5,6 +5,7 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { Thread } from '../../../models/thread.class ';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-single-message',
@@ -17,6 +18,7 @@ export class SingleMessageComponent implements OnInit {
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
@@ -84,6 +86,11 @@ export class SingleMessageComponent implements OnInit {
     return false;
   }
 
+  /**
+   * 
+   * @returns true if the messages has answers,
+   * false if it has no ansers
+   */
   messageHasAnswers(){
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
@@ -98,7 +105,7 @@ export class SingleMessageComponent implements OnInit {
    * set curent message in fire service with current message from input
    */
   answer() {
-    this.uiService.showThread = true;
+    this.openThreadWindow();
     if (this.uiService.mainContent === 'directMessage') {
       this.setCurrentThreadForDm();
       this.fireService.currentMessage = new Message(this.currentMessage);
@@ -113,6 +120,14 @@ export class SingleMessageComponent implements OnInit {
 
     }
 
+  }
+
+  openThreadWindow(){
+    if (this.observerService.isMobile) {
+      this.uiService.openThreadMobile();
+    } else {
+      this.uiService.showThread = true;
+    }
   }
 
   /**
