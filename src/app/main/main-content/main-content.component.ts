@@ -7,6 +7,7 @@ import { ThreadComponent } from '../thread/thread.component';
 import { AddChannelPopupComponent } from '../add-channel-popup/add-channel-popup.component';
 
 import { fadeIn } from '../../shared/animations';
+import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
 
 
 
@@ -20,6 +21,6 @@ import { fadeIn } from '../../shared/animations';
 })
 export class MainContentComponent {
   uiService = inject(UiService);
-
+  observerService = inject(BreakpointObserverService);
 
 }

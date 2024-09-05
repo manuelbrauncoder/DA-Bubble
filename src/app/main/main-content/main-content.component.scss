@@ -8,7 +8,7 @@ main{
     gap: 1rem;
 }
 
-.workspace-wrapper{
+app-workspace-menu{
     max-width: 25%;
     @media(max-width: 839px) {
         width: 100%;
@@ -16,11 +16,11 @@ main{
     }
 }
 
-.chat-wrapper{
+app-chat{
     flex-grow: 2;
 }
 
-.thread-wrapper{
+app-thread{
     height: 100%;
     max-width: 35%;
     @media(max-width: 839px) {
@@ -39,7 +39,7 @@ main{
     z-index: 2;
 }
 
-.popup-wrapper{
+app-add-channel-popup{
     position: fixed;
     top: 50%;
     left: 50%;

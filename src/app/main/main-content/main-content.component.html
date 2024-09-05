@@ -1,37 +1,28 @@
 <main>
-    
+
     @if (uiService.showWorkspaceMenu) {
-    <div class="workspace-wrapper">
-            <app-workspace-menu></app-workspace-menu>
-        </div>
+    <app-workspace-menu></app-workspace-menu>
     }
 
 
     @if (uiService.showChat) {
-    <div class="chat-wrapper">
-            <app-chat></app-chat>
-        </div>
+    <app-chat></app-chat>
     }
-    
+
 
     @if (uiService.showThread) {
-    <div class="thread-wrapper">
-            <app-thread></app-thread>
-        </div>
+    <app-thread></app-thread>
     }
-    
-    
+
+    @if (!observerService.isMobile) {
     <div class="workspace-btn-wrapper">
         <app-workspace-menu-button></app-workspace-menu-button>
     </div>
+    }
+
 
     @if (uiService.showAddChannelPopup) {
-        <div @fadeIn class="popup-wrapper">
-            <app-add-channel-popup></app-add-channel-popup>
-        </div>
-        <div (click)="uiService.toggleAddChannelPopup()" class="popup-background"></div>
+    <app-add-channel-popup @fadeIn></app-add-channel-popup>
+    <div (click)="uiService.toggleAddChannelPopup()" class="popup-background"></div>
     }
 </main>
-
-
-
