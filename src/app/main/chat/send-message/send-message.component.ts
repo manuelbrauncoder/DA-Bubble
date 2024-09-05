@@ -1,5 +1,4 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +30,18 @@ export class SendMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.copyRecipient();
+  }
+
+  /**
+   * 
+   * @returns different strings with channel name or user name
+   */
+  getPlaceholderText(){
+    if (this.currentRecipient instanceof Conversation) {
+      return `Nachricht an ${this.currentRecipient.participants.second.username}`;
+    } else {
+      return `Nachricht an # ${this.currentRecipient.name}`;
+    }
   }
 
   /**
@@ -68,7 +79,10 @@ export class SendMessageComponent implements OnInit {
   }
 
   /**
-   * 
+   * set currentRecipient as new Conversation
+   * create message object
+   * push message to messages array in Conversation
+   * update Conversation in firestore
    */
   async handleDirectMessage() {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);

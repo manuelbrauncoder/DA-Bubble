@@ -1,5 +1,5 @@
 <div class="send-message-container">
-    <textarea type="text" [(ngModel)]="content" placeholder="Nachricht an #Entwicklerteam"></textarea>
+    <textarea type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
     <div class="icons">
         <div class="add-elements">
