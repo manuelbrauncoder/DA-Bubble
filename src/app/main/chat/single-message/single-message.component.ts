@@ -121,16 +121,18 @@ export class SingleMessageComponent implements OnInit {
    * if not, create a new Thread and set it
    * as currentThread and save it in firebase
    */
-  setCurrentThreadForChannel() {
+  async setCurrentThreadForChannel() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
         this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
         this.fireService.currentThread = this.createThread();
         this.currentMessage.thread = this.fireService.currentThread;
-        this.saveUpdatedChannel();
+        await this.saveUpdatedChannel();
+        this.fireService.getMessagesPerDayForThread();
       }
     }
   }
@@ -142,16 +144,18 @@ export class SingleMessageComponent implements OnInit {
    * if not, create a new Thread and set it
    * as currentThread and save it in firebase
    */
-  setCurrentThreadForDm() {
+  async setCurrentThreadForDm() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
         this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
         this.fireService.currentThread = this.createThread();
         this.currentMessage.thread = this.fireService.currentThread;
-        this.saveUpdatedConversation();
+        await this.saveUpdatedConversation();
+        this.fireService.getMessagesPerDayForThread();
       }
     }
   }
@@ -171,17 +175,17 @@ export class SingleMessageComponent implements OnInit {
    * set updatet message with thread in conversation
    * save updated conversatin in firebase
    */
-  saveUpdatedConversation() {
+  async saveUpdatedConversation() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === currentMessageId);
     this.fireService.currentConversation.messages[updateId] = this.currentMessage;
-    this.fireService.addConversation(this.fireService.currentConversation);
+    await this.fireService.addConversation(this.fireService.currentConversation);
   }
 
-  saveUpdatedChannel() {
+  async saveUpdatedChannel() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentChannel.messages.findIndex(message => message.id === currentMessageId);
     this.fireService.currentChannel.messages[updateId] = this.currentMessage;
-    this.fireService.addChannel(this.fireService.currentChannel);
+    await this.fireService.addChannel(this.fireService.currentChannel);
   }
 }

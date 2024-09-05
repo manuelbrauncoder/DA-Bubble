@@ -115,12 +115,14 @@ export class SendMessageComponent implements OnInit {
   /**
    * handle differtent recipients (channel or direct message)
    */
-  saveNewMessage() {
+  async saveNewMessage() {
     if (this.currentRecipient instanceof Channel) {
-      this.handleChannelMessage();
+      await this.handleChannelMessage();
+      this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
     } else {
-      this.handleDirectMessage();
+      await this.handleDirectMessage();
+      this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
     }
   }

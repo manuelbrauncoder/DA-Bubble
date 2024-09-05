@@ -27,6 +27,7 @@ export class FirestoreService {
 
   messagesPerDay: any = []; // for channels
   messagesPerDayConversation: any = []; // for conversations
+  messagesPerDayThread: any = []; // for thread
 
   constructor() { }
 
@@ -73,7 +74,6 @@ export class FirestoreService {
           messages
         })
     );
-    console.log(this.messagesPerDay);
     
   }
 
@@ -97,7 +97,29 @@ export class FirestoreService {
           messages
         })
     );
-    console.log(this.messagesPerDayConversation);
+    
+  }
+
+  getMessagesPerDayForThread() {
+    this.messagesPerDayThread = [];
+    let dayMap = new Map<string, Message[]>();
+    this.currentThread.messages.forEach((message) => {
+    let messageDate = this.getFormattedDate(message.time);
+    let messages = dayMap.get(messageDate);
+    if (!messages) {
+      messages = [];
+      dayMap.set(messageDate, messages);
+    }
+    messages.push(message);
+    });
+    this.messagesPerDayThread = Array.from(
+      dayMap,
+      ([date, messages]) => 
+        new DateMessages({
+          date,
+          messages
+        })
+    );
     
   }
 

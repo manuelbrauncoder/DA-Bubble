@@ -28,6 +28,34 @@ app-send-message {
     padding: 1rem 2.188rem 2.5rem 2.188rem;
 }
 
+.date-divider {
+    @include dFlex();
+
+    .messages-date {
+        padding: 0.313rem 0.938rem;
+        border: 1px solid $color-purple-light;
+        border-radius: 100vw;
+        width: fit-content;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.534rem;
+        color: black;
+    }
+
+    .line-wrapper {
+        flex-grow: 2;
+        @include dFlex();
+
+        .line {
+            border: unset;
+            height: 1px;
+            width: 100%;
+            background-color: $color-purple-light;
+        }
+    }
+}
+
 .answer-counter {
     @include dFlex($jc: flex-start, $g: 20px);
     width: 100%;
@@ -58,7 +86,7 @@ app-send-message {
     height: calc(100% - 282.5px);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     overflow-y: auto;
 }
 
