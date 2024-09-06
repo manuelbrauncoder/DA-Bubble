@@ -14,8 +14,8 @@ export class ReactionBarComponent implements OnInit {
   threadService = inject(ThreadService);
   userService = inject(UserService);
 
+  @Input() threadMessage = false;
   @Input() currentMessage: Message = new Message()
-  @Input() threadMessage: boolean = false;
   @Output() triggerAnswer = new EventEmitter<void>();
 
   ngOnInit(): void {
@@ -28,6 +28,7 @@ export class ReactionBarComponent implements OnInit {
 
   logMessageOut(){
     console.log(this.currentMessage);
+    console.log('Thread Message?', this.threadMessage);
     
   }
 

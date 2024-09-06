@@ -18,7 +18,7 @@
 
     </div>
     <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'reaction-bar-current-user' : 'reaction-bar-user'">
-        <app-reaction-bar [currentMessage]="currentMessage" (triggerAnswer)="answer()"></app-reaction-bar>
+        <app-reaction-bar [threadMessage]="threadMessage" [currentMessage]="currentMessage" (triggerAnswer)="answer()"></app-reaction-bar>
     </div>
     
 
