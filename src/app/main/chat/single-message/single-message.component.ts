@@ -6,6 +6,7 @@ import { Thread } from '../../../models/thread.class ';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-single-message',
@@ -19,6 +20,7 @@ export class SingleMessageComponent implements OnInit {
   fireService = inject(FirestoreService);
   userService = inject(UserService);
   observerService = inject(BreakpointObserverService);
+  threadService = inject(ThreadService);
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
@@ -105,6 +107,7 @@ export class SingleMessageComponent implements OnInit {
    * set curent message in fire service with current message from input
    */
   answer() {
+    this.threadService.scrolledToBottomOnStart = false;
     this.openThreadWindow();
     if (this.uiService.mainContent === 'directMessage') {
       this.setCurrentThreadForDm();

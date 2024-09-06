@@ -6,7 +6,7 @@
 
 </header>
 
-<main class="messages">
+<main #conversationMessages class="messages">
 
     @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
     <div class="date-divider">

@@ -2,7 +2,7 @@
  * This Service File is for handling everything about conversations
  */
 
-import { inject, Injectable } from '@angular/core';
+import { ElementRef, inject, Injectable } from '@angular/core';
 import { UiService } from './ui.service';
 import { User } from '../models/user.class';
 import { FirestoreService } from './firestore.service';
@@ -20,7 +20,29 @@ export class ConversationService {
   observerService = inject(BreakpointObserverService);
 
 
+  scrolledToBottomOnStart = false;
+
   constructor() { }
+
+
+  scrollAtStart(container: ElementRef) {
+    if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {
+      this.scrollToBottom(container);
+      this.scrolledToBottomOnStart = true;
+    }
+  }
+
+  scrollToBottom(container: ElementRef): void {
+    try {
+      container.nativeElement.scroll({
+        top: container.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } catch (error) {
+      console.log('Could not scroll to bottom');
+    }
+  }
 
   /**
    * change main content to 'directMessage'
@@ -29,6 +51,7 @@ export class ConversationService {
    * @param secondUser is the User you want to chat with
    */
   openConversation(secondUser: User) {
+    this.scrolledToBottomOnStart = false;
     this.setCurrentConversation(secondUser);
     this.showChannelContent();
   }

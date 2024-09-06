@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -9,6 +9,8 @@ import { Conversation } from '../../../models/conversation.class';
 import { Thread } from '../../../models/thread.class ';
 import { UiService } from '../../../services/ui.service';
 import { ChannelService } from '../../../services/channel.service';
+import { ConversationService } from '../../../services/conversation.service';
+import { ThreadService } from '../../../services/thread.service';
 
 @Component({
   selector: 'app-send-message',
@@ -22,6 +24,8 @@ export class SendMessageComponent implements OnInit {
   userService = inject(UserService);
   uiService = inject(UiService);
   channelService = inject(ChannelService);
+  conversationService = inject(ConversationService);
+  threadService = inject(ThreadService);
 
   @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
   @Input() threadMessage = false;
@@ -137,10 +141,13 @@ export class SendMessageComponent implements OnInit {
       this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
       this.channelService.scrolledToBottomOnStart = false;
+      this.threadService.scrolledToBottomOnStart = false;
     } else {
       await this.handleDirectMessage();
       this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
+      this.conversationService.scrolledToBottomOnStart = false;
+      this.threadService.scrolledToBottomOnStart = false;
     }
   }
 
