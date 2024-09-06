@@ -22,6 +22,7 @@ export class SingleMessageComponent implements OnInit {
   userService = inject(UserService);
   observerService = inject(BreakpointObserverService);
   threadService = inject(ThreadService);
+
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
@@ -113,12 +114,9 @@ export class SingleMessageComponent implements OnInit {
     if (this.uiService.mainContent === 'directMessage') {
       this.setCurrentThreadForDm();
       this.fireService.currentMessage = new Message(this.currentMessage);
-      console.log(this.fireService.currentThread);
     } else if (this.uiService.mainContent === 'channelChat') {
       this.setCurrentThreadForChannel();
       this.fireService.currentMessage = new Message(this.currentMessage);
-      console.log(this.fireService.currentChannel);
-
     } else {
       console.log('no option choosed');
 

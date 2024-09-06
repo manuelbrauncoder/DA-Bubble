@@ -1,27 +1,27 @@
-
-
 <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="message-container">
     <img class="avatar" [src]="currentMessage.sender.avatar" alt="">
     <div [ngStyle]="{'align-items': isMessageFromCurrentUser() ? 'flex-end' : 'flex-start'}" class="message">
         <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="name-and-time">
             <h3>{{ currentMessage.sender.username }}</h3>
             <span>{{ getFormattedTime(currentMessage.time) }}</span>
-            <!-- @if (!threadMessage) {
-                <span (click)="answer()">answer btn for testing</span>
-            } -->
         </div>
         <div [ngClass]="isMessageFromCurrentUser() ? 'current-user-content' : 'user-content'" class="content">
             <span>{{ currentMessage.content }}</span>
         </div>
         @if (!threadMessage && messageHasAnswers()) {
-            <div class="answers">
-                <span (click)="answer()" class="answer-counter">{{ currentMessage.thread?.messages?.length}} {{ formatAnswerCount() }}</span>
-                <span class="last-answer">Letzte Antwort {{ getTimeOfLastAnswer() }}</span>
-            </div>
+        <div class="answers">
+            <span (click)="answer()" class="answer-counter">{{ currentMessage.thread?.messages?.length}} {{
+                formatAnswerCount() }}</span>
+            <span class="last-answer">Letzte Antwort {{ getTimeOfLastAnswer() }}</span>
+        </div>
         }
-        
+
     </div>
     <div [ngClass]="isMessageFromCurrentUser() ? 'reaction-bar-current-user' : 'reaction-bar-user'">
-        <app-reaction-bar></app-reaction-bar>
+        <app-reaction-bar [currentMessage]="currentMessage" (triggerAnswer)="answer()"></app-reaction-bar>
     </div>
+    
+
+   
+
 </div>
