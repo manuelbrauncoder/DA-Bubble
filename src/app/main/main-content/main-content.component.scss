@@ -10,7 +10,6 @@ main{
 
 .workspace-menu-wrapper{
     width: 25%;
-    transition: width 0.5s ease;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;
@@ -19,13 +18,11 @@ main{
 
 .chat-wrapper{
     flex-grow: 2;
-    transition: flex-grow 0.5s ease;
 }
 
 .thread-wrapper{
     height: 100%;
-    width: 25%;
-    transition: width 0.5s ease;
+    width: 30%;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;

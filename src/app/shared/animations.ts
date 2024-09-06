@@ -9,7 +9,7 @@ export const fadeIn = trigger('fadeIn', [
   ]);
 
 
-  export const toggleWidth = trigger('toggleWidth', [
+  export const toggleWidth25 = trigger('toggleWidth25', [
     transition(':enter', [
         style({ width: '0', opacity: 0 }),
         animate('0.3s ease', style({ width: '25%', opacity: 1 }))
@@ -17,6 +17,16 @@ export const fadeIn = trigger('fadeIn', [
     transition(':leave', [
         animate('0.3s ease', style({ width: '0', opacity: 0 }))
     ])
+]);
+
+export const toggleWidth30 = trigger('toggleWidth30', [
+  transition(':enter', [
+      style({ width: '0', opacity: 0 }),
+      animate('0.3s ease', style({ width: '30%', opacity: 1 }))
+  ]),
+  transition(':leave', [
+      animate('0.3s ease', style({ width: '0', opacity: 0 }))
+  ])
 ]);
 
 export const expandChat = trigger('expandChat', [
