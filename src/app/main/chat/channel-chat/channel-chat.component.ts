@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ChannelService } from '../../../services/channel.service';
 import { UiService } from '../../../services/ui.service';
 import { UserService } from '../../../services/user.service';
@@ -19,12 +19,25 @@ import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe'
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
-export class ChannelChatComponent {
+export class ChannelChatComponent implements AfterViewChecked {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
 
+  @ViewChild('channelMessages') scrollContainer!: ElementRef;
   
 
+  ngAfterViewChecked(): void {
+    this.channelService.scrollAtStart(this.scrollContainer);
+  }
+
+  
+
+  
+
+  
+  
+
+  
 }

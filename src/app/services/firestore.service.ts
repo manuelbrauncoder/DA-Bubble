@@ -151,7 +151,7 @@ export class FirestoreService {
    */
   logChanges(change: DocumentChange<DocumentData>) {
     if (change.type === 'added') {
-      console.log('New Data ', change.doc.data());
+      //console.log('New Data ', change.doc.data());
     }
     if (change.type === 'modified') {
       console.log('Modified Data: ', change.doc.data());

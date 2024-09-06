@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, ElementRef, ViewChild } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Channel } from '../models/channel.class';
 import { User } from '../models/user.class';
@@ -12,8 +12,33 @@ export class ChannelService {
   fireService = inject(FirestoreService);
   uiService = inject(UiService);
   observerService = inject(BreakpointObserverService);
+  
+  scrolledToBottomOnStart = false;
 
   constructor() { }
+
+
+  scrollAtStart(container: ElementRef){
+    if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {
+      this.scrollToElement(container);
+      this.scrolledToBottomOnStart = true;
+    }
+  }
+
+  scrollToElement(container: ElementRef): void {
+    try {
+      container.nativeElement.scroll({
+        top: container.nativeElement.scrollHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    } catch (error) {
+      console.log('Could not scroll to bottom');
+      
+    }
+    
+  }
+  
 
   /**
    * Check if a user exists in the channel
@@ -37,11 +62,14 @@ export class ChannelService {
         this.fireService.currentChannel = new Channel(activeChannel);
         this.showChannelContent();
         this.fireService.getMessagesPerDay();
+        this.scrolledToBottomOnStart = false;
       } else {
         channel.channelActive = false;
       }
     })
   }
+
+ 
 
   showChannelContent() {
     if (this.observerService.isMobile) {

@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import { Message } from '../../../models/message.class';
 import { Conversation } from '../../../models/conversation.class';
 import { Thread } from '../../../models/thread.class ';
 import { UiService } from '../../../services/ui.service';
+import { ChannelService } from '../../../services/channel.service';
 
 @Component({
   selector: 'app-send-message',
@@ -20,6 +21,7 @@ export class SendMessageComponent implements OnInit {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
   uiService = inject(UiService);
+  channelService = inject(ChannelService);
 
   @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
   @Input() threadMessage = false;
@@ -134,6 +136,7 @@ export class SendMessageComponent implements OnInit {
       await this.handleChannelMessage();
       this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
+      this.channelService.scrolledToBottomOnStart = false;
     } else {
       await this.handleDirectMessage();
       this.userService.fireService.getMessagesPerDayForThread();

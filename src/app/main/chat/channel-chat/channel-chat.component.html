@@ -52,7 +52,7 @@
         </div>
     </header>
     
-    <main class="messages"> 
+    <main #channelMessages class="messages"> 
         @for (day of channelService.fireService.messagesPerDay; track $index) {
             <div class="date-divider">
                 <div class="line-wrapper">
