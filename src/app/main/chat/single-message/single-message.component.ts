@@ -7,11 +7,12 @@ import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 import { ThreadService } from '../../../services/thread.service';
+import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactionBarComponent],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })

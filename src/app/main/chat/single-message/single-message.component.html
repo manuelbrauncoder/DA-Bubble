@@ -6,9 +6,9 @@
         <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="name-and-time">
             <h3>{{ currentMessage.sender.username }}</h3>
             <span>{{ getFormattedTime(currentMessage.time) }}</span>
-            @if (!threadMessage) {
+            <!-- @if (!threadMessage) {
                 <span (click)="answer()">answer btn for testing</span>
-            }
+            } -->
         </div>
         <div [ngClass]="isMessageFromCurrentUser() ? 'current-user-content' : 'user-content'" class="content">
             <span>{{ currentMessage.content }}</span>
@@ -20,5 +20,8 @@
             </div>
         }
         
+    </div>
+    <div [ngClass]="isMessageFromCurrentUser() ? 'reaction-bar-current-user' : 'reaction-bar-user'">
+        <app-reaction-bar></app-reaction-bar>
     </div>
 </div>

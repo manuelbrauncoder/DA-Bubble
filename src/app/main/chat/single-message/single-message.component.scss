@@ -3,9 +3,41 @@
 
 
 .message-container {
+    position: relative;
     width: 100%;
     display: flex;
     gap: 1.875rem;
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: ease 225ms;
+    &:hover {
+        background-color: $color-active-channel;
+        transition: ease 225ms;
+    }
+    &:hover .user-content{
+        background-color: white;
+        transition: ease 225ms;
+    }
+    &:hover .reaction-bar-user {
+        visibility: visible;
+        opacity: 1;
+        animation: reaction-bar-user-slide-in 150ms ease-out forwards;
+    }
+    &:not(:hover) .reaction-bar-user {
+        visibility: visible;
+        opacity: 0;
+        animation: reaction-bar-user-slide-out 150ms ease-out forwards;
+    }
+    &:hover .reaction-bar-current-user {
+        visibility: visible;
+        opacity: 1;
+        animation: reaction-bar-current-user-slide-in 150ms ease-out forwards;
+    }
+    &:not(:hover) .reaction-bar-current-user {
+        visibility: visible;
+        opacity: 0;
+        animation: reaction-bar-current-user-slide-out 150ms ease-out forwards;
+    }
 }
 
 .avatar {
@@ -80,6 +112,7 @@
     background-color: $color-active-channel;
     border-radius: 0 1.875rem 1.875rem 1.875rem;
     padding: 0.938rem;
+    transition: ease 225ms;
     span{
         color: black;
     }
@@ -94,5 +127,65 @@
         font-weight: 400;
         line-height: 1.534rem;
         text-align: left;
+    }
+}
+
+.reaction-bar-user{
+    position: absolute;
+    top: -1rem;
+    right: 2rem;
+    visibility: hidden;
+    animation: reaction-bar-user-slide-in 200ms ease-out forwards;
+}
+
+.reaction-bar-current-user {
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    visibility: hidden;
+    animation: reaction-bar-current-user-slide-in 200ms ease-out forwards;
+}
+
+@keyframes reaction-bar-current-user-slide-in{
+    from{
+        transform: translateX(3rem);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes reaction-bar-current-user-slide-out{
+    from{
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateX(3rem);
+        opacity: 0;
+    }
+}
+
+@keyframes reaction-bar-user-slide-in{
+    from{
+        transform: translateX(-3rem);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes reaction-bar-user-slide-out{
+    from{
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateX(-3rem);
+        opacity: 0;
     }
 }
