@@ -1,18 +1,31 @@
 <main>
 
     @if (uiService.showWorkspaceMenu) {
-    <app-workspace-menu></app-workspace-menu>
+        <div @toggleWidth class="workspace-menu-wrapper">
+            <app-workspace-menu></app-workspace-menu>
+
+        </div>
     }
 
 
     @if (uiService.showChat) {
-    <app-chat></app-chat>
+        <div class="chat-wrapper" @expandChat>
+            <app-chat></app-chat>
+
+        </div>
     }
 
 
     @if (uiService.showThread) {
-    <app-thread></app-thread>
+        <div @toggleWidth class="thread-wrapper">
+            <app-thread></app-thread>
+
+        </div>
     }
+
+    
+
+
 
     @if (!observerService.isMobile) {
     <div class="workspace-btn-wrapper">

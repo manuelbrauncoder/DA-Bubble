@@ -8,21 +8,24 @@ main{
     gap: 1rem;
 }
 
-app-workspace-menu{
+.workspace-menu-wrapper{
     width: 25%;
+    transition: width 0.5s ease;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;
     }
 }
 
-app-chat{
+.chat-wrapper{
     flex-grow: 2;
+    transition: flex-grow 0.5s ease;
 }
 
-app-thread{
+.thread-wrapper{
     height: 100%;
     width: 25%;
+    transition: width 0.5s ease;
     @media(max-width: 839px) {
         width: 100%;
         max-width: 100%;
