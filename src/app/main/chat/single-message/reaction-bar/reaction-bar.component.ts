@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../../services/thread.service';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
   selector: 'app-reaction-bar',
@@ -11,6 +12,7 @@ import { ThreadService } from '../../../../services/thread.service';
 })
 export class ReactionBarComponent implements OnInit {
   threadService = inject(ThreadService);
+  userService = inject(UserService);
 
   @Input() currentMessage: Message = new Message()
   @Input() threadMessage: boolean = false;
@@ -22,6 +24,11 @@ export class ReactionBarComponent implements OnInit {
 
   triggerAnswerInParent() {
     this.triggerAnswer.emit();
+  }
+
+  logMessageOut(){
+    console.log(this.currentMessage);
+    
   }
 
   

@@ -76,19 +76,7 @@ export class SingleMessageComponent implements OnInit {
     return;
   }
 
-  /**
-   * 
-   * @returns true if the message is from currentUser
-   */
-  isMessageFromCurrentUser(): boolean{
-    const currentUser = this.userService.getCurrentUser();
-    if (currentUser) {
-      if (currentUser.uid === this.currentMessage.sender.uid) {
-        return true;
-      }
-    }
-    return false;
-  }
+  
 
   /**
    * 

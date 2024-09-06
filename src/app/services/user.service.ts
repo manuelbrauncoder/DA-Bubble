@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { FirebaseAuthService } from './firebase-auth.service';
 import { User } from '../models/user.class';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,20 @@ export class UserService {
       currentUser = new User(user);
     }
       return currentUser;
+  }
+
+  /**
+   * 
+   * @returns true if the message is from currentUser
+   */
+  isMessageFromCurrentUser(currentMessage: Message): boolean{
+    const currentUser = this.getCurrentUser();
+    if (currentUser) {
+      if (currentUser.uid === currentMessage.sender.uid) {
+        return true;
+      }
+    }
+    return false;
   }
 
 

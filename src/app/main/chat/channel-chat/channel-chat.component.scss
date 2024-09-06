@@ -141,6 +141,7 @@ app-send-message {
 .date-divider {
     margin-top: auto;
     @include dFlex();
+    padding: 0 2.188rem;
 
     .messages-date {
         padding: 0.313rem 0.938rem;

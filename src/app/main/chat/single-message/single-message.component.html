@@ -1,11 +1,11 @@
-<div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="message-container">
+<div [ngStyle]="{'flex-direction': userService.isMessageFromCurrentUser(currentMessage) ? 'row-reverse' : 'row'}" class="message-container">
     <img class="avatar" [src]="currentMessage.sender.avatar" alt="">
-    <div [ngStyle]="{'align-items': isMessageFromCurrentUser() ? 'flex-end' : 'flex-start'}" class="message">
-        <div [ngStyle]="{'flex-direction': isMessageFromCurrentUser() ? 'row-reverse' : 'row'}" class="name-and-time">
+    <div [ngStyle]="{'align-items': userService.isMessageFromCurrentUser(currentMessage) ? 'flex-end' : 'flex-start'}" class="message">
+        <div [ngStyle]="{'flex-direction': userService.isMessageFromCurrentUser(currentMessage) ? 'row-reverse' : 'row'}" class="name-and-time">
             <h3>{{ currentMessage.sender.username }}</h3>
             <span>{{ getFormattedTime(currentMessage.time) }}</span>
         </div>
-        <div [ngClass]="isMessageFromCurrentUser() ? 'current-user-content' : 'user-content'" class="content">
+        <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'current-user-content' : 'user-content'" class="content">
             <span>{{ currentMessage.content }}</span>
         </div>
         @if (!threadMessage && messageHasAnswers()) {
@@ -17,7 +17,7 @@
         }
 
     </div>
-    <div [ngClass]="isMessageFromCurrentUser() ? 'reaction-bar-current-user' : 'reaction-bar-user'">
+    <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'reaction-bar-current-user' : 'reaction-bar-user'">
         <app-reaction-bar [currentMessage]="currentMessage" (triggerAnswer)="answer()"></app-reaction-bar>
     </div>
     

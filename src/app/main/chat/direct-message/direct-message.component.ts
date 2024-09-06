@@ -21,4 +21,13 @@ export class DirectMessageComponent implements AfterViewChecked{
   ngAfterViewChecked(): void {
     this.conversationService.scrollAtStart(this.scrollContainer);
   }
+
+  getConversationPartner(){
+    const currentUser = this.userService.getCurrentUser()
+    if (currentUser.uid === this.conversationService.fireService.currentConversation.participants.first.uid) {
+      return this.conversationService.fireService.currentConversation.participants.second;
+    } else {
+      return this.conversationService.fireService.currentConversation.participants.first;
+    }
+  }
 }

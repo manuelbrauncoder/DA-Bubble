@@ -29,7 +29,9 @@ app-send-message {
 }
 
 .date-divider {
+    margin-top: auto;
     @include dFlex();
+    padding: 0 2.188rem;
 
     .messages-date {
         padding: 0.313rem 0.938rem;
@@ -59,6 +61,7 @@ app-send-message {
 .answer-counter {
     @include dFlex($jc: flex-start, $g: 20px);
     width: 100%;
+    padding: 0 2.188rem;
 
     span {
         font-family: Nunito;
@@ -95,7 +98,8 @@ header {
     width: 100%;
     @include dFlex($jc: space-between);
     box-shadow: 0px 2px 10px 0px #00000014;
-    padding: 2rem 2.5rem;
+    padding: 1.5625rem 2.188rem;
+    border-radius: 1.875rem 1.875rem 0 0;
 
     >div {
         @include dFlex($g: 0.313rem);
