@@ -6,6 +6,7 @@ export class User {
     avatar: string;
     currentlyLoggedIn: boolean;
     userChatActive: boolean;
+    status: 'online' | 'offline' | 'away';
 
     constructor(obj?: Partial<User>){
         this.uid = obj?.uid ?? '';
@@ -15,5 +16,6 @@ export class User {
         this.avatar = obj?.avatar ?? '';
         this.currentlyLoggedIn = obj?.currentlyLoggedIn ?? false;
         this.userChatActive = obj?.userChatActive ?? false;
+        this.status = obj?.status ?? 'offline'
     }
 }

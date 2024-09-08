@@ -402,7 +402,8 @@ export class FirestoreService {
       createdAt: user.createdAt || 0,
       avatar: user.avatar || '',
       currentlyLoggedIn: user.currentlyLoggedIn || false,
-      userChatActive: user.userChatActive || false
+      userChatActive: user.userChatActive || false,
+      status: user.status || 'offline'
     }
   }
 }
