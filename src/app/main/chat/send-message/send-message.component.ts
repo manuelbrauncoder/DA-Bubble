@@ -44,7 +44,7 @@ export class SendMessageComponent implements OnInit {
    */
   getPlaceholderText(){
     if (this.currentRecipient instanceof Conversation) {
-      return `Nachricht an ${this.currentRecipient.participants.second.username}`;
+      return `Nachricht an ${this.userService.getUserData(this.currentRecipient.participants.second).username}`;
     } else {
       return `Nachricht an # ${this.currentRecipient.name}`;
     }

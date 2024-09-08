@@ -17,11 +17,11 @@ export class Conversation {
 }
 
 export class Participants {
-    first: User;
-    second: User;
+    first: string;
+    second: string;
 
     constructor(obj?: Partial<Participants>){
-        this.first = obj?.first ?? new User;
-        this.second = obj?.second ?? new User;
+        this.first = obj?.first ?? '';
+        this.second = obj?.second ?? '';
     }
 }

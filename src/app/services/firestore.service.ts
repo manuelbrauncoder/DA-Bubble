@@ -313,8 +313,8 @@ export class FirestoreService {
 
   getCleanParticipantsJson(participant: Participants) {
     return {
-      first: this.getCleanUserJson(participant.first),
-      second: this.getCleanUserJson(participant.second)
+      first: participant.first,
+      second: participant.second
     }
   }
 

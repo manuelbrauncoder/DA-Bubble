@@ -4,7 +4,6 @@
 
 import { ElementRef, inject, Injectable } from '@angular/core';
 import { UiService } from './ui.service';
-import { User } from '../models/user.class';
 import { FirestoreService } from './firestore.service';
 import { UserService } from './user.service';
 import { Conversation, Participants } from '../models/conversation.class';
@@ -50,9 +49,9 @@ export class ConversationService {
    * 
    * @param secondUser is the User you want to chat with
    */
-  openConversation(secondUser: User) {
+  openConversation(secondUserUid: string) {
     this.scrolledToBottomOnStart = false;
-    this.setCurrentConversation(secondUser);
+    this.setCurrentConversation(secondUserUid);
     this.showChannelContent();
   }
 
@@ -72,13 +71,13 @@ export class ConversationService {
    * 
    * @param secondUser is the User you want to chat with
    */
-  async setCurrentConversation(secondUser: User) {
-    let firstUser = this.userService.getCurrentUser();
-    let conversation = this.findConversation(firstUser, secondUser);
+  async setCurrentConversation(secondUserUid: string) {
+    let firstUserUid = this.userService.getCurrentUser().uid;
+    let conversation = this.findConversation(firstUserUid, secondUserUid);
     if (conversation) {
       this.fireService.currentConversation = new Conversation(conversation);
     } else {
-      await this.createNewConversation(firstUser, secondUser);
+      await this.createNewConversation(firstUserUid, secondUserUid);
     }
     this.fireService.getMessagesPerDayForConversation();
   }
@@ -89,11 +88,11 @@ export class ConversationService {
    * @returns false if the conversations do not exist, or
    * returns the conversation
    */
-  findConversation(firstUser: User, secondUser: User): Conversation | false {
+  findConversation(firstUserUid: string, secondUserUid: string): Conversation | false {
     for (let i = 0; i < this.fireService.conversations.length; i++) {
       const conversation = this.fireService.conversations[i];
       const participants = conversation.participants;
-      if (this.participantExist(participants, firstUser, secondUser)) {
+      if (this.participantExist(participants, firstUserUid, secondUserUid)) {
         console.log('Conversation gefunden!', conversation);
         return conversation;
       }
@@ -107,9 +106,9 @@ export class ConversationService {
    * check if first and second User are part of Participants 
    * @returns 
    */
-  participantExist(participants: Participants, firstUser: User, secondUser: User) {
-    return (participants.first.uid === firstUser.uid && participants.second.uid === secondUser.uid) ||
-      (participants.first.uid === secondUser.uid && participants.second.uid === firstUser.uid)
+  participantExist(participants: Participants, firstUserUid: string, secondUserUid: string) {
+    return (participants.first === firstUserUid && participants.second === secondUserUid) ||
+      (participants.first === secondUserUid && participants.second === firstUserUid)
   }
 
   /**
@@ -117,10 +116,10 @@ export class ConversationService {
    * @param firstUser 
    * @param secondUser 
    */
-  async createNewConversation(firstUser: User, secondUser: User) {
+  async createNewConversation(firstUserUid: string, secondUserUid: string) {
     this.fireService.currentConversation = new Conversation();
-    this.fireService.currentConversation.participants.first = firstUser;
-    this.fireService.currentConversation.participants.second = secondUser;
+    this.fireService.currentConversation.participants.first = firstUserUid;
+    this.fireService.currentConversation.participants.second = secondUserUid;
     await this.fireService.addConversation(this.fireService.currentConversation);
   }
 }

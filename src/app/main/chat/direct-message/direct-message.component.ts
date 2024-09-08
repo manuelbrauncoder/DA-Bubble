@@ -24,10 +24,10 @@ export class DirectMessageComponent implements AfterViewChecked{
 
   getConversationPartner(){
     const currentUser = this.userService.getCurrentUser()
-    if (currentUser.uid === this.conversationService.fireService.currentConversation.participants.first.uid) {
-      return this.conversationService.fireService.currentConversation.participants.second;
+    if (currentUser.uid === this.conversationService.fireService.currentConversation.participants.first) {
+      return this.userService.getUserData(this.conversationService.fireService.currentConversation.participants.second);
     } else {
-      return this.conversationService.fireService.currentConversation.participants.first;
+      return this.userService.getUserData(this.conversationService.fireService.currentConversation.participants.first);
     }
   }
 }

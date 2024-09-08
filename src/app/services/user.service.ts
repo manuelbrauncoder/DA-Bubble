@@ -13,6 +13,16 @@ export class UserService {
 
   constructor() { }
 
+
+  getUserData(userUid: string): User {
+    const user = this.fireService.users.find(user => user.uid === userUid);
+    if (user) {
+      return user;
+    } else {
+      return new User();
+    }
+  }
+
   /**
    * 
    * @returns the current logged in User
