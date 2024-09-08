@@ -15,7 +15,7 @@
                 <div (click)="uiService.toggleChannelUsersPopup()" class="users">
     
                     @for (user of channelService.fireService.currentChannel.users.slice(0, 3); track $index) {
-                            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                            <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(user))" alt="">
                         
                     }
                     <span class="user-number">{{ channelService.fireService.currentChannel.users.length }}</span>

@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ChannelService } from '../../../services/channel.service';
 import { UiService } from '../../../services/ui.service';
-import { User } from '../../../models/user.class';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
@@ -23,8 +22,8 @@ export class PopupAddUserComponent implements OnInit {
 
   searchInput = '';
 
-  selectedUsers: User[] = [];
-  availableUsers: User[] = [];
+  selectedUsers: string[] = [];
+  availableUsers: string[] = [];
 
   /**
    * copy the current channel to updated channel
@@ -62,7 +61,12 @@ export class PopupAddUserComponent implements OnInit {
    * @returns all users, that are not in the selectedUsers array
    */
   getAvailableUsers() {
-    return this.channelService.fireService.users.filter(user => !this.selectedUsers.some(selUser => selUser.uid === user.uid));
+    let userIds: string[] = [];
+    const users = this.channelService.fireService.users.filter(user => !this.selectedUsers.some(selUser => selUser === user.uid));
+    users.forEach((user) => {
+      userIds.push(user.uid);
+    })
+    return userIds;
   }
 
   /**
@@ -73,8 +77,8 @@ export class PopupAddUserComponent implements OnInit {
     if (!this.searchInput) {
       return this.availableUsers;
     } else {
-      return this.availableUsers.filter((user) =>
-        user.username.toLowerCase().includes(this.searchInput));
+      return this.availableUsers.filter((uid) =>
+        this.userService.getUserData(uid).username.toLowerCase().includes(this.searchInput));
     }
   }
 
@@ -82,9 +86,9 @@ export class PopupAddUserComponent implements OnInit {
    * select user and remove it from availableUsers array
    * @param user 
    */
-  selectUser(user: User) {
-    this.selectedUsers.push(user);
-    const index = this.availableUsers.findIndex(u => u.uid === user.uid);
+  selectUser(userUid: string) {
+    this.selectedUsers.push(userUid);
+    const index = this.availableUsers.findIndex(uid => uid === userUid);
     if (index !== -1) {
       this.availableUsers.splice(index, 1);
     }
@@ -95,8 +99,8 @@ export class PopupAddUserComponent implements OnInit {
    * @param user 
    * @param index 
    */
-  unselectUser(user: User, index: number) {
-    this.availableUsers.push(user);
+  unselectUser(userUid: string, index: number) {
+    this.availableUsers.push(userUid);
     this.selectedUsers.splice(index, 1);
   }
 }

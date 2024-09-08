@@ -28,14 +28,14 @@
                                 <span class="user-name">{{ authService.currentUserSig()?.username }} (Du)</span>
                             </div>
                         }
-                        @for (user of channelService.fireService.currentChannel.users; track $index) {
-                            @if (user.uid !== authService.auth.currentUser?.uid) {
+                        @for (uid of channelService.fireService.currentChannel.users; track $index) {
+                            @if (uid !== authService.auth.currentUser?.uid) {
                                 <div class="user">
                                     <div class="img-wrapper">
-                                        <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
-                                        <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                                        <hr [ngClass]="userService.getUserData(uid).currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                                        <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(uid))" alt="">
                                     </div>
-                                    <span class="user-name">{{ user.username }}</span>
+                                    <span class="user-name">{{ userService.getUserData(uid).username }}</span>
                                 </div>
                             } 
                         }

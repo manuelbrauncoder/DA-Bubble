@@ -7,7 +7,7 @@ export class Channel {
     description: string;
     name: string;
     creator: string;
-    users: User[];
+    users: string[];
     messages: Message[];
     comments: string[];
     reactions: string[];

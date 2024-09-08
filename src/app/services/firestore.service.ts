@@ -324,7 +324,7 @@ export class FirestoreService {
       name: channel.name,
       description: channel.description,
       creator: channel.creator,
-      users: channel.users.map(user => this.getCleanUserJson(user)),
+      users: channel.users,
       messages: channel.messages.map(message => this.getCleanMessageJson(message))
     }
   }

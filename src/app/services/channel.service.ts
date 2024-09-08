@@ -47,7 +47,7 @@ export class ChannelService {
    * @returns 
    */
   isUserInChannel(user: User, channel: Channel) {
-    return channel.users.some(u => u.uid === user.uid);
+    return channel.users.some(u => u === user.uid);
   }
 
   /**

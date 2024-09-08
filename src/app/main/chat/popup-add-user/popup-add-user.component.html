@@ -23,10 +23,10 @@
                 @for (user of selectedUsers; track $index; let index = $index) {
                     <div class="selected-user">
                         <div class="img-wrapper">
-                            <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
-                            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                            <hr [ngClass]="userService.getUserData(user).currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                            <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(user))" alt="">
                         </div>
-                    <span>{{ user.username }}</span>
+                    <span>{{ userService.getUserData(user).username }}</span>
                     <svg (click)="unselectUser(user, index)" class="remove-user-icon" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_740_11631)">
                         <mask id="mask0_740_11631" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="8" y="8" width="24" height="25">
@@ -53,10 +53,10 @@
                 @for (user of searchUsers(); track $index; let index = $index) {
                     <div (click)="selectUser(user)" class="user">
                         <div class="img-wrapper">
-                            <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
-                            <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
+                            <hr [ngClass]="userService.getUserData(user).currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                            <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(user))" alt="">
                         </div>
-                    <span>{{ user.username }}</span>
+                    <span>{{ userService.getUserData(user).username }}</span>
                     </div>
                     
                 }
