@@ -19,10 +19,7 @@ export class Message{
         this.thread = obj?.thread;
         this.data = obj?.data ?? [];
         this.reactions = obj?.reactions ?? [];
-    }
-
-   
-     
+    }   
 }
 
 export class DateMessages {

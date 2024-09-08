@@ -145,8 +145,8 @@ export class EditProfileComponent implements OnInit {
     if (this.nameIsChanged) {
       this.updatedUser = new User(this.userService.getCurrentUser());
       this.updatedUser.username = this.editProfileData.name;
-      await this.firestoreService.addUser(this.updatedUser);  // await hinzugefügt damit funktion abgeschlossen ist
-      this.authService.updateUsername(this.editProfileData.name); // Funktion aus dem authService
+      await this.firestoreService.addUser(this.updatedUser);
+      this.authService.updateUsername(this.editProfileData.name);
       console.log(this.updatedUser);
       this.nameIsChanged = false;
       this.closeEditProfile();
