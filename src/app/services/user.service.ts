@@ -44,7 +44,7 @@ export class UserService {
   isMessageFromCurrentUser(currentMessage: Message): boolean{
     const currentUser = this.getCurrentUser();
     if (currentUser) {
-      if (currentUser.uid === currentMessage.sender.uid) {
+      if (currentUser.uid === currentMessage.sender) {
         return true;
       }
     }

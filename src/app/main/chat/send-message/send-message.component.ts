@@ -122,7 +122,7 @@ export class SendMessageComponent implements OnInit {
   createMessage(content: string): Message {
     return new Message({
       time: this.authService.getCurrentTimestamp(),
-      sender: this.userService.getCurrentUser(),
+      sender: this.userService.getCurrentUser().uid,
       content: content,
       thread: new Thread,
       data: [],

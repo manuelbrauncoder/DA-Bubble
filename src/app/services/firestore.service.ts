@@ -333,7 +333,7 @@ export class FirestoreService {
     const cleanMessage: any = {
       id: message.id,
       time: message.time,
-      sender: this.getCleanUserJson(message.sender),
+      sender: message.sender,
       content: message.content,
       data: message.data,
       reactions: message.reactions
