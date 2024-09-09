@@ -45,7 +45,7 @@ header {
     width: 100%;
     padding: 1rem 0;
     overflow-y: auto;
-    height: calc(100% - 31.40625rem);
+    height: calc(100% - 17.40625rem);
 }
 
 .date-divider {
@@ -80,8 +80,9 @@ header {
 
 .message-recipient {
     @include dFlex($fd: column, $ai: flex-start, $g: 1.5rem);
-    padding: 2.188rem;
+    padding: 1rem 2.188rem;
     margin-right: auto;
+    margin-top: auto;
 
     .name {
         @include dFlex($g: 1.563rem, $ai: flex-end);

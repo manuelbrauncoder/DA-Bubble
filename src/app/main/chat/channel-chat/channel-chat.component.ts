@@ -36,7 +36,7 @@ export class ChannelChatComponent implements AfterViewChecked {
     if (this.userService.getCurrentUser().uid === this.channelService.fireService.currentChannel.creator) {
       return 'Du hast';
     } else {
-      return `${this.userService.getUserData(this.channelService.fireService.currentChannel.creator)} hat`;
+      return `${this.userService.getUserData(this.channelService.fireService.currentChannel.creator).username} hat`;
     }
   }
 
@@ -46,7 +46,7 @@ export class ChannelChatComponent implements AfterViewChecked {
     const channelTime = new Date(this.channelService.fireService.currentChannel.time);
     const channelDate = channelTime.toLocaleDateString();
     if (channelDate === dateToday) {
-      return 'Heute';
+      return 'heute';
     } else {
       return `am ${channelDate}`;
     }

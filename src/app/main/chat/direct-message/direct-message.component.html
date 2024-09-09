@@ -25,19 +25,19 @@
     }
     }
 
-
+    <div class="message-recipient">
+        <div class="name">
+            <img [src]="getConversationPartner().avatar" alt="">
+            <h3>{{ getConversationPartner().username }}</h3>
+        </div>
+        <div class="info">
+            <span>Diese Unterhaltung findet nur zwischen <span class="user-name">&#64;{{ getConversationPartner().username }} </span>und dir statt.</span>
+        </div>
+    </div>
 
 </main>
 
-<div class="message-recipient">
-    <div class="name">
-        <img [src]="getConversationPartner().avatar" alt="">
-        <h3>{{ getConversationPartner().username }}</h3>
-    </div>
-    <div class="info">
-        <span>Diese Unterhaltung findet nur zwischen <span class="user-name">&#64;{{ getConversationPartner().username }} </span>und dir statt.</span>
-    </div>
-</div>
+
 
 
 <app-send-message [currentRecipient]="conversationService.fireService.currentConversation"></app-send-message>
