@@ -32,6 +32,14 @@ export class ChannelChatComponent implements AfterViewChecked {
     this.channelService.scrollAtStart(this.scrollContainer);
   }
 
+  getChannelCreator(){
+    if (this.userService.getCurrentUser().uid === this.channelService.fireService.currentChannel.creator) {
+      return 'Du hast';
+    } else {
+      return `${this.userService.getUserData(this.channelService.fireService.currentChannel.creator)} hat`;
+    }
+  }
+
   
 
   

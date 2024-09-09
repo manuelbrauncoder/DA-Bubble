@@ -5,6 +5,7 @@ import { Channel } from '../../models/channel.class';
 import { ChannelService } from '../../services/channel.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { AddChannelPopup2Component } from "../add-channel-popup-2/add-channel-popup-2.component";
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-add-channel-popup',
@@ -17,6 +18,7 @@ export class AddChannelPopupComponent {
   uiService = inject(UiService);
   channelService = inject(ChannelService);
   authService = inject(FirebaseAuthService);
+  userService = inject(UserService);
   newChannel: Channel = new Channel();
 
   /**
@@ -32,13 +34,11 @@ export class AddChannelPopupComponent {
     }    
   }
 
-  /**
-   * add current user as channel creator to newChannel
-   * @returns current user name
-   */
+ 
   addCurrentUserAsChannelCreator(){
-    if (this.authService.auth.currentUser?.displayName) {
-      return this.authService.auth.currentUser?.displayName;
+    const currentUser = this.userService.getCurrentUser();
+    if (currentUser) {
+      return currentUser.uid;
     } else {
       return '';
     }

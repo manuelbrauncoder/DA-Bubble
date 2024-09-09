@@ -71,6 +71,12 @@
         }
     </main>
 
+    <div class="channel-info">
+        <h4># {{ channelService.fireService.currentChannel.name }}</h4>
+        <span>{{ getChannelCreator() }} diesen Channel getDate() erstellt. </span>
+        <span>Das ist der Anfang des Channels <span>#{{ channelService.fireService.currentChannel.name }}</span>.</span>
+    </div>
+
     <app-send-message [currentRecipient]="channelService.fireService.currentChannel"></app-send-message>
 } @else {
     <h1>You are not a channel member!!</h1>
