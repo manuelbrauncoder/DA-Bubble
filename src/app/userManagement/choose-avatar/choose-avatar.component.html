@@ -4,7 +4,7 @@
     <h2>Wähle deinen Avatar</h2>
   </div>
   <div class="profile-wrapper">
-    <img [src]="selectedAvatar || './assets/img/chars/profile_placeholder.png'" alt="">
+    <img [src]="selectedAvatar || './assets/img/chars/profile_placeholder.png'" alt="Avatar Vorschau">
     <h3>{{ regData?.username }}</h3>
   </div>
 
@@ -19,8 +19,8 @@
   </div>
 
   <div class="load-img-wrapper">
-    <span>eigenes Bild verwenden</span>
-    <button>Datei hochladen</button>
+    <span>Eigenes Bild verwenden</span>
+    <input type="file" (change)="onFileSelected($event)" />
   </div>
   <div class="btn-wrapper">
     <span *ngIf="registrationFailed">{{ errorMassage }}</span> 
