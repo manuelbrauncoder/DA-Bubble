@@ -40,6 +40,7 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
+  showTaggableUsersPopup: boolean = false;
 
 
   
@@ -206,6 +207,10 @@ export class UiService {
     setTimeout(() => {
       this.showProfileChangeConfirmationPopup = false;
     }, 4500);
+  }
+
+  toggleTaggableUsersPopup() {
+    this.showTaggableUsersPopup = !this.showTaggableUsersPopup;
   }
 
   constructor() { }
