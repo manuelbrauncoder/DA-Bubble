@@ -82,7 +82,6 @@ header {
     @include dFlex($fd: column, $ai: flex-start, $g: 1.5rem);
     padding: 1rem 2.188rem;
     margin-right: auto;
-    margin-top: auto;
 
     .name {
         @include dFlex($g: 1.563rem, $ai: flex-end);
@@ -128,4 +127,8 @@ app-send-message {
     height: 182px;
     width: 100%;
     padding: 1rem 2.188rem 2.5rem 2.188rem;
+}
+
+.room{
+    font-weight: 700 !important;
 }

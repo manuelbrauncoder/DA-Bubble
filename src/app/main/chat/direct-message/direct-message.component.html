@@ -1,13 +1,10 @@
 <header>
     <div>
         <img [src]="getConversationPartner().avatar" alt="">
-        <h3>{{ getConversationPartner().username }}</h3>
+        <h3>{{ getConversationPartner().username }} @if (isSelfTalking()) {(Du)}</h3>
     </div>
-
 </header>
-
 <main #conversationMessages class="messages">
-
     @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
     <div class="date-divider">
         <div class="line-wrapper">
@@ -19,25 +16,27 @@
         </div>
 
     </div>
-
     @for (message of day.messages; track $index) {
     <app-single-message [currentMessage]="message"></app-single-message>
     }
     }
-
-    <div class="message-recipient">
+    <div [ngStyle]="conversationService.fireService.currentConversation.messages.length === 0 ? {'margin-top': 'auto'} : {'margin-top': '0'}"
+        class="message-recipient">
         <div class="name">
             <img [src]="getConversationPartner().avatar" alt="">
-            <h3>{{ getConversationPartner().username }}</h3>
+            <h3>{{ getConversationPartner().username }} @if (isSelfTalking()){(Du)}</h3>
         </div>
         <div class="info">
-            <span>Diese Unterhaltung findet nur zwischen <span class="user-name">&#64;{{ getConversationPartner().username }} </span>und dir statt.</span>
+            @if (isSelfTalking()) {
+            <span><span class="room">Dieser Raum ist nur für dich da.</span> Mache dir Notizen, liste deine To-dos auf
+                oder bewahre Links und Dateien griffbereit auf. Du kannst hier auch gerne Dinge mit dir selbst
+                besprechen.</span>
+            } @else {
+            <span>Diese Unterhaltung findet nur zwischen <span class="user-name">&#64;{{
+                    getConversationPartner().username }} </span>und dir statt.</span>
+            }
         </div>
     </div>
-
 </main>
-
-
-
 
 <app-send-message [currentRecipient]="conversationService.fireService.currentConversation"></app-send-message>

@@ -89,6 +89,7 @@ export class AddChannelPopup2Component implements OnInit {
    * close popups
    */
   async saveChannelAndClose() {
+    this.newChannel.time = Date.now();
     await this.channelService.fireService.addChannel(this.newChannel);
     this.uiService.toggleAddChannelPopup();
     this.channelService.toggleActiveChannel(this.newChannel);

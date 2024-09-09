@@ -69,7 +69,7 @@
     }
     }
 
-    <div class="channel-info">
+    <div [ngStyle]="channelService.fireService.currentChannel.messages.length === 0 ? {'margin-top': 'auto'} : {'margin-top': '0'}" class="channel-info">
         <div (click)="uiService.toggleEditChannelPopup()" class="title">
             <h4># {{ channelService.fireService.currentChannel.name }}</h4>
             <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">

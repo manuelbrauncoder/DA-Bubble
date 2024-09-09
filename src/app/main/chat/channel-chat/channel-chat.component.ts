@@ -10,12 +10,13 @@ import { SingleMessageComponent } from "../single-message/single-message.compone
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { fadeIn } from "../../../shared/animations";
 import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
   animations: [fadeIn],
-  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent, FormatDateForListPipe],
+  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent, FormatDateForListPipe, CommonModule],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })

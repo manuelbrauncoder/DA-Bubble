@@ -101,7 +101,7 @@
         @if (uiService.showDirectMessages) {
             <div class="users">
                 @if (authService.auth.currentUser) {
-                    <div class="user" [ngClass]="{'chat-active': userService.getCurrentUser().userChatActive}">
+                    <div (click)="conversationService.openConversation(authService.auth.currentUser.uid)" class="user" [ngClass]="{'chat-active': userService.getCurrentUser().userChatActive}">
                         <div class="img-wrapper">
                             <hr class="online-state">
                             <img class="profile-img" [src]="userService.getCurrentUsersAvatar()" alt="">
