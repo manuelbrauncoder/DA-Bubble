@@ -56,6 +56,7 @@ export class ChannelService {
    * @param activeChannel 
    */
   toggleActiveChannel(activeChannel: Channel) {
+    this.uiService.userChatNotActive();
     this.fireService.channels.forEach((channel) => {
       if (activeChannel.name === channel.name) {
         channel.channelActive = true;

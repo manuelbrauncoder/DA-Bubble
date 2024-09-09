@@ -52,10 +52,12 @@ export class ConversationService {
   openConversation(secondUserUid: string) {
     this.scrolledToBottomOnStart = false;
     this.setCurrentConversation(secondUserUid);
-    this.showChannelContent();
+    this.showChatContent();
+    this.uiService.hightlightUserChat(this.userService.getUserData(secondUserUid));
+    this.uiService.channelChatNotActive();
   }
 
-  showChannelContent() {
+  showChatContent() {
     if (this.observerService.isMobile) {
       this.uiService.openChatMobile('directMessage');
     } else {

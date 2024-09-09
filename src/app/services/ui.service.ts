@@ -3,6 +3,9 @@
  */
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { inject, Injectable } from '@angular/core';
+import { FirestoreService } from './firestore.service';
+import { User } from '../models/user.class';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +13,7 @@ import { inject, Injectable } from '@angular/core';
 export class UiService {
 
   observerService = inject(BreakpointObserver);
+  fireService = inject(FirestoreService);
 
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
   showDirectMessages: boolean = false; // user list in workspace menu
@@ -36,6 +40,42 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
+
+
+  
+
+  /**
+   * set all userChatActive values to false
+   */
+  userChatNotActive(){
+    this.fireService.users.forEach((user) => {
+      user.userChatActive = false;
+    })
+  }
+
+  /**
+   * 
+   * @param user set chat active to true and
+   * other users to false
+   */
+  hightlightUserChat(user: User){
+    this.fireService.users.forEach((userInList) => {
+      if (user.uid === userInList.uid) {
+        userInList.userChatActive = true;
+      } else {
+        userInList.userChatActive = false;
+      }
+    })
+  }
+
+  /**
+   * set all channelActive values to false
+   */
+  channelChatNotActive(){
+    this.fireService.channels.forEach((channel) => {
+      channel.channelActive = false;
+    })
+  }
 
   openChatMobile(content: 'channelChat' | 'newMessage' | 'directMessage'){
     this.mainContent = content;

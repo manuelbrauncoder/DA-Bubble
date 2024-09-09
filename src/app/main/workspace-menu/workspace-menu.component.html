@@ -56,7 +56,7 @@
         @if (uiService.showChannels) {
             <div class="channel-list">
                  @for (channel of fireService.channels; track $index; let index = $index) {
-                    <span (click)="channelService.toggleActiveChannel(channel)" [ngClass]="{'channel-active': channel.channelActive}" class="channel"># {{ channel.name }}</span>
+                    <span (click)="channelService.toggleActiveChannel(channel)" [ngClass]="{'chat-active': channel.channelActive}" class="channel"># {{ channel.name }}</span>
                  }
             </div>
             <div class="add-channel">
@@ -101,7 +101,7 @@
         @if (uiService.showDirectMessages) {
             <div class="users">
                 @if (authService.auth.currentUser) {
-                    <div class="user">
+                    <div class="user" [ngClass]="{'chat-active': userService.getCurrentUser().userChatActive}">
                         <div class="img-wrapper">
                             <hr class="online-state">
                             <img class="profile-img" [src]="userService.getCurrentUsersAvatar()" alt="">
@@ -111,7 +111,7 @@
                 }
                 @for (user of authService.fireService.users; track $index) {
                     @if (user.uid !== authService.auth.currentUser?.uid) {
-                        <div (click)="conversationService.openConversation(user.uid)" class="user">
+                        <div (click)="conversationService.openConversation(user.uid)" class="user" [ngClass]="{'chat-active': user.userChatActive}">
                             <div class="img-wrapper">
                                 <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
                                 <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
