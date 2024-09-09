@@ -322,6 +322,7 @@ export class FirestoreService {
     return {
       id: channel.id,
       name: channel.name,
+      time: channel.time,
       description: channel.description,
       creator: channel.creator,
       users: channel.users,
@@ -378,6 +379,7 @@ export class FirestoreService {
       id: channel.id || '',
       description: channel.description || '',
       name: channel.name || '',
+      time: channel.time || 0,
       creator: channel.creator || '',
       users: channel.users || [],
       messages: channel.messages || [],

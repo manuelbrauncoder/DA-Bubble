@@ -37,6 +37,7 @@ export class SendMessageComponent implements OnInit {
   ngOnInit(): void {
     this.copyRecipient();
   }
+  
 
   /**
    * 

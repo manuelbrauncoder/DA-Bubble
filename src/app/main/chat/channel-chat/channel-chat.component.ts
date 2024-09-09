@@ -40,6 +40,19 @@ export class ChannelChatComponent implements AfterViewChecked {
     }
   }
 
+  getDate(){
+    const today = new Date();
+    const dateToday = today.toLocaleDateString();
+    const channelTime = new Date(this.channelService.fireService.currentChannel.time);
+    const channelDate = channelTime.toLocaleDateString();
+    if (channelDate === dateToday) {
+      return 'Heute';
+    } else {
+      return `am ${channelDate}`;
+    }
+  }
+
+ 
   
 
   
