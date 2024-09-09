@@ -42,8 +42,12 @@ export class UiService {
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
 
+  showEditMessagePopup = false;
 
-  
+
+  toggleEditMessagePopup() {
+    this.showEditMessagePopup = !this.showEditMessagePopup;
+  }
 
   /**
    * set all userChatActive values to false

@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { Message } from '../../../../models/message.class';
 import { ThreadService } from '../../../../services/thread.service';
 import { UserService } from '../../../../services/user.service';
+import { UiService } from '../../../../services/ui.service';
 
 @Component({
   selector: 'app-reaction-bar',
@@ -13,6 +14,7 @@ import { UserService } from '../../../../services/user.service';
 export class ReactionBarComponent implements OnInit {
   threadService = inject(ThreadService);
   userService = inject(UserService);
+  uiService = inject(UiService);
 
   @Input() threadMessage = false;
   @Input() currentMessage: Message = new Message()
