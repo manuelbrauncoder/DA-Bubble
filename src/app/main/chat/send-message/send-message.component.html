@@ -13,21 +13,20 @@
                 <img src="assets/icons/channel-chat/addReactionIcon.svg">
             </div>
 
-            <div class="bounding-box" (click)="showTaggableUsers()">
-                <img src="assets/icons/channel-chat/tagPersonIcon.svg">
-            </div>
-            <!-- @if (uiService.showTaggableUsersPopup) {
-                <div class="taggableUsersPopup">
-                    @for (user of getChannelUsers(); track $index) {
-                        <div class="taggableUser">
-                            <img [src]="user.avatar">
-                            <span>{{ user.username }}</span>
-                        </div>
-                    }
+            <div class="popup-wrapper">
+                <div class="bounding-box" (click)="showTaggableUsers()">
+                    <img src="assets/icons/channel-chat/tagPersonIcon.svg">
                 </div>
-            } -->
-        </div>
+                @if (uiService.showTaggableUsersPopup) {
+                    <app-popup-taggable-users @fadeIn [currentRecipient]="currentRecipient"></app-popup-taggable-users>
+                }
+                </div>
+            </div>
 
         <img src="assets/icons/channel-chat/sendIcon.svg" class="send-btn" (click)="saveNewMessage()">
     </div>
 </div>
+
+@if (uiService.showTaggableUsersPopup) {
+    <div @fadeIn class="popup-background" (click)="showTaggableUsers()"></div>
+}

@@ -12,11 +12,14 @@ import { ChannelService } from '../../../services/channel.service';
 import { ConversationService } from '../../../services/conversation.service';
 import { ThreadService } from '../../../services/thread.service';
 import { User } from '../../../models/user.class';
+import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
+import { fadeIn } from '../../../shared/animations';
 
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent],
+  animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
 })
@@ -51,20 +54,6 @@ export class SendMessageComponent implements OnInit {
       return `Nachricht an # ${this.currentRecipient.name}`;
     }
   }
-
-  // getChannelUsers() {
-  //   let users: User[] = [];
-
-  //   if (this.currentRecipient instanceof Channel) {
-  //     this.currentRecipient.users.forEach((userUid) => {
-  //       const user = this.userService.getUserData(userUid);
-  //       users.push(user);
-  //     });
-  //     return users;
-  //   } else {
-  //     return [];
-  //   }
-  // }
 
   showTaggableUsers() {
     this.uiService.toggleTaggableUsersPopup();

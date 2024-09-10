@@ -1,0 +1,18 @@
+<div class="taggable-users-list-popup">
+    <header>
+        <p>Mitglieder markieren</p>
+
+        <div class="bounding-box" (click)="closePopup()">
+            <img src="assets/icons/close.svg">
+        </div>
+    </header>
+
+    <div class="taggable-users-list">
+        @for (user of getChannelUsers(); track $index) {
+            <div class="taggable-user" (click)="tagThisUser()">
+                <img [src]="user.avatar">
+                <span>{{ user.username }}</span>
+            </div>
+        }
+    </div>
+</div>
