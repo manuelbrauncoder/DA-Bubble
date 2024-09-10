@@ -2,6 +2,7 @@
 @import '../../../mixins.scss';
 
 main {
+    z-index: 4;
     box-shadow: 0.25rem 0.25rem 0.4375rem 0rem #00000033;
     background-color: white;
     position: absolute;

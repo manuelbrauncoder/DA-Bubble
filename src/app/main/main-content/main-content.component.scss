@@ -1,29 +1,40 @@
 @import '../../../mixins.scss';
 @import '../../../styles.scss';
 
-main{
+main {
     height: 100%;
     width: 100%;
     display: flex;
     gap: 1rem;
 }
 
-.workspace-menu-wrapper{
+.workspace-menu-wrapper {
     width: 380px;
-    @media(max-width: 839px) {
+    flex-shrink: 0;
+
+    @media(max-width: 1399px) {
+        position: absolute;
+        height: calc(100vh - 200px);
+        z-index: 3;
+        box-shadow: 0rem 0.125rem 0.625rem 0rem rgba(0, 0, 0, 0.0784313725);
+        border-radius: 1.875rem;
+    }
+
+    @media(max-width: 599px) {
         width: 100%;
         max-width: 100%;
     }
 }
 
-.chat-wrapper{
+.chat-wrapper {
     flex-grow: 2;
 }
 
-.thread-wrapper{
-    height: 100%;
-    width: 30%;
-    @media(max-width: 839px) {
+.thread-wrapper {
+    width: 440px;
+    flex-shrink: 0;
+
+    @media(max-width: 599px) {
         width: 100%;
         max-width: 100%;
     }
@@ -39,7 +50,7 @@ main{
     z-index: 2;
 }
 
-app-add-channel-popup{
+app-add-channel-popup {
     position: fixed;
     top: 50%;
     left: 50%;

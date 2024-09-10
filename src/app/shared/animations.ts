@@ -22,7 +22,7 @@ export const fadeIn = trigger('fadeIn', [
 export const toggleWidth30 = trigger('toggleWidth30', [
   transition(':enter', [
       style({ width: '0', opacity: 0 }),
-      animate('0.2s ease', style({ width: '30%', opacity: 1 }))
+      animate('0.2s ease', style({ width: '440px', opacity: 1 }))
   ]),
   transition(':leave', [
       animate('0.2s ease', style({ width: '0', opacity: 0 }))

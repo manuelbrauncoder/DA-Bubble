@@ -1,6 +1,7 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, DestroyRef } from '@angular/core';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 import { UiService } from './ui.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
@@ -9,38 +10,53 @@ export class BreakpointObserverService {
 
   uiService = inject(UiService);
 
-  breakpointsToObserve = [Breakpoints.TabletPortrait, Breakpoints.HandsetPortrait, Breakpoints.HandsetLandscape];
+  breakpointsToObserve = [
+    `(max-width: 1099px)`,
+    `(max-width: 599px)`,
+    `(min-width: 1100px)`
+  ];
 
   isMobile: boolean = false;
+  isTablet : boolean = false;
   isHandsetLandscape: boolean = false;
 
 
-  constructor(private responsive: BreakpointObserver) { }
+  constructor(private responsive: BreakpointObserver, private destroyRef: DestroyRef) { }
 
   initObserver(){
-    this.responsive.observe(this.breakpointsToObserve).subscribe((result) => {
-      if (result.breakpoints[Breakpoints.TabletPortrait] || result.breakpoints[Breakpoints.HandsetPortrait]) {
-        this.isMobile = true;
-        this.hideInMobilePortrait();       
-      } else if (!result.breakpoints[Breakpoints.TabletPortrait] || !result.breakpoints[Breakpoints.HandsetPortrait]) {
+    this.responsive.observe(this.breakpointsToObserve)
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(state => {
+      if (state.breakpoints[`(max-width: 1099px)`]) {
+        // tablet
+        console.log('Tablet');
+        this.isTablet = true;
         this.isMobile = false;
-        this.showInDesktopMode();
       }
-      if (result.breakpoints[Breakpoints.HandsetLandscape]) {
-        this.isHandsetLandscape = true;
-      } else if(!result.breakpoints[Breakpoints.HandsetLandscape]) {
-        this.isHandsetLandscape = false;        
+      if (state.breakpoints[`(max-width: 599px)`]) {
+        // mobile
+        console.log('Mobile');
+        this.isMobile = true;
+        this.isTablet = false;
+        this.hideInMobile();
       }
-    });
+      if (state.breakpoints[`(min-width: 1100px)`]) {
+        // desktop
+        console.log('Desktop');
+        this.isMobile = false;
+        this.isTablet = false;
+        this.showInDesktop();
+      }
+    })
   }
 
-  hideInMobilePortrait(){
+  hideInMobile(){
     this.uiService.showWorkspaceMenu = true;
     this.uiService.showThread = false;
     this.uiService.showChat = false;
   }
 
-  showInDesktopMode(){
+  showInDesktop(){
     this.uiService.showWorkspaceMenu = true;
     this.uiService.showThread = false;
     this.uiService.showChat = true;
