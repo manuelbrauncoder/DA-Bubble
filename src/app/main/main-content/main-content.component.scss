@@ -16,13 +16,17 @@ main {
         position: absolute;
         height: calc(100vh - 200px);
         z-index: 3;
-        box-shadow: 0rem 0.125rem 0.625rem 0rem rgba(0, 0, 0, 0.0784313725);
+        box-shadow: 6px 0 6px #0000002f;
         border-radius: 1.875rem;
     }
 
-    @media(max-width: 599px) {
+    @media(max-width: 999px) {
         width: 100%;
         max-width: 100%;
+        height: unset;
+        box-shadow: unset;
+        border-radius: unset;
+        position: static;
     }
 }
 
@@ -34,7 +38,7 @@ main {
     width: 440px;
     flex-shrink: 0;
 
-    @media(max-width: 599px) {
+    @media(max-width: 999px) {
         width: 100%;
         max-width: 100%;
     }

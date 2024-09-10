@@ -11,8 +11,8 @@ export class BreakpointObserverService {
   uiService = inject(UiService);
 
   breakpointsToObserve = [
-    `(max-width: 1099px)`,
-    `(max-width: 599px)`,
+    `(max-width: 1399px)`,
+    `(max-width: 999px)`,
     `(min-width: 1100px)`
   ];
 
@@ -27,20 +27,22 @@ export class BreakpointObserverService {
     this.responsive.observe(this.breakpointsToObserve)
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(state => {
-      if (state.breakpoints[`(max-width: 1099px)`]) {
+      if (state.breakpoints[`(max-width: 1399px)`]) {
         // tablet
         console.log('Tablet');
+        this.uiService.showWorkspaceMenu = false;
         this.isTablet = true;
         this.isMobile = false;
+        this.uiService.showChat = true;
       }
-      if (state.breakpoints[`(max-width: 599px)`]) {
+      if (state.breakpoints[`(max-width: 999px)`]) {
         // mobile
         console.log('Mobile');
         this.isMobile = true;
         this.isTablet = false;
         this.hideInMobile();
       }
-      if (state.breakpoints[`(min-width: 1100px)`]) {
+      if (state.breakpoints[`(min-width: 1400px)`]) {
         // desktop
         console.log('Desktop');
         this.isMobile = false;
