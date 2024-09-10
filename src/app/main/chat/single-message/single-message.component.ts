@@ -9,6 +9,7 @@ import { BreakpointObserverService } from '../../../services/breakpoint-observer
 import { ThreadService } from '../../../services/thread.service';
 import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
 import { FormsModule } from '@angular/forms';
+import { Channel } from '../../../models/channel.class';
 
 @Component({
   selector: 'app-single-message',
@@ -49,32 +50,50 @@ export class SingleMessageComponent implements OnInit {
     await this.handleConversationMessage();
   }
 
+  /**
+   * Handles message update in a channel.
+   * Checks if the message is in the channel or in a thread and updates accordingly.
+   */
   async handleChannelMessage() {
-    const channel = this.fireService.currentChannel;  // current channel from fireService
-    let messageIndex = 0; // index from message in channel
-    for (let k = 0; k < channel.messages.length; k++) { // for loop über alle messages im channel
-      const message = channel.messages[k];
-      if (message.id === this.currentMessage.id) {  // wenn die id übereinstimmt
-        messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);  // index der nachricht suchen
-        channel.messages[messageIndex] = this.currentMessage; // nachricht im channel updaten
-        await this.fireService.addChannel(channel); // channel in firebase updaten
-        this.cancelEditMode();
-        console.log('Message found:', message, 'in Channel:', channel);
-        return; // mit return funktion abbrechen, heißt der rest wird nur ausgeführt wenn die Nachricht nicht gefunden wurde
-      } else if (message.thread) { // wenn die message einen thread hat
-        for (let j = 0; j < message.thread.messages.length; j++) { // for loop über die messages im thread
-          const threadMessage = message.thread.messages[j]; 
-          if (threadMessage.id === this.currentMessage.id) {  // wenn thread message id und currentMessage id übereinstimmen
-            const threadMessageIndex = message.thread.messages.findIndex(m => m.id === threadMessage.id); // index suchen
-            message.thread.messages[threadMessageIndex] = this.currentMessage;  // message mit index updaten
-            await this.fireService.addChannel(channel); // channel in firebase updaten
-            this.cancelEditMode();
-            console.log('message found:', threadMessage, 'in thread:', message.thread, 'in channel:', channel);
-            return;
-          }
+    const channel = this.fireService.currentChannel;
+    const messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);
+    if (messageIndex !== -1) {
+      await this.updateMessageInChannelList(channel, messageIndex);
+      return;
+    }
+    for (let message of channel.messages) {
+      if (message.thread) {
+        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        if (threadMessageIndex !== -1) {
+          await this.updateMessageInChannelThread(channel, message, threadMessageIndex);
         }
       }
     }
+  }
+
+  /**
+   * update the message in thread and save updated channel in firebase
+   * @param channel - the channel where the tread exists 
+   * @param message - the parent message containing the thread
+   * @param threadMessageIndex  - the index of the message in thread
+   */
+  async updateMessageInChannelThread(channel: Channel, message: Message, threadMessageIndex: number) {
+    message.thread!.messages[threadMessageIndex] = this.currentMessage;
+    await this.fireService.addChannel(channel);
+    this.cancelEditMode();
+  }
+
+  
+
+  /**
+   * update the message in channel and save channel in firebase
+   * @param channel 
+   * @param messageIndex 
+   */
+  async updateMessageInChannelList(channel: Channel, messageIndex: number) {
+    channel.messages[messageIndex] = this.currentMessage;
+    await this.fireService.addChannel(channel);
+    this.cancelEditMode();
   }
 
   async handleConversationMessage() {
