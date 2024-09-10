@@ -19,23 +19,29 @@ header {
         @include dFlex($g: 0.938rem);
     }
 
-    svg {
-        @include dFlex();
-        padding: 0.25rem;
+    .svg-wrapper {
+        width: 40px;
+        height: 40px;
         border-radius: 100%;
-        cursor: pointer;
         transition: ease-in 0.15s;
-
+        cursor: pointer;
         &:hover {
             background-color: $color-active-channel;
-            scale: 1.1;
             transition: ease-in 0.15s;
         }
 
-        &:hover path {
-            fill: $color-purple-3;
+        &:hover svg {
+            scale: 1.1;
+            transition: ease-in 0.15s;
+
+            path {
+                fill: $color-purple-3;
+                transition: ease-in 0.15s;
+            }
         }
     }
+
+
 }
 
 .channels {

@@ -1,5 +1,5 @@
 import { inject, Injectable, DestroyRef } from '@angular/core';
-import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { UiService } from './ui.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

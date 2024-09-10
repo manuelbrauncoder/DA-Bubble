@@ -42,7 +42,15 @@ export class UiService {
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
 
-
+  mobileBackBtn(){
+    if (this.showThread) {
+      this.showThread = false;
+      this.showChat = true;
+    } else {
+      this.showChat = false;
+      this.showWorkspaceMenu = true;
+    }
+  }
 
   /**
    * set all userChatActive values to false
