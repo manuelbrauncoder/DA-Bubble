@@ -10,6 +10,7 @@ import { ThreadService } from '../../../services/thread.service';
 import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
 import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
+import { Conversation } from '../../../models/conversation.class';
 
 @Component({
   selector: 'app-single-message',
@@ -66,6 +67,7 @@ export class SingleMessageComponent implements OnInit {
         const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
         if (threadMessageIndex !== -1) {
           await this.updateMessageInChannelThread(channel, message, threadMessageIndex);
+          return;
         }
       }
     }
@@ -83,8 +85,6 @@ export class SingleMessageComponent implements OnInit {
     this.cancelEditMode();
   }
 
-  
-
   /**
    * update the message in channel and save channel in firebase
    * @param channel 
@@ -96,32 +96,51 @@ export class SingleMessageComponent implements OnInit {
     this.cancelEditMode();
   }
 
+  /**
+   * Handles message update in conversation.
+   * Checks if the message is in the conversation or in a thread and updates it accordingly.
+   * If the message is found in the main conversation messages, it updates it and returns.
+   * Otherwise, it checks if the message is part of a thread and updates it there.
+   * @returns when conversatin is updated
+   */
   async handleConversationMessage() {
     const conversation = this.fireService.currentConversation;
-    let messageIndex = 0;
-    for (let k = 0; k < conversation.messages.length; k++) {
-      const message = conversation.messages[k];
-      if (message.id === this.currentMessage.id) {
-        messageIndex = conversation.messages.findIndex(conMess => conMess.id === this.currentMessage.id);
-        conversation.messages[messageIndex] = this.currentMessage;
-        await this.fireService.addConversation(conversation);
-        this.cancelEditMode();
-        console.log('Message found:', message, 'in Conversation:', conversation);
-        return;
-      } else if (message.thread) {
-        for (let k = 0; k < message.thread.messages.length; k++) {
-          const threadMessage = message.thread.messages[k];
-          if (threadMessage.id === this.currentMessage.id) {
-            const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
-            message.thread.messages[threadMessageIndex] = this.currentMessage;
-            await this.fireService.addConversation(conversation);
-            this.cancelEditMode();
-            console.log('message found:', threadMessage, 'in thread:', message.thread, 'in conversation:', conversation);
-            return;
-          }
+    const messageIndex = conversation.messages.findIndex(m => m.id === this.currentMessage.id);
+    if (messageIndex !== -1) {
+      await this.updateMessageInConversationList(conversation, messageIndex);
+      return;
+    }
+    for (let message of conversation.messages) {
+      if (message.thread) {
+        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        if (threadMessageIndex !== -1) {
+          await this.updateMessageInConversationThread(conversation, message, threadMessageIndex);
         }
       }
     }
+  }
+
+  /**
+   * 
+   * @param conversation - The conversation where the thread exists.
+   * @param message - The parent message containing the thread.
+   * @param threadMessageIndex - The index from the message in the thread.
+   */
+  async updateMessageInConversationThread(conversation: Conversation, message: Message, threadMessageIndex: number) {
+    message.thread!.messages[threadMessageIndex] = this.currentMessage;
+    await this.fireService.addConversation(conversation);
+    this.cancelEditMode();
+  }
+
+  /**
+   * Updates the message in the main conversation list and saves the updated conversation in Firebase.
+   * @param conversation - The conversation containing the message.
+   * @param messageIndex - The index of the message in the conversation.
+   */
+  async updateMessageInConversationList(conversation: Conversation, messageIndex: number) {
+    conversation.messages[messageIndex] = this.currentMessage;
+    await this.fireService.addConversation(conversation);
+    this.cancelEditMode();
   }
 
   toggleMenuPopup() {
@@ -178,8 +197,6 @@ export class SingleMessageComponent implements OnInit {
     return;
   }
 
-
-
   /**
    * 
    * @returns true if the messages has answers,
@@ -209,9 +226,7 @@ export class SingleMessageComponent implements OnInit {
       this.fireService.currentMessage = new Message(this.currentMessage);
     } else {
       console.log('no option choosed');
-
     }
-
   }
 
   openThreadWindow() {
