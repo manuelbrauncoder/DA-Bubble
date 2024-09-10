@@ -32,11 +32,6 @@ export class SingleMessageComponent implements OnInit {
 
   editContent = '';
 
-  logMessageOut(){
-    console.log('current message:', this.currentMessage);
-    console.log('Thread Message?', this.threadMessage); 
-  }
-
   showEditContainer() {
     this.editMode = true;
     this.editContent = this.currentMessage.content;
@@ -48,8 +43,66 @@ export class SingleMessageComponent implements OnInit {
     this.editMode = false;
   }
 
-  async saveEditedMessage(){
-    this.currentMessage.content = this.editContent;
+  async saveEditedMessage() {
+    this.currentMessage.content = this.editContent; // update content from currentMessage
+    await this.handleChannelMessage();
+    await this.handleConversationMessage();
+  }
+
+  async handleChannelMessage() {
+    const channel = this.fireService.currentChannel;  // current channel from fireService
+    let messageIndex = 0; // index from message in channel
+    for (let k = 0; k < channel.messages.length; k++) { // for loop über alle messages im channel
+      const message = channel.messages[k];
+      if (message.id === this.currentMessage.id) {  // wenn die id übereinstimmt
+        messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);  // index der nachricht suchen
+        channel.messages[messageIndex] = this.currentMessage; // nachricht im channel updaten
+        await this.fireService.addChannel(channel); // channel in firebase updaten
+        this.cancelEditMode();
+        console.log('Message found:', message, 'in Channel:', channel);
+        return; // mit return funktion abbrechen, heißt der rest wird nur ausgeführt wenn die Nachricht nicht gefunden wurde
+      } else if (message.thread) { // wenn die message einen thread hat
+        for (let j = 0; j < message.thread.messages.length; j++) { // for loop über die messages im thread
+          const threadMessage = message.thread.messages[j]; 
+          if (threadMessage.id === this.currentMessage.id) {  // wenn thread message id und currentMessage id übereinstimmen
+            const threadMessageIndex = message.thread.messages.findIndex(m => m.id === threadMessage.id); // index suchen
+            message.thread.messages[threadMessageIndex] = this.currentMessage;  // message mit index updaten
+            await this.fireService.addChannel(channel); // channel in firebase updaten
+            this.cancelEditMode();
+            console.log('message found:', threadMessage, 'in thread:', message.thread, 'in channel:', channel);
+            return;
+          }
+        }
+      }
+    }
+  }
+
+  async handleConversationMessage() {
+    const conversation = this.fireService.currentConversation;
+    let messageIndex = 0;
+    for (let k = 0; k < conversation.messages.length; k++) {
+      const message = conversation.messages[k];
+      if (message.id === this.currentMessage.id) {
+        messageIndex = conversation.messages.findIndex(conMess => conMess.id === this.currentMessage.id);
+        conversation.messages[messageIndex] = this.currentMessage;
+        await this.fireService.addConversation(conversation);
+        this.cancelEditMode();
+        console.log('Message found:', message, 'in Conversation:', conversation);
+        return;
+      } else if (message.thread) {
+        for (let k = 0; k < message.thread.messages.length; k++) {
+          const threadMessage = message.thread.messages[k];
+          if (threadMessage.id === this.currentMessage.id) {
+            const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+            message.thread.messages[threadMessageIndex] = this.currentMessage;
+            await this.fireService.addConversation(conversation);
+            this.cancelEditMode();
+            console.log('message found:', threadMessage, 'in thread:', message.thread, 'in conversation:', conversation);
+            return;
+          }
+        }
+      }
+    }
   }
 
   toggleMenuPopup() {
@@ -68,8 +121,8 @@ export class SingleMessageComponent implements OnInit {
     this.currentMessage = new Message(this.currentMessage);
   }
 
-  formatAnswerCount(){
-    return this.currentMessage.thread?.messages.length === 1 ?  'Antwort' : 'Antworten';
+  formatAnswerCount() {
+    return this.currentMessage.thread?.messages.length === 1 ? 'Antwort' : 'Antworten';
   }
 
   getFormattedDate() {
@@ -97,7 +150,7 @@ export class SingleMessageComponent implements OnInit {
    * 
    * @returns formatted time of last answer
    */
-  getTimeOfLastAnswer(){
+  getTimeOfLastAnswer() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         return this.getFormattedTime(this.currentMessage.thread.messages[this.currentMessage.thread.messages.length - 1].time);
@@ -106,14 +159,14 @@ export class SingleMessageComponent implements OnInit {
     return;
   }
 
-  
+
 
   /**
    * 
    * @returns true if the messages has answers,
    * false if it has no ansers
    */
-  messageHasAnswers(){
+  messageHasAnswers() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         return true;
@@ -142,7 +195,7 @@ export class SingleMessageComponent implements OnInit {
 
   }
 
-  openThreadWindow(){
+  openThreadWindow() {
     if (this.observerService.isMobile) {
       this.uiService.openThreadMobile();
     } else {

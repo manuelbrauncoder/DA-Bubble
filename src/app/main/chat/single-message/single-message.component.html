@@ -24,7 +24,6 @@
         @if (editMode) {
         <div class="edit-container">
             <textarea [(ngModel)]="editContent"
-                placeholder="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus, quasi sit? Reiciendis, hic ipsam dolorum voluptas non, quo reprehenderit recusandae quibusdam dolores, illum autem quidem nisi porro temporibus vel rerum!"
                 required name="edit-input" id=""></textarea>
             <div class="footer">
                 <div class="icon-wrapper svg-hover">
@@ -42,7 +41,7 @@
                 </div>
                 <div class="btns">
                     <button (click)="cancelEditMode()" class="secondary-btn">Abbrechen</button>
-                    <button class="primary-btn">Speichern</button>
+                    <button (click)="saveEditedMessage()" class="primary-btn">Speichern</button>
                 </div>
 
             </div>
