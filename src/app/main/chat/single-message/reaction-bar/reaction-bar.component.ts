@@ -19,20 +19,22 @@ export class ReactionBarComponent implements OnInit {
   @Input() threadMessage = false;
   @Input() currentMessage: Message = new Message()
   @Output() triggerAnswer = new EventEmitter<void>();
+  @Output() triggerMenuPopup = new EventEmitter<void>();
+  
 
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
+  }
+
+  triggerMenuPopupInParent() {
+    this.triggerMenuPopup.emit();
   }
 
   triggerAnswerInParent() {
     this.triggerAnswer.emit();
   }
 
-  logMessageOut(){
-    console.log(this.currentMessage);
-    console.log('Thread Message?', this.threadMessage);
-    
-  }
+  
 
   
 }

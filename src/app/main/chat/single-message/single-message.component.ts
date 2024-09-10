@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 import { ThreadService } from '../../../services/thread.service';
 import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
-  imports: [CommonModule, ReactionBarComponent],
+  imports: [CommonModule, ReactionBarComponent, FormsModule],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -25,6 +26,35 @@ export class SingleMessageComponent implements OnInit {
 
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
+
+  showMenuPopup = false;
+  editMode = false;
+
+  editContent = '';
+
+  logMessageOut(){
+    console.log('current message:', this.currentMessage);
+    console.log('Thread Message?', this.threadMessage); 
+  }
+
+  showEditContainer() {
+    this.editMode = true;
+    this.editContent = this.currentMessage.content;
+    this.showMenuPopup = false;
+  }
+
+  cancelEditMode() {
+    this.editContent = '';
+    this.editMode = false;
+  }
+
+  async saveEditedMessage(){
+    this.currentMessage.content = this.editContent;
+  }
+
+  toggleMenuPopup() {
+    this.showMenuPopup = !this.showMenuPopup;
+  }
 
   months = [
     "Januar", "Februar", "März", "April",

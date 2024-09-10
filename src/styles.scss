@@ -203,16 +203,49 @@ $color-popup-bg: #eceefe80;
   font-weight: 700;
   line-height: 1.534rem;
   @include dFlex();
-  animation-duration: 0.1s;
+  transition: 100ms ease-in;
 
   &:hover {
     background-color: $color-purple-2;
-    animation-duration: 0.1s;
+    transition: 100ms ease-in;
   }
 
   &:disabled {
     background-color: $color-disabled-grey;
     cursor: not-allowed;
+  }
+}
+
+.secondary-btn {
+  border: 1px solid $color-purple-2;
+  border-radius: 100vw;
+  padding: 0.75rem 1.5625rem;
+  font-family: Nunito;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.534rem;
+  @include dFlex();
+  transition: 100ms ease-in;
+  color: $color-purple-1;
+  background-color: white;
+  &:hover{
+    color: white;
+    background-color: $color-purple-3;
+    transition: 100ms ease-in;
+    border-color: $color-purple-3;
+  }
+  &:focus{
+    background-color: $color-purple-1;
+    border-color: $color-purple-1;
+    color: white;
+    transition: 100ms ease-in;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    background-color: white;
+    color: $color-disabled-grey;
+    border: 1px solid $color-disabled-grey;
+    transition: 100ms ease-in;
   }
 }
 
