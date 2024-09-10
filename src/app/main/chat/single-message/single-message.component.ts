@@ -31,6 +31,7 @@ export class SingleMessageComponent implements OnInit {
 
   showMenuPopup = false;
   editMode = false;
+  updatedInChannel = false;
 
   editContent = '';
 
@@ -46,9 +47,11 @@ export class SingleMessageComponent implements OnInit {
   }
 
   async saveEditedMessage() {
-    this.currentMessage.content = this.editContent; // update content from currentMessage
+    this.currentMessage.content = this.editContent;
     await this.handleChannelMessage();
-    await this.handleConversationMessage();
+    if (!this.updatedInChannel) {
+      await this.handleConversationMessage();
+    }
   }
 
   /**
@@ -60,6 +63,7 @@ export class SingleMessageComponent implements OnInit {
     const messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);
     if (messageIndex !== -1) {
       await this.updateMessageInChannelList(channel, messageIndex);
+      this.updatedInChannel = true;
       return;
     }
     for (let message of channel.messages) {
@@ -67,6 +71,7 @@ export class SingleMessageComponent implements OnInit {
         const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
         if (threadMessageIndex !== -1) {
           await this.updateMessageInChannelThread(channel, message, threadMessageIndex);
+          this.updatedInChannel = true;
           return;
         }
       }
