@@ -5,7 +5,6 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { User } from '../models/user.class';
-import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class UiService {
   fireService = inject(FirestoreService);
 
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
-  showDirectMessages: boolean = false; // user list in workspace menu
+  showDirectMessages: boolean = true; // user list in workspace menu
   showChannels: boolean = true; // channel list in workspace menu
 
   showChannelEditPopup: boolean = false; // opens in channel-chat-component
@@ -41,6 +40,8 @@ export class UiService {
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
+
+  
 
   mobileBackBtn(){
     if (this.showThread) {
