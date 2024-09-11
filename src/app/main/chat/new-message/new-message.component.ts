@@ -21,33 +21,43 @@ export class NewMessageComponent {
 
   search() {
     if (this.searchInput.trim()) {
-      this.filteredResults = [];
+      this.resetSearch();
       const trimmedInput = this.searchInput.trim().toLowerCase();
-      const filteredUser = this.fireService.users
-        .filter(user => this.searchUser(user, trimmedInput))
-        .map(user => user.username)
-      const filteredChannels = this.fireService.channels
-        .filter(channel => channel.name.toLowerCase().includes(trimmedInput))
-        .map(channel => channel.name);
-      this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])]
+      if (trimmedInput.startsWith('#')) {
+        this.filteredResults = this.fireService.channels
+          .filter(channel => channel.name.toLowerCase().includes(trimmedInput.substring(1)))
+          .map(channel => channel.name);
+      } else if (trimmedInput.startsWith('@')) {
+        this.filteredResults = this.fireService.users
+          .filter(user => user.username.toLowerCase().includes(trimmedInput.substring(1)) || user.email.toLowerCase().includes(trimmedInput.substring(1)))
+          .map(user => user.username);
+      } else {
+        const filteredUser = this.fireService.users
+          .filter(user => user.username.toLowerCase().includes(trimmedInput) || user.email.toLowerCase().includes(trimmedInput))
+          .map(user => user.username)
+        const filteredChannels = this.fireService.channels
+          .filter(channel => channel.name.toLowerCase().includes(trimmedInput))
+          .map(channel => channel.name);
+        this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])]
+      }
     } else {
-      this.filteredResults = [];
-      this.placeholderForChild = 'Starte eine neue Nachricht';
+      this.resetSearch();
     }
   }
 
-  completeInput(result: string){
+  resetSearch() {
+    this.filteredResults = [];
+    this.placeholderForChild = 'Starte eine neue Nachricht';
+  }
+
+  completeInput(result: string) {
     this.searchInput = result;
     this.filteredResults = [];
     this.createNewPlaceholder(result);
   }
 
-  createNewPlaceholder(name: string){
+  createNewPlaceholder(name: string) {
     this.placeholderForChild = `Nachricht an ${name}`;
-  }
-
-  searchUser(user: User, input: string) {
-    return user.username.toLowerCase().includes(input) || user.email.toLowerCase().includes(input);
   }
 
 }

@@ -29,8 +29,19 @@ header {
     }
 }
 
-.search-output{
-    @include dFlex($jc: flex-start, $g: 0.5rem);
+.result-list{
+    @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 0.5rem);
+}
+
+.result {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 100vw;
+    transition: 150ms ease-in;
+    &:hover{
+        background-color: $color-active-channel;
+        transition: 150ms ease-in;
+    }
 }
 
 app-send-message{

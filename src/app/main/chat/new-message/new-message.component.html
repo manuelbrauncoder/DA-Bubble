@@ -1,9 +1,9 @@
 <header>
     <h3>Neue Nachricht</h3>
     <input [(ngModel)]="searchInput" (input)="search()" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text" class="channel-input">
-    <div class="search-output">
+    <div class="result-list">
         @for (result of filteredResults; track $index) {
-            <span (click)="completeInput(result)">{{ result }}</span>
+            <span class="result" (click)="completeInput(result)">{{ result }}</span>
         }
     </div>
 </header>

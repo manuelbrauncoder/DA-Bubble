@@ -55,11 +55,7 @@ export class SendMessageComponent implements OnInit {
       return `Nachricht an ${this.userService.getUserData(this.currentRecipient.participants.second).username}`;
     } else {
       return `Nachricht an # ${this.currentRecipient.name}`;
-    } 
-      
-    
-
-      
+    }
   }
 
   showTaggableUsers() {
