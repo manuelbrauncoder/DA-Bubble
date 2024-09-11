@@ -96,7 +96,7 @@ export class ConversationService {
       const participants = conversation.participants;
       if (this.participantExist(participants, firstUserUid, secondUserUid)) {
         console.log('Conversation gefunden!', conversation);
-        return conversation;
+        return new Conversation(conversation);
       }
     }
     console.log('keine Conversation gefunden, erstelle neue!');

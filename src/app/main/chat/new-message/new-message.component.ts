@@ -2,7 +2,10 @@ import { Component, inject } from '@angular/core';
 import { SendMessageComponent } from "../send-message/send-message.component";
 import { FirestoreService } from '../../../services/firestore.service';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../../models/user.class';
+import { Channel } from '../../../models/channel.class';
+import { Conversation } from '../../../models/conversation.class';
+import { ConversationService } from '../../../services/conversation.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-new-message',
@@ -13,11 +16,15 @@ import { User } from '../../../models/user.class';
 })
 export class NewMessageComponent {
   fireService = inject(FirestoreService);
+  conversationService = inject(ConversationService);
+  userService = inject(UserService);
 
   searchInput = '';
   filteredResults: string[] = [];
 
   placeholderForChild = 'Starte eine neue Nachricht';
+  recipientForChild: Channel | Conversation  =  new Channel;
+  userUid = '';
 
   search() {
     if (this.searchInput.trim()) {
@@ -54,10 +61,30 @@ export class NewMessageComponent {
     this.searchInput = result;
     this.filteredResults = [];
     this.createNewPlaceholder(result);
+    this.getRecipient(result);
   }
 
   createNewPlaceholder(name: string) {
     this.placeholderForChild = `Nachricht an ${name}`;
+  }
+
+  getRecipient(result: string){
+    this.fireService.channels.forEach((channel) => {
+      if (channel.name.trim().toLowerCase() === result.trim().toLowerCase()) {
+        this.recipientForChild = new Channel(channel);
+      } else {
+        this.fireService.users.forEach((user) => {
+          if (user.username.trim().toLowerCase() === result.trim().toLowerCase()) {
+            const currentUser = this.userService.getCurrentUser();
+            const conversation = this.conversationService.findConversation(currentUser.uid, user.uid);
+            if (conversation instanceof Conversation) {
+              this.recipientForChild = conversation;
+              this.userUid = user.uid;
+            }
+          }
+        })
+      }
+    })
   }
 
 }

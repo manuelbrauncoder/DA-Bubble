@@ -34,6 +34,7 @@ export class SendMessageComponent implements OnInit {
   @Input() threadMessage = false;
   @Input() newMessage = false;
   @Input() newPlaceholder = '';
+  @Input() userUid = '';
 
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
@@ -158,12 +159,26 @@ export class SendMessageComponent implements OnInit {
       this.content = '';
       this.channelService.scrolledToBottomOnStart = false;
       this.threadService.scrolledToBottomOnStart = false;
+      this.redirectToChat();
     } else {
       await this.handleDirectMessage();
       this.userService.fireService.getMessagesPerDayForThread();
       this.content = '';
       this.conversationService.scrolledToBottomOnStart = false;
       this.threadService.scrolledToBottomOnStart = false;
+      this.redirectToChat();
+    }
+  }
+
+  redirectToChat() {
+    if (!this.newMessage) {
+      return;
+    } else {
+      if (this.currentRecipient instanceof Conversation) {
+        this.conversationService.openConversation(this.userUid);
+      } else {
+        this.channelService.toggleActiveChannel(this.currentRecipient);
+      }
     }
   }
 
