@@ -40,11 +40,9 @@ export class SendMessageComponent implements OnInit {
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
 
-
   ngOnInit(): void {
     this.copyRecipient();
   }
-
 
   /**
    * 
@@ -54,7 +52,7 @@ export class SendMessageComponent implements OnInit {
     if (this.newMessage) {
       return this.newPlaceholder;
     } else if (this.currentRecipient instanceof Conversation) {
-      return `Nachricht an ${this.userService.getUserData(this.currentRecipient.participants.second).username}`;
+      return `Nachricht an ${this.conversationService.getConversationPartner().username}`;
     } else {
       return `Nachricht an # ${this.currentRecipient.name}`;
     }
@@ -148,27 +146,21 @@ export class SendMessageComponent implements OnInit {
     });
   }
 
-
-
   /**
    * handle differtent recipients (channel or direct message)
    */
   async saveNewMessage() {
     if (this.currentRecipient instanceof Channel) {
       await this.handleChannelMessage();
-      this.userService.fireService.getMessagesPerDayForThread();
-      this.content = '';
       this.channelService.scrolledToBottomOnStart = false;
-      this.threadService.scrolledToBottomOnStart = false;
-      this.redirectToChat();
     } else {
       await this.handleDirectMessage();
-      this.userService.fireService.getMessagesPerDayForThread();
-      this.content = '';
       this.conversationService.scrolledToBottomOnStart = false;
-      this.threadService.scrolledToBottomOnStart = false;
-      this.redirectToChat();
     }
+    this.userService.fireService.getMessagesPerDayForThread();
+    this.content = '';
+    this.threadService.scrolledToBottomOnStart = false;
+    this.redirectToChat();
   }
 
   redirectToChat() {

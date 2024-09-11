@@ -23,6 +23,18 @@ export class ConversationService {
 
   constructor() { }
 
+  getConversationPartner(){
+    const currentUser = this.userService.getCurrentUser()
+    if (currentUser.uid === this.fireService.currentConversation.participants.first) {
+      return this.userService.getUserData(this.fireService.currentConversation.participants.second);
+    } else {
+      return this.userService.getUserData(this.fireService.currentConversation.participants.first);
+    }
+  }
+
+  isSelfTalking(){
+    return this.fireService.currentConversation.participants.first === this.fireService.currentConversation.participants.second;
+  }
 
   scrollAtStart(container: ElementRef) {
     if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {

@@ -23,16 +23,7 @@ export class DirectMessageComponent implements AfterViewChecked{
     this.conversationService.scrollAtStart(this.scrollContainer);
   }
 
-  getConversationPartner(){
-    const currentUser = this.userService.getCurrentUser()
-    if (currentUser.uid === this.conversationService.fireService.currentConversation.participants.first) {
-      return this.userService.getUserData(this.conversationService.fireService.currentConversation.participants.second);
-    } else {
-      return this.userService.getUserData(this.conversationService.fireService.currentConversation.participants.first);
-    }
-  }
+  
 
-  isSelfTalking(){
-    return this.conversationService.fireService.currentConversation.participants.first === this.conversationService.fireService.currentConversation.participants.second;
-  }
+  
 }
