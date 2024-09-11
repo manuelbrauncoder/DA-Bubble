@@ -15,24 +15,35 @@ export class NewMessageComponent {
   fireService = inject(FirestoreService);
 
   searchInput = '';
-  filteredUsers: string[] = [];
+  filteredResults: string[] = [];
+
+  placeholderForChild = 'Starte eine neue Nachricht';
 
   search() {
     if (this.searchInput.trim()) {
-      this.filteredUsers = [];
-      let trimmedInput = this.searchInput.trim().toLowerCase();
-      let filteredUser = this.fireService.users.filter(user =>
-        this.searchUser(user, trimmedInput)
-      );
-      this.filteredUsers = filteredUser.map(user => user.username);
+      this.filteredResults = [];
+      const trimmedInput = this.searchInput.trim().toLowerCase();
+      const filteredUser = this.fireService.users
+        .filter(user => this.searchUser(user, trimmedInput))
+        .map(user => user.username)
+      const filteredChannels = this.fireService.channels
+        .filter(channel => channel.name.toLowerCase().includes(trimmedInput))
+        .map(channel => channel.name);
+      this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])]
     } else {
-      this.filteredUsers = [];
+      this.filteredResults = [];
+      this.placeholderForChild = 'Starte eine neue Nachricht';
     }
   }
 
-  completeUser(username: string){
-    this.searchInput = username;
-    this.filteredUsers = [];
+  completeInput(result: string){
+    this.searchInput = result;
+    this.filteredResults = [];
+    this.createNewPlaceholder(result);
+  }
+
+  createNewPlaceholder(name: string){
+    this.placeholderForChild = `Nachricht an ${name}`;
   }
 
   searchUser(user: User, input: string) {

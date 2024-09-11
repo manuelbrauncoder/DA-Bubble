@@ -11,7 +11,6 @@ import { UiService } from '../../../services/ui.service';
 import { ChannelService } from '../../../services/channel.service';
 import { ConversationService } from '../../../services/conversation.service';
 import { ThreadService } from '../../../services/thread.service';
-import { User } from '../../../models/user.class';
 import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
 import { fadeIn } from '../../../shared/animations';
 
@@ -33,6 +32,8 @@ export class SendMessageComponent implements OnInit {
 
   @Input() currentRecipient: Conversation | Channel = new Channel; // Empfänger der Nachricht
   @Input() threadMessage = false;
+  @Input() newMessage = false;
+  @Input() newPlaceholder = '';
 
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
@@ -41,18 +42,24 @@ export class SendMessageComponent implements OnInit {
   ngOnInit(): void {
     this.copyRecipient();
   }
-  
+
 
   /**
    * 
    * @returns different strings with channel name or user name
    */
-  getPlaceholderText(){
-    if (this.currentRecipient instanceof Conversation) {
+  getPlaceholderText() {
+    if (this.newMessage) {
+      return this.newPlaceholder;
+    } else if (this.currentRecipient instanceof Conversation) {
       return `Nachricht an ${this.userService.getUserData(this.currentRecipient.participants.second).username}`;
     } else {
       return `Nachricht an # ${this.currentRecipient.name}`;
-    }
+    } 
+      
+    
+
+      
   }
 
   showTaggableUsers() {
@@ -82,15 +89,17 @@ export class SendMessageComponent implements OnInit {
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
-      console.log('thread channel message!');
-      this.userService.fireService.currentThread.messages.push(message);
-      console.log(this.userService.fireService.currentThread);
-      const messageIndex = this.findChannelMessageToUpdate();
-      this.userService.fireService.currentChannel.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
-      console.log(this.userService.fireService.currentChannel);
+      this.createThreadInChannelMessage(message);
     }
     await this.userService.fireService.addChannel(this.userService.fireService.currentChannel);
 
+  }
+
+  createThreadInChannelMessage(message: Message) {
+    console.log('thread channel message!');
+    this.userService.fireService.currentThread.messages.push(message);
+    const messageIndex = this.findChannelMessageToUpdate();
+    this.userService.fireService.currentChannel.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
   }
 
   /**
@@ -105,17 +114,19 @@ export class SendMessageComponent implements OnInit {
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
-      this.userService.fireService.currentThread.messages.push(message);
-      console.log(this.userService.fireService.currentThread);
-      const messageIndex = this.findConversationMessageToUpdate();
-      this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
-      console.log(this.userService.fireService.currentConversation);
+      this.createThreadInConversationMessage(message);
     }
     await this.userService.fireService.addConversation(this.userService.fireService.currentConversation);
 
   }
 
-  findChannelMessageToUpdate(){
+  createThreadInConversationMessage(message: Message) {
+    this.userService.fireService.currentThread.messages.push(message);
+    const messageIndex = this.findConversationMessageToUpdate();
+    this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
+  }
+
+  findChannelMessageToUpdate() {
     return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
   }
 
