@@ -71,23 +71,21 @@ export class NewMessageComponent {
     this.placeholderForChild = `Nachricht an ${name}`;
   }
 
-  getRecipient(result: string){
-    this.fireService.channels.forEach((channel) => {
+  async getRecipient(result: string) {
+    for (let channel of this.fireService.channels) {
       if (channel.name.trim().toLowerCase() === result.trim().toLowerCase()) {
         this.recipientForChild = new Channel(channel);
-      } else {
-        this.fireService.users.forEach((user) => {
-          if (user.username.trim().toLowerCase() === result.trim().toLowerCase()) {
-            const currentUser = this.userService.getCurrentUser();
-            const conversation = this.conversationService.findConversation(currentUser.uid, user.uid);
-            if (conversation instanceof Conversation) {
-              this.recipientForChild = conversation;
-              this.userUid = user.uid;
-            }
-          }
-        })
+        return;
       }
-    })
+    }
+    for (let user of this.fireService.users) {
+      if (user.username.trim().toLowerCase() === result.trim().toLowerCase()) {
+        await this.conversationService.setCurrentConversation(user.uid);
+        this.userUid = user.uid;
+        this.recipientForChild = this.fireService.currentConversation;
+        return;
+      }
+    }
   }
-
 }
+
