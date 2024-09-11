@@ -29,6 +29,10 @@ header {
     }
 }
 
+.search-output{
+    @include dFlex($jc: flex-start, $g: 0.5rem);
+}
+
 app-send-message{
     padding: 1rem 2.188rem 2.5rem 2.188rem;
     width: 100%;

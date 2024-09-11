@@ -30,6 +30,11 @@ app-root {
   flex-direction: column;
   align-items: center;
   gap: .8rem;
+  overflow: hidden;
+  @media(max-width: 999px) {
+    padding: 0;
+    gap: 0;
+}
 }
 
 app-header,
@@ -47,6 +52,9 @@ app-header-for-usermanagement {
 app-main-content {
   width: 100%;
   height: calc(100vh - 200px);
+  @media(max-width: 999px) {
+    height: calc(100vh - 102px);
+}
 }
 
 app-footer {
