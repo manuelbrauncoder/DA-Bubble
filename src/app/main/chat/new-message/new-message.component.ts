@@ -23,35 +23,64 @@ export class NewMessageComponent {
   filteredResults: string[] = [];
 
   placeholderForChild = 'Starte eine neue Nachricht';
-  recipientForChild: Channel | Conversation  =  new Channel;
+  recipientForChild: Channel | Conversation = new Channel;
   userUid = '';
-  disableInputChild = true;
+  isChildInputDisabled = true;
 
+  /**
+   * handle different kinds of searches
+   */
   search() {
+    const trimmedInput = this.searchInput.trim().toLowerCase();
     if (this.searchInput.trim()) {
       this.resetSearch();
-      const trimmedInput = this.searchInput.trim().toLowerCase();
-      if (trimmedInput.startsWith('#')) {
-        this.filteredResults = this.fireService.channels
-          .filter(channel => channel.name.toLowerCase().includes(trimmedInput.substring(1)))
-          .map(channel => channel.name);
-      } else if (trimmedInput.startsWith('@')) {
-        this.filteredResults = this.fireService.users
-          .filter(user => user.username.toLowerCase().includes(trimmedInput.substring(1)) || user.email.toLowerCase().includes(trimmedInput.substring(1)))
-          .map(user => user.username);
+      if (this.isChannelSearch(trimmedInput)) {
+        this.searchChannels(trimmedInput);
+      } else if (this.isUserSearch(trimmedInput)) {
+        this.searchUsers(trimmedInput);
       } else {
-        const filteredUser = this.fireService.users
-          .filter(user => user.username.toLowerCase().includes(trimmedInput) || user.email.toLowerCase().includes(trimmedInput))
-          .map(user => user.username)
-        const filteredChannels = this.fireService.channels
-          .filter(channel => channel.name.toLowerCase().includes(trimmedInput))
-          .map(channel => channel.name);
-        this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])]
+        this.searchAll(trimmedInput);
       }
     } else {
       this.resetSearch();
-      this.disableInputChild = true;
+      this.isChildInputDisabled = true;
     }
+  }
+
+  /**
+   * search for channel names, user names and user emails
+   * @param searchTerm from input field
+   */
+  searchAll(searchTerm: string) {
+    const filteredUser = this.fireService.users
+      .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
+      .map(user => user.username)
+    const filteredChannels = this.fireService.channels
+      .filter(channel => channel.name.toLowerCase().includes(searchTerm))
+      .map(channel => channel.name);
+    this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])];
+  }
+
+  searchUsers(input: string) {
+    const searchTerm = input.substring(1);
+    this.filteredResults = this.fireService.users
+      .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
+      .map(user => user.username);
+  }
+
+  isUserSearch(input: string): boolean {
+    return input.startsWith('@');
+  }
+
+  searchChannels(input: string) {
+    const searchTerm = input.substring(1);
+    this.filteredResults = this.fireService.channels
+      .filter(channel => channel.name.toLowerCase().includes(searchTerm))
+      .map(channel => channel.name);
+  }
+
+  isChannelSearch(input: string): boolean {
+    return input.startsWith('#');
   }
 
   resetSearch() {
@@ -64,13 +93,19 @@ export class NewMessageComponent {
     this.filteredResults = [];
     this.createNewPlaceholder(result);
     this.getRecipient(result);
-    this.disableInputChild = false;
+    this.isChildInputDisabled = false;
   }
 
   createNewPlaceholder(name: string) {
     this.placeholderForChild = `Nachricht an ${name}`;
   }
 
+  /**
+   * search in channels for the channel name, break if found
+   * then search in conversations for conversation between result (user) and current user
+   * @param result - the result from the search (username or channelname)
+   * @returns just stop the method if channel or conversation found
+   */
   async getRecipient(result: string) {
     for (let channel of this.fireService.channels) {
       if (channel.name.trim().toLowerCase() === result.trim().toLowerCase()) {

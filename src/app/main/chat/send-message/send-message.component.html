@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-        <img src="assets/icons/channel-chat/sendIcon.svg" class="send-btn" (click)="saveNewMessage()">
+        <img src="assets/icons/channel-chat/sendIcon.svg" [ngStyle]="{ cursor: disableInput ? 'not-allowed' : 'pointer' }" class="send-btn" (click)="saveNewMessage()">
     </div>
 </div>
 
