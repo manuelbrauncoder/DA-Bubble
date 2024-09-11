@@ -16,6 +16,9 @@ textarea {
   border: none;
   outline: none;
   resize: none;
+  &:disabled {
+    background-color: white;
+  }
 }
 
 .icons {

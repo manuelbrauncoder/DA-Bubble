@@ -25,6 +25,7 @@ export class NewMessageComponent {
   placeholderForChild = 'Starte eine neue Nachricht';
   recipientForChild: Channel | Conversation  =  new Channel;
   userUid = '';
+  disableInputChild = true;
 
   search() {
     if (this.searchInput.trim()) {
@@ -49,6 +50,7 @@ export class NewMessageComponent {
       }
     } else {
       this.resetSearch();
+      this.disableInputChild = true;
     }
   }
 
@@ -62,6 +64,7 @@ export class NewMessageComponent {
     this.filteredResults = [];
     this.createNewPlaceholder(result);
     this.getRecipient(result);
+    this.disableInputChild = false;
   }
 
   createNewPlaceholder(name: string) {

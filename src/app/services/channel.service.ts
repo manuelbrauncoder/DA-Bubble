@@ -17,7 +17,6 @@ export class ChannelService {
 
   constructor() { }
 
-
   scrollAtStart(container: ElementRef) {
     if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {
       this.scrollToBottom(container);
@@ -36,9 +35,6 @@ export class ChannelService {
       console.log('Could not scroll to bottom');
     }
   }
-
-
-
 
   /**
    * Check if a user exists in the channel
@@ -69,8 +65,6 @@ export class ChannelService {
       }
     })
   }
-
-
 
   showChannelContent() {
     if (this.observerService.isMobile) {

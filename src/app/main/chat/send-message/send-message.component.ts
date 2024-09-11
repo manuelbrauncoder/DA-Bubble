@@ -35,6 +35,7 @@ export class SendMessageComponent implements OnInit {
   @Input() newMessage = false;
   @Input() newPlaceholder = '';
   @Input() userUid = '';
+  @Input() disableInput = false;
 
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
