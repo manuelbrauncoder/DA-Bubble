@@ -1,5 +1,5 @@
 <div class="send-message-container">
-    <textarea type="text" [(ngModel)]="content" placeholder="Nachricht an #Entwicklerteam"></textarea>
+    <textarea [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
     <div class="icons">
         <div class="add-elements">
@@ -13,11 +13,20 @@
                 <img src="assets/icons/channel-chat/addReactionIcon.svg">
             </div>
 
-            <div class="bounding-box">
-                <img src="assets/icons/channel-chat/tagPersonIcon.svg">
+            <div class="popup-wrapper">
+                <div class="bounding-box" (click)="showTaggableUsers()">
+                    <img src="assets/icons/channel-chat/tagPersonIcon.svg">
+                </div>
+                @if (uiService.showTaggableUsersPopup) {
+                    <app-popup-taggable-users @fadeIn [currentRecipient]="currentRecipient"></app-popup-taggable-users>
+                }
+                </div>
             </div>
-        </div>
 
         <img src="assets/icons/channel-chat/sendIcon.svg" class="send-btn" (click)="saveNewMessage()">
     </div>
 </div>
+
+@if (uiService.showTaggableUsersPopup) {
+    <div @fadeIn class="popup-background" (click)="showTaggableUsers()"></div>
+}

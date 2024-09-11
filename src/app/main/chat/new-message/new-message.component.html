@@ -1,1 +1,10 @@
-<p>new-message works!</p>
+<header>
+    <h3>Neue Nachricht</h3>
+    <input [(ngModel)]="searchInput" (input)="search()" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text" class="channel-input">
+    <div class="result-list">
+        @for (result of filteredResults; track $index) {
+            <span class="result" (click)="completeInput(result)">{{ result }}</span>
+        }
+    </div>
+</header>
+<app-send-message [disableInput]="disableInputChild" [userUid]="userUid" [currentRecipient]="recipientForChild" [newMessage]="true" [newPlaceholder]="placeholderForChild"></app-send-message>

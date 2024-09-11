@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { FirebaseAuthService } from './firebase-auth.service';
 import { User } from '../models/user.class';
+import { Message } from '../models/message.class';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,16 @@ export class UserService {
   authService = inject(FirebaseAuthService);
 
   constructor() { }
+
+
+  getUserData(userUid: string): User {
+    const user = this.fireService.users.find(user => user.uid === userUid);
+    if (user) {
+      return user;
+    } else {
+      return new User();
+    }
+  }
 
   /**
    * 
@@ -24,6 +35,20 @@ export class UserService {
       currentUser = new User(user);
     }
       return currentUser;
+  }
+
+  /**
+   * 
+   * @returns true if the message is from currentUser
+   */
+  isMessageFromCurrentUser(currentMessage: Message): boolean{
+    const currentUser = this.getCurrentUser();
+    if (currentUser) {
+      if (currentUser.uid === currentMessage.sender) {
+        return true;
+      }
+    }
+    return false;
   }
 
 
@@ -57,29 +82,4 @@ export class UserService {
       return 'assets/img/chars/profile_placeholder.png';
     }
   }
-
-  /**
-   * Call this method to delete all data in 'users'
-   * then push example users to 'users' collection in firebase
-   */
-  // async resetUsersInFirebase(){
-  //   if (confirm('Delete all Users, and replace with example Users?')) {
-  //     await this.deleteAllUsers();
-  //     await this.addExampleUsersToFirebase();
-  //   }
-  // }
-
-  // async addExampleUsersToFirebase(){
-  //   for (let i = 0; i < this.fireService.exampleUsers.length; i++) {
-  //     const user = this.fireService.exampleUsers[i];
-  //     await this.fireService.addUser(user);
-  //   }
-  // }
-
-  // async deleteAllUsers(){
-  //   while (this.fireService.users.length > 0) {
-  //     const id = this.fireService.users[0].id;
-  //     await this.fireService.deleteDocument(id, 'users');
-  //   }
-  // }
 }

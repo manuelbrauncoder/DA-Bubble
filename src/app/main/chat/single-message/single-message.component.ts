@@ -5,11 +5,17 @@ import { FirestoreService } from '../../../services/firestore.service';
 import { Thread } from '../../../models/thread.class ';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
+import { ThreadService } from '../../../services/thread.service';
+import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
+import { FormsModule } from '@angular/forms';
+import { Channel } from '../../../models/channel.class';
+import { Conversation } from '../../../models/conversation.class';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactionBarComponent, FormsModule],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -17,8 +23,134 @@ export class SingleMessageComponent implements OnInit {
   uiService = inject(UiService);
   fireService = inject(FirestoreService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
+  threadService = inject(ThreadService);
+
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
+
+  showMenuPopup = false;
+  editMode = false;
+  updatedInChannel = false;
+
+  editContent = '';
+
+  showEditContainer() {
+    this.editMode = true;
+    this.editContent = this.currentMessage.content;
+    this.showMenuPopup = false;
+  }
+
+  cancelEditMode() {
+    this.editContent = '';
+    this.editMode = false;
+  }
+
+  async saveEditedMessage() {
+    this.currentMessage.content = this.editContent;
+    await this.handleChannelMessage();
+    if (!this.updatedInChannel) {
+      await this.handleConversationMessage();
+    }
+  }
+
+  /**
+   * Handles message update in a channel.
+   * Checks if the message is in the channel or in a thread and updates accordingly.
+   */
+  async handleChannelMessage() {
+    const channel = this.fireService.currentChannel;
+    const messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);
+    if (messageIndex !== -1) {
+      await this.updateMessageInChannelList(channel, messageIndex);
+      this.updatedInChannel = true;
+      return;
+    }
+    for (let message of channel.messages) {
+      if (message.thread) {
+        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        if (threadMessageIndex !== -1) {
+          await this.updateMessageInChannelThread(channel, message, threadMessageIndex);
+          this.updatedInChannel = true;
+          return;
+        }
+      }
+    }
+  }
+
+  /**
+   * update the message in thread and save updated channel in firebase
+   * @param channel - the channel where the tread exists 
+   * @param message - the parent message containing the thread
+   * @param threadMessageIndex  - the index of the message in thread
+   */
+  async updateMessageInChannelThread(channel: Channel, message: Message, threadMessageIndex: number) {
+    message.thread!.messages[threadMessageIndex] = this.currentMessage;
+    await this.fireService.addChannel(channel);
+    this.cancelEditMode();
+  }
+
+  /**
+   * update the message in channel and save channel in firebase
+   * @param channel 
+   * @param messageIndex 
+   */
+  async updateMessageInChannelList(channel: Channel, messageIndex: number) {
+    channel.messages[messageIndex] = this.currentMessage;
+    await this.fireService.addChannel(channel);
+    this.cancelEditMode();
+  }
+
+  /**
+   * Handles message update in conversation.
+   * Checks if the message is in the conversation or in a thread and updates it accordingly.
+   * If the message is found in the main conversation messages, it updates it and returns.
+   * Otherwise, it checks if the message is part of a thread and updates it there.
+   * @returns when conversatin is updated
+   */
+  async handleConversationMessage() {
+    const conversation = this.fireService.currentConversation;
+    const messageIndex = conversation.messages.findIndex(m => m.id === this.currentMessage.id);
+    if (messageIndex !== -1) {
+      await this.updateMessageInConversationList(conversation, messageIndex);
+      return;
+    }
+    for (let message of conversation.messages) {
+      if (message.thread) {
+        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        if (threadMessageIndex !== -1) {
+          await this.updateMessageInConversationThread(conversation, message, threadMessageIndex);
+        }
+      }
+    }
+  }
+
+  /**
+   * 
+   * @param conversation - The conversation where the thread exists.
+   * @param message - The parent message containing the thread.
+   * @param threadMessageIndex - The index from the message in the thread.
+   */
+  async updateMessageInConversationThread(conversation: Conversation, message: Message, threadMessageIndex: number) {
+    message.thread!.messages[threadMessageIndex] = this.currentMessage;
+    await this.fireService.addConversation(conversation);
+    this.cancelEditMode();
+  }
+
+  /**
+   * Updates the message in the main conversation list and saves the updated conversation in Firebase.
+   * @param conversation - The conversation containing the message.
+   * @param messageIndex - The index of the message in the conversation.
+   */
+  async updateMessageInConversationList(conversation: Conversation, messageIndex: number) {
+    conversation.messages[messageIndex] = this.currentMessage;
+    await this.fireService.addConversation(conversation);
+    this.cancelEditMode();
+  }
+
+  toggleMenuPopup() {
+    this.showMenuPopup = !this.showMenuPopup;
+  }
 
   months = [
     "Januar", "Februar", "März", "April",
@@ -30,6 +162,10 @@ export class SingleMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
+  }
+
+  formatAnswerCount() {
+    return this.currentMessage.thread?.messages.length === 1 ? 'Antwort' : 'Antworten';
   }
 
   getFormattedDate() {
@@ -57,7 +193,7 @@ export class SingleMessageComponent implements OnInit {
    * 
    * @returns formatted time of last answer
    */
-  getTimeOfLastAnswer(){
+  getTimeOfLastAnswer() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         return this.getFormattedTime(this.currentMessage.thread.messages[this.currentMessage.thread.messages.length - 1].time);
@@ -68,19 +204,10 @@ export class SingleMessageComponent implements OnInit {
 
   /**
    * 
-   * @returns true if the message is from currentUser
+   * @returns true if the messages has answers,
+   * false if it has no ansers
    */
-  isMessageFromCurrentUser(): boolean{
-    const currentUser = this.userService.getCurrentUser();
-    if (currentUser) {
-      if (currentUser.uid === this.currentMessage.sender.uid) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  messageHasAnswers(){
+  messageHasAnswers() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         return true;
@@ -94,21 +221,25 @@ export class SingleMessageComponent implements OnInit {
    * set curent message in fire service with current message from input
    */
   answer() {
-    this.uiService.showThread = true;
+    this.threadService.scrolledToBottomOnStart = false;
+    this.openThreadWindow();
     if (this.uiService.mainContent === 'directMessage') {
       this.setCurrentThreadForDm();
       this.fireService.currentMessage = new Message(this.currentMessage);
-      console.log(this.fireService.currentThread);
     } else if (this.uiService.mainContent === 'channelChat') {
       this.setCurrentThreadForChannel();
       this.fireService.currentMessage = new Message(this.currentMessage);
-      console.log(this.fireService.currentChannel);
-
     } else {
       console.log('no option choosed');
-
     }
+  }
 
+  openThreadWindow() {
+    if (this.observerService.isMobile) {
+      this.uiService.openThreadMobile();
+    } else {
+      this.uiService.showThread = true;
+    }
   }
 
   /**
@@ -117,16 +248,18 @@ export class SingleMessageComponent implements OnInit {
    * if not, create a new Thread and set it
    * as currentThread and save it in firebase
    */
-  setCurrentThreadForChannel() {
+  async setCurrentThreadForChannel() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
         this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
         this.fireService.currentThread = this.createThread();
         this.currentMessage.thread = this.fireService.currentThread;
-        this.saveUpdatedChannel();
+        await this.saveUpdatedChannel();
+        this.fireService.getMessagesPerDayForThread();
       }
     }
   }
@@ -138,16 +271,18 @@ export class SingleMessageComponent implements OnInit {
    * if not, create a new Thread and set it
    * as currentThread and save it in firebase
    */
-  setCurrentThreadForDm() {
+  async setCurrentThreadForDm() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
         this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
         this.fireService.currentThread = this.createThread();
         this.currentMessage.thread = this.fireService.currentThread;
-        this.saveUpdatedConversation();
+        await this.saveUpdatedConversation();
+        this.fireService.getMessagesPerDayForThread();
       }
     }
   }
@@ -167,17 +302,17 @@ export class SingleMessageComponent implements OnInit {
    * set updatet message with thread in conversation
    * save updated conversatin in firebase
    */
-  saveUpdatedConversation() {
+  async saveUpdatedConversation() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === currentMessageId);
     this.fireService.currentConversation.messages[updateId] = this.currentMessage;
-    this.fireService.addConversation(this.fireService.currentConversation);
+    await this.fireService.addConversation(this.fireService.currentConversation);
   }
 
-  saveUpdatedChannel() {
+  async saveUpdatedChannel() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentChannel.messages.findIndex(message => message.id === currentMessageId);
     this.fireService.currentChannel.messages[updateId] = this.currentMessage;
-    this.fireService.addChannel(this.fireService.currentChannel);
+    await this.fireService.addChannel(this.fireService.currentChannel);
   }
 }

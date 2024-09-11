@@ -1,7 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Channel } from '../../models/channel.class';
 import { UiService } from '../../services/ui.service';
-import { User } from '../../models/user.class';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChannelService } from '../../services/channel.service';
@@ -22,14 +21,19 @@ export class AddChannelPopup2Component implements OnInit {
   channelService = inject(ChannelService);
   searchInput = '';
 
-  selectedUsers: User[] = [];
-  availableUsers: User[] = [];
+  selectedUsers: string[] = [];
+  availableUsers: string[] = [];
 
   users: 'all' | 'certain' = 'all';
 
   ngOnInit(): void {
     this.newChannel = new Channel(this.currentChannel);
-    this.availableUsers = [...this.userService.fireService.users];
+    this.availableUsers = this.setAvailableUserUids();
+  }
+
+  setAvailableUserUids(){
+    return this.channelService.fireService.users.map(user => user.uid);
+
   }
 
   /**
@@ -40,8 +44,8 @@ export class AddChannelPopup2Component implements OnInit {
     if (!this.searchInput) {
       return this.availableUsers;
     } else {
-      return this.availableUsers.filter((user) =>
-        user.username.toLowerCase().includes(this.searchInput));
+      return this.availableUsers.filter((uid) =>
+       this.userService.getUserData(uid).username.toLowerCase().includes(this.searchInput));
     }
   }
 
@@ -49,9 +53,9 @@ export class AddChannelPopup2Component implements OnInit {
    * select user and remove it from availableUsers array
    * @param user 
    */
-  selectUser(user: User) {
-    this.selectedUsers.push(user);
-    const index = this.availableUsers.findIndex(u => u.username === user.username);
+  selectUser(uid: string) {
+    this.selectedUsers.push(uid);
+    const index = this.availableUsers.findIndex(u => u === uid);
     if (index !== -1) {
       this.availableUsers.splice(index, 1);
     }
@@ -62,8 +66,8 @@ export class AddChannelPopup2Component implements OnInit {
    * @param user 
    * @param index 
    */
-  unselectUser(user: User, index: number) {
-    this.availableUsers.push(user);
+  unselectUser(userUid: string, index: number) {
+    this.availableUsers.push(userUid);
     this.selectedUsers.splice(index, 1);
   }
 
@@ -85,6 +89,7 @@ export class AddChannelPopup2Component implements OnInit {
    * close popups
    */
   async saveChannelAndClose() {
+    this.newChannel.time = Date.now();
     await this.channelService.fireService.addChannel(this.newChannel);
     this.uiService.toggleAddChannelPopup();
     this.channelService.toggleActiveChannel(this.newChannel);
@@ -96,7 +101,7 @@ export class AddChannelPopup2Component implements OnInit {
   addAllUsersToChannel() {
     this.newChannel.users = [];
     this.channelService.fireService.users.forEach(user => {
-      this.newChannel.users.push(user);
+      this.newChannel.users.push(user.uid);
     })
   }
 

@@ -1,0 +1,50 @@
+@import '../../../../styles.scss';
+@import '../../../../mixins.scss';
+
+header {
+    width: 100%;
+    @include dFlex($fd: column, $ai: flex-start, $g: 1.25rem);
+    box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
+    padding: 2rem 2.8125rem 1.25rem 2.8125rem;
+    background-color: white;
+    border-radius: 1.875rem 1.875rem 0 0;
+
+    input {
+        width: 100%;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.534rem;
+        text-align: left;
+        color: $color-disabled-grey;
+    }
+
+    h3 {
+        color: black;
+        font-family: Nunito;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 2.04625rem;
+        text-align: left;
+    }
+}
+
+.result-list{
+    @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 0.5rem);
+}
+
+.result {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 100vw;
+    transition: 150ms ease-in;
+    &:hover{
+        background-color: $color-active-channel;
+        transition: 150ms ease-in;
+    }
+}
+
+app-send-message{
+    padding: 1rem 2.188rem 2.5rem 2.188rem;
+    width: 100%;
+}

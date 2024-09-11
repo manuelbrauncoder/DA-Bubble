@@ -1,15 +1,21 @@
 /**
  * This Service File is for opening and closing UI Elements
  */
-import { Injectable } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { inject, Injectable } from '@angular/core';
+import { FirestoreService } from './firestore.service';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UiService {
 
+  observerService = inject(BreakpointObserver);
+  fireService = inject(FirestoreService);
+
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
-  showDirectMessages: boolean = false; // user list in workspace menu
+  showDirectMessages: boolean = true; // user list in workspace menu
   showChannels: boolean = true; // channel list in workspace menu
 
   showChannelEditPopup: boolean = false; // opens in channel-chat-component
@@ -33,6 +39,71 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
+  showTaggableUsersPopup: boolean = false;
+
+  
+
+  mobileBackBtn(){
+    if (this.showThread) {
+      this.showThread = false;
+      this.showChat = true;
+    } else {
+      this.showChat = false;
+      this.showWorkspaceMenu = true;
+    }
+  }
+
+  /**
+   * set all userChatActive values to false
+   */
+  userChatNotActive(){
+    this.fireService.users.forEach((user) => {
+      user.userChatActive = false;
+    })
+  }
+
+  /**
+   * 
+   * @param user set chat active to true and
+   * other users to false
+   */
+  hightlightUserChat(user: User){
+    this.fireService.users.forEach((userInList) => {
+      if (user.uid === userInList.uid) {
+        userInList.userChatActive = true;
+      } else {
+        userInList.userChatActive = false;
+      }
+    })
+  }
+
+  /**
+   * set all channelActive values to false
+   */
+  channelChatNotActive(){
+    this.fireService.channels.forEach((channel) => {
+      channel.channelActive = false;
+    })
+  }
+
+  openChatMobile(content: 'channelChat' | 'newMessage' | 'directMessage'){
+    this.mainContent = content;
+    this.showWorkspaceMenu = false;
+    this.showThread = false;
+    this.showChat = true;
+  }
+
+  openThreadMobile(){
+    this.showWorkspaceMenu = false;
+    this.showThread = true;
+    this.showChat = false;
+  }
+
+  openWorkspaceMenuMobile(){
+    this.showWorkspaceMenu = true;
+    this.showThread = false;
+    this.showChat = false;
+  }
 
   closeThreadWindow() {
     this.showThread = false;
@@ -144,6 +215,10 @@ export class UiService {
     setTimeout(() => {
       this.showProfileChangeConfirmationPopup = false;
     }, 4500);
+  }
+
+  toggleTaggableUsersPopup() {
+    this.showTaggableUsersPopup = !this.showTaggableUsersPopup;
   }
 
   constructor() { }

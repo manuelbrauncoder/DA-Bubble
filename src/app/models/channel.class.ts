@@ -6,8 +6,9 @@ export class Channel {
     id: string;
     description: string;
     name: string;
+    time: number;
     creator: string;
-    users: User[];
+    users: string[];
     messages: Message[];
     comments: string[];
     reactions: string[];
@@ -23,6 +24,7 @@ export class Channel {
         this.id = obj?.id ?? uuidv4();
         this.description = obj?.description ?? '';
         this.name = obj?.name ?? '';
+        this.time = obj?.time ?? 0;
         this.creator = obj?.creator ?? '';
         this.users = obj?.users ?? [];
         this.messages = obj?.messages ?? [];

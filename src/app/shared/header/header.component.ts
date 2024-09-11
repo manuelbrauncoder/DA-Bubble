@@ -5,6 +5,8 @@ import { UiService } from '../../services/ui.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { UserService } from '../../services/user.service';
+import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
+
 
 
 @Component({
@@ -19,6 +21,7 @@ export class HeaderComponent {
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
 
 
   openPopup() {

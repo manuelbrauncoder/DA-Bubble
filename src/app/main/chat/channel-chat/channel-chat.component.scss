@@ -30,7 +30,10 @@
     top: 2.8125rem;
 }
 
+
+
 header {
+    height: 102px;
     box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
     padding: 1.5625rem 2.8125rem;
     width: 100%;
@@ -121,24 +124,25 @@ header {
 }
 
 app-send-message {
+    height: 182px;
     width: 100%;
-    height: fit-content;
-    padding: 0 2.188rem 2.5rem 2.188rem;
+    padding: 1rem 2.188rem 2.5rem 2.188rem;
 }
 
 .messages {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 1rem;
+    gap: 2rem;
     width: 100%;
-    padding: 1rem;
+    padding: 1rem 0;
     overflow-y: auto;
-    height: 100%;
+    height: calc(100% - 282.5px);
 }
 
 .date-divider {
+    margin-top: auto;
     @include dFlex();
+    padding: 0 2.188rem;
 
     .messages-date {
         padding: 0.313rem 0.938rem;
@@ -162,5 +166,55 @@ app-send-message {
             width: 100%;
             background-color: $color-purple-light;
         }
+    }
+}
+
+.channel-info {
+    @include dFlex($fd: column, $ai: flex-start, $g: 0.5rem);
+    margin-right: auto;
+    padding: 1rem 2.188rem 1rem 2.188rem;
+    .title {
+        @include dFlex($g: 0.625rem, $jc: flex-start);
+        cursor: pointer;
+        border-radius: 100vw;
+        transition: ease-in 0.15s;
+        width: fit-content;
+
+        svg{
+            display: none;
+        }
+
+        h4 {
+            font-family: Nunito;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 2.04625rem;
+        }
+
+        &:hover {
+            background-color: $color-active-channel;
+            transition: ease-in 0.15s;
+            color: $color-purple-3;
+        }
+
+        &:hover svg {
+            transition: ease-in 0.15s;
+            display: block;
+            path {
+                fill: $color-purple-3;
+            }
+        }
+    }
+
+    .info {
+        font-family: Nunito;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 27.28px;
+        text-align: left;
+    }
+
+    .purple3{
+        color: $color-purple-3;
     }
 }

@@ -6,13 +6,14 @@ import { ChatComponent } from "../chat/chat.component";
 import { ThreadComponent } from '../thread/thread.component';
 import { AddChannelPopupComponent } from '../add-channel-popup/add-channel-popup.component';
 
-import { fadeIn } from '../../shared/animations';
+import { fadeIn, toggleWidth25, toggleWidth30, expandChat } from '../../shared/animations';
+import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
 
 
 
 @Component({
   selector: 'app-main-content',
-  animations: [fadeIn],
+  animations: [fadeIn, toggleWidth25, toggleWidth30, expandChat],
   standalone: true,
   imports: [WorkspaceMenuComponent, WorkspaceMenuButtonComponent, ChatComponent, ThreadComponent, AddChannelPopupComponent],
   templateUrl: './main-content.component.html',
@@ -20,6 +21,6 @@ import { fadeIn } from '../../shared/animations';
 })
 export class MainContentComponent {
   uiService = inject(UiService);
-
+  observerService = inject(BreakpointObserverService);
 
 }

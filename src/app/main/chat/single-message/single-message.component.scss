@@ -3,9 +3,47 @@
 
 
 .message-container {
+    position: relative;
     width: 100%;
     display: flex;
     gap: 1.875rem;
+    cursor: pointer;
+    padding: 1.5rem;
+    transition: ease 225ms;
+
+    &:hover {
+        background-color: $color-active-channel;
+        transition: ease 225ms;
+    }
+
+    &:hover .user-content {
+        background-color: white;
+        transition: ease 225ms;
+    }
+
+    &:hover .reaction-bar-user {
+        visibility: visible;
+        opacity: 1;
+        animation: reaction-bar-user-slide-in 150ms ease-out forwards;
+    }
+
+    &:not(:hover) .reaction-bar-user {
+        visibility: visible;
+        opacity: 0;
+        animation: reaction-bar-user-slide-out 150ms ease-out forwards;
+    }
+
+    &:hover .reaction-bar-current-user {
+        visibility: visible;
+        opacity: 1;
+        animation: reaction-bar-current-user-slide-in 150ms ease-out forwards;
+    }
+
+    &:not(:hover) .reaction-bar-current-user {
+        visibility: visible;
+        opacity: 0;
+        animation: reaction-bar-current-user-slide-out 150ms ease-out forwards;
+    }
 }
 
 .avatar {
@@ -16,12 +54,14 @@
 }
 
 .message {
+    width: 100%;
     @include dFlex($fd: column, $ai: flex-start, $g: 0.5rem);
 }
 
 .name-and-time {
     @include dFlex($jc: flex-start, $g: 1.25rem);
     width: 100%;
+
     h3 {
         font-family: Nunito;
         font-size: 1.125rem;
@@ -43,6 +83,7 @@
 
 .answers {
     @include dFlex($jc: flex-start, $g: 1.25rem);
+
     .answer-counter {
         cursor: pointer;
         font-family: Nunito;
@@ -52,11 +93,13 @@
         text-align: left;
         color: $color-purple-3;
         transition: ease 225ms;
-        &:hover{
+
+        &:hover {
             transition: ease 225ms;
             transform: scale(1.05);
         }
     }
+
     .last-answer {
         font-family: Nunito;
         font-size: 0.875rem;
@@ -67,11 +110,12 @@
     }
 }
 
-.current-user-content{
+.current-user-content {
     background-color: $color-purple-3;
     border-radius: 1.875rem 0 1.875rem 1.875rem;
     padding: 0.938rem;
-    span{
+
+    span {
         color: white;
     }
 }
@@ -80,7 +124,9 @@
     background-color: $color-active-channel;
     border-radius: 0 1.875rem 1.875rem 1.875rem;
     padding: 0.938rem;
-    span{
+    transition: ease 225ms;
+
+    span {
         color: black;
     }
 }
@@ -88,11 +134,171 @@
 .content {
     display: flex;
     justify-content: flex-start;
-    span{
+
+    span {
         font-family: Nunito;
         font-size: 1.125rem;
         font-weight: 400;
         line-height: 1.534rem;
         text-align: left;
+    }
+}
+
+.reaction-bar-wrapper {
+    position: relative;
+}
+
+.reaction-bar-user {
+    position: absolute;
+    top: -1rem;
+    right: 2rem;
+    visibility: hidden;
+    animation: reaction-bar-user-slide-in 200ms ease-out forwards;
+}
+
+.reaction-bar-current-user {
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    visibility: hidden;
+    animation: reaction-bar-current-user-slide-in 200ms ease-out forwards;
+}
+
+.popup {
+    background-color: white;
+    z-index: 3;
+    @include dFlex($g: 15px);
+    position: absolute;
+    top: 50%;
+    left: 15rem;
+    box-shadow: 0px 6px 14px 0px #00000033;
+    padding: 10px 20px;
+    border-radius: 0 30px 30px 30px;
+
+    span {
+        font-family: Nunito;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 27.28px;
+        text-align: left;
+        color: black;
+        white-space: nowrap;
+        padding: 10px 20px;
+        border-radius: 100vw;
+        transition: 150ms ease-in;
+    }
+
+    &:hover span {
+        font-weight: 700;
+        transition: 150ms ease-in;
+        color: $color-purple-3;
+        background-color: $color-active-channel;
+    }
+}
+
+.icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    @include dFlex();
+    transition: 150ms ease-in;
+
+    &:hover {
+        background-color: $color-active-channel;
+        transition: 150ms ease-in;
+    }
+}
+
+.svg-hover {
+    transition: 150ms ease-in;
+
+    &:hover svg {
+        scale: 1.05;
+
+        path {
+            fill: $color-purple-3;
+        }
+    }
+
+}
+
+.edit-container {
+    min-width: 50%;
+    border: 1px solid $color-purple-light;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    @include dFlex($fd: column, $g: 1rem);
+
+    .footer {
+        width: 100%;
+        @include dFlex($jc: space-between);
+
+        .btns {
+            @include dFlex($g: 2rem);
+        }
+    }
+
+    textarea {
+        width: 100%;
+        border: unset;
+        outline: none;
+        resize: none;
+        font-family: Nunito;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 24.55px;
+        text-align: left;
+        color: $color-disabled-grey;
+    }
+}
+
+
+
+@keyframes reaction-bar-current-user-slide-in {
+    from {
+        transform: translateX(3rem);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes reaction-bar-current-user-slide-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(3rem);
+        opacity: 0;
+    }
+}
+
+@keyframes reaction-bar-user-slide-in {
+    from {
+        transform: translateX(-3rem);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes reaction-bar-user-slide-out {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-3rem);
+        opacity: 0;
     }
 }

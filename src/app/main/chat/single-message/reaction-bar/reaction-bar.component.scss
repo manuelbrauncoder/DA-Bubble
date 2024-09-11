@@ -1,0 +1,40 @@
+@import '../../../../../mixins.scss';
+@import '../../../../../styles.scss';
+
+main {
+    @include dFlex($g: 5px);
+    background-color: white;
+    padding: 3px 15px 3px 20px;
+    border-radius: 25px 25px 0 25px;
+    border: 1px solid $color-purple-light;
+
+    .icon-wrapper {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        @include dFlex();
+        transition: 150ms ease-in;
+
+        &:hover {
+            background-color: $color-active-channel;
+            transition: 150ms ease-in;
+        }
+    }
+}
+
+.svg-hover {
+    transition: 150ms ease-in;
+
+    &:hover svg {
+        scale: 1.05;
+
+        path {
+            fill: $color-purple-3;
+        }
+    }
+
+}
+
+
+
+

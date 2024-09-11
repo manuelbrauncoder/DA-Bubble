@@ -20,7 +20,10 @@
 
   <div class="load-img-wrapper">
     <span>Eigenes Bild verwenden</span>
-    <input type="file" (change)="onFileSelected($event)" />
+    <button class="file-button">
+      Datei hochladen
+      <input type="file" (change)="onFileSelected($event)" />
+    </button>
   </div>
   <div class="btn-wrapper">
     <span *ngIf="registrationFailed">{{ errorMassage }}</span> 

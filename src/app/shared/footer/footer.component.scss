@@ -3,6 +3,10 @@
 div {
   display: flex;
   gap: 1rem;
+
+  @media (max-width: 500px) {
+    display: none; 
+  }
 }
 
 @include linkUserM;

@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
@@ -16,7 +16,7 @@ import { BreakpointObserverService } from './services/breakpoint-observer.servic
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent],
+  imports: [RouterModule ,RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -30,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   uiService = inject(UiService);
   testMode: boolean = false;
   showFooterAndHeader: boolean = false;
+  showResponsiveFooter: boolean = false;
 
   unsubUsersList;
   unsubChannelList;
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private showNoFooterRoutes: string[] = ['/dabubble'];
+  private showNoResponsiveFooter: string[] = ['/dabubble', '/registration', '/avatar', '/sendmail', '/resetpwd', '/privacy_policy', '/imprint'];
 
   ngOnInit(): void {
     this.breakpointService.initObserver();
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.showFooterAndHeader = this.showNoFooterRoutes.includes(event.urlAfterRedirects);
+        this.showResponsiveFooter = this.showNoResponsiveFooter.includes(event.urlAfterRedirects);
       }
     });
   }

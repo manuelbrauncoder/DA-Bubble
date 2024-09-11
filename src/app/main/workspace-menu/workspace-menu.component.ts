@@ -21,5 +21,11 @@ export class WorkspaceMenuComponent {
   channelService = inject(ChannelService);
   userService = inject(UserService);
   conversationService = inject(ConversationService);
+
+  openNewMessage() {
+    this.uiService.changeMainContent('newMessage');
+    this.uiService.channelChatNotActive();
+    this.uiService.userChatNotActive();
+  }
  
 }

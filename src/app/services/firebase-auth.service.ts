@@ -47,6 +47,7 @@ export class FirebaseAuthService {
   uiService = inject(UiService);
   newEmailAddress: string = '';
   updateEmail: boolean = false;
+  loginTooLongAgo: boolean = false;
   googleUser: boolean = false;
   guestUser: boolean = false;
 
@@ -200,15 +201,15 @@ export class FirebaseAuthService {
    * @param newName new username
    */
   updateUsername(newName: string) {
-    const currentUser = this.auth.currentUser; // aktuell eingeloggter user
-    if (currentUser) {  // Abfrage ob der user auch existiert
-      updateProfile(currentUser, {displayName: newName}).then(()=>{ // firebase auth function parameter: eingeloggter user und neuer username
-        this.currentUserSig.set({ // manuelles aktualisieren des user signals ( nicht unbedingt nötig, so sieht man aber gleich die Änderung)
+    const currentUser = this.auth.currentUser;
+    if (currentUser) {
+      updateProfile(currentUser, {displayName: newName}).then(()=>{
+        this.currentUserSig.set({
           username: newName,
           email: currentUser.email!,
           uid: currentUser.uid
         })
-      }).catch((err)=>{ // error handling im catch block
+      }).catch((err)=>{
         console.log('Error updating Username', err);
       }) 
     }
@@ -345,6 +346,7 @@ export class FirebaseAuthService {
       }).catch((err) => {
         let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
+          this.loginTooLongAgo = true;
           this.uiService.toggleVerifyPassword();
         }
         console.log(err);

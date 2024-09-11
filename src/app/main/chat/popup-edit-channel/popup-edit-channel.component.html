@@ -59,7 +59,7 @@
         <hr class="divider">
         <div class="creator">
             <h4>Erstellt von</h4>
-            <h3>{{ channelService.fireService.currentChannel.creator }}</h3>
+            <h3>{{ userService.getUserData(channelService.fireService.currentChannel.creator).username }}</h3>
         </div>
     </div>
 

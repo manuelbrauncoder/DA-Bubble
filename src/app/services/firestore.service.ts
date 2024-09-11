@@ -27,6 +27,7 @@ export class FirestoreService {
 
   messagesPerDay: any = []; // for channels
   messagesPerDayConversation: any = []; // for conversations
+  messagesPerDayThread: any = []; // for thread
 
   constructor() { }
 
@@ -73,7 +74,6 @@ export class FirestoreService {
           messages
         })
     );
-    console.log(this.messagesPerDay);
     
   }
 
@@ -97,7 +97,29 @@ export class FirestoreService {
           messages
         })
     );
-    console.log(this.messagesPerDayConversation);
+    
+  }
+
+  getMessagesPerDayForThread() {
+    this.messagesPerDayThread = [];
+    let dayMap = new Map<string, Message[]>();
+    this.currentThread.messages.forEach((message) => {
+    let messageDate = this.getFormattedDate(message.time);
+    let messages = dayMap.get(messageDate);
+    if (!messages) {
+      messages = [];
+      dayMap.set(messageDate, messages);
+    }
+    messages.push(message);
+    });
+    this.messagesPerDayThread = Array.from(
+      dayMap,
+      ([date, messages]) => 
+        new DateMessages({
+          date,
+          messages
+        })
+    );
     
   }
 
@@ -129,7 +151,7 @@ export class FirestoreService {
    */
   logChanges(change: DocumentChange<DocumentData>) {
     if (change.type === 'added') {
-      console.log('New Data ', change.doc.data());
+      //console.log('New Data ', change.doc.data());
     }
     if (change.type === 'modified') {
       console.log('Modified Data: ', change.doc.data());
@@ -190,6 +212,7 @@ export class FirestoreService {
     })
   }
 
+  
   // ================= Channel Methods ========================
 
   /**
@@ -290,8 +313,8 @@ export class FirestoreService {
 
   getCleanParticipantsJson(participant: Participants) {
     return {
-      first: this.getCleanUserJson(participant.first),
-      second: this.getCleanUserJson(participant.second)
+      first: participant.first,
+      second: participant.second
     }
   }
 
@@ -299,9 +322,10 @@ export class FirestoreService {
     return {
       id: channel.id,
       name: channel.name,
+      time: channel.time,
       description: channel.description,
       creator: channel.creator,
-      users: channel.users.map(user => this.getCleanUserJson(user)),
+      users: channel.users,
       messages: channel.messages.map(message => this.getCleanMessageJson(message))
     }
   }
@@ -310,7 +334,7 @@ export class FirestoreService {
     const cleanMessage: any = {
       id: message.id,
       time: message.time,
-      sender: this.getCleanUserJson(message.sender),
+      sender: message.sender,
       content: message.content,
       data: message.data,
       reactions: message.reactions
@@ -355,6 +379,7 @@ export class FirestoreService {
       id: channel.id || '',
       description: channel.description || '',
       name: channel.name || '',
+      time: channel.time || 0,
       creator: channel.creator || '',
       users: channel.users || [],
       messages: channel.messages || [],
@@ -378,7 +403,9 @@ export class FirestoreService {
       username: user.username || '',
       createdAt: user.createdAt || 0,
       avatar: user.avatar || '',
-      currentlyLoggedIn: user.currentlyLoggedIn || false
+      currentlyLoggedIn: user.currentlyLoggedIn || false,
+      userChatActive: user.userChatActive || false,
+      status: user.status || 'offline'
     }
   }
 }

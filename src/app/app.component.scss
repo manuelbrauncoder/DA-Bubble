@@ -1,3 +1,5 @@
+@use './../mixins.scss' as *;
+
 .test-btn{
     color: red;
 }
@@ -9,3 +11,32 @@
     justify-content: center;
     align-items: center;
 }
+
+.responsive-container {
+    @include flexColumn;
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: .5rem;
+
+    >a {
+        text-decoration: none;
+        border: .1rem solid #444DF2;
+        border-radius: 1.5rem;
+        color: #444DF2;
+        background-color: white;
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+        font-weight: 700;
+  
+        &:hover {
+          border: .1rem solid #535AF1;
+          color: white;
+          background-color: #535AF1;
+        }
+    }
+
+    @media (max-width: 500px) {
+        display: flex;
+      }
+  }
