@@ -4,7 +4,12 @@
         @if (filteredResults.length > 0) {
             <div class="result-list">
                 @for (result of filteredResults; track $index) {
-                    <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
+                    <div class="result-wrapper">
+                        @if (isResultInstanceOfUser(result)) {
+                            <img class="userAvatar" [src]="result.avatar" alt="">
+                        }
+                        <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
+                    </div>
                 }
             </div>
         }

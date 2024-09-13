@@ -21,12 +21,16 @@ export class NewMessageComponent {
   userService = inject(UserService);
 
   searchInput = '';
-  filteredResults: any[] = [];
+  filteredResults: (User | Channel)[] = [];
 
   placeholderForChild = 'Starte eine neue Nachricht';
   recipientForChild: Channel | Conversation = new Channel;
   userUid = '';
   isChildInputDisabled = true;
+
+  isResultInstanceOfUser(result: User | Channel) {
+    return result instanceof User;
+  }
 
   /**
    * handle different kinds of searches
@@ -71,7 +75,7 @@ export class NewMessageComponent {
 
   setName(name: User | Channel) {
     if (name instanceof User) {
-      return `@ ${name.username}`;
+      return `@${name.username}`;
     } else {
       return `# ${name.name}`;
     }
@@ -103,21 +107,20 @@ export class NewMessageComponent {
     } else {
       this.setChannelInput(result);
     }
+    this.filteredResults = [];
+    this.isChildInputDisabled = false;
   }
 
   setUserInput(result: User) {
     this.searchInput = result.username;
     this.createNewPlaceholder(result.username);
-    this.isChildInputDisabled = false;
     this.setConversation(result);
   }
 
   setChannelInput(result: Channel) {
     this.searchInput = result.name;
-    this.filteredResults = [];
     this.createNewPlaceholder(result.name);
     this.recipientForChild = new Channel(result);
-    this.isChildInputDisabled = false;
   }
 
   createNewPlaceholder(name: string) {
