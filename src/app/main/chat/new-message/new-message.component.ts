@@ -28,8 +28,8 @@ export class NewMessageComponent {
   userUid = '';
   isChildInputDisabled = true;
 
-  isResultInstanceOfUser(result: User | Channel) {
-    return result instanceof User;
+  isResultUser(result: User | Channel): result is User {
+    return (result as User).avatar !== undefined;
   }
 
   /**

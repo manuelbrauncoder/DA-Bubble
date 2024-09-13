@@ -5,9 +5,11 @@
             <div class="result-list">
                 @for (result of filteredResults; track $index) {
                     <div class="result-wrapper">
-                        <!-- @if (isResultInstanceOfUser(result)) {
+                        @if (isResultUser(result)) {
                             <img class="userAvatar" [src]="result.avatar" alt="">
-                        } -->
+                        } @else {
+                            <img src="assets/icons/workspace-menu/workspace-3-circles.svg" alt="" class="userAvatar">
+                        }
                         <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
                     </div>
                 }
