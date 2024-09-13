@@ -1,10 +1,16 @@
 <header>
     <h3>Neue Nachricht</h3>
-    <input [(ngModel)]="searchInput" (input)="search()" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text" class="channel-input">
-    <div class="result-list">
-        @for (result of filteredResults; track $index) {
-            <span class="result" (click)="completeInput(result)">{{ result }}</span>
+    <div class="input-wrapper">
+        @if (filteredResults.length > 0) {
+            <div class="result-list">
+                @for (result of filteredResults; track $index) {
+                    <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
+                }
+            </div>
         }
+        
     </div>
+    <input [(ngModel)]="searchInput" (input)="search()" placeholder="An: #channel, oder @jemand oder E-Mail Adresse" type="text" class="channel-input">
+    
 </header>
 <app-send-message [disableInput]="isChildInputDisabled" [userUid]="userUid" [currentRecipient]="recipientForChild" [newMessage]="true" [newPlaceholder]="placeholderForChild"></app-send-message>

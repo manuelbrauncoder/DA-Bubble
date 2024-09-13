@@ -6,6 +6,7 @@ import { Channel } from '../../../models/channel.class';
 import { Conversation } from '../../../models/conversation.class';
 import { ConversationService } from '../../../services/conversation.service';
 import { UserService } from '../../../services/user.service';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-new-message',
@@ -20,7 +21,7 @@ export class NewMessageComponent {
   userService = inject(UserService);
 
   searchInput = '';
-  filteredResults: string[] = [];
+  filteredResults: any[] = [];
 
   placeholderForChild = 'Starte eine neue Nachricht';
   recipientForChild: Channel | Conversation = new Channel;
@@ -54,18 +55,26 @@ export class NewMessageComponent {
   searchAll(searchTerm: string) {
     const filteredUser = this.fireService.users
       .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
-      .map(user => user.username)
+      .map(user => new User(user));
     const filteredChannels = this.fireService.channels
       .filter(channel => channel.name.toLowerCase().includes(searchTerm))
-      .map(channel => channel.name);
-    this.filteredResults = [...new Set([...filteredUser, ...filteredChannels])];
+      .map(channel => new Channel(channel));
+    this.filteredResults = [...filteredUser, ...filteredChannels];
   }
 
   searchUsers(input: string) {
     const searchTerm = input.substring(1);
     this.filteredResults = this.fireService.users
       .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
-      .map(user => user.username);
+      .map(user => new User(user));
+  }
+
+  setName(name: User | Channel) {
+    if (name instanceof User) {
+      return `@ ${name.username}`;
+    } else {
+      return `# ${name.name}`;
+    }
   }
 
   isUserSearch(input: string): boolean {
@@ -76,7 +85,7 @@ export class NewMessageComponent {
     const searchTerm = input.substring(1);
     this.filteredResults = this.fireService.channels
       .filter(channel => channel.name.toLowerCase().includes(searchTerm))
-      .map(channel => channel.name);
+      .map(channel => new Channel(channel));
   }
 
   isChannelSearch(input: string): boolean {
@@ -88,11 +97,26 @@ export class NewMessageComponent {
     this.placeholderForChild = 'Starte eine neue Nachricht';
   }
 
-  completeInput(result: string) {
-    this.searchInput = result;
+  completeInput(result: User | Channel) {
+    if (result instanceof User) {
+      this.setUserInput(result);
+    } else {
+      this.setChannelInput(result);
+    }
+  }
+
+  setUserInput(result: User) {
+    this.searchInput = result.username;
+    this.createNewPlaceholder(result.username);
+    this.isChildInputDisabled = false;
+    this.setConversation(result);
+  }
+
+  setChannelInput(result: Channel) {
+    this.searchInput = result.name;
     this.filteredResults = [];
-    this.createNewPlaceholder(result);
-    this.getRecipient(result);
+    this.createNewPlaceholder(result.name);
+    this.recipientForChild = new Channel(result);
     this.isChildInputDisabled = false;
   }
 
@@ -100,25 +124,12 @@ export class NewMessageComponent {
     this.placeholderForChild = `Nachricht an ${name}`;
   }
 
-  /**
-   * search in channels for the channel name, break if found
-   * then search in conversations for conversation between result (user) and current user
-   * @param result - the result from the search (username or channelname)
-   * @returns just stop the method if channel or conversation found
-   */
-  async getRecipient(result: string) {
-    for (let channel of this.fireService.channels) {
-      if (channel.name.trim().toLowerCase() === result.trim().toLowerCase()) {
-        this.recipientForChild = new Channel(channel);
-        return;
-      }
-    }
-    for (let user of this.fireService.users) {
-      if (user.username.trim().toLowerCase() === result.trim().toLowerCase()) {
-        await this.conversationService.setCurrentConversation(user.uid);
-        this.userUid = user.uid;
+  async setConversation(user: User) {
+    for (let u of this.fireService.users) {
+      if (user.uid === u.uid) {
+        await this.conversationService.setCurrentConversation(u.uid);
+        this.userUid = u.uid;
         this.recipientForChild = this.fireService.currentConversation;
-        return;
       }
     }
   }

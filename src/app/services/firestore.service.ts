@@ -227,7 +227,7 @@ export class FirestoreService {
         const channel = this.setChannelObject(element.data());
         this.channels.push(channel);
       });
-      this.setActiveChannel();
+      //this.setActiveChannel();
       list.docChanges().forEach((change) => {
         this.logChanges(change);
         this.getMessagesPerDay();

@@ -24,7 +24,7 @@ export class UiService {
   showChannelUsersAddUser: boolean = false;
   showChannelUsers: boolean = true;
 
-  mainContent: 'channelChat' | 'newMessage' | 'directMessage' = 'channelChat';
+  mainContent: 'channelChat' | 'newMessage' | 'directMessage' = 'newMessage';
 
   showChat: boolean = true; // chat window in main-content
   showThread: boolean = false; // thread window in main-content

@@ -9,6 +9,10 @@ header {
     background-color: white;
     border-radius: 1.875rem 1.875rem 0 0;
 
+    .input-wrapper{
+        position: relative;
+    }
+
     input {
         width: 100%;
         font-family: Nunito;
@@ -31,9 +35,17 @@ header {
 
 .result-list{
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 0.5rem);
+    position: absolute;
+    box-shadow: 0px 6px 10px 0px #00000033;
+    border-radius: 0 30px 30px 30px;
+    background-color: white;
+    padding: 20px;
+    top: 87px;
+    left: 23px;
 }
 
 .result {
+    white-space: nowrap;
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 100vw;
