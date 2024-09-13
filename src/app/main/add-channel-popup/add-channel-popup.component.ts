@@ -34,6 +34,10 @@ export class AddChannelPopupComponent {
     }    
   }
 
+  isChannelNameTaken(){
+    return this.channelService.fireService.channels.some(channel => channel.name.trim().toLowerCase() === this.newChannel.name.trim().toLowerCase());
+  }
+
  
   addCurrentUserAsChannelCreator(){
     const currentUser = this.userService.getCurrentUser();

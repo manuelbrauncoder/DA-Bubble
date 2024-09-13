@@ -23,6 +23,24 @@ main {
     }
 }
 
+.input-wrapper{
+    position: relative;
+    width: 100%;
+    img{
+        cursor: default;
+    }
+    input{
+        padding-left: 3rem;
+    }
+}
+
+.input-icon{
+    position: absolute;
+    top: 50%;
+    left: 1.125rem;
+    transform: translateY(-50%);
+}
+
 .form-wrapper {
     width: 100%;
 

@@ -25,12 +25,20 @@
         <div class="form-wrapper">
             <form name="addChannelForm" #addChannelForm="ngForm" (ngSubmit)="onSubmit(addChannelForm)">
                 <label for="name">Channel-Name</label>
-                <input name="channelName" [(ngModel)]="newChannel.name" #channelName="ngModel" class="channel-input"
+                
+                <div class="input-wrapper">
+                    <img class="input-icon" src="assets/icons/add-channel-popup/hashtag.svg" alt="">
+                    <input name="channelName" [(ngModel)]="newChannel.name" #channelName="ngModel" class="channel-input"
                     required minlength="4" id="name" type="text" placeholder="z.B. Kooperationsprojekte">
+                    @if (isChannelNameTaken()) {
+                        <span class="error-message">* Channel-Name bereits vorhanden.</span>
+                    }
+                </div>
+                
                 <label for="description">Beschreibung <span>(optional)</span></label>
                 <input name="channelDescription" [(ngModel)]="newChannel.description" #channelDescription="ngModel"
                     class="channel-input" id="description" type="text" placeholder="Dein Text hier">
-                <button [disabled]="!addChannelForm.valid" class="primary-btn" type="submit">Erstellen</button>
+                <button [disabled]="isChannelNameTaken() || newChannel.name.length < 4 || !addChannelForm.valid" class="primary-btn" type="submit">Erstellen</button>
             </form>
         </div>
     

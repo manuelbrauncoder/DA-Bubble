@@ -30,11 +30,12 @@ app-root {
   flex-direction: column;
   align-items: center;
   gap: .8rem;
-  overflow: hidden;
+
+  // overflow: hidden;
   @media(max-width: 999px) {
     padding: 0;
     gap: 0;
-}
+  }
 }
 
 app-header,
@@ -52,9 +53,10 @@ app-header-for-usermanagement {
 app-main-content {
   width: 100%;
   height: calc(100vh - 200px);
+
   @media(max-width: 999px) {
     height: calc(100vh - 102px);
-}
+  }
 }
 
 app-footer {
@@ -155,6 +157,8 @@ $color-purple-2: #797EF3;
 $color-purple-light: #ADB0D9;
 $color-disabled-grey: #686868;
 $color-popup-bg: #eceefe80;
+$color-error-red: #ED1E79;
+
 
 
 
@@ -230,18 +234,21 @@ $color-popup-bg: #eceefe80;
   transition: 100ms ease-in;
   color: $color-purple-1;
   background-color: white;
-  &:hover{
+
+  &:hover {
     color: white;
     background-color: $color-purple-3;
     transition: 100ms ease-in;
     border-color: $color-purple-3;
   }
-  &:focus{
+
+  &:focus {
     background-color: $color-purple-1;
     border-color: $color-purple-1;
     color: white;
     transition: 100ms ease-in;
   }
+
   &:disabled {
     cursor: not-allowed;
     background-color: white;
@@ -249,6 +256,18 @@ $color-popup-bg: #eceefe80;
     border: 1px solid $color-disabled-grey;
     transition: 100ms ease-in;
   }
+}
+
+.error-message {
+  color: $color-error-red;
+  font-family: Nunito;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.188rem;
+  text-align: left;
+  position: absolute;
+  bottom: -1.2rem;
+  left: 0;
 }
 
 .icon {
@@ -268,14 +287,16 @@ $color-popup-bg: #eceefe80;
 
 
 *::-webkit-scrollbar {
-  width: .5rem; /* Breite des Scrollbalkens */
+  width: .5rem;
+  /* Breite des Scrollbalkens */
   max-height: .5rem;
   background: #FFFCF3;
   border-radius: 4px;
 }
 
 *::-webkit-scrollbar-track {
-  background: #FFFCF3;/* Hintergrundfarbe des Scrollbalkens */
+  background: #FFFCF3;
+  /* Hintergrundfarbe des Scrollbalkens */
   border: 1px solid #444DF2;
   border-radius: 4px;
 }
@@ -284,10 +305,13 @@ $color-popup-bg: #eceefe80;
   cursor: pointer;
   min-height: 30px;
   border: 1px solid black;
-  background: #444DF2; /* Farbe des Griffs des Scrollbalkens */
-  border-radius: 4px; /* Radius des Griffs des Scrollbalkens */
+  background: #444DF2;
+  /* Farbe des Griffs des Scrollbalkens */
+  border-radius: 4px;
+  /* Radius des Griffs des Scrollbalkens */
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: #797EF3; /* Farbe des Griffs des Scrollbalkens bei Hover */
+  background: #797EF3;
+  /* Farbe des Griffs des Scrollbalkens bei Hover */
 }
