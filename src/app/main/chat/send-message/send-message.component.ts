@@ -44,6 +44,10 @@ export class SendMessageComponent implements OnInit {
     this.copyRecipient();
   }
 
+  isBtnDisabled(){
+    return this.disableInput || this.content.length < 2;
+  }
+
   /**
    * 
    * @returns different strings with channel name or user name
