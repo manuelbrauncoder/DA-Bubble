@@ -92,10 +92,18 @@ input {
   transition: ease-in-out 250ms;
 }
 
-.popup-overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.popup-wrapper {
+  position: relative;
+}
+
+app-edit-user-and-logout-popup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.popup-background {
   position: fixed;
   top: 0;
   left: 0;
@@ -103,5 +111,4 @@ input {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
-  padding: 2rem;
 }

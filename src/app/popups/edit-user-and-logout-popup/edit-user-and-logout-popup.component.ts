@@ -4,12 +4,14 @@ import { UiService } from '../../services/ui.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { ProfileChangeConfirmationComponent } from '../profile-change-confirmation/profile-change-confirmation.component';
+import { fadeIn } from '../../shared/animations';
 
 
 @Component({
   selector: 'app-edit-user-and-logout-popup',
   standalone: true,
   imports: [CommonModule, ViewProfileComponent, ProfileChangeConfirmationComponent],
+  animations: [fadeIn],
   templateUrl: './edit-user-and-logout-popup.component.html',
   styleUrl: './edit-user-and-logout-popup.component.scss'
 })

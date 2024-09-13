@@ -6,6 +6,7 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { UserService } from '../../services/user.service';
 import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
+import { fadeIn } from '../animations';
 
 
 
@@ -13,6 +14,7 @@ import { BreakpointObserverService } from '../../services/breakpoint-observer.se
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, EditUserAndLogoutPopupComponent],
+  animations: [fadeIn],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -24,7 +26,7 @@ export class HeaderComponent {
   observerService = inject(BreakpointObserverService);
 
 
-  openPopup() {
+  togglePopup() {
     this.uiService.toggleEditUserAndLogoutPopup();
   }
 }

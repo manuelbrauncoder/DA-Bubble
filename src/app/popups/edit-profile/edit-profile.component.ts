@@ -7,12 +7,14 @@ import { FormsModule } from '@angular/forms';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.class';
+import { fadeIn } from '../../shared/animations';
 
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
   imports: [CommonModule, FormsModule, VerifyPasswordComponent],
+  animations: [fadeIn],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
 })
