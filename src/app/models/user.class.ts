@@ -2,7 +2,7 @@ export class User {
     uid: string;
     email: string;
     username: string;
-    createdAt: number | string; // timestamp
+    createdAt: number | string;
     avatar: string;
     currentlyLoggedIn: boolean;
     userChatActive: boolean;

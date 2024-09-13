@@ -227,7 +227,6 @@ export class FirestoreService {
         const channel = this.setChannelObject(element.data());
         this.channels.push(channel);
       });
-      //this.setActiveChannel();
       list.docChanges().forEach((change) => {
         this.logChanges(change);
         this.getMessagesPerDay();
@@ -354,7 +353,6 @@ export class FirestoreService {
   }
 
   
-
   /**
    * 
    * @param user 
@@ -366,7 +364,8 @@ export class FirestoreService {
       email: user.email,
       username: user.username,
       currentlyLoggedIn: user.currentlyLoggedIn || false,
-      avatar: user.avatar
+      avatar: user.avatar,
+      status: user.status
     };
   }
 

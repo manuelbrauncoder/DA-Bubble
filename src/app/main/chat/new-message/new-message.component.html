@@ -5,9 +5,9 @@
             <div class="result-list">
                 @for (result of filteredResults; track $index) {
                     <div class="result-wrapper">
-                        @if (isResultInstanceOfUser(result)) {
+                        <!-- @if (isResultInstanceOfUser(result)) {
                             <img class="userAvatar" [src]="result.avatar" alt="">
-                        }
+                        } -->
                         <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
                     </div>
                 }

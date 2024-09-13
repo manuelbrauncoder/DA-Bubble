@@ -248,6 +248,7 @@ export class FirebaseAuthService {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
         user.currentlyLoggedIn = loggedInState;
+        user.status = loggedInState ? 'online' : 'offline';
         this.fireService.addUser(user);
       }
     })
