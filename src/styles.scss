@@ -17,6 +17,7 @@ h4 {
   padding: 0;
 }
 
+
 body {
   background-color: #ECEEFE;
   max-width: 1920px;
@@ -31,7 +32,6 @@ app-root {
   align-items: center;
   gap: .8rem;
 
-  // overflow: hidden;
   @media(max-width: 999px) {
     padding: 0;
     gap: 0;

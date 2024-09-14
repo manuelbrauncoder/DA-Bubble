@@ -80,8 +80,6 @@ header {
 .users {
     @include dFlex($fd: column, $g: 1.563rem, $ai: flex-start, $jc: flex-start);
     padding-left: 2.188rem;
-    height: calc(100vh - 695px);
-    overflow-y: auto;
 }
 
 .user-name {

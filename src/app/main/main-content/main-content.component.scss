@@ -11,6 +11,9 @@ main {
 .workspace-menu-wrapper {
     width: 380px;
     flex-shrink: 0;
+    background-color: white;
+    border-radius: 1.875rem;
+    overflow-y: auto;
 
     @media(max-width: 1399px) {
         position: absolute;
