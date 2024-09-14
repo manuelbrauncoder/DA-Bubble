@@ -7,11 +7,12 @@ import { Conversation } from '../../../models/conversation.class';
 import { ConversationService } from '../../../services/conversation.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.class';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [SendMessageComponent, FormsModule],
+  imports: [SendMessageComponent, FormsModule, CommonModule],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
 })
@@ -27,6 +28,29 @@ export class NewMessageComponent {
   recipientForChild: Channel | Conversation = new Channel;
   userUid = '';
   isChildInputDisabled = true;
+
+  /**
+   * 
+   * @param result 
+   * @returns 'User' if result is User, 'Channel' if result is Channel and
+   * current User is not in Channel
+   */
+  checkResultType(result: Channel | User): string {
+    const currentUser = this.userService.getCurrentUser();
+    if (result && typeof result === 'object') {
+      if ('uid' in result && typeof result.uid === 'string') {
+        return 'User';
+      }
+      if ('users' in result && Array.isArray(result.users)) {
+        if (result.users.includes(currentUser.uid)) {
+          return 'userIsInChannel';
+        } else {
+          return 'Channel';
+        }
+      }
+    }
+    return 'Unknown';
+  }
 
   isResultUser(result: User | Channel): result is User {
     return (result as User).avatar !== undefined;

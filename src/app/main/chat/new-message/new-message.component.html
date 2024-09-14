@@ -10,7 +10,12 @@
                         } @else {
                             <img src="assets/icons/workspace-menu/workspace-3-circles.svg" alt="" class="userAvatar">
                         }
-                        <span class="result" (click)="completeInput(result)">{{ setName(result) }}</span>
+                        <button (click)="completeInput(result)" [ngStyle]="{'cursor': checkResultType(result) === 'Channel' ? 'not-allowed' : 'pointer'}" [disabled]="checkResultType(result) === 'Channel'" class="result">
+                            {{ setName(result) }}
+                            @if (checkResultType(result) === 'Channel') {
+                                <span class="no-member">(Kein Channel Mitglied)</span>
+                            }
+                        </button>                        
                     </div>
                 }
             </div>

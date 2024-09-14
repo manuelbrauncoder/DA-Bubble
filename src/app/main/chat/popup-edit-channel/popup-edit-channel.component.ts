@@ -30,11 +30,12 @@ export class PopupEditChannelComponent {
   /**
    * Remove current User from Channel
    */
-  leaveChannel(){
+  async leaveChannel(){
     let currentUser: User = this.userService.getCurrentUser();
     if (currentUser) {
      const userIndex = this.channelService.fireService.currentChannel.users.findIndex(uid => uid === currentUser.uid);
-      this.channelService.fireService.currentChannel.users.splice(userIndex, 1); 
+      this.channelService.fireService.currentChannel.users.splice(userIndex, 1);
+      await this.channelService.fireService.addChannel(this.channelService.fireService.currentChannel);
       this.uiService.toggleEditChannelPopup();     
     }
   }
