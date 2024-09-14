@@ -141,3 +141,16 @@ form {
     }
   }
 }
+
+@media(max-width: 700px) {
+  span, a, button, input {
+    font-size: .8rem;
+  }
+
+  form {
+    >p {
+      font-size: .8rem;
+    }
+  }
+
+}

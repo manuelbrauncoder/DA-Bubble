@@ -315,3 +315,9 @@ $color-error-red: #ED1E79;
   background: #797EF3;
   /* Farbe des Griffs des Scrollbalkens bei Hover */
 }
+
+@media(max-width: 700px) {
+  h2 {
+    font-size: 2rem;
+  }
+}
