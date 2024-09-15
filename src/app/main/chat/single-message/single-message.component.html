@@ -15,6 +15,7 @@
         <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'current-user-content' : 'user-content'"
             class="content">
             <span>{{ currentMessage.content }}</span>
+            <img src="{{currentMessage.data[0]}}" alt="">
         </div>
         }
 

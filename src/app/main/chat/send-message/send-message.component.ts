@@ -90,6 +90,7 @@ export class SendMessageComponent implements OnInit {
   async handleChannelMessage() {
     this.currentRecipient = new Channel(this.currentRecipient as Channel);
     const message = this.createMessage(this.content);
+    message.data = this.data;
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
@@ -115,6 +116,7 @@ export class SendMessageComponent implements OnInit {
   async handleDirectMessage() {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
     const message = this.createMessage(this.content);
+    message.data = this.data;
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
@@ -163,8 +165,8 @@ export class SendMessageComponent implements OnInit {
       this.data = fileUrls;
     }
   
-    const message = this.createMessage(this.content);
-    message.data = this.data; 
+    // const message = this.createMessage(this.content);
+    // message.data = this.data; 
   
     if (this.currentRecipient instanceof Channel) {
       await this.handleChannelMessage();
