@@ -52,7 +52,7 @@
                 <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="editProfileData.name" value="" (ngModelChange)="onNameChange()"
                     placeholder="Vorname Nachname" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
                 @if (name.invalid && (name.dirty || name.touched)) {
-                    <span @fadeIn>Bitte ein Vor- und Nachname eingeben</span>
+                    <span>Bitte ein Vor- und Nachname eingeben</span>
                 }
             </div>
 
@@ -66,7 +66,7 @@
                     value="" placeholder="beispiel@bsp.de" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}"
                     required>
                 @if (email.invalid && (email.dirty || email.touched)) {
-                    <span @fadeIn>Bitte eine gültige E-Mail-Adresse eingeben</span>
+                    <span>Bitte eine gültige E-Mail-Adresse eingeben</span>
                 }
             </div>
 
