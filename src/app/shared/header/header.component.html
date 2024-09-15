@@ -31,10 +31,10 @@
     </div>
 
     @if (uiService.showEditUserAndLogoutPopup) {
-        <app-edit-user-and-logout-popup @fadeIn></app-edit-user-and-logout-popup>
+        <app-edit-user-and-logout-popup></app-edit-user-and-logout-popup>
     }
 </div>
 
 @if (uiService.showEditUserAndLogoutPopup) {
-    <div @fadeIn class="popup-background" (click)="togglePopup()"></div>
+    <div class="popup-background" (click)="togglePopup()"></div>
 }
