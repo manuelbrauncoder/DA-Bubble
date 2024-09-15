@@ -13,6 +13,7 @@ import { ConversationService } from '../../../services/conversation.service';
 import { ThreadService } from '../../../services/thread.service';
 import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
 import { fadeIn } from '../../../shared/animations';
+import { FireStorageService } from '../../../services/fire-storage.service';
 
 @Component({
   selector: 'app-send-message',
@@ -25,6 +26,7 @@ import { fadeIn } from '../../../shared/animations';
 export class SendMessageComponent implements OnInit {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
+  storageService = inject(FireStorageService);
   uiService = inject(UiService);
   channelService = inject(ChannelService);
   conversationService = inject(ConversationService);
@@ -39,6 +41,8 @@ export class SendMessageComponent implements OnInit {
 
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
+  selectedFiles: File[] = [];
+  filePreviews: string[] = [];
 
   ngOnInit(): void {
     this.copyRecipient();
@@ -154,6 +158,14 @@ export class SendMessageComponent implements OnInit {
    * handle differtent recipients (channel or direct message)
    */
   async saveNewMessage() {
+    if (this.selectedFiles.length > 0) {
+      const fileUrls = await this.storageService.uploadFiles(this.selectedFiles);
+      this.data = fileUrls;
+    }
+  
+    const message = this.createMessage(this.content);
+    message.data = this.data; 
+  
     if (this.currentRecipient instanceof Channel) {
       await this.handleChannelMessage();
       this.channelService.scrolledToBottomOnStart = false;
@@ -161,8 +173,12 @@ export class SendMessageComponent implements OnInit {
       await this.handleDirectMessage();
       this.conversationService.scrolledToBottomOnStart = false;
     }
+  
     this.userService.fireService.getMessagesPerDayForThread();
     this.content = '';
+    this.data = [];
+    this.filePreviews = [];
+    this.selectedFiles = []; 
     this.threadService.scrolledToBottomOnStart = false;
     this.redirectToChat();
   }
@@ -176,6 +192,26 @@ export class SendMessageComponent implements OnInit {
       } else {
         this.channelService.toggleActiveChannel(this.currentRecipient);
       }
+    }
+  }
+
+  getFileName(preview: string): string {
+    return this.storageService.extractFileName(preview);
+  }
+
+  onFilesSelected(event: any) {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      this.selectedFiles = Array.from(files);
+      this.filePreviews = []; 
+
+      this.selectedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.filePreviews.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      });
     }
   }
 

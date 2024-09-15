@@ -102,3 +102,28 @@ app-popup-taggable-users {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 10;
 }
+
+#file-upload {
+  display: none;
+}
+
+.preview-btn-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.file-preview-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  overflow-x: auto;
+  max-width: 14rem;
+}
+
+.file-preview {
+  max-height: 36px;
+
+  object-fit: cover;
+
+}

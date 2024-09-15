@@ -4,7 +4,12 @@
     <div class="icons">
         <div class="add-elements">
             <div class="bounding-box">
-                <img src="assets/icons/channel-chat/plusIcon.svg">
+                <div>
+                    <label for="file-upload" class="custom-file-upload">
+                        <img src="assets/icons/channel-chat/plusIcon.svg" alt="Upload Icon">
+                    </label>
+                    <input id="file-upload" type="file" (change)="onFilesSelected($event)" multiple/>
+                </div>             
             </div>
 
             <hr>
@@ -20,9 +25,22 @@
                 @if (uiService.showTaggableUsersPopup) {
                     <app-popup-taggable-users @fadeIn [currentRecipient]="currentRecipient"></app-popup-taggable-users>
                 }
+            </div>
+        </div>
+        
+        <div class="preview-btn-wrapper">
+            <div class="file-preview-container">
+                <div *ngFor="let preview of filePreviews; let i = index">
+                    <img *ngIf="preview.startsWith('data:image')" [src]="preview" alt="Bild-Vorschau" class="file-preview" />
+
+                    <p *ngIf="selectedFiles[i].name.endsWith('.pdf')">{{ getFileName(selectedFiles[i].name) }}</p>
+
+                    <p *ngIf="!preview.startsWith('data:image') && !selectedFiles[i].name.endsWith('.pdf')">{{ getFileName(selectedFiles[i].name) }}</p>
                 </div>
             </div>
 
+            
+        </div>
         <img src="assets/icons/channel-chat/sendIcon.svg" [ngStyle]="{ cursor: isBtnDisabled() ? 'not-allowed' : 'pointer' }" class="send-btn" (click)="saveNewMessage()">
     </div>
 </div>
