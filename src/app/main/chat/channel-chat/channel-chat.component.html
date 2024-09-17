@@ -11,7 +11,9 @@
             
         </div>
         @if (uiService.showChannelEditPopup) {
-            <div @fadeIn class="popup-edit-channel"><app-popup-edit-channel></app-popup-edit-channel></div>
+            <div @fadeIn [ngClass]="observerService.isMobile ? 'full-screen' : 'popup-edit-channel'">
+                <app-popup-edit-channel></app-popup-edit-channel>
+            </div>
         }
     </div>
     

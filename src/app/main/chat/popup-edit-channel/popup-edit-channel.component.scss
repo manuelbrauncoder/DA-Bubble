@@ -8,6 +8,9 @@ main {
     padding: 2.5rem;
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 1.25rem);
     min-width: 30rem;
+    @media(max-width: 999px) {
+        border-radius: 0;
+    }
 }
 
 .title {

@@ -16,6 +16,15 @@
     z-index: 3;
 }
 
+.full-screen {
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+}
+
 .add-user-btn-wrapper {
     position: relative;
 }
@@ -40,6 +49,7 @@ header {
     width: 100%;
     border-radius: 1.875rem 1.875rem 0 0;
     @include dFlex($jc: space-between);
+
     @media(max-width: 999px) {
         border-radius: 0;
     }
@@ -73,6 +83,7 @@ header {
 
     .users-wrapper {
         position: relative;
+
         @media(max-width: 999px) {
             display: none;
         }
@@ -180,6 +191,7 @@ app-send-message {
     @include dFlex($fd: column, $ai: flex-start, $g: 0.5rem);
     margin-right: auto;
     padding: 1rem 2.188rem 1rem 2.188rem;
+
     .title {
         @include dFlex($g: 0.625rem, $jc: flex-start);
         cursor: pointer;
@@ -187,7 +199,7 @@ app-send-message {
         transition: ease-in 0.15s;
         width: fit-content;
 
-        svg{
+        svg {
             display: none;
         }
 
@@ -207,6 +219,7 @@ app-send-message {
         &:hover svg {
             transition: ease-in 0.15s;
             display: block;
+
             path {
                 fill: $color-purple-3;
             }
@@ -221,7 +234,7 @@ app-send-message {
         text-align: left;
     }
 
-    .purple3{
+    .purple3 {
         color: $color-purple-3;
     }
 }

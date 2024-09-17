@@ -11,6 +11,7 @@ import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { fadeIn } from "../../../shared/animations";
 import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-channel-chat',
@@ -25,6 +26,7 @@ export class ChannelChatComponent implements AfterViewChecked {
   uiService = inject(UiService);
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
+  observerService = inject(BreakpointObserverService);
 
   @ViewChild('channelMessages') scrollContainer!: ElementRef;
   
