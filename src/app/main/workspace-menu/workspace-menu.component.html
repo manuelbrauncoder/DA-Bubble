@@ -157,4 +157,10 @@
 
         }
     </div>
+
+    @if (observerService.isMobile) {
+        <div (click)="uiService.openChatMobile('newMessage')" class="new-message-mobile-btn">
+            <img src="assets/icons/workspace-menu/new-message-mobile-btn.svg" alt="">
+        </div>
+    }
 </main>

@@ -107,11 +107,9 @@ export class ConversationService {
       const conversation = this.fireService.conversations[i];
       const participants = conversation.participants;
       if (this.participantExist(participants, firstUserUid, secondUserUid)) {
-        console.log('Conversation gefunden!', conversation);
         return new Conversation(conversation);
       }
     }
-    console.log('keine Conversation gefunden, erstelle neue!');
     return false;
   }
 
