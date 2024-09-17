@@ -4,7 +4,6 @@ import { UiService } from '../../services/ui.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FormsModule } from '@angular/forms';
-import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.class';
 
@@ -12,7 +11,7 @@ import { User } from '../../models/user.class';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, VerifyPasswordComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
 })

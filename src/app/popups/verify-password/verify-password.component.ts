@@ -11,7 +11,7 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-verify-password',
   standalone: true,
-  imports: [CommonModule, FormsModule, EditProfileComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './verify-password.component.html',
   styleUrl: './verify-password.component.scss'
 })
@@ -52,7 +52,6 @@ export class VerifyPasswordComponent implements OnInit{
     this.authService.reAuthenticateUser(email, password);
     this.closeVerifyPassword();
     this.authService.loginTooLongAgo = false;
-    this.uiService.toggleProfileChangeConfirmationPopup();
   }
 
   
@@ -62,7 +61,7 @@ export class VerifyPasswordComponent implements OnInit{
    */
   closeVerifyPassword() {
     this.uiService.toggleVerifyPassword();
-    this.uiService.toggleEditProfile();
-    this.uiService.toggleViewProfile();
+    this.uiService.showEditProfilePopup = false;
+    this.uiService.showViewProfilePopup = false;
   }
 }
