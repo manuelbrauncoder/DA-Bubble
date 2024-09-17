@@ -13,9 +13,6 @@
 
 .popup-edit-channel {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     z-index: 3;
 }
 
@@ -28,6 +25,10 @@
     z-index: 3;
     right: 0;
     top: 2.8125rem;
+}
+
+.title-wrapper {
+    position: relative;
 }
 
 
