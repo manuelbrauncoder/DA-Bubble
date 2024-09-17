@@ -38,7 +38,6 @@ app-root {
   }
 }
 
-app-header,
 app-header-for-usermanagement {
   display: flex;
   justify-content: space-between;
@@ -46,8 +45,24 @@ app-header-for-usermanagement {
   width: 100%;
 }
 
+app-header{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  height: 102px;
+  @media(max-width: 999px) {
+    padding: 0 1rem;
+  }
+}
+
 app-header-for-usermanagement {
   align-items: center;
+}
+
+app-search-bar{
+  width: 100%;
 }
 
 app-main-content {

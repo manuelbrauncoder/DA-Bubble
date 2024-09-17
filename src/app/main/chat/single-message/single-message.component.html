@@ -15,7 +15,9 @@
         <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'current-user-content' : 'user-content'"
             class="content">
             <span>{{ currentMessage.content }}</span>
-            <img src="{{currentMessage.data[0]}}" alt="">
+            @if (currentMessage.data.length > 0) {
+                <img class="data-preview" src="{{currentMessage.data[0]}}" alt="">
+            }
         </div>
         }
 

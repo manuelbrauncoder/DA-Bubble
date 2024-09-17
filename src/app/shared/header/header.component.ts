@@ -6,13 +6,14 @@ import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { UserService } from '../../services/user.service';
 import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
+import { SearchBarComponent } from "../search-bar/search-bar.component";
 
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, EditUserAndLogoutPopupComponent],
+  imports: [CommonModule, EditUserAndLogoutPopupComponent, SearchBarComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

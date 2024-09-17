@@ -6,11 +6,13 @@ import { FirestoreService } from '../../services/firestore.service';
 import { ChannelService } from '../../services/channel.service';
 import { UserService } from '../../services/user.service';
 import { ConversationService } from '../../services/conversation.service';
+import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
+import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 
 @Component({
   selector: 'app-workspace-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SearchBarComponent],
   templateUrl: './workspace-menu.component.html',
   styleUrl: './workspace-menu.component.scss'
 })
@@ -21,6 +23,7 @@ export class WorkspaceMenuComponent {
   channelService = inject(ChannelService);
   userService = inject(UserService);
   conversationService = inject(ConversationService);
+  observerService = inject(BreakpointObserverService);
 
   openNewMessage() {
     this.uiService.changeMainContent('newMessage');

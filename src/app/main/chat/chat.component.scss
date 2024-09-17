@@ -6,6 +6,9 @@ main{
     width: 100%;
     background-color: white;
     border-radius: 1.875rem;
+    @media(max-width: 999px) {
+        border-radius: 0;
+    }
 }
 
 app-channel-chat, app-direct-message{

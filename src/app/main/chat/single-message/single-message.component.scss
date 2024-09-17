@@ -111,6 +111,7 @@
 }
 
 .current-user-content {
+    @include dFlex($fd: column, $g: 1rem);
     background-color: $color-purple-3;
     border-radius: 1.875rem 0 1.875rem 1.875rem;
     padding: 0.938rem;
@@ -121,6 +122,7 @@
 }
 
 .user-content {
+    @include dFlex($fd: column, $g: 1rem);
     background-color: $color-active-channel;
     border-radius: 0 1.875rem 1.875rem 1.875rem;
     padding: 0.938rem;
@@ -301,4 +303,10 @@
         transform: translateX(-3rem);
         opacity: 0;
     }
+}
+
+.data-preview {
+    width: 6rem;
+    height: 4rem;
+    object-fit: cover;
 }

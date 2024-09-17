@@ -41,7 +41,11 @@ export class UiService {
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
 
-  
+  showMobileNavigation: boolean = false;
+
+  toggleMobileNavigation(){
+    this.showMobileNavigation = !this.showMobileNavigation;
+  }
 
   mobileBackBtn(){
     if (this.showThread) {
@@ -50,6 +54,7 @@ export class UiService {
     } else {
       this.showChat = false;
       this.showWorkspaceMenu = true;
+      this.showMobileNavigation = false;
     }
   }
 
@@ -91,18 +96,21 @@ export class UiService {
     this.showWorkspaceMenu = false;
     this.showThread = false;
     this.showChat = true;
+    this.showMobileNavigation = true;
   }
 
   openThreadMobile(){
     this.showWorkspaceMenu = false;
     this.showThread = true;
     this.showChat = false;
+    this.showMobileNavigation = true;
   }
 
   openWorkspaceMenuMobile(){
     this.showWorkspaceMenu = true;
     this.showThread = false;
     this.showChat = false;
+    this.showMobileNavigation = false;
   }
 
   closeThreadWindow() {

@@ -8,6 +8,9 @@ header {
     padding: 2rem 2.8125rem 1.25rem 2.8125rem;
     background-color: white;
     border-radius: 1.875rem 1.875rem 0 0;
+    @media(max-width: 999px) {
+        border-radius: 0;
+    }
 
     .input-wrapper {
         position: relative;
