@@ -8,9 +8,13 @@ main {
     padding: 2.5rem;
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 1.25rem);
     min-width: 30rem;
+    height: 100%;
 
     @media(max-width: 999px) {
         border-radius: 0;
+        overflow-y: auto;
+        min-width: unset;
+        width: 100%;
     }
 }
 

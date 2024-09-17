@@ -48,7 +48,7 @@ export class SendMessageComponent implements OnInit {
     this.copyRecipient();
   }
 
-  isBtnDisabled(){
+  isBtnDisabled() {
     return this.disableInput || this.content.length < 2;
   }
 
@@ -89,15 +89,13 @@ export class SendMessageComponent implements OnInit {
    */
   async handleChannelMessage() {
     this.currentRecipient = new Channel(this.currentRecipient as Channel);
-    const message = this.createMessage(this.content);
-    message.data = this.data;
+    const message = this.createMessage(this.content, this.data);
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
       this.createThreadInChannelMessage(message);
     }
     await this.userService.fireService.addChannel(this.userService.fireService.currentChannel);
-
   }
 
   createThreadInChannelMessage(message: Message) {
@@ -115,8 +113,7 @@ export class SendMessageComponent implements OnInit {
    */
   async handleDirectMessage() {
     this.currentRecipient = new Conversation(this.currentRecipient as Conversation);
-    const message = this.createMessage(this.content);
-    message.data = this.data;
+    const message = this.createMessage(this.content, this.data);
     if (!this.threadMessage) {
       this.currentRecipient.messages.push(message);
     } else {
@@ -145,13 +142,13 @@ export class SendMessageComponent implements OnInit {
    * @param content from the message
    * @returns a Message Object
    */
-  createMessage(content: string): Message {
+  createMessage(content: string, data?: string[]): Message {
     return new Message({
       time: this.authService.getCurrentTimestamp(),
       sender: this.userService.getCurrentUser().uid,
       content: content,
       thread: new Thread,
-      data: [],
+      data: data || [],
       reactions: []
     });
   }
@@ -164,10 +161,6 @@ export class SendMessageComponent implements OnInit {
       const fileUrls = await this.storageService.uploadFiles(this.selectedFiles);
       this.data = fileUrls;
     }
-  
-    // const message = this.createMessage(this.content);
-    // message.data = this.data; 
-  
     if (this.currentRecipient instanceof Channel) {
       await this.handleChannelMessage();
       this.channelService.scrolledToBottomOnStart = false;
@@ -175,12 +168,16 @@ export class SendMessageComponent implements OnInit {
       await this.handleDirectMessage();
       this.conversationService.scrolledToBottomOnStart = false;
     }
-  
+    this.setDefaultsAndSyncMessages();
+
+  }
+
+  setDefaultsAndSyncMessages() {
     this.userService.fireService.getMessagesPerDayForThread();
     this.content = '';
     this.data = [];
     this.filePreviews = [];
-    this.selectedFiles = []; 
+    this.selectedFiles = [];
     this.threadService.scrolledToBottomOnStart = false;
     this.redirectToChat();
   }
@@ -205,7 +202,7 @@ export class SendMessageComponent implements OnInit {
     const files: FileList = event.target.files;
     if (files.length > 0) {
       this.selectedFiles = Array.from(files);
-      this.filePreviews = []; 
+      this.filePreviews = [];
 
       this.selectedFiles.forEach(file => {
         const reader = new FileReader();
@@ -214,6 +211,14 @@ export class SendMessageComponent implements OnInit {
         };
         reader.readAsDataURL(file);
       });
+    }
+  }
+
+  setidforFileInput(){
+    if (this.threadMessage) {
+      return 'thread';
+    } else {
+      return 'chat';
     }
   }
 

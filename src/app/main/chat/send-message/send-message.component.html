@@ -5,10 +5,10 @@
         <div class="add-elements">
             <div class="bounding-box">
                 <div>
-                    <label for="file-upload" class="custom-file-upload">
+                    <label [for]="setidforFileInput()" class="custom-file-upload">
                         <img src="assets/icons/channel-chat/plusIcon.svg" alt="Upload Icon">
                     </label>
-                    <input id="file-upload" type="file" (change)="onFilesSelected($event)" multiple/>
+                    <input class="file-upload" [id]="setidforFileInput()" type="file" (change)="onFilesSelected($event)" multiple/>
                 </div>             
             </div>
 
