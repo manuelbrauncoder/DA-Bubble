@@ -24,6 +24,9 @@ export class PopupAddUserComponent implements OnInit {
 
   selectedUsers: string[] = [];
   availableUsers: string[] = [];
+  usersAlreadyInChannel: string[] = [];
+
+  filteredUsers: string[] = [];
 
   /**
    * copy the current channel to updated channel
@@ -32,7 +35,7 @@ export class PopupAddUserComponent implements OnInit {
    */
   ngOnInit(): void {
     this.updatedChannel = new Channel(this.channelService.fireService.currentChannel);
-    this.selectedUsers = [...this.channelService.fireService.currentChannel.users];
+    this.usersAlreadyInChannel = [...this.channelService.fireService.currentChannel.users];
     this.availableUsers = this.getAvailableUsers();
   }
 
@@ -43,7 +46,7 @@ export class PopupAddUserComponent implements OnInit {
    * clear arrays and close popup
    */
   async onSubmit() {
-    this.updatedChannel.users = [...this.selectedUsers];
+    this.updatedChannel.users = [...this.selectedUsers, ...this.usersAlreadyInChannel];
     await this.channelService.fireService.addChannel(this.updatedChannel);
     this.channelService.toggleActiveChannel(this.updatedChannel);
     this.clearArrAndClosePopup();
@@ -62,7 +65,7 @@ export class PopupAddUserComponent implements OnInit {
    */
   getAvailableUsers() {
     let userIds: string[] = [];
-    const users = this.channelService.fireService.users.filter(user => !this.selectedUsers.some(selUser => selUser === user.uid));
+    const users = this.channelService.fireService.users.filter(user => !this.usersAlreadyInChannel.some(selUser => selUser === user.uid));
     users.forEach((user) => {
       userIds.push(user.uid);
     })
@@ -74,23 +77,26 @@ export class PopupAddUserComponent implements OnInit {
    * @returns all avalableUsers or a filtered Array
    */
   searchUsers() {
+    this.filteredUsers = [];
     if (!this.searchInput) {
-      return this.availableUsers;
+      this.filteredUsers = [];
     } else {
-      return this.availableUsers.filter((uid) =>
+      const searchedUsers = this.availableUsers.filter((uid) =>
         this.userService.getUserData(uid).username.toLowerCase().includes(this.searchInput));
-    }
+      this.filteredUsers = searchedUsers;
+     }
   }
 
   /**
    * select user and remove it from availableUsers array
    * @param user 
    */
-  selectUser(userUid: string) {
+  selectUser(userUid: string, filterIndex: number) {
     this.selectedUsers.push(userUid);
     const index = this.availableUsers.findIndex(uid => uid === userUid);
     if (index !== -1) {
       this.availableUsers.splice(index, 1);
+      this.filteredUsers.splice(filterIndex, 1);
     }
   }
 
