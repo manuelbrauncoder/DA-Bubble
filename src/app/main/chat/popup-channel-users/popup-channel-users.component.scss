@@ -22,6 +22,10 @@
     overflow-y: auto;
 }
 
+.users-in-edit-channel {
+    @include dFlex($fd: column, $g: 0.813rem, $ai: flex-start, $jc: flex-start);
+}
+
 .user-name {
     font-family: Nunito;
     font-size: 1.125rem;

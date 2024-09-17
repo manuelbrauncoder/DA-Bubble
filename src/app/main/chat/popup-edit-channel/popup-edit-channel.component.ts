@@ -6,11 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.class';
+import { PopupChannelUsersComponent } from "../popup-channel-users/popup-channel-users.component";
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-popup-edit-channel',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PopupChannelUsersComponent],
   templateUrl: './popup-edit-channel.component.html',
   styleUrl: './popup-edit-channel.component.scss'
 })
@@ -18,6 +20,7 @@ export class PopupEditChannelComponent {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
 
   nameInput = '';
   descriptionInput = '';

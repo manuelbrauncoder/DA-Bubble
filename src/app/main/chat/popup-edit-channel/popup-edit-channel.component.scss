@@ -30,7 +30,8 @@ main {
 }
 
 .channel-name,
-.channel-description {
+.channel-description,
+.channel-members-wrapper {
     border-radius: 1.25rem;
     @include dFlex($fd: column, $g: 1.25rem, $jc: flex-start, $ai: flex-start);
     width: 100%;

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { UiService } from '../../../services/ui.service';
 import { ChannelService } from '../../../services/channel.service';
 import { UserService } from '../../../services/user.service';
@@ -18,4 +18,6 @@ export class PopupChannelUsersComponent {
   channelService = inject(ChannelService);
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
+
+  @Input() showInEditChannelPopup = false;
 }

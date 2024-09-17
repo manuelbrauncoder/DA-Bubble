@@ -63,6 +63,12 @@
         </div>
     </div>
 
-
+    <!-- Channel Members -->
+     @if (observerService.isMobile) {
+        <div class="channel-members-wrapper show-border">
+            <app-popup-channel-users [showInEditChannelPopup]="true"></app-popup-channel-users>
+         </div>
+     }
+     
     <button (click)="leaveChannel()" type="button" class="primary-btn">Channel verlassen</button>
 </main>
