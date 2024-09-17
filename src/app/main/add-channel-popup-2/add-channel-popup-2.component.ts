@@ -23,6 +23,7 @@ export class AddChannelPopup2Component implements OnInit {
 
   selectedUsers: string[] = [];
   availableUsers: string[] = [];
+  filteredUsers: string[] = [];
 
   users: 'all' | 'certain' = 'all';
 
@@ -41,10 +42,11 @@ export class AddChannelPopup2Component implements OnInit {
    * @returns all avalableUsers or a filtered Array
    */
   searchUsers() {
+    this.filteredUsers = [];
     if (!this.searchInput) {
-      return this.availableUsers;
+      this.filteredUsers = [];
     } else {
-      return this.availableUsers.filter((uid) =>
+      this.filteredUsers = this.availableUsers.filter((uid) =>
        this.userService.getUserData(uid).username.toLowerCase().includes(this.searchInput));
     }
   }
@@ -53,11 +55,12 @@ export class AddChannelPopup2Component implements OnInit {
    * select user and remove it from availableUsers array
    * @param user 
    */
-  selectUser(uid: string) {
+  selectUser(uid: string, filterIndex: number) {
     this.selectedUsers.push(uid);
     const index = this.availableUsers.findIndex(u => u === uid);
     if (index !== -1) {
       this.availableUsers.splice(index, 1);
+      this.filteredUsers.splice(filterIndex, 1);
     }
   }
 

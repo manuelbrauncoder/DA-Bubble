@@ -81,11 +81,11 @@
                 }
             </div>
         <div class="search-input-wrapper">
-            <input [(ngModel)]="searchInput" placeholder="Name eingeben" name="searchInput" type="text" class="channel-input">
-            @if (searchInput) {
+            <input (input)="searchUsers()" [(ngModel)]="searchInput" placeholder="Name eingeben" name="searchInput" type="text" class="channel-input">
+            @if (filteredUsers.length > 0) {
             <div class="users">
-                @for (uid of searchUsers(); track $index; let index = $index) {
-                    <div (click)="selectUser(uid)" class="user">
+                @for (uid of filteredUsers; track $index; let index = $index) {
+                    <div (click)="selectUser(uid, index)" class="user">
                         <div class="img-wrapper">
                             <hr [ngClass]="userService.getUserData(uid).currentlyLoggedIn ? 'online-state' : 'offline-state'">
                             <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(uid))" alt="">
