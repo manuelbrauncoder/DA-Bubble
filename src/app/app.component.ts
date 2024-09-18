@@ -4,7 +4,6 @@ import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
 import { UserService } from './services/user.service';
-import { User } from './models/user.class';
 import { WorkspaceMenuComponent } from "./main/workspace-menu/workspace-menu.component";
 import { LoginComponent } from './userManagement/login/login.component';
 import { FooterComponent } from "./shared/footer/footer.component";
@@ -13,10 +12,12 @@ import { HeaderForUsermanagementComponent } from "./shared/header-for-usermanage
 import { UiService } from './services/ui.service';
 import { BreakpointObserverService } from './services/breakpoint-observer.service';
 import { MobilePopupComponent } from "./shared/mobile-popup/mobile-popup.component";
+import { slideFromBottom } from "./shared/animations";
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  animations: [slideFromBottom],
   imports: [RouterModule, RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent, MobilePopupComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

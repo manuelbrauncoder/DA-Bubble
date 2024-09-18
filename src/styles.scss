@@ -74,6 +74,11 @@ app-main-content {
   }
 }
 
+app-mobile-popup{
+  z-index: 5;
+  width: 100%;
+}
+
 app-footer {
   position: fixed;
   bottom: 1%;
