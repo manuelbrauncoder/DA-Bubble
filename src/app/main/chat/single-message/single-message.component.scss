@@ -241,8 +241,8 @@
     min-width: 50%;
     border: 1px solid $color-purple-light;
     background-color: white;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 1.25rem;
+    padding: 1.25rem;
     @include dFlex($fd: column, $g: 1rem);
 
     .footer {
@@ -260,10 +260,9 @@
         outline: none;
         resize: none;
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
-        text-align: left;
+        line-height: 1.534rem;
         color: $color-disabled-grey;
     }
 }

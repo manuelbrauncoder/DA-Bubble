@@ -42,6 +42,7 @@ export class UiService {
   showTaggableUsersPopup: boolean = false;
 
   showMobileNavigation: boolean = false;
+  showMobilePopup: boolean = false;
 
   toggleMobileNavigation(){
     this.showMobileNavigation = !this.showMobileNavigation;

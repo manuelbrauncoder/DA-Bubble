@@ -12,11 +12,12 @@ import { CommonModule } from '@angular/common';
 import { HeaderForUsermanagementComponent } from "./shared/header-for-usermanagement/header-for-usermanagement.component";
 import { UiService } from './services/ui.service';
 import { BreakpointObserverService } from './services/breakpoint-observer.service';
+import { MobilePopupComponent } from "./shared/mobile-popup/mobile-popup.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule ,RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent],
+  imports: [RouterModule, RouterOutlet, HeaderComponent, WorkspaceMenuComponent, LoginComponent, FooterComponent, CommonModule, HeaderForUsermanagementComponent, MobilePopupComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
