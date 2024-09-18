@@ -19,19 +19,8 @@
         </svg>
     </header>
 
-
-
     <div #threadMessages class="messages">
-        <div class="date-divider">
-            <div class="line-wrapper">
-                <hr class="line">
-            </div>
-            <h3 class="messages-date">{{ fireService.currentThread.rootMessage.time| formatDateForList}} </h3>
-            <div class="line-wrapper">
-                <hr class="line">
-            </div>
-
-        </div>
+        <app-date-divider [rootMessage]="true"></app-date-divider>
 
         <app-single-message [threadMessage]="true" [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
             
@@ -45,21 +34,9 @@
         }
 
         @for (day of fireService.messagesPerDayThread; track $index) {
-            
             @if (!compareDate(day)) {
-                <div class="date-divider">
-                    <div class="line-wrapper">
-                        <hr class="line">
-                    </div>
-                    <h3 class="messages-date">{{ day.messages[0].time | formatDateForList}} </h3>
-                    <div class="line-wrapper">
-                        <hr class="line">
-                    </div>
-    
-                </div>
+                <app-date-divider [day]="day"></app-date-divider>
             }
-            
-
             @for (message of day.messages; track $index) {
                 <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
             }
@@ -75,7 +52,3 @@
     }
 
 </div>
-
-<!-- change @for to messagesPerDayForThread
- add date divider from channel-chat to for loop
- call method on send new message -->

@@ -8,6 +8,7 @@ import { ConversationService } from '../../../services/conversation.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.class';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-new-message',
@@ -20,6 +21,7 @@ export class NewMessageComponent {
   fireService = inject(FirestoreService);
   conversationService = inject(ConversationService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
 
   searchInput = '';
   filteredResults: (User | Channel)[] = [];
@@ -28,6 +30,10 @@ export class NewMessageComponent {
   recipientForChild: Channel | Conversation = new Channel;
   userUid = '';
   isChildInputDisabled = true;
+
+  setPlaceholderForSearchbar(){
+    return this.observerService.isMobile ? 'An: #channel, oder @jemand' : 'An: #channel, oder @jemand oder E-Mail Adresse';
+  }
 
   /**
    * 

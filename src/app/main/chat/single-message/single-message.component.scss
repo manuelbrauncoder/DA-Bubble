@@ -51,6 +51,11 @@
     height: 4.375rem;
     border-radius: 100%;
     background-color: white;
+
+    @media(max-width: 999px) {
+        width: 3.125rem;
+        height: 3.125rem;
+    }
 }
 
 .message {
@@ -118,6 +123,10 @@
 
     span {
         color: white;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.449rem;
     }
 }
 
@@ -130,6 +139,10 @@
 
     span {
         color: black;
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.449rem;
     }
 }
 

@@ -6,11 +6,12 @@ import { UiService } from '../../services/ui.service';
 import { FormatDateForListPipe } from '../../pipes/format-date-for-list.pipe';
 import { DateMessages } from '../../models/message.class';
 import { ThreadService } from '../../services/thread.service';
+import { DateDividerComponent } from "../chat/single-message/date-divider/date-divider.component";
 
 @Component({
   selector: 'app-thread',
   standalone: true,
-  imports: [SingleMessageComponent, SendMessageComponent, FormatDateForListPipe],
+  imports: [SingleMessageComponent, SendMessageComponent, FormatDateForListPipe, DateDividerComponent],
   templateUrl: './thread.component.html',
   styleUrl: './thread.component.scss'
 })

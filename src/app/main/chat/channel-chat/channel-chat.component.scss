@@ -30,6 +30,30 @@
     position: relative;
 }
 
+.add-user {
+    @include dFlex();
+    cursor: pointer;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 100%;
+    background-color: $color-active-channel;
+    transition: ease-in 0.15s;
+    @media(max-width: 999px) {
+        height: 2rem;
+        width: 2rem;
+    }
+
+    &:hover {
+        svg,
+        path,
+        rect {
+            fill: $color-purple-3;
+            scale: 1.05;
+            transition: ease-in 0.15s;
+        }
+    }
+}
+
 .popup-relative {
     position: absolute;
     z-index: 3;
@@ -53,6 +77,7 @@ header {
 
     @media(max-width: 999px) {
         border-radius: 0;
+        padding: 0.625rem 1rem;
     }
 
     .title {
@@ -67,6 +92,11 @@ header {
             font-size: 1.5rem;
             font-weight: 700;
             line-height: 2.04625rem;
+
+            @media(max-width: 999px) {
+                font-size: 1.25rem;
+                line-height: 1.705rem;
+            }
         }
 
         &:hover {
@@ -122,23 +152,6 @@ header {
                 color: $color-purple-3;
             }
         }
-
-        .add-user {
-            padding: 0.25rem;
-            background-color: $color-active-channel;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 100%;
-            cursor: pointer;
-            transition: ease-in 0.15s;
-
-            &:hover path,
-            rect {
-                fill: $color-purple-3;
-                scale: 1.05;
-                transition: ease-in 0.15s;
-            }
-        }
     }
 }
 
@@ -146,6 +159,9 @@ app-send-message {
     height: 182px;
     width: 100%;
     padding: 1rem 2.188rem 2.5rem 2.188rem;
+    @media(max-width: 999px) {
+        padding: 1rem;
+    }
 }
 
 .messages {
@@ -156,36 +172,6 @@ app-send-message {
     padding: 1rem 0;
     overflow-y: auto;
     height: calc(100% - 282.5px);
-}
-
-.date-divider {
-    margin-top: auto;
-    @include dFlex();
-    padding: 0 2.188rem;
-
-    .messages-date {
-        padding: 0.313rem 0.938rem;
-        border: 1px solid $color-purple-light;
-        border-radius: 100vw;
-        width: fit-content;
-        font-family: Nunito;
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 1.534rem;
-        color: black;
-    }
-
-    .line-wrapper {
-        flex-grow: 2;
-        @include dFlex();
-
-        .line {
-            border: unset;
-            height: 1px;
-            width: 100%;
-            background-color: $color-purple-light;
-        }
-    }
 }
 
 .channel-info {

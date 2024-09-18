@@ -8,8 +8,10 @@ header {
     width: 100%;
     border-radius: 1.875rem 1.875rem 0 0;
     @include dFlex($jc: flex-start);
+
     @media(max-width: 999px) {
         border-radius: 0;
+        padding: 0.625rem 1rem;
     }
 
     >div {
@@ -23,6 +25,11 @@ header {
             width: 3.125rem;
             height: 3.125rem;
             border-radius: 100%;
+
+            @media(max-width: 999px) {
+                width: 2.5rem;
+                height: 2.5rem;
+            }
         }
 
         h3 {
@@ -30,8 +37,12 @@ header {
             font-size: 1.5rem;
             font-weight: 700;
             line-height: 2.04625rem;
-            text-align: left;
             color: black;
+
+            @media(max-width: 999px) {
+                font-size: 1.25rem;
+                line-height: 1.705rem;
+            }
         }
 
         &:hover {
@@ -51,36 +62,6 @@ header {
     height: calc(100% - 17.40625rem);
 }
 
-.date-divider {
-    margin-top: auto;
-    @include dFlex();
-    padding: 0 2.188rem;
-
-    .messages-date {
-        padding: 0.313rem 0.938rem;
-        border: 1px solid $color-purple-light;
-        border-radius: 100vw;
-        width: fit-content;
-        font-family: Nunito;
-        font-size: 1.125rem;
-        font-weight: 400;
-        line-height: 1.534rem;
-        color: black;
-    }
-
-    .line-wrapper {
-        flex-grow: 2;
-        @include dFlex();
-
-        .line {
-            border: unset;
-            height: 0.0625rem;
-            width: 100%;
-            background-color: $color-purple-light;
-        }
-    }
-}
-
 .message-recipient {
     @include dFlex($fd: column, $ai: flex-start, $g: 1.5rem);
     padding: 1rem 2.188rem;
@@ -88,10 +69,16 @@ header {
 
     .name {
         @include dFlex($g: 1.563rem, $ai: flex-end);
+
         img {
             border-radius: 100%;
             height: 6.25rem;
             width: 6.25rem;
+
+            @media(max-width: 999px) {
+                height: 4.5rem;
+                width: 4.5rem;
+            }
         }
 
         h3 {
@@ -99,8 +86,10 @@ header {
             font-size: 1.5rem;
             font-weight: 700;
             line-height: 2.04625rem;
-            text-align: left;
             color: black;
+
+            @media(max-width: 999px) {
+            }
         }
     }
 
@@ -112,11 +101,13 @@ header {
             line-height: 1.705rem;
             text-align: left;
             color: $color-offline-gray;
+            
 
             .user-name {
                 color: $color-purple-3;
                 cursor: pointer;
                 transition: ease-in 0.15s;
+
                 &:hover {
                     font-weight: 700;
                     transition: ease-in 0.15s;
@@ -130,8 +121,12 @@ app-send-message {
     height: 182px;
     width: 100%;
     padding: 1rem 2.188rem 2.5rem 2.188rem;
+
+    @media(max-width: 999px) {
+        padding: 1rem;
+    }
 }
 
-.room{
+.room {
     font-weight: 700 !important;
 }

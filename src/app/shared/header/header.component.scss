@@ -1,12 +1,13 @@
 a {
   padding: 0;
-  width: 15.132rem;
-  height: 4.375rem;
 }
 
 .small-logo {
   width: 15.132rem;
-  height: 4.375rem;
+  height: auto;
+  @media(max-width: 999px) {
+    width: 10rem;
+  }
 }
 
 app-search-bar{
@@ -16,11 +17,19 @@ app-search-bar{
 .mobile-navigation{
   display: flex;
   align-items: center;
+  gap: 0.625rem;
   >div{
     display: flex;
     align-items: center;
+    gap: 0.625rem;
+    h1{
+      font-size: 1.5rem;
+    }
   }
   img{
+    height: 3.125rem;
+    width: 3.125rem;
+    border-radius: 100%;
     cursor: default;
   }
   svg{
@@ -60,13 +69,15 @@ app-search-bar{
 
 .avatar-container {
   position: relative;
-  width: 4.375rem;
-  height: 4.375rem;
 
   .avatar-img {
     width: 4.375rem;
     height: 4.375rem;
     border-radius: 100%;
+    @media(max-width: 999px) {
+      width: 3.125rem;
+      height: 3.125rem;
+    }
   }
 
   .online-status {

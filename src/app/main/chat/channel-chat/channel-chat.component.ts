@@ -12,12 +12,13 @@ import { fadeIn } from "../../../shared/animations";
 import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
+import { DateDividerComponent } from "../single-message/date-divider/date-divider.component";
 
 @Component({
   selector: 'app-channel-chat',
   standalone: true,
   animations: [fadeIn],
-  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent, FormatDateForListPipe, CommonModule],
+  imports: [PopupAddUserComponent, PopupEditChannelComponent, PopupChannelUsersComponent, SendMessageComponent, SingleMessageComponent, FormatDateForListPipe, CommonModule, DateDividerComponent],
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })

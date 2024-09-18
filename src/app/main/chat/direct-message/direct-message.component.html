@@ -6,16 +6,7 @@
 </header>
 <main #conversationMessages class="messages">
     @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
-    <div class="date-divider">
-        <div class="line-wrapper">
-            <hr class="line">
-        </div>
-        <h3 class="messages-date">{{ day.messages[0].time | formatDateForList}} </h3>
-        <div class="line-wrapper">
-            <hr class="line">
-        </div>
-
-    </div>
+    <app-date-divider [day]="day"></app-date-divider>
     @for (message of day.messages; track $index) {
     <app-single-message [currentMessage]="message"></app-single-message>
     }

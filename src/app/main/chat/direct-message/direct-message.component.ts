@@ -5,11 +5,12 @@ import { ConversationService } from '../../../services/conversation.service';
 import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
+import { DateDividerComponent } from "../single-message/date-divider/date-divider.component";
 
 @Component({
   selector: 'app-direct-message',
   standalone: true,
-  imports: [SingleMessageComponent, SendMessageComponent, FormatDateForListPipe, CommonModule],
+  imports: [SingleMessageComponent, SendMessageComponent, FormatDateForListPipe, CommonModule, DateDividerComponent],
   templateUrl: './direct-message.component.html',
   styleUrl: './direct-message.component.scss'
 })
