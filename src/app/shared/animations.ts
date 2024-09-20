@@ -1,14 +1,13 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-const popupHidden = { opacity: '0' };
-const popupVisible = { opacity: '1' };
+import { animate, style, transition, trigger } from '@angular/animations';
+
 const timing = '225ms ease-in';
 
 export const fadeIn = trigger('fadeIn', [
-    transition(':enter', [style(popupHidden), animate(timing, style(popupVisible))]),
-    transition(':leave', [style(popupVisible), animate(timing, style(popupHidden))]),
+    transition(':enter', [style({ opacity: '0' }), animate(timing, style({ opacity: '1' }))]),
+    transition(':leave', [style({ opacity: '1' }), animate(timing, style({ opacity: '0' }))]),
 ]);
 
-export const toggleWidth25 = trigger('toggleWidth25', [
+export const toggleWorkspace = trigger('toggleWorkspace', [
     transition(':enter', [
         style({ width: '0', opacity: 0 }),
         animate('0.2s ease-out', style({ width: '380px', opacity: 1 }))
@@ -18,7 +17,7 @@ export const toggleWidth25 = trigger('toggleWidth25', [
     ])
 ]);
 
-export const toggleWidth30 = trigger('toggleWidth30', [
+export const toggleThread = trigger('toggleThread', [
     transition(':enter', [
         style({ width: '0', opacity: 0 }),
         animate('0.2s ease', style({ width: '440px', opacity: 1 }))
