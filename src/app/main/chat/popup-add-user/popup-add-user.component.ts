@@ -65,7 +65,7 @@ export class PopupAddUserComponent implements OnInit {
   clearArrAndClosePopup(){
     this.selectedUsers = [];
     this.availableUsers = [];
-    this.uiService.toggleAddUserToChannelPopup();
+    this.togglePopup();
   }
 
 
