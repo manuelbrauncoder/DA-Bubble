@@ -1,1 +1,46 @@
-<input [ngClass]="showInWorkspaceMenu ? 'workspace-input' : ''" type="text" [placeholder]="placeholderText">
+<div class="input-wrapper">
+
+    <input (input)="search()" [(ngModel)]="searchInput" [ngClass]="showInWorkspaceMenu ? 'workspace-input' : ''"
+        type="text" [placeholder]="placeholderText">
+
+    @if (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0) {
+    <div class="search-results">
+
+        @if (filteredUsers.length > 0) {
+        <div class="users">
+            <h3>User:</h3>
+            @for (user of filteredUsers; track $index) {
+            <div class="user">
+                <span>{{ user.username }}</span>
+            </div>
+            }
+        </div>
+        }
+
+        @if (filteredChannels.length > 0) {
+            <div class="channels">
+                <h3>Channels:</h3>
+                @for (channel of filteredChannels; track $index) {
+                    <div class="channel">
+                        <span>{{ channel.name }}</span>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (filteredMessages.length > 0) {
+            <div class="messages">
+                <h3>Messages:</h3>
+                @for (message of filteredMessages; track $index) {
+                    <div class="message">
+                        <span>{{ message.content }}</span>
+                    </div>
+                }
+            </div>
+        }
+        
+        
+    </div>
+    }
+
+</div>

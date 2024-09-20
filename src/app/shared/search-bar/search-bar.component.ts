@@ -1,14 +1,79 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { FirestoreService } from '../../services/firestore.service';
+import { Channel } from '../../models/channel.class';
+import { UserService } from '../../services/user.service';
+import { Message } from '../../models/message.class';
+import { User } from '../../models/user.class';
+import { Conversation } from '../../models/conversation.class';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })
 export class SearchBarComponent {
   @Input() showInWorkspaceMenu = false;
   @Input() placeholderText = 'Devspace durchsuchen';
+
+  fireService = inject(FirestoreService);
+  userService = inject(UserService);
+
+  currentUser = this.userService.getCurrentUser();
+
+  searchInput = '';
+
+  filteredUsers: User[] = [];
+  filteredChannels: Channel[] = [];
+  filteredMessages: Message[] = [];
+
+
+  resetSearch() {
+    this.filteredUsers = [];
+    this.filteredChannels = [];
+    this.filteredMessages = [];
+  }
+
+  search() {
+    const searchTerm = this.searchInput.trim().toLowerCase();
+    if (searchTerm) {
+      this.resetSearch();
+      this.searchUsers(searchTerm);
+      this.searchChannels(searchTerm);
+      this.searchMessages(searchTerm);
+      this.logAll();
+    } else {
+      this.resetSearch();
+    }
+  }
+
+  searchMessages(searchTerm: string) {
+    
+      
+  }
+
+
+  searchUsers(searchTerm: string) {
+    this.filteredUsers = this.fireService.users
+      .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
+      .map(user => new User(user));
+  }
+
+  searchChannels(searchTerm: string) {
+    this.filteredChannels = this.fireService.channels
+      .filter(channel => channel.name.toLowerCase().includes(searchTerm))
+      .map(channel => new Channel(channel));
+  }
+
+  logAll(){
+    console.log('Filtered Users:', this.filteredUsers);
+    console.log('Filtered Channels:', this.filteredChannels);
+    console.log('Filtered Messages:', this.filteredMessages);
+  }
+
+
+
 }
