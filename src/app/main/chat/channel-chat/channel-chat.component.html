@@ -92,8 +92,9 @@
 
 <app-send-message [currentRecipient]="channelService.fireService.currentChannel"></app-send-message>
 } @else {
-<h1>You are not a channel member!!</h1>
-<h3>Anfrage für Channel Beitritt an Ersteller senden?</h3>
+<h1>Du bist leider kein Mitglied in diesem Kanal.</h1>
+<h3>Möchtest du eine Beitrittsanfrage stellen?</h3>
+<button (click)="sendJoinRequest()" type="button" class="primary-btn">Senden</button>
 }
 
 

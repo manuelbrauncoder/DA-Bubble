@@ -13,6 +13,10 @@ import { FormatDateForListPipe } from '../../../pipes/format-date-for-list.pipe'
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 import { DateDividerComponent } from "../single-message/date-divider/date-divider.component";
+import { ConversationService } from '../../../services/conversation.service';
+import { Message } from '../../../models/message.class';
+import { Thread } from '../../../models/thread.class ';
+import { Conversation } from '../../../models/conversation.class';
 
 @Component({
   selector: 'app-channel-chat',
@@ -28,10 +32,12 @@ export class ChannelChatComponent implements AfterViewChecked {
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
   observerService = inject(BreakpointObserverService);
+  conversationService = inject(ConversationService);
+
 
   @ViewChild('channelMessages') scrollContainer!: ElementRef;
 
-  toggleAddUserToChannel(){
+  toggleAddUserToChannel() {
     if (!this.observerService.isMobile) {
       this.uiService.toggleAddUserToChannelPopup();
     } else {
@@ -39,13 +45,12 @@ export class ChannelChatComponent implements AfterViewChecked {
       this.uiService.toggleMobilePopup();
     }
   }
-  
 
   ngAfterViewChecked(): void {
     this.channelService.scrollAtStart(this.scrollContainer);
   }
 
-  getChannelCreator(){
+  getChannelCreator() {
     if (this.userService.getCurrentUser().uid === this.channelService.fireService.currentChannel.creator) {
       return 'Du hast';
     } else {
@@ -53,7 +58,7 @@ export class ChannelChatComponent implements AfterViewChecked {
     }
   }
 
-  getDate(){
+  getDate() {
     const today = new Date();
     const dateToday = today.toLocaleDateString();
     const channelTime = new Date(this.channelService.fireService.currentChannel.time);
@@ -65,13 +70,58 @@ export class ChannelChatComponent implements AfterViewChecked {
     }
   }
 
- 
-  
+  setRecipient() {
+    const creatorUid = this.channelService.fireService.currentChannel.creator;
+    if (this.channelService.fireService.currentChannel.users.some(u => u === creatorUid)) {
+      return creatorUid;
+    } else {
+      if (this.channelService.fireService.currentChannel.users.length !== 0) {
+        return this.channelService.fireService.currentChannel.users[0];
+      } else {
+        return '';
+      }
+    }
+  }
 
-  
+  async sendJoinRequest() {
+    const requestRecipient = this.setRecipient();
+    if (requestRecipient === '') {
+      console.log('no members in this channel');
+    } else {
+      const userUid = this.userService.getCurrentUser().uid;
+      let conversation = this.conversationService.findConversation(userUid, requestRecipient);
+      const content = this.createContent(this.userService.getUserData(requestRecipient).username);
+      const message = this.createMessage(content);
+      if (conversation) {
+        conversation.messages.push(message);
+        await this.channelService.fireService.addConversation(conversation);
+      }
+    }
 
-  
-  
+  }
 
-  
+  createContent(name: string) {
+    return `Hallo ${name}, ich würde gerne zu dem Channel ${this.channelService.fireService.currentChannel.name} eingeladen werden :)`
+  }
+
+  createMessage(content: string, data?: string[]): Message {
+    return new Message({
+      time: this.authService.getCurrentTimestamp(),
+      sender: this.userService.getCurrentUser().uid,
+      content: content,
+      thread: new Thread,
+      data: data || [],
+      reactions: []
+    });
+  }
+
+
+
+
+
+
+
+
+
+
 }
