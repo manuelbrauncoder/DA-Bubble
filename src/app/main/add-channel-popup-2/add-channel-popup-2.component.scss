@@ -2,8 +2,11 @@
 @import '../../../mixins.scss';
 
 main {
-    @include dFlex($fd: column, $g: 20px, $ai: flex-start);
-    width: 700px;
+    @include dFlex($fd: column, $g: 1.25rem, $ai: flex-start);
+    width: 43.75rem;
+    @media(max-width: 999px) {
+        width: 100%;
+    }
 }
 
 .title {
@@ -12,13 +15,12 @@ main {
 
     h3 {
         font-family: Nunito;
-        font-size: 24px;
+        font-size: 1.5rem;
         font-weight: 700;
-        line-height: 32.74px;
+        line-height: 2.046rem;
         text-align: left;
     }
 }
-
 
 button {
     margin-left: auto;
@@ -39,35 +41,33 @@ form {
 }
 
 .input-wrapper {
-    @include dFlex($jc: flex-start, $g: 20px);
+    @include dFlex($jc: flex-start, $g: 1.25rem);
     cursor: pointer;
 }
 
 .channel {
     font-family: Nunito;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 400;
-    line-height: 24.55px;
+    line-height: 1.534rem;
     cursor: pointer;
 }
 
-
-
 .checked {
     position: relative;
-    margin-right: 20px;
+    margin-right: 1.25rem;
 
     .custom-check-border {
         z-index: 1;
-        transform: translate(-4px, -50%);
+        transform: translate(-0.25rem, -50%);
         position: absolute;
         left: 0;
         top: 50%;
         margin: 0;
-        height: 20px;
-        width: 20px;
+        height: 1.25rem;
+        width: 1.25rem;
         border-radius: 100%;
-        border: 1px solid $color-purple-light;
+        border: 0.0625rem solid $color-purple-light;
         cursor: default;
     }
 
@@ -77,8 +77,8 @@ form {
         transform: translate(0, -50%);
         position: absolute;
         margin: 0;
-        width: 12px;
-        height: 12px;
+        width: 0.75rem;
+        height: 0.75rem;
         border-radius: 100%;
         background-color: $color-purple-1;
         border: unset;
@@ -87,23 +87,23 @@ form {
 
 .unchecked {
     position: relative;
-    margin-right: 20px;
+    margin-right: 1.25rem;
 
     .custom-check-border {
         z-index: 1;
-        transform: translate(-4px, -50%);
+        transform: translate(-0.25rem, -50%);
         position: absolute;
         left: 0;
         top: 50%;
         margin: 0;
-        height: 20px;
-        width: 20px;
+        height: 1.25rem;
+        width: 1.25rem;
         border-radius: 100%;
-        border: 1px solid $color-purple-light;
+        border: 0.0625rem solid $color-purple-light;
         cursor: pointer;
 
         &:hover {
-            border: 1px solid $color-purple-2;
+            border: 0.0625rem solid $color-purple-2;
         }
     }
 }
@@ -115,16 +115,16 @@ form {
 
 .users {
     position: absolute;
-    top: 64px;
+    top: 4rem;
     left: 0;
-    @include dFlex($fd: column, $ai: flex-start, $g: 15px, $jc: flex-start);
-    border: 1px solid $color-purple-light;
-    border-radius: 0 20px 20px 20px;
-    padding: 20px 25px;
-    box-shadow: 0px 2px 10px 0px #00000014;
+    @include dFlex($fd: column, $ai: flex-start, $g: 0.9375rem, $jc: flex-start);
+    border: 0.0625rem solid $color-purple-light;
+    border-radius: 0 1.25rem 1.25rem 1.25rem;
+    padding: 1.25rem 1.5625rem;
+    box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
     z-index: 2;
     background-color: white;
-    max-height: 300px;
+    max-height: 18.75rem;
     overflow-y: auto;
 }
 
@@ -139,49 +139,48 @@ form {
 }
 
 .selected-users {
-    @include dFlex($jc: flex-start, $ai: flex-start, $g: 4px);
+    @include dFlex($jc: flex-start, $ai: flex-start, $g: 0.25rem);
     flex-wrap: wrap;
     width: 100%;
 }
 
 .selected-user {
     width: fit-content;
-    padding: 3px 20px;
+    padding: 0.1875rem 1.25rem;
     border-radius: 100vw;
-    @include dFlex($jc: flex-start, $g: 15px);
+    @include dFlex($jc: flex-start, $g: 0.9375rem);
     cursor: pointer;
     background-color: $color-active-channel;
 
     span {
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
+        line-height: 1.534rem;
         text-align: left;
-
     }
 }
 
-.remove-user-icon:hover{
+.remove-user-icon:hover {
     scale: 1.05;
     cursor: pointer;
-    rect, path{
+    rect, path {
         fill: $color-purple-3;
     }
 }
 
 .user {
     width: fit-content;
-    padding: 4px 20px;
+    padding: 0.25rem 1.25rem;
     border-radius: 100vw;
-    @include dFlex($jc: flex-start, $g: 15px);
+    @include dFlex($jc: flex-start, $g: 0.9375rem);
     cursor: pointer;
 
     span {
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
+        line-height: 1.534rem;
     }
 
     &:hover {
@@ -195,12 +194,12 @@ form {
 
 .state-icon {
     position: absolute;
-    bottom: 7px;
-    right: 0px;
-    height: 14px;
-    width: 14px;
+    bottom: 0.4375rem;
+    right: 0;
+    height: 0.875rem;
+    width: 0.875rem;
     border-radius: 100%;
-    border: 2px solid white;
+    border: 0.125rem solid white;
 }
 
 .profile-img {
