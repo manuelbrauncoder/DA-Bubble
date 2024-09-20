@@ -30,7 +30,6 @@ export class SearchBarComponent {
   filteredChannels: Channel[] = [];
   filteredMessages: Message[] = [];
 
-
   resetSearch() {
     this.filteredUsers = [];
     this.filteredChannels = [];
@@ -38,21 +37,30 @@ export class SearchBarComponent {
   }
 
   search() {
-    const searchTerm = this.searchInput.trim().toLowerCase();
+    const searchTerm = this.searchInput.toLowerCase();
     if (searchTerm) {
       this.resetSearch();
       this.searchUsers(searchTerm);
       this.searchChannels(searchTerm);
       this.searchMessages(searchTerm);
-      this.logAll();
     } else {
       this.resetSearch();
     }
   }
 
   searchMessages(searchTerm: string) {
-    
-      
+    const channelMessages: Message[] = this.fireService.channels.reduce((messages: Message[], channel) => {
+      return messages.concat(channel.messages.filter(message =>
+        message.content.toLowerCase().includes(searchTerm)
+      ));
+    }, []);
+    const conversationMessages: Message[] = this.fireService.conversations.reduce((messages: Message[], conversation) => {
+      return messages.concat(conversation.messages.filter(message => 
+          message.content.toLowerCase().includes(searchTerm)
+      ));
+  }, []);
+
+      this.filteredMessages = [...channelMessages, ...conversationMessages];
   }
 
 
@@ -73,7 +81,4 @@ export class SearchBarComponent {
     console.log('Filtered Channels:', this.filteredChannels);
     console.log('Filtered Messages:', this.filteredMessages);
   }
-
-
-
 }
