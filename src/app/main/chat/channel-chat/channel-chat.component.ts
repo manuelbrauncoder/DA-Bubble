@@ -70,6 +70,12 @@ export class ChannelChatComponent implements AfterViewChecked {
     }
   }
 
+  /**
+   * 
+   * @returns the uid from channel creator, if he left the channel
+   * it returns the uid from first channel member, if the channel has 
+   * no members it returns an empty string
+   */
   setRecipient() {
     const creatorUid = this.channelService.fireService.currentChannel.creator;
     if (this.channelService.fireService.currentChannel.users.some(u => u === creatorUid)) {
@@ -95,6 +101,9 @@ export class ChannelChatComponent implements AfterViewChecked {
       if (conversation) {
         conversation.messages.push(message);
         await this.channelService.fireService.addConversation(conversation);
+      } else {
+        await this.conversationService.createNewConversation(userUid, requestRecipient);
+        this.conversationService.fireService.currentConversation.messages.push(message);
       }
     }
 
