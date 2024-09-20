@@ -30,6 +30,7 @@ export class PopupEditChannelComponent {
   showNameInput = false;
   showDescriptionInput = false;
 
+
   /**
    * Remove current User from Channel
    */

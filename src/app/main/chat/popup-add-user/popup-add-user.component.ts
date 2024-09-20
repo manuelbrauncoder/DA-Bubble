@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ChannelService } from '../../../services/channel.service';
 import { UiService } from '../../../services/ui.service';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { FormsModule } from '@angular/forms';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-popup-add-user',
@@ -17,16 +18,25 @@ export class PopupAddUserComponent implements OnInit {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
+  observerService = inject(BreakpointObserverService);
+
+  @Input() shownInMobilePopup = false;
 
   updatedChannel: Channel = new Channel();
-
   searchInput = '';
-
   selectedUsers: string[] = [];
   availableUsers: string[] = [];
   usersAlreadyInChannel: string[] = [];
 
   filteredUsers: string[] = [];
+
+  togglePopup(){
+    if (this.observerService.isMobile) {
+      this.uiService.toggleMobilePopup();
+    } else {
+      this.uiService.toggleAddUserToChannelPopup();
+    }
+  }
 
   /**
    * copy the current channel to updated channel

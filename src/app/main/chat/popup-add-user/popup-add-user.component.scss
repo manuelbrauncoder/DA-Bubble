@@ -1,13 +1,21 @@
 @import '../../../../mixins.scss';
 @import '../../../../styles.scss';
 
-main {
+.popup{
     box-shadow: 0rem 0.375rem 0.625rem 0rem #00000033;
     background-color: white;
     border-radius: 1.875rem 0 1.875rem 1.875rem;
     @include dFlex($fd: column, $g: 1.25rem);
     padding: 2.5rem;
     min-width: 30rem;
+}
+
+
+
+.mobile-popup{
+    @include dFlex($fd: column, $g: 1.25rem);
+    background-color: white;
+    width: 100%;
 }
 
 .title {
@@ -62,6 +70,9 @@ main {
     background-color: white;
     max-height: 300px;
     overflow-y: auto;
+    @media(max-width: 999px) {
+        padding: 10px 12px;
+    }
 }
 
 .online-state {
@@ -112,6 +123,9 @@ main {
     border-radius: 100vw;
     @include dFlex($jc: flex-start, $g: 15px);
     cursor: pointer;
+    @media(max-width: 999px) {
+        padding: 4px 10px;
+    }
 
     span {
         font-family: Nunito;

@@ -30,6 +30,15 @@ export class ChannelChatComponent implements AfterViewChecked {
   observerService = inject(BreakpointObserverService);
 
   @ViewChild('channelMessages') scrollContainer!: ElementRef;
+
+  toggleAddUserToChannel(){
+    if (!this.observerService.isMobile) {
+      this.uiService.toggleAddUserToChannelPopup();
+    } else {
+      this.uiService.mobilePopupContent = 'addUser';
+      this.uiService.toggleMobilePopup();
+    }
+  }
   
 
   ngAfterViewChecked(): void {

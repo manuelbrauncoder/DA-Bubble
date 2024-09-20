@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { CommonModule } from '@angular/common';
 import { PopupAddUserComponent } from '../popup-add-user/popup-add-user.component';
+import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 
 @Component({
   selector: 'app-popup-channel-users',
@@ -18,6 +19,16 @@ export class PopupChannelUsersComponent {
   channelService = inject(ChannelService);
   userService = inject(UserService);
   authService = inject(FirebaseAuthService);
+  observerService = inject(BreakpointObserverService);
 
   @Input() showInEditChannelPopup = false;
+
+  toggleAddUserToChannel(){
+    if (!this.observerService.isMobile) {
+      this.uiService.showAddUserInChannelUser();
+    } else {
+      this.uiService.mobilePopupContent = 'addUser';
+      this.uiService.toggleMobilePopup();
+    }
+  }
 }

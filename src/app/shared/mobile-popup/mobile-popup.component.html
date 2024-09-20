@@ -1,8 +1,8 @@
 <main>
     <hr>
     <div class="content-wrapper">
-        <!-- space for components
-         set Input() in .ts
-         for showing the component you want -->
+        @if (uiService.mobilePopupContent === 'addUser') {
+            <app-popup-add-user [shownInMobilePopup]="true"></app-popup-add-user>
+        }
     </div>
 </main>

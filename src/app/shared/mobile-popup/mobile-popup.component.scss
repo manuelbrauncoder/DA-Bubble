@@ -10,9 +10,9 @@ main{
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: 320px;
+    min-height: 50%;
     z-index: 5;
-    @include dFlex();
+    @include dFlex($fd: column, $jc: flex-start);
 
     hr {
         width: 62px;
@@ -20,6 +20,9 @@ main{
         border: unset;
         background-color: #D9D9D9;
         border-radius: 100vw;
-        margin-bottom: auto;
     }
+}
+
+.content-wrapper{
+    width: 100%;
 }
