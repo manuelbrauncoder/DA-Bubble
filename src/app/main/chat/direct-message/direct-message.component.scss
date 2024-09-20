@@ -26,10 +26,10 @@ header {
             height: 3.125rem;
             border-radius: 100%;
 
-            @media(max-width: 999px) {
-                width: 2.5rem;
-                height: 2.5rem;
-            }
+            // @media(max-width: 999px) {
+            //     width: 2.5rem;
+            //     height: 2.5rem;
+            // }
         }
 
         h3 {
@@ -39,10 +39,10 @@ header {
             line-height: 2.04625rem;
             color: black;
 
-            @media(max-width: 999px) {
-                font-size: 1.25rem;
-                line-height: 1.705rem;
-            }
+            // @media(max-width: 999px) {
+            //     font-size: 1.25rem;
+            //     line-height: 1.705rem;
+            // }
         }
 
         &:hover {
@@ -75,10 +75,10 @@ header {
             height: 6.25rem;
             width: 6.25rem;
 
-            @media(max-width: 999px) {
-                height: 4.5rem;
-                width: 4.5rem;
-            }
+            // @media(max-width: 999px) {
+            //     height: 4.5rem;
+            //     width: 4.5rem;
+            // }
         }
 
         h3 {
@@ -122,9 +122,9 @@ app-send-message {
     width: 100%;
     padding: 1rem 2.188rem 2.5rem 2.188rem;
 
-    @media(max-width: 999px) {
-        padding: 1rem;
-    }
+    // @media(max-width: 999px) {
+    //     padding: 1rem;
+    // }
 }
 
 .room {

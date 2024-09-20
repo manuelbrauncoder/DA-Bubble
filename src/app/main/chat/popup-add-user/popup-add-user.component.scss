@@ -10,8 +10,6 @@
     min-width: 30rem;
 }
 
-
-
 .mobile-popup{
     @include dFlex($fd: column, $g: 1.25rem);
     background-color: white;
@@ -59,20 +57,17 @@
 
 .users {
     position: absolute;
-    top: 64px;
+    top: 4rem;
     left: 0;
-    @include dFlex($fd: column, $ai: flex-start, $g: 15px, $jc: flex-start);
-    border: 1px solid $color-purple-light;
-    border-radius: 0 20px 20px 20px;
-    padding: 20px 25px;
-    box-shadow: 0px 2px 10px 0px #00000014;
+    @include dFlex($fd: column, $ai: flex-start, $g: 1rem, $jc: flex-start);
+    border: 0.0625rem solid $color-purple-light;
+    border-radius: 0 1.25rem 1.25rem 1.25rem;
+    padding: 1.25rem 1.563rem;
+    box-shadow: 0rem 0.125rem 0.625rem 0rem #00000014;
     z-index: 2;
     background-color: white;
-    max-height: 300px;
+    max-height: 18.75rem;
     overflow-y: auto;
-    @media(max-width: 999px) {
-        padding: 10px 12px;
-    }
 }
 
 .online-state {
@@ -86,26 +81,25 @@
 }
 
 .selected-users {
-    @include dFlex($jc: flex-start, $ai: flex-start, $g: 4px);
+    @include dFlex($jc: flex-start, $ai: flex-start, $g: 0.25rem);
     flex-wrap: wrap;
     width: 100%;
 }
 
 .selected-user {
     width: fit-content;
-    padding: 3px 20px;
+    padding: 0.25rem 1.25rem;
     border-radius: 100vw;
-    @include dFlex($jc: flex-start, $g: 15px);
+    @include dFlex($jc: flex-start, $g: 0.9375rem);
     cursor: pointer;
     background-color: $color-active-channel;
 
     span {
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
+        line-height: 1.534rem;
         text-align: left;
-
     }
 }
 
@@ -119,19 +113,16 @@
 
 .user {
     width: fit-content;
-    padding: 4px 20px;
+    padding: 0.25rem 1.25rem;
     border-radius: 100vw;
-    @include dFlex($jc: flex-start, $g: 15px);
+    @include dFlex($jc: flex-start, $g: 0.9375rem);
     cursor: pointer;
-    @media(max-width: 999px) {
-        padding: 4px 10px;
-    }
 
     span {
         font-family: Nunito;
-        font-size: 18px;
+        font-size: 1.125rem;
         font-weight: 400;
-        line-height: 24.55px;
+        line-height: 1.534rem;
     }
 
     &:hover {
@@ -145,12 +136,12 @@
 
 .state-icon {
     position: absolute;
-    bottom: 7px;
-    right: 0px;
-    height: 14px;
-    width: 14px;
+    bottom: 0.4375rem;
+    right: 0;
+    height: 0.875rem;
+    width: 0.875rem;
     border-radius: 100%;
-    border: 2px solid white;
+    border: 0.125rem solid white;
 }
 
 .profile-img {

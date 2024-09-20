@@ -38,10 +38,10 @@
     border-radius: 100%;
     background-color: $color-active-channel;
     transition: ease-in 0.15s;
-    @media(max-width: 999px) {
-        height: 2rem;
-        width: 2rem;
-    }
+    // @media(max-width: 999px) {
+    //     height: 2rem;
+    //     width: 2rem;
+    // }
 
     &:hover {
         svg,
@@ -77,7 +77,7 @@ header {
 
     @media(max-width: 999px) {
         border-radius: 0;
-        padding: 0.625rem 1rem;
+        //padding: 0.625rem 1rem;
     }
 
     .title {
@@ -93,10 +93,10 @@ header {
             font-weight: 700;
             line-height: 2.04625rem;
 
-            @media(max-width: 999px) {
-                font-size: 1.25rem;
-                line-height: 1.705rem;
-            }
+            // @media(max-width: 999px) {
+            //     font-size: 1.25rem;
+            //     line-height: 1.705rem;
+            // }
         }
 
         &:hover {
@@ -160,7 +160,7 @@ app-send-message {
     width: 100%;
     padding: 1rem 2.188rem 2.5rem 2.188rem;
     @media(max-width: 999px) {
-        padding: 1rem;
+        //padding: 1rem;
     }
 }
 
@@ -215,9 +215,9 @@ app-send-message {
 
     .info {
         font-family: Nunito;
-        font-size: 20px;
+        font-size: 1.25rem;
         font-weight: 400;
-        line-height: 27.28px;
+        line-height: 1.705rem;
         text-align: left;
     }
 

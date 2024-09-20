@@ -36,10 +36,10 @@ header {
         font-weight: 700;
         line-height: 2.04625rem;
 
-        @media(max-width: 999px) {
-            font-size: 1.25rem;
-            line-height: 1.705rem;
-        }
+        // @media(max-width: 999px) {
+        //     font-size: 1.25rem;
+        //     line-height: 1.705rem;
+        // }
     }
 }
 
@@ -93,7 +93,7 @@ app-send-message {
     padding: 1rem 2.188rem 2.5rem 2.188rem;
     width: 100%;
 
-    @media(max-width: 999px) {
-        padding: 1rem;
-    }
+    // @media(max-width: 999px) {
+    //     padding: 1rem;
+    // }
 }
