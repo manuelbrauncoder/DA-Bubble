@@ -3,10 +3,13 @@
 
 .thread-wrapper {
     height: 100%;
-    //width: 100%;
     background-color: white;
     border-radius: 1.875rem;
     @include dFlex($fd: column, $g: 1rem, $ai: flex-start);
+
+    @media(max-width: 999px) {
+        border-radius: 0;
+    }
 }
 
 .input-wrapper {
@@ -74,5 +77,9 @@ header {
     >div {
         @include dFlex($g: 0.313rem);
         flex-wrap: wrap;
+    }
+
+    @media(max-width: 999px) {
+        border-radius: 0;
     }
 }
