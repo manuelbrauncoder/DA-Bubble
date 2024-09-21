@@ -35,6 +35,9 @@
                     @for (message of filteredMessages; track $index) {
                         <div class="message">
                             <span>{{ message.content }}</span>
+                            @if (isUserInMessage(message)) {
+                                <span>message not from user!</span>
+                            }
                         </div>
                     }
                 </div>

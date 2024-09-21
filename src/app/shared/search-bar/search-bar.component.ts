@@ -6,7 +6,7 @@ import { Channel } from '../../models/channel.class';
 import { UserService } from '../../services/user.service';
 import { Message } from '../../models/message.class';
 import { User } from '../../models/user.class';
-import { Conversation } from '../../models/conversation.class';
+import { ChannelService } from '../../services/channel.service';
 
 @Component({
   selector: 'app-search-bar',
@@ -21,14 +21,50 @@ export class SearchBarComponent {
 
   fireService = inject(FirestoreService);
   userService = inject(UserService);
+  channelService = inject(ChannelService);
 
-  currentUser = this.userService.getCurrentUser();
 
   searchInput = '';
 
   filteredUsers: User[] = [];
   filteredChannels: Channel[] = [];
   filteredMessages: Message[] = [];
+
+  isUserInMessage(message: Message): boolean {
+    if (message.sender === this.userService.getCurrentUser().uid) {
+      return true;
+    }
+    if (this.isUserInConversation(message)) {
+      return true;
+    }
+    if (this.isUserInChannelMessage(message)) {
+      return true;
+    }  
+      return false;
+    
+  }
+
+  isUserInConversation(message: Message) {
+    for (const conversation of this.fireService.conversations) {
+      if (conversation.messages.some(m => m.id === message.id)) {
+        if (conversation.participants.first === this.userService.getCurrentUser().uid || conversation.participants.second === this.userService.getCurrentUser().uid) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  isUserInChannelMessage(message: Message) {
+    for (const channel of this.fireService.channels) {
+      if (channel.messages.some(m => m.id === message.id)) {
+        if (this.channelService.isUserInChannel(this.userService.getCurrentUser(), channel)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
   resetSearch() {
     this.filteredUsers = [];
@@ -55,12 +91,12 @@ export class SearchBarComponent {
       ));
     }, []);
     const conversationMessages: Message[] = this.fireService.conversations.reduce((messages: Message[], conversation) => {
-      return messages.concat(conversation.messages.filter(message => 
-          message.content.toLowerCase().includes(searchTerm)
+      return messages.concat(conversation.messages.filter(message =>
+        message.content.toLowerCase().includes(searchTerm)
       ));
-  }, []);
+    }, []);
 
-      this.filteredMessages = [...channelMessages, ...conversationMessages];
+    this.filteredMessages = [...channelMessages, ...conversationMessages];
   }
 
 
@@ -76,7 +112,7 @@ export class SearchBarComponent {
       .map(channel => new Channel(channel));
   }
 
-  logAll(){
+  logAll() {
     console.log('Filtered Users:', this.filteredUsers);
     console.log('Filtered Channels:', this.filteredChannels);
     console.log('Filtered Messages:', this.filteredMessages);

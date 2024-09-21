@@ -25,7 +25,7 @@ import { Thread } from '../../../models/thread.class ';
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
-export class ChannelChatComponent implements AfterViewChecked, OnInit {
+export class ChannelChatComponent implements AfterViewChecked {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
@@ -33,17 +33,7 @@ export class ChannelChatComponent implements AfterViewChecked, OnInit {
   observerService = inject(BreakpointObserverService);
   conversationService = inject(ConversationService);
 
-  currentChannelId = this.channelService.fireService.currentChannel.id;
-  currentUser = this.userService.getCurrentUser();
-  sendBtnText = 'Senden';
-  requestText = 'Möchtest du eine Beitrittsanfrage stellen?';
-
-
   @ViewChild('channelMessages') scrollContainer!: ElementRef;
-
-  ngOnInit(): void {
-    this.setRequestText();
-  }
 
   toggleAddUserToChannel() {
     if (!this.observerService.isMobile) {
@@ -118,22 +108,29 @@ export class ChannelChatComponent implements AfterViewChecked, OnInit {
   }
 
   setRequestText() {
-    if (!this.userAlreadySendRequestToChannel()) {
-      this.requestText = 'Möchtest du eine Beitrittsanfrage stellen?';
-      this.sendBtnText = 'Senden';
+    if (this.userAlreadySendRequestToChannel()) {
+      return 'Beitrittsanfrage gesendet.'
+    } else {
+      return 'Beitrittsanfrage senden?'
     }
-    this.requestText = 'Beitrittsanfrage gesendet.';
-      this.sendBtnText = 'Gesendet';
   }
 
-  async markAsRequestSent(){
-    this.currentUser.channelJoinRequestsSent.push(this.currentChannelId);
-    await this.channelService.fireService.addUser(this.currentUser);
+  setSendBtnText(){
+    if (this.userAlreadySendRequestToChannel()) {
+      return 'Gesendet';
+    } else {
+      return 'Senden';
+    }
+  }
+
+  async markAsRequestSent() {
+    this.userService.getCurrentUser().channelJoinRequestsSent.push(this.channelService.fireService.currentChannel.id);
+    await this.channelService.fireService.addUser(this.userService.getCurrentUser());
     this.setRequestText();
   }
 
   userAlreadySendRequestToChannel(): boolean {
-    return this.currentUser.channelJoinRequestsSent.some(id => id === this.currentChannelId);
+    return this.userService.getCurrentUser().channelJoinRequestsSent.some(id => id === this.channelService.fireService.currentChannel.id);
   }
 
   createContent(name: string) {

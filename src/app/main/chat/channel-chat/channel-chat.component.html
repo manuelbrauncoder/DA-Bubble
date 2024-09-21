@@ -94,9 +94,9 @@
 } @else {
 <div class="channel-request">
     <h2>Du bist leider kein Mitglied in diesem Kanal.</h2>
-    <h3>{{ requestText }}</h3>
+    <h3>{{ setRequestText() }}</h3>
     <button (click)="sendJoinRequest()" [disabled]="userAlreadySendRequestToChannel()" type="button"
-        class="primary-btn">{{ sendBtnText }}</button>
+        class="primary-btn">{{ setSendBtnText() }}</button>
 </div>
 
 }
