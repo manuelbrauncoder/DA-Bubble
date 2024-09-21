@@ -235,23 +235,6 @@ export class FirestoreService {
   }
 
   /**
-   * set first channel as active on first time loading channels
-   */
-  // setActiveChannel() {
-  //   if (this.channels.length > 0 && !this.isDefaultChannelset) {
-  //     this.channels.forEach((channel) => {
-  //       if (this.channels[0].name === channel.name) {
-  //         this.isDefaultChannelset = true;
-  //         channel.channelActive = true;
-  //         this.currentChannel = new Channel(this.channels[0]);
-  //       } else {
-  //         channel.channelActive = false;
-  //       }
-  //     })
-  //   }
-  // }
-
-  /**
    * Call this method to add or update a Channel
    */
   async addChannel(channel: any) {
@@ -365,7 +348,8 @@ export class FirestoreService {
       username: user.username,
       currentlyLoggedIn: user.currentlyLoggedIn || false,
       avatar: user.avatar,
-      status: user.status
+      status: user.status,
+      channelJoinRequestsSent: user.channelJoinRequestsSent || []
     };
   }
 
@@ -404,7 +388,8 @@ export class FirestoreService {
       avatar: user.avatar || '',
       currentlyLoggedIn: user.currentlyLoggedIn || false,
       userChatActive: user.userChatActive || false,
-      status: user.status || 'offline'
+      status: user.status || 'offline',
+      channelJoinRequestsSent: user.channelJoinRequestsSent
     }
   }
 }

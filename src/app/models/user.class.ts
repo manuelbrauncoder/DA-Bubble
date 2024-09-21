@@ -7,6 +7,7 @@ export class User {
     currentlyLoggedIn: boolean;
     userChatActive: boolean;
     status: 'online' | 'offline' | 'away';
+    channelJoinRequestsSent: string[];
 
     constructor(obj?: Partial<User>){
         this.uid = obj?.uid ?? '';
@@ -16,6 +17,7 @@ export class User {
         this.avatar = obj?.avatar ?? '';
         this.currentlyLoggedIn = obj?.currentlyLoggedIn ?? false;
         this.userChatActive = obj?.userChatActive ?? false;
-        this.status = obj?.status ?? 'offline'
+        this.status = obj?.status ?? 'offline';
+        this.channelJoinRequestsSent = obj?.channelJoinRequestsSent ?? [];
     }
 }

@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { ChannelService } from '../../../services/channel.service';
 import { UiService } from '../../../services/ui.service';
 import { UserService } from '../../../services/user.service';
@@ -16,7 +16,6 @@ import { DateDividerComponent } from "../single-message/date-divider/date-divide
 import { ConversationService } from '../../../services/conversation.service';
 import { Message } from '../../../models/message.class';
 import { Thread } from '../../../models/thread.class ';
-import { Conversation } from '../../../models/conversation.class';
 
 @Component({
   selector: 'app-channel-chat',
@@ -26,7 +25,7 @@ import { Conversation } from '../../../models/conversation.class';
   templateUrl: './channel-chat.component.html',
   styleUrl: './channel-chat.component.scss'
 })
-export class ChannelChatComponent implements AfterViewChecked {
+export class ChannelChatComponent implements AfterViewChecked, OnInit {
   channelService = inject(ChannelService);
   uiService = inject(UiService);
   userService = inject(UserService);
@@ -34,8 +33,17 @@ export class ChannelChatComponent implements AfterViewChecked {
   observerService = inject(BreakpointObserverService);
   conversationService = inject(ConversationService);
 
+  currentChannelId = this.channelService.fireService.currentChannel.id;
+  currentUser = this.userService.getCurrentUser();
+  sendBtnText = 'Senden';
+  requestText = 'Möchtest du eine Beitrittsanfrage stellen?';
+
 
   @ViewChild('channelMessages') scrollContainer!: ElementRef;
+
+  ngOnInit(): void {
+    this.setRequestText();
+  }
 
   toggleAddUserToChannel() {
     if (!this.observerService.isMobile) {
@@ -105,8 +113,27 @@ export class ChannelChatComponent implements AfterViewChecked {
         await this.conversationService.createNewConversation(userUid, requestRecipient);
         this.conversationService.fireService.currentConversation.messages.push(message);
       }
+      await this.markAsRequestSent();
     }
+  }
 
+  setRequestText() {
+    if (!this.userAlreadySendRequestToChannel()) {
+      this.requestText = 'Möchtest du eine Beitrittsanfrage stellen?';
+      this.sendBtnText = 'Senden';
+    }
+    this.requestText = 'Beitrittsanfrage gesendet.';
+      this.sendBtnText = 'Gesendet';
+  }
+
+  async markAsRequestSent(){
+    this.currentUser.channelJoinRequestsSent.push(this.currentChannelId);
+    await this.channelService.fireService.addUser(this.currentUser);
+    this.setRequestText();
+  }
+
+  userAlreadySendRequestToChannel(): boolean {
+    return this.currentUser.channelJoinRequestsSent.some(id => id === this.currentChannelId);
   }
 
   createContent(name: string) {
