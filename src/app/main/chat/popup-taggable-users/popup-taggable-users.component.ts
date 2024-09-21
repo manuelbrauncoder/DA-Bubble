@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { UiService } from '../../../services/ui.service';
 import { Conversation } from '../../../models/conversation.class';
 import { Channel } from '../../../models/channel.class';
@@ -18,6 +18,7 @@ export class PopupTaggableUsersComponent {
   userService = inject(UserService);
 
   @Input() currentRecipient: Conversation | Channel = new Channel(); // Empfänger der Nachricht
+  @Output() userTagged = new EventEmitter<string>();
 
 
   getChannelUsers() {
@@ -35,8 +36,9 @@ export class PopupTaggableUsersComponent {
   }
 
 
-  tagThisUser() {
-    console.log('Diesen User in der Nachricht markieren.');
+  tagThisUser(username: string) {
+    this.userTagged.emit(username);
+    console.log('Diesen User in der Nachricht markieren. Sein Name ist:', username);
   }
 
 

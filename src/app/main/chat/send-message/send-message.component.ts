@@ -43,6 +43,7 @@ export class SendMessageComponent implements OnInit {
   data: any[] = []; // message data, e.g. photos
   selectedFiles: File[] = [];
   filePreviews: string[] = [];
+  allTaggedUsers: string[] = [];
 
   ngOnInit(): void {
     this.copyRecipient();
@@ -68,6 +69,11 @@ export class SendMessageComponent implements OnInit {
 
   showTaggableUsers() {
     this.uiService.toggleTaggableUsersPopup();
+  }
+
+  pushTaggedUsersInArray(username: string) {
+    this.allTaggedUsers.push(username);
+    console.log('Das ist das Array wo alle markierter User drin sind.', this.allTaggedUsers);
   }
 
   /**
