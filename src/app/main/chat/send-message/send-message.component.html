@@ -38,10 +38,9 @@
                     <p *ngIf="!preview.startsWith('data:image') && !selectedFiles[i].name.endsWith('.pdf')">{{ getFileName(selectedFiles[i].name) }}</p>
                 </div>
             </div>
-
-            
         </div>
-        <img src="assets/icons/channel-chat/sendIcon.svg" [ngStyle]="{ cursor: isBtnDisabled() ? 'not-allowed' : 'pointer' }" class="send-btn" (click)="saveNewMessage()">
+        
+        <img src="assets/icons/channel-chat/sendIcon.svg" [ngStyle]="{ cursor: isBtnDisabled() }" class="send-btn" (click)="saveNewMessage()" [class.disabled]="isBtnDisabled()" [attr.disabled]="isBtnDisabled() ? true : null">
     </div>
 </div>
 

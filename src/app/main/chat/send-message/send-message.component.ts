@@ -49,7 +49,8 @@ export class SendMessageComponent implements OnInit {
   }
 
   isBtnDisabled() {
-    return this.disableInput || this.content.length < 2;
+    // return this.disableInput || this.content.length < 2;
+    return this.disableInput || this.content.trim().length === 0;
   }
 
   /**
