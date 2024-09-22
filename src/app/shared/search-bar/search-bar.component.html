@@ -6,10 +6,11 @@
         <div class="search-results">
             @if (filteredUsers.length > 0) {
                 <div class="users">
-                    <h3>User:</h3>
+                    <h3>Nutzer:</h3>
 
                     @for (user of filteredUsers; track $index) {
-                        <div class="user">
+                        <div class="user result">
+                            <img src="{{user.avatar}}" alt="">
                             <span>{{ user.username }}</span>
                         </div>
                     }
@@ -21,7 +22,8 @@
                     <h3>Channels:</h3>
 
                     @for (channel of filteredChannels; track $index) {
-                        <div class="channel">
+                        <div class="channel result">
+                            <img src="assets/icons/workspace-menu/workspace-3-circles.svg" alt="channel-image">
                             <span>{{ channel.name }}</span>
                         </div>
                     }
@@ -30,12 +32,15 @@
 
             @if ((filteredMessages | filterMessage).length > 0) {
                 <div class="messages">
-                    <h3>Messages:</h3>
+                    <h3>Nachrichten:</h3>
 
                     @for (message of filteredMessages | filterMessage; track $index) {
-                        <div class="message">
-                                <span>{{ message.content }}</span>   
-                            
+                        <div class="message result">
+                                <img src="{{ userService.getUserData(message.sender).avatar }}" alt="">
+                                <div>
+                                    <h4>{{ userService.getUserData(message.sender).username }}:</h4>
+                                    <span>{{ message.content | truncateString: 15 }}</span>      
+                                </div>
                         </div>
                     }
                 </div>

@@ -55,3 +55,26 @@ input {
   max-height: 400px;
   overflow-y: auto;
 }
+
+.result {
+  padding: 0.5rem 1rem;
+  border-radius: 100vw;
+  cursor: pointer;
+  @include dFlex($jc: flex-start, $g: 0.5rem);
+
+  img {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+  }
+
+  &:hover {
+    background-color: $color-active-channel;
+  }
+}
+
+.user {
+  
+
+  
+}

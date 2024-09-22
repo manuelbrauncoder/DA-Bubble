@@ -8,11 +8,12 @@ import { Message } from '../../models/message.class';
 import { User } from '../../models/user.class';
 import { ChannelService } from '../../services/channel.service';
 import { FilterMessagePipe } from '../../pipes/filter-message.pipe';
+import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule, FilterMessagePipe],
+  imports: [CommonModule, FormsModule, FilterMessagePipe, TruncateStringPipe],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })
