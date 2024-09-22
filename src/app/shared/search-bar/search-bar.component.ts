@@ -51,19 +51,37 @@ export class SearchBarComponent {
   }
 
   searchMessages(searchTerm: string) {
-    const channelMessages: Message[] = this.fireService.channels.reduce((messages: Message[], channel) => {
-      return messages.concat(channel.messages.filter(message =>
-        message.content.toLowerCase().includes(searchTerm)
-      ));
-    }, []);
-    const conversationMessages: Message[] = this.fireService.conversations.reduce((messages: Message[], conversation) => {
-      return messages.concat(conversation.messages.filter(message =>
-        message.content.toLowerCase().includes(searchTerm)
-      ));
-    }, []);
-
-    this.filteredMessages = [...channelMessages, ...conversationMessages];
+    this.fireService.channels.forEach(channel => {
+      channel.messages.forEach(message => {
+        if (this.isMessageMatching(message, searchTerm)) {
+          this.filteredMessages.push(message);
+        }
+      })
+    })
+    this.fireService.conversations.forEach(conversation => {
+      conversation.messages.forEach(message => {
+        if (this.isMessageMatching(message, searchTerm)) {
+          this.filteredMessages.push(message);
+        }
+      })
+    })
   }
+
+  isMessageMatching(message: Message, searchTerm: string) {
+    if (message.content.toLowerCase().includes(searchTerm)) {
+      return true;
+    }
+    if (message.thread) {
+      const matchingThreadMessages = message.thread.messages.filter(threadMessage =>
+        threadMessage.content.toLowerCase().includes(searchTerm)
+      );
+      if (matchingThreadMessages.length > 0) {
+        this.filteredMessages.push(...matchingThreadMessages);
+      }
+    }
+    return false;
+  }
+
 
 
   searchUsers(searchTerm: string) {
