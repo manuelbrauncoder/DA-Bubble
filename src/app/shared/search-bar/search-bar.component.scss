@@ -52,4 +52,6 @@ input {
   padding: 1rem;
   box-shadow: 0rem 0.375rem 0.625rem 0rem #00000033;
   border-radius: 0 1.875rem 1.875rem 1.875rem;
+  max-height: 400px;
+  overflow-y: auto;
 }

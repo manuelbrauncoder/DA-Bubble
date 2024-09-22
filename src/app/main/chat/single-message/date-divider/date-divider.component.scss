@@ -2,7 +2,6 @@
 @import '../../../../../mixins.scss';
 
 .date-divider {
-    margin-top: auto;
     @include dFlex();
     padding: 0 2.188rem;
 

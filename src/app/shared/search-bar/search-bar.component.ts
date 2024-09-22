@@ -7,11 +7,12 @@ import { UserService } from '../../services/user.service';
 import { Message } from '../../models/message.class';
 import { User } from '../../models/user.class';
 import { ChannelService } from '../../services/channel.service';
+import { FilterMessagePipe } from '../../pipes/filter-message.pipe';
 
 @Component({
   selector: 'app-search-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, FilterMessagePipe],
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.scss'
 })
@@ -29,42 +30,6 @@ export class SearchBarComponent {
   filteredUsers: User[] = [];
   filteredChannels: Channel[] = [];
   filteredMessages: Message[] = [];
-
-  isUserInMessage(message: Message): boolean {
-    if (message.sender === this.userService.getCurrentUser().uid) {
-      return true;
-    }
-    if (this.isUserInConversation(message)) {
-      return true;
-    }
-    if (this.isUserInChannelMessage(message)) {
-      return true;
-    }  
-      return false;
-    
-  }
-
-  isUserInConversation(message: Message) {
-    for (const conversation of this.fireService.conversations) {
-      if (conversation.messages.some(m => m.id === message.id)) {
-        if (conversation.participants.first === this.userService.getCurrentUser().uid || conversation.participants.second === this.userService.getCurrentUser().uid) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  isUserInChannelMessage(message: Message) {
-    for (const channel of this.fireService.channels) {
-      if (channel.messages.some(m => m.id === message.id)) {
-        if (this.channelService.isUserInChannel(this.userService.getCurrentUser(), channel)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
 
   resetSearch() {
     this.filteredUsers = [];

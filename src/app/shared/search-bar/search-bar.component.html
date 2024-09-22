@@ -2,7 +2,7 @@
     <input (input)="search()" [(ngModel)]="searchInput" [ngClass]="showInWorkspaceMenu ? 'workspace-input' : ''"
         type="text" [placeholder]="placeholderText">
 
-    @if (filteredUsers.length > 0 || filteredChannels.length > 0 || filteredMessages.length > 0) {
+    @if (filteredUsers.length > 0 || filteredChannels.length > 0 || (filteredMessages | filterMessage).length > 0) {
         <div class="search-results">
             @if (filteredUsers.length > 0) {
                 <div class="users">
@@ -28,16 +28,14 @@
                 </div>
             }
 
-            @if (filteredMessages.length > 0) {
+            @if ((filteredMessages | filterMessage).length > 0) {
                 <div class="messages">
                     <h3>Messages:</h3>
 
-                    @for (message of filteredMessages; track $index) {
+                    @for (message of filteredMessages | filterMessage; track $index) {
                         <div class="message">
-                            <span>{{ message.content }}</span>
-                            @if (isUserInMessage(message)) {
-                                <span>message not from user!</span>
-                            }
+                                <span>{{ message.content }}</span>   
+                            
                         </div>
                     }
                 </div>
