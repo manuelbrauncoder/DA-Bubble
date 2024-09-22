@@ -9,6 +9,8 @@ import { User } from '../../models/user.class';
 import { ChannelService } from '../../services/channel.service';
 import { FilterMessagePipe } from '../../pipes/filter-message.pipe';
 import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
+import { ConversationService } from '../../services/conversation.service';
+import { Conversation } from '../../models/conversation.class';
 
 @Component({
   selector: 'app-search-bar',
@@ -24,7 +26,9 @@ export class SearchBarComponent {
   fireService = inject(FirestoreService);
   userService = inject(UserService);
   channelService = inject(ChannelService);
+  conversationService = inject(ConversationService);
 
+  channel: Channel = new Channel();
 
   searchInput = '';
 
@@ -33,10 +37,94 @@ export class SearchBarComponent {
   filteredMessages: Message[] = [];
 
   resetSearch() {
+    this.searchInput = '';
     this.filteredUsers = [];
     this.filteredChannels = [];
     this.filteredMessages = [];
   }
+
+  redirectToChannel(channel: Channel){
+    this.channelService.toggleActiveChannel(channel);
+    this.resetSearch();
+  }
+
+  redirectToConversation(secondUserUid: string){
+    this.conversationService.openConversation(secondUserUid);
+    this.resetSearch();
+  }
+
+  redirectToThread(){
+    
+  }
+
+  redirectToMessage(message: Message){
+   this.isMessageInChannel(message);  // search message in channel
+   this.isMessageInConversation(message);   // search message in conersation
+  }
+
+  /**
+   * loop over conversations and every message in conversation
+   * @param message 
+   */
+  isMessageInConversation(message: Message) {
+    this.fireService.conversations.forEach(conversation => {
+      conversation.messages.forEach(m => {
+        this.searchMessageInConversation(m, message.id, conversation);
+      })
+    })
+  }
+
+  /**
+   * search messageId in thread.messages,
+   * if not found, search in thread
+   * @param message from array
+   * @param messageId to find
+   * @param conversation to search for messages
+   */
+  searchMessageInConversation(message: Message, messageIdToFind: string, conversation: Conversation) {
+    const secondUid = this.userService.getCurrentUser().uid === conversation.participants.first ? conversation.participants.second : conversation.participants.first;
+    if (message.id === messageIdToFind) {
+      this.redirectToConversation(secondUid);
+      console.log('Message is in Conversation');
+      return;
+    }
+    if (message.thread) {
+      const matchingThreadMessages = message.thread.messages.filter(tm => tm.id === messageIdToFind);
+      if (matchingThreadMessages.length > 0) {
+        this.redirectToConversation(secondUid);
+        console.log('Message in Thread');
+        return;
+      }
+    }
+  }
+
+  isMessageInChannel(message: Message){
+    this.fireService.channels.forEach(channel => {
+      channel.messages.forEach(m => {
+        this.searchMessageInChannel(m, message.id, channel);
+      })
+    })
+  }
+
+  searchMessageInChannel(message: Message, messageIdToFind: string, channel: Channel) {
+    if (message.id === messageIdToFind) {
+      this.redirectToChannel(channel);
+      console.log('Message is in Channel');
+      return;
+    }
+    if (message.thread) {
+      const matchingThreadMessages = message.thread.messages.filter(tm => tm.id === messageIdToFind);
+      if (matchingThreadMessages.length > 0) {
+        this.redirectToChannel(channel);
+        console.log('Message in thread');
+        return;
+      }
+    }
+  }
+
+
+
+  // for search function
 
   search() {
     const searchTerm = this.searchInput.toLowerCase();
@@ -82,8 +170,7 @@ export class SearchBarComponent {
     return false;
   }
 
-
-
+  
   searchUsers(searchTerm: string) {
     this.filteredUsers = this.fireService.users
       .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))
