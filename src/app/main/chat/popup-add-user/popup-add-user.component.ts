@@ -58,7 +58,7 @@ export class PopupAddUserComponent implements OnInit {
   async onSubmit() {
     this.updatedChannel.users = [...this.selectedUsers, ...this.usersAlreadyInChannel];
     await this.channelService.fireService.addChannel(this.updatedChannel);
-    this.channelService.toggleActiveChannel(this.updatedChannel);
+    this.channelService.toggleActiveChannel(this.updatedChannel, true);
     this.clearArrAndClosePopup();
   }
 

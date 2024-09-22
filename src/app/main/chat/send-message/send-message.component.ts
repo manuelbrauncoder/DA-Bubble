@@ -6,7 +6,7 @@ import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { UserService } from '../../../services/user.service';
 import { Message } from '../../../models/message.class';
 import { Conversation } from '../../../models/conversation.class';
-import { Thread } from '../../../models/thread.class ';
+import { Thread } from '../../../models/thread.class';
 import { UiService } from '../../../services/ui.service';
 import { ChannelService } from '../../../services/channel.service';
 import { ConversationService } from '../../../services/conversation.service';
@@ -195,7 +195,7 @@ export class SendMessageComponent implements OnInit {
       if (this.currentRecipient instanceof Conversation) {
         this.conversationService.openConversation(this.userUid);
       } else {
-        this.channelService.toggleActiveChannel(this.currentRecipient);
+        this.channelService.toggleActiveChannel(this.currentRecipient, true);
       }
     }
   }

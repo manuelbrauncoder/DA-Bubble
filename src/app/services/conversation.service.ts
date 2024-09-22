@@ -61,9 +61,9 @@ export class ConversationService {
    * 
    * @param secondUser is the User you want to chat with
    */
-  openConversation(secondUserUid: string) {
+  async openConversation(secondUserUid: string) {
     this.scrolledToBottomOnStart = false;
-    this.setCurrentConversation(secondUserUid);
+    await this.setCurrentConversation(secondUserUid);
     this.showChatContent();
     this.uiService.hightlightUserChat(this.userService.getUserData(secondUserUid));
     this.uiService.channelChatNotActive();

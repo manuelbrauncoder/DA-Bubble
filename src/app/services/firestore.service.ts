@@ -5,7 +5,7 @@ import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
 import { DateMessages, Message } from '../models/message.class';
 import { Conversation, Participants } from '../models/conversation.class';
-import { Thread } from '../models/thread.class ';
+import { Thread } from '../models/thread.class';
 
 @Injectable({
   providedIn: 'root'

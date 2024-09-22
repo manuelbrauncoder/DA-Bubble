@@ -51,7 +51,7 @@ export class ChannelService {
    * Call in Workspace-menu-component
    * @param activeChannel 
    */
-  toggleActiveChannel(activeChannel: Channel) {
+  toggleActiveChannel(activeChannel: Channel, scrollToBottom: boolean) {
     this.uiService.userChatNotActive();
     this.fireService.channels.forEach((channel) => {
       if (activeChannel.name === channel.name) {
@@ -59,7 +59,7 @@ export class ChannelService {
         this.fireService.currentChannel = new Channel(activeChannel);
         this.showChannelContent();
         this.fireService.getMessagesPerDay();
-        this.scrolledToBottomOnStart = false;
+        scrollToBottom ? this.scrolledToBottomOnStart = false : true;
       } else {
         channel.channelActive = false;
       }

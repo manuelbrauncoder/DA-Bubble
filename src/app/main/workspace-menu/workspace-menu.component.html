@@ -76,7 +76,7 @@
         @if (uiService.showChannels) {
         <div class="channel-list">
             @for (channel of fireService.channels; track $index; let index = $index) {
-            <span (click)="channelService.toggleActiveChannel(channel)"
+            <span (click)="channelService.toggleActiveChannel(channel, true)"
                 [ngClass]="{'chat-active': channel.channelActive}" class="channel"># {{ channel.name }}</span>
             }
         </div>

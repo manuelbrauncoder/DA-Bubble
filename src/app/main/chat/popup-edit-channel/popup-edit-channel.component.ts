@@ -59,7 +59,7 @@ export class PopupEditChannelComponent {
     this.updatedChannel = new Channel(this.channelService.fireService.currentChannel);
     this.updatedChannel.name = this.nameInput;
     await this.channelService.fireService.addChannel(this.updatedChannel);
-    this.channelService.toggleActiveChannel(this.updatedChannel);
+    this.channelService.toggleActiveChannel(this.updatedChannel, true);
     this.toggleNameInput();
   }
 
@@ -70,7 +70,7 @@ export class PopupEditChannelComponent {
     this.updatedChannel = new Channel(this.channelService.fireService.currentChannel);
     this.updatedChannel.description = this.descriptionInput;
     await this.channelService.fireService.addChannel(this.updatedChannel);
-    this.channelService.toggleActiveChannel(this.updatedChannel);
+    this.channelService.toggleActiveChannel(this.updatedChannel, true);
     this.toggleDescriptionInput();
   }
 }

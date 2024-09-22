@@ -8,7 +8,7 @@
     @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
     <app-date-divider [day]="day"></app-date-divider>
     @for (message of day.messages; track $index) {
-    <app-single-message [currentMessage]="message"></app-single-message>
+    <app-single-message [id]="'conversation-' + message.id" [currentMessage]="message"></app-single-message>
     }
     }
     <div [ngStyle]="conversationService.fireService.currentConversation.messages.length === 0 ? {'margin-top': 'auto'} : {'margin-top': '0'}"

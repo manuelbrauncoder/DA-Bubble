@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { Message } from '../../../models/message.class';
 import { UiService } from '../../../services/ui.service';
 import { FirestoreService } from '../../../services/firestore.service';
-import { Thread } from '../../../models/thread.class ';
+import { Thread } from '../../../models/thread.class';
 import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';

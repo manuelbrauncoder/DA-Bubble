@@ -38,7 +38,7 @@
                 <app-date-divider [day]="day"></app-date-divider>
             }
             @for (message of day.messages; track $index) {
-                <app-single-message [threadMessage]="true" [currentMessage]="message"></app-single-message>
+                <app-single-message [id]="'thread-' + message.id" [threadMessage]="true" [currentMessage]="message"></app-single-message>
             }
         }
     </div>

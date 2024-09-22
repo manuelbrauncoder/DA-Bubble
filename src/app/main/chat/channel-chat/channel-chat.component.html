@@ -65,7 +65,7 @@
     @for (day of channelService.fireService.messagesPerDay; track $index) {
     <app-date-divider [day]="day"></app-date-divider>
     @for (message of day.messages; track $index) {
-    <app-single-message [currentMessage]="message"></app-single-message>
+    <app-single-message [id]="'channel-' + message.id" [currentMessage]="message"></app-single-message>
     }
     }
 

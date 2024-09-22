@@ -11,6 +11,9 @@ import { FilterMessagePipe } from '../../pipes/filter-message.pipe';
 import { TruncateStringPipe } from '../../pipes/truncate-string.pipe';
 import { ConversationService } from '../../services/conversation.service';
 import { Conversation } from '../../models/conversation.class';
+import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
+import { UiService } from '../../services/ui.service';
+import { Thread } from '../../models/thread.class';
 
 @Component({
   selector: 'app-search-bar',
@@ -27,6 +30,8 @@ export class SearchBarComponent {
   userService = inject(UserService);
   channelService = inject(ChannelService);
   conversationService = inject(ConversationService);
+  observerService = inject(BreakpointObserverService);
+  uiService = inject(UiService);
 
   channel: Channel = new Channel();
 
@@ -36,6 +41,14 @@ export class SearchBarComponent {
   filteredChannels: Channel[] = [];
   filteredMessages: Message[] = [];
 
+  openThreadWindow() {
+    if (this.observerService.isMobile) {
+      this.uiService.openThreadMobile();
+    } else {
+      this.uiService.showThread = true;
+    }
+  }
+
   resetSearch() {
     this.searchInput = '';
     this.filteredUsers = [];
@@ -43,23 +56,75 @@ export class SearchBarComponent {
     this.filteredMessages = [];
   }
 
-  redirectToChannel(channel: Channel){
-    this.channelService.toggleActiveChannel(channel);
+  redirectToChannel(channel: Channel, messageId?: string) {
+    this.channelService.toggleActiveChannel(channel, true);
     this.resetSearch();
+    if (messageId) {
+      setTimeout(() => {
+        this.scrollToMessage(messageId);
+      }, 100);
+    }
   }
 
-  redirectToConversation(secondUserUid: string){
+  redirectToConversation(secondUserUid: string, messageId?: string) {
     this.conversationService.openConversation(secondUserUid);
     this.resetSearch();
+    if (messageId) {
+      setTimeout(() => {
+        this.scrollToMessage(messageId);
+      }, 100);
+    }
   }
 
-  redirectToThread(){
-    
+  async redirectToThreadInConversation(secondUid: string, messageId: string) {
+    await this.conversationService.openConversation(secondUid);
+    this.fireService.currentConversation.messages.forEach(message => {
+      if (message.thread) {
+        message.thread.messages.forEach(tm => {
+          if (tm.id === messageId) {
+            this.openThreadWindow();
+            this.fireService.currentThread = new Thread(message.thread);
+            this.fireService.getMessagesPerDayForThread();
+            setTimeout(() => {
+              this.scrollToMessage(`thread-${messageId}`);
+            }, 300);
+          }
+        });
+      }
+    })
   }
 
-  redirectToMessage(message: Message){
-   this.isMessageInChannel(message);  // search message in channel
-   this.isMessageInConversation(message);   // search message in conersation
+  async redirectToThreadInChannel(channel: Channel, messageId: string) {
+    this.channelService.toggleActiveChannel(channel, false);
+    this.fireService.currentChannel.messages.forEach(message => {
+      if (message.thread) {
+        message.thread.messages.forEach(tm => {
+          if (tm.id === messageId) {
+            this.openThreadWindow();
+            this.fireService.currentThread = new Thread(message.thread);
+            this.fireService.getMessagesPerDayForThread();
+            setTimeout(() => {
+              this.scrollToMessage(`thread-${messageId}`);
+            }, 300);
+          }
+        });
+      }
+    });
+  }
+
+  scrollToMessage(messageId: string) {
+    setTimeout(() => {
+      const element = document.getElementById(messageId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 300);
+
+  }
+
+  redirectToMessage(message: Message) {
+    this.isMessageInChannel(message);  // search message in channel
+    this.isMessageInConversation(message);   // search message in conersation
   }
 
   /**
@@ -70,8 +135,8 @@ export class SearchBarComponent {
     this.fireService.conversations.forEach(conversation => {
       conversation.messages.forEach(m => {
         this.searchMessageInConversation(m, message.id, conversation);
-      })
-    })
+      });
+    });
   }
 
   /**
@@ -84,45 +149,42 @@ export class SearchBarComponent {
   searchMessageInConversation(message: Message, messageIdToFind: string, conversation: Conversation) {
     const secondUid = this.userService.getCurrentUser().uid === conversation.participants.first ? conversation.participants.second : conversation.participants.first;
     if (message.id === messageIdToFind) {
-      this.redirectToConversation(secondUid);
-      console.log('Message is in Conversation');
+      this.redirectToConversation(secondUid, `conversation-${messageIdToFind}`);
       return;
     }
     if (message.thread) {
       const matchingThreadMessages = message.thread.messages.filter(tm => tm.id === messageIdToFind);
       if (matchingThreadMessages.length > 0) {
-        this.redirectToConversation(secondUid);
-        console.log('Message in Thread');
+        this.redirectToThreadInConversation(secondUid, messageIdToFind);
         return;
       }
     }
   }
 
-  isMessageInChannel(message: Message){
+  isMessageInChannel(message: Message) {
     this.fireService.channels.forEach(channel => {
       channel.messages.forEach(m => {
         this.searchMessageInChannel(m, message.id, channel);
-      })
-    })
+      });
+    });
   }
 
+
   searchMessageInChannel(message: Message, messageIdToFind: string, channel: Channel) {
-    if (message.id === messageIdToFind) {
-      this.redirectToChannel(channel);
+    if (message.id === messageIdToFind) { // wenn die message in messages gefunden wurde
+      this.redirectToChannel(channel, `channel-${messageIdToFind}`);
       console.log('Message is in Channel');
-      return;
+      return; // funktion abbrechen wenn message gefunden wurde
     }
-    if (message.thread) {
-      const matchingThreadMessages = message.thread.messages.filter(tm => tm.id === messageIdToFind);
+    if (message.thread) {  // message im thread suchen
+      const matchingThreadMessages = message.thread.messages.filter(tm => tm.id === messageIdToFind); // sucht die thread messages nach der message ab
       if (matchingThreadMessages.length > 0) {
-        this.redirectToChannel(channel);
+        this.redirectToThreadInChannel(channel, messageIdToFind);
         console.log('Message in thread');
         return;
       }
     }
   }
-
-
 
   // for search function
 
@@ -144,15 +206,15 @@ export class SearchBarComponent {
         if (this.isMessageMatching(message, searchTerm)) {
           this.filteredMessages.push(message);
         }
-      })
-    })
+      });
+    });
     this.fireService.conversations.forEach(conversation => {
       conversation.messages.forEach(message => {
         if (this.isMessageMatching(message, searchTerm)) {
           this.filteredMessages.push(message);
         }
-      })
-    })
+      });
+    });
   }
 
   isMessageMatching(message: Message, searchTerm: string) {
@@ -170,7 +232,7 @@ export class SearchBarComponent {
     return false;
   }
 
-  
+
   searchUsers(searchTerm: string) {
     this.filteredUsers = this.fireService.users
       .filter(user => user.username.toLowerCase().includes(searchTerm) || user.email.toLowerCase().includes(searchTerm))

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Thread } from "./thread.class ";
+import { Thread } from "./thread.class";
 import { User } from "./user.class";
 
 export class Message{

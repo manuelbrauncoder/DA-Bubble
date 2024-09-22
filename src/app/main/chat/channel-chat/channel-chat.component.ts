@@ -15,7 +15,7 @@ import { BreakpointObserverService } from '../../../services/breakpoint-observer
 import { DateDividerComponent } from "../single-message/date-divider/date-divider.component";
 import { ConversationService } from '../../../services/conversation.service';
 import { Message } from '../../../models/message.class';
-import { Thread } from '../../../models/thread.class ';
+import { Thread } from '../../../models/thread.class';
 
 @Component({
   selector: 'app-channel-chat',
