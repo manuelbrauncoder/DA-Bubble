@@ -43,18 +43,24 @@ export class SendMessageComponent implements OnInit {
   data: any[] = []; // message data, e.g. photos
   selectedFiles: File[] = [];
   filePreviews: string[] = [];
-  allTaggedUsers: string[] = [];
 
+  /**
+   * Angular lifecycle hook - Called when the component is initialized.
+   * Copies the current recipient (either Channel or Conversation).
+   */
   ngOnInit(): void {
     this.copyRecipient();
   }
 
+  /**
+   * Checks if the send button should be disabled.
+   * @returns {boolean} True if the input is disabled or no content/files are provided.
+   */
   isBtnDisabled() {
     return this.disableInput || (this.content.trim().length === 0 && this.selectedFiles.length === 0);
   }
 
   /**
-   * 
    * @returns different strings with channel name or user name
    */
   getPlaceholderText() {
@@ -67,13 +73,19 @@ export class SendMessageComponent implements OnInit {
     }
   }
 
+  /**
+   * Toggles the popup for selecting taggable users.
+   */
   showTaggableUsers() {
     this.uiService.toggleTaggableUsersPopup();
   }
 
-  pushTaggedUsersInArray(username: string) {
-    this.allTaggedUsers.push(username);
-    console.log('Das ist das Array wo alle markierter User drin sind.', this.allTaggedUsers);
+  /**
+   * Adds a tagged user's username to the message content.
+   * @param {string} username - The username of the tagged user.
+   */
+  displayTaggedUser(username: string) {
+    this.content += `@${username} `;
   }
 
   /**
@@ -104,6 +116,10 @@ export class SendMessageComponent implements OnInit {
     await this.userService.fireService.addChannel(this.userService.fireService.currentChannel);
   }
 
+  /**
+   * Adds a message to a thread in the current channel.
+   * @param {Message} message - The message to be added to the thread.
+   */
   createThreadInChannelMessage(message: Message) {
     console.log('thread channel message!');
     this.userService.fireService.currentThread.messages.push(message);
@@ -126,25 +142,35 @@ export class SendMessageComponent implements OnInit {
       this.createThreadInConversationMessage(message);
     }
     await this.userService.fireService.addConversation(this.userService.fireService.currentConversation);
-
   }
 
+  /**
+   * Adds a message to a thread in the current conversation.
+   * @param {Message} message - The message to be added to the thread.
+   */
   createThreadInConversationMessage(message: Message) {
     this.userService.fireService.currentThread.messages.push(message);
     const messageIndex = this.findConversationMessageToUpdate();
     this.userService.fireService.currentConversation.messages[messageIndex].thread = new Thread(this.userService.fireService.currentThread);
   }
 
+  /**
+   * Finds the index of the message to be updated in the current channel.
+   * @returns {number} The index of the message to update.
+   */
   findChannelMessageToUpdate() {
     return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
   }
 
+  /**
+   * Finds the index of the message to be updated in the current conversation.
+   * @returns {number} The index of the message to update.
+   */
   findConversationMessageToUpdate() {
     return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
   }
 
   /**
-   * 
    * @param content from the message
    * @returns a Message Object
    */
@@ -175,9 +201,11 @@ export class SendMessageComponent implements OnInit {
       this.conversationService.scrolledToBottomOnStart = false;
     }
     this.setDefaultsAndSyncMessages();
-
   }
 
+  /**
+   * Resets default values after sending a message and syncs message data.
+   */
   setDefaultsAndSyncMessages() {
     this.userService.fireService.getMessagesPerDayForThread();
     this.content = '';
@@ -188,6 +216,9 @@ export class SendMessageComponent implements OnInit {
     this.redirectToChat();
   }
 
+  /**
+   * Redirects the user back to the chat after sending a message.
+   */
   redirectToChat() {
     if (!this.newMessage) {
       return;
@@ -200,10 +231,19 @@ export class SendMessageComponent implements OnInit {
     }
   }
 
+  /**
+   * Extracts the filename from a file preview URL.
+   * @param {string} preview - The preview URL.
+   * @returns {string} The filename.
+   */
   getFileName(preview: string): string {
     return this.storageService.extractFileName(preview);
   }
 
+  /**
+   * Handles file selection and generates previews.
+   * @param {Event} event - The file input event.
+   */
   onFilesSelected(event: any) {
     const files: FileList = event.target.files;
     if (files.length > 0) {
@@ -220,6 +260,10 @@ export class SendMessageComponent implements OnInit {
     }
   }
 
+  /**
+   * Sets the ID for the file input based on the message type (thread or chat).
+   * @returns {string} The input ID.
+   */
   setidforFileInput(){
     if (this.threadMessage) {
       return 'thread';
@@ -227,5 +271,4 @@ export class SendMessageComponent implements OnInit {
       return 'chat';
     }
   }
-
 }

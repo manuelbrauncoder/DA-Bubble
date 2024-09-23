@@ -20,7 +20,10 @@ export class PopupTaggableUsersComponent {
   @Input() currentRecipient: Conversation | Channel = new Channel(); // Empfänger der Nachricht
   @Output() userTagged = new EventEmitter<string>();
 
-
+  /**
+   * Retrieves the users associated with the current channel.
+   * @returns {User[]} An array of users in the current channel, or an empty array if the recipient is not a channel.
+   */
   getChannelUsers() {
     let users: User[] = [];
 
@@ -35,13 +38,18 @@ export class PopupTaggableUsersComponent {
     }
   }
 
-
+  /**
+   * Emits an event with the tagged user's username and closes the popup.
+   * @param {string} username - The username of the tagged user.
+   */
   tagThisUser(username: string) {
     this.userTagged.emit(username);
-    console.log('Diesen User in der Nachricht markieren. Sein Name ist:', username);
+    this.closePopup();
   }
 
-
+  /**
+   * Closes the popup for selecting taggable users.
+   */
   closePopup() {
     this.uiService.toggleTaggableUsersPopup();
   }
