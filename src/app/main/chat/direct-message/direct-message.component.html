@@ -11,6 +11,7 @@
     <app-single-message [id]="'conversation-' + message.id" [currentMessage]="message"></app-single-message>
     }
     }
+    
     <div [ngStyle]="conversationService.fireService.currentConversation.messages.length === 0 ? {'margin-top': 'auto'} : {'margin-top': '0'}"
         class="message-recipient">
         <div class="name">

@@ -12,7 +12,7 @@ import { Thread } from '../models/thread.class';
 })
 export class FirestoreService {
   firestore = inject(Firestore);
-  private isDefaultChannelset = false;
+  // private isDefaultChannelset = false;
 
   currentChannel: Channel = new Channel();
   currentConversation: Conversation = new Conversation();
@@ -155,6 +155,7 @@ export class FirestoreService {
     }
     if (change.type === 'modified') {
       console.log('Modified Data: ', change.doc.data());
+      //this.getMessagesPerDay();
     }
     if (change.type === 'removed') {
       console.log('Removed Data: ', change.doc.data());
@@ -229,6 +230,10 @@ export class FirestoreService {
       });
       list.docChanges().forEach((change) => {
         this.logChanges(change);
+        const changedChannel = this.setChannelObject(change.doc.data());
+        if (changedChannel.id === this.currentChannel.id) {
+          this.currentChannel = new Channel(changedChannel);
+        }
         this.getMessagesPerDay();
       })
     })
@@ -257,6 +262,10 @@ export class FirestoreService {
       });
       list.docChanges().forEach((change) => {
         this.logChanges(change);
+        const changedConversation = this.setConversationObject(change.doc.data());
+        if (this.currentConversation.id === changedConversation.id) {
+          this.currentConversation = new Conversation(changedConversation);
+        }
         this.getMessagesPerDayForConversation();
       })
     })
