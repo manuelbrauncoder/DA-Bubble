@@ -61,7 +61,7 @@
     </div>
 </header>
 
-<main #channelMessages class="messages">
+<main #channelMessages id="channelContainer" class="messages">
     @for (day of channelService.fireService.messagesPerDay; track $index) {
     <app-date-divider [day]="day"></app-date-divider>
     @for (message of day.messages; track $index) {

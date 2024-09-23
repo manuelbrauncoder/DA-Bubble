@@ -19,7 +19,7 @@
         </svg>
     </header>
 
-    <div #threadMessages class="messages">
+    <div #threadMessages id="threadContainer" class="messages">
         <app-date-divider [rootMessage]="true"></app-date-divider>
 
         <app-single-message [threadMessage]="true" [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>

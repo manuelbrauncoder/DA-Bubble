@@ -65,6 +65,10 @@ app-main-content {
   }
 }
 
+app-single-message{
+  transition: 300ms ease-out;
+}
+
 app-date-divider{
   margin-top: auto;
 }
@@ -291,6 +295,11 @@ $color-error-red: #ed1e79;
   &:hover path {
     fill: $color-purple-3;
   }
+}
+
+.highlight-message{
+  box-shadow: 6px 0 6px rgba(0, 0, 0, 0.1843137255);
+  transition: 300ms ease-out;
 }
 
 *::-webkit-scrollbar {

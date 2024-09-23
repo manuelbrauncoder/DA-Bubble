@@ -60,9 +60,7 @@ export class SearchBarComponent {
     this.channelService.toggleActiveChannel(channel, true);
     this.resetSearch();
     if (messageId) {
-      setTimeout(() => {
-        this.scrollToMessage(messageId);
-      }, 100);
+        this.scrollToMessage(messageId, 'channelContainer');
     }
   }
 
@@ -70,9 +68,7 @@ export class SearchBarComponent {
     this.conversationService.openConversation(secondUserUid);
     this.resetSearch();
     if (messageId) {
-      setTimeout(() => {
-        this.scrollToMessage(messageId);
-      }, 100);
+        this.scrollToMessage(messageId, 'conversationContainer');
     }
   }
 
@@ -85,9 +81,7 @@ export class SearchBarComponent {
             this.openThreadWindow();
             this.fireService.currentThread = new Thread(message.thread);
             this.fireService.getMessagesPerDayForThread();
-            setTimeout(() => {
-              this.scrollToMessage(`thread-${messageId}`);
-            }, 300);
+              this.scrollToMessage(`thread-${messageId}`, 'threadContainer');
           }
         });
       }
@@ -103,23 +97,37 @@ export class SearchBarComponent {
             this.openThreadWindow();
             this.fireService.currentThread = new Thread(message.thread);
             this.fireService.getMessagesPerDayForThread();
-            setTimeout(() => {
-              this.scrollToMessage(`thread-${messageId}`);
-            }, 300);
+              this.scrollToMessage(`thread-${messageId}`, 'threadContainer');
           }
         });
       }
     });
   }
 
-  scrollToMessage(messageId: string) {
+  scrollToMessage(messageId: string, scrollContainer: string) {
     setTimeout(() => {
+      const offset = 200;
+      const container = document.getElementById(scrollContainer);
       const element = document.getElementById(messageId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      if (container && element) {
+        container.scrollTo({
+          top: element.offsetTop - offset,
+          behavior: 'smooth'
+        });
+        this.highlightMessage(messageId);
+        this.resetSearch();
       }
     }, 300);
+  }
 
+  highlightMessage(messageId: string){
+    const message = document.getElementById(messageId);
+    if (message) {
+      message.classList.add('highlight-message');
+      setTimeout(() => {
+        message.classList.remove('highlight-message');
+      }, 2000);
+    }
   }
 
   redirectToMessage(message: Message) {

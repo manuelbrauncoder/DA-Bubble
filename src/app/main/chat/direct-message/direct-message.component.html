@@ -4,7 +4,7 @@
         <h3>{{ conversationService.getConversationPartner().username }} @if (conversationService.isSelfTalking()) {(Du)}</h3>
     </div>
 </header>
-<main #conversationMessages class="messages">
+<main #conversationMessages id="conversationContainer" class="messages">
     @for (day of conversationService.fireService.messagesPerDayConversation; track $index) {
     <app-date-divider [day]="day"></app-date-divider>
     @for (message of day.messages; track $index) {
