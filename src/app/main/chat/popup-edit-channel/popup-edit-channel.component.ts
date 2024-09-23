@@ -30,6 +30,16 @@ export class PopupEditChannelComponent {
   showNameInput = false;
   showDescriptionInput = false;
 
+  isChannelNameTaken(){
+    if (this.channelService.fireService.currentChannel.name.trim().toLowerCase() === this.nameInput.trim().toLowerCase()) {
+      return false;
+    } else if (this.channelService.fireService.channels.some(channel => channel.name.trim().toLowerCase() === this.nameInput.trim().toLowerCase())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 
   /**
    * Remove current User from Channel

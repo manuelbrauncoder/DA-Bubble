@@ -16,6 +16,7 @@ export class ChannelService {
   scrolledToBottomOnStart = false;
 
   constructor() { }
+  
 
   scrollAtStart(container: ElementRef) {
     if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {

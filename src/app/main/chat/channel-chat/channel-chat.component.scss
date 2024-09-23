@@ -162,15 +162,6 @@ header {
     }
 }
 
-app-send-message {
-    height: 182px;
-    width: 100%;
-    padding: 1rem 2.188rem 2.5rem 2.188rem;
-    @media(max-width: 999px) {
-        //padding: 1rem;
-    }
-}
-
 .messages {
     display: flex;
     flex-direction: column;
@@ -178,7 +169,7 @@ app-send-message {
     width: 100%;
     padding: 1rem 0;
     overflow-y: auto;
-    height: calc(100% - 282.5px);
+    height: calc(100% - 255.5px);
 }
 
 .channel-info {
