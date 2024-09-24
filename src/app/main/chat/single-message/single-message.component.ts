@@ -11,11 +11,15 @@ import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
 import { FormsModule } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { Conversation } from '../../../models/conversation.class';
+import { DataDetailViewComponent } from "./data-detail-view/data-detail-view.component";
+import { fadeIn } from "../../../shared/animations";
+import { FireStorageService } from '../../../services/fire-storage.service';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
-  imports: [CommonModule, ReactionBarComponent, FormsModule],
+  animations: [fadeIn],
+  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -25,6 +29,7 @@ export class SingleMessageComponent implements OnInit {
   userService = inject(UserService);
   observerService = inject(BreakpointObserverService);
   threadService = inject(ThreadService);
+  fireStorageService = inject(FireStorageService);
 
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
@@ -34,6 +39,11 @@ export class SingleMessageComponent implements OnInit {
   updatedInChannel = false;
 
   editContent = '';
+
+  openDataDetailView(path: string) {
+    this.uiService.currentDataPath = path;
+    this.uiService.showDataDetailView = true;
+  }
 
   showEditContainer() {
     this.editMode = true;

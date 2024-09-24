@@ -156,7 +156,7 @@ export class SendMessageComponent implements OnInit {
 
   /**
    * Finds the index of the message to be updated in the current channel.
-   * @returns {number} The index of the message to update.
+   * @returns The index of the message to update.
    */
   findChannelMessageToUpdate() {
     return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
@@ -164,7 +164,7 @@ export class SendMessageComponent implements OnInit {
 
   /**
    * Finds the index of the message to be updated in the current conversation.
-   * @returns {number} The index of the message to update.
+   * @returns The index of the message to update.
    */
   findConversationMessageToUpdate() {
     return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
@@ -262,7 +262,7 @@ export class SendMessageComponent implements OnInit {
 
   /**
    * Sets the ID for the file input based on the message type (thread or chat).
-   * @returns {string} The input ID.
+   * @returns The input ID.
    */
   setidforFileInput(){
     if (this.threadMessage) {
