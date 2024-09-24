@@ -23,18 +23,15 @@ import {
   sendPasswordResetEmail,
   confirmPasswordReset,
   verifyPasswordResetCode,
-  signInWithPopup,
-  getAuth
+  signInWithPopup
 } from '@angular/fire/auth';
-import { from, Observable, Subscription } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { AuthUser } from '../interfaces/auth-user';
 import { FirestoreService } from './firestore.service';
-import { UserInterface } from '../interfaces/user-interface';
-import { User } from '../models/user.class';
 import { UiService } from './ui.service';
 import { Router } from '@angular/router';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
+import { Channel } from '../models/channel.class';
 
 @Injectable({
   providedIn: 'root',
@@ -162,10 +159,11 @@ export class FirebaseAuthService {
    * @param {string} password 
    * @returns {Observable<void>} An observable that completes when the user is successfully registered and the profile is updated.
    */
-  register(email: string, username: string, password: string, avatar: string): Observable<void> {
+   register(email: string, username: string, password: string, avatar: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
       updateProfile(response.user, { displayName: username });
       this.saveNewUserInFirestore(email, username, response.user.uid, avatar);
+      this.addNewUserToWelcomeChannel(response.user.uid);
       this.currentUserSig.set({
         email: response.user.email!,
         username: response.user.displayName!,
@@ -179,16 +177,26 @@ export class FirebaseAuthService {
     return from(promise);
   }
 
-  saveNewUserInFirestore(email: string, username: string, uid: string, avatar: string) {
+  addNewUserToWelcomeChannel(uid: string){
+    const channelIndex = this.fireService.channels.findIndex(channel => channel.name.toLowerCase() === 'welcome');
+    if (channelIndex !== -1) {
+      const channel = new Channel(this.fireService.channels[channelIndex]);
+      channel.users.push(uid);
+      this.fireService.addChannel(channel);
+    }
+  }
+
+  async saveNewUserInFirestore(email: string, username: string, uid: string, avatar: string) {
     let newUser = {
       uid: uid,
       username: username,
       email: email,
       createdAt: this.getCurrentTimestamp(),
       currentlyLoggedIn: true,
-      avatar: avatar
+      avatar: avatar,
+      status: 'online'
     }
-    this.fireService.addUser(newUser);
+    await this.fireService.addUser(newUser);
   }
 
   getCurrentTimestamp() {
