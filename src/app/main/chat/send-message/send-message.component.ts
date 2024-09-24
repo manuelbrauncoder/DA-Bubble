@@ -240,25 +240,42 @@ export class SendMessageComponent implements OnInit {
     return this.storageService.extractFileName(preview);
   }
 
-  /**
-   * Handles file selection and generates previews.
-   * @param {Event} event - The file input event.
-   */
-  onFilesSelected(event: any) {
-    const files: FileList = event.target.files;
-    if (files.length > 0) {
-      this.selectedFiles = Array.from(files);
-      this.filePreviews = [];
+/**
+ * Handles file selection and generates previews.
+ * Limits file size to 500KB and accepts only image and PDF files.
+ * @param {Event} event - The file input event.
+ */
+onFilesSelected(event: any) {
+  const files: FileList = event.target.files;
+  const maxSize = 500 * 1024;
+  const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
-      this.selectedFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-          this.filePreviews.push(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      });
-    }
+  if (files.length > 0) {
+    this.selectedFiles = [];
+    this.filePreviews = [];
+
+    Array.from(files).forEach(file => {
+      if (!allowedTypes.includes(file.type)) {
+        alert('Nur Bilddateien (.jpg, .jpeg, .png) und PDF-Dateien sind erlaubt.');
+        return;
+      }
+
+      if (file.size > maxSize) {
+        alert(`Die Datei ${file.name} überschreitet die maximale Größe von 500KB.`);
+        return;
+      }
+
+      this.selectedFiles.push(file);
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.filePreviews.push(e.target.result);
+      };
+
+      reader.readAsDataURL(file);
+    });
   }
+}
 
   /**
    * Sets the ID for the file input based on the message type (thread or chat).
