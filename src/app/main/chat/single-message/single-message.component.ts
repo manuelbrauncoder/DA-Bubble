@@ -37,12 +37,17 @@ export class SingleMessageComponent implements OnInit {
   showMenuPopup = false;
   editMode = false;
   updatedInChannel = false;
+  showDataDetailView = false;
 
   editContent = '';
 
+  closeDataDetailView(){
+    this.showDataDetailView = false;
+  }
+
   openDataDetailView(path: string) {
     this.uiService.currentDataPath = path;
-    this.uiService.showDataDetailView = true;
+    this.showDataDetailView = true;
   }
 
   showEditContainer() {

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { UiService } from '../../../../services/ui.service';
 import { FireStorageService } from '../../../../services/fire-storage.service';
 
@@ -14,5 +14,11 @@ export class DataDetailViewComponent {
   fireStorageService = inject(FireStorageService);
 
   @Input() data = '';
+  @Output() closeDetailView = new EventEmitter<boolean>();
+
+
+  triggerCloseDetailViewInParent(){
+    this.closeDetailView.emit();
+  }
   
 }

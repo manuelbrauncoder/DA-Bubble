@@ -67,9 +67,9 @@
         }
     </div>
 
-    @if (uiService.showDataDetailView) {
-        <app-data-detail-view @fadeIn [data]="currentMessage.data[0]"></app-data-detail-view>
-        <div class="popup-background" @fadeIn (click)="uiService.toggleDataDetailView()"></div>
+    @if (showDataDetailView) {
+        <app-data-detail-view (closeDetailView)="closeDataDetailView()" @fadeIn [data]="currentMessage.data[0]"></app-data-detail-view>
+        <div class="popup-background" @fadeIn (click)="closeDataDetailView()"></div>
         }
 
 </div>
