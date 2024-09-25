@@ -36,6 +36,7 @@ export class SingleMessageComponent implements OnInit {
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
+
   showMenuPopup = false;
   editMode = false;
   updatedInChannel = false;
@@ -48,10 +49,8 @@ export class SingleMessageComponent implements OnInit {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 
-  async addEmojiToReactions(emoji: string){
-    console.log(emoji);
+  async handleReaction(emoji: string){
     const reaction = this.createNewReaction(emoji);
-    console.log(reaction);
     const reactionIndex = this.currentMessage.reactions.findIndex(r => r.id === emoji);
     if (reactionIndex === -1) {
       this.currentMessage.reactions.push(reaction);
@@ -222,7 +221,7 @@ export class SingleMessageComponent implements OnInit {
   weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
   ngOnInit(): void {
-    this.currentMessage = new Message(this.currentMessage);
+    this.currentMessage = new Message(this.currentMessage);        
   }
 
   formatAnswerCount() {
@@ -313,7 +312,7 @@ export class SingleMessageComponent implements OnInit {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
-        this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.currentThread = new Thread(this.currentMessage.thread)        
         this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
@@ -354,7 +353,7 @@ export class SingleMessageComponent implements OnInit {
   createThread(): Thread {
     return new Thread({
       id: '',
-      rootMessage: new Message(this.currentMessage),
+      rootMessage: this.currentMessage.id,
       messages: []
     })
   }

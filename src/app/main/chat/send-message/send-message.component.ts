@@ -171,7 +171,7 @@ export class SendMessageComponent implements OnInit {
    * @returns The index of the message to update.
    */
   findChannelMessageToUpdate() {
-    return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+    return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage);
   }
 
   /**
@@ -179,7 +179,7 @@ export class SendMessageComponent implements OnInit {
    * @returns The index of the message to update.
    */
   findConversationMessageToUpdate() {
-    return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+    return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage);
   }
 
   /**

@@ -27,6 +27,25 @@ export class FirestoreService {
 
   constructor() { }
 
+  getMessageFromId(id: string): Message{
+    let returnMessage = new Message;
+    this.channels.forEach(channel => {
+      channel.messages.forEach(message => {
+        if (message.id === id) {
+          returnMessage = new Message(message);
+        } 
+      })
+    });
+    this.conversations.forEach(conversation => {
+      conversation.messages.forEach(message => {
+        if (message.id === id) {
+          returnMessage = new Message(message);
+        } 
+      })
+    })
+    return returnMessage;
+  }
+
 
    getFormattedDate(timestamp: number): string {
     const date = new Date(timestamp);
@@ -344,7 +363,7 @@ export class FirestoreService {
   getCleanThreadJson(thread: Thread) {
     return {
       id: thread.id,
-      rootMessage: this.getCleanMessageJson(thread.rootMessage),
+      rootMessage: thread.rootMessage || '',
       messages: thread.messages.map(message => this.getCleanMessageJson(message))
     }
   }

@@ -22,7 +22,7 @@
     <div #threadMessages id="threadContainer" class="messages">
         <app-date-divider [rootMessage]="true"></app-date-divider>
 
-        <app-single-message [threadMessage]="true" [currentMessage]="fireService.currentThread.rootMessage"></app-single-message>
+        <app-single-message [threadMessage]="true" [currentMessage]="fireService.getMessageFromId(fireService.currentThread.rootMessage)"></app-single-message>
             
         @if (fireService.currentThread.messages.length > 0) {
         <div class="answer-counter">

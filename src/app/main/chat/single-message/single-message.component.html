@@ -83,7 +83,7 @@
 
     @if (showEmojiPicker) {
         <div class="emoji-picker-wrapper">
-            <app-emoji-picker (sendEmoji)="addEmojiToReactions($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
+            <app-emoji-picker (sendEmoji)="handleReaction($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
         </div>
     }
 
