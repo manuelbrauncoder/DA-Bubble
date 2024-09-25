@@ -51,6 +51,11 @@ export class SendMessageComponent implements OnInit {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 
+  addEmojiToInput(emoji: string){
+    this.content += emoji;
+    this.toggleEmojiPicker();
+  }
+
   /**
    * Angular lifecycle hook - Called when the component is initialized.
    * Copies the current recipient (either Channel or Conversation).

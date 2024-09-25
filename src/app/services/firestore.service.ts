@@ -3,7 +3,7 @@ import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Fires
 import { orderBy } from '@firebase/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
-import { DateMessages, Message } from '../models/message.class';
+import { DateMessages, Message, Reaction } from '../models/message.class';
 import { Conversation, Participants } from '../models/conversation.class';
 import { Thread } from '../models/thread.class';
 
@@ -331,6 +331,14 @@ export class FirestoreService {
       cleanMessage.thread = this.getCleanThreadJson(message.thread)
     }
     return cleanMessage;
+  }
+
+  getCleanReactionJson(reaction: Reaction) {
+    return {
+      counter: reaction.counter,
+      id: reaction.id,
+      fromUser: reaction.fromUser
+    }
   }
 
   getCleanThreadJson(thread: Thread) {

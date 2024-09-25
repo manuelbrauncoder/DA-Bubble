@@ -310,6 +310,10 @@ $color-error-red: #ed1e79;
   transition: 300ms ease-out;
 }
 
+.emoji-mart-scroll {
+  height: 140px !important;
+}
+
 *::-webkit-scrollbar {
   width: 0.5rem;
   /* Breite des Scrollbalkens */
