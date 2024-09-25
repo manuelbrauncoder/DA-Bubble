@@ -325,7 +325,7 @@ export class FirestoreService {
       sender: message.sender,
       content: message.content,
       data: message.data,
-      reactions: message.reactions
+      reactions: message.reactions.map(reaction => this.getCleanReactionJson(reaction))
     };
     if (message.thread) {
       cleanMessage.thread = this.getCleanThreadJson(message.thread)

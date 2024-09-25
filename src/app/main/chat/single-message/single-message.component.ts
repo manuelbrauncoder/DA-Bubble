@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { Message } from '../../../models/message.class';
+import { Message, Reaction } from '../../../models/message.class';
 import { UiService } from '../../../services/ui.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Thread } from '../../../models/thread.class';
@@ -14,12 +14,14 @@ import { Conversation } from '../../../models/conversation.class';
 import { DataDetailViewComponent } from "./data-detail-view/data-detail-view.component";
 import { fadeIn } from "../../../shared/animations";
 import { FireStorageService } from '../../../services/fire-storage.service';
+import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
   animations: [fadeIn],
-  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent],
+  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent, EmojiPickerComponent, EmojiComponent],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -38,8 +40,52 @@ export class SingleMessageComponent implements OnInit {
   editMode = false;
   updatedInChannel = false;
   showDataDetailView = false;
+  showEmojiPicker = false;
 
   editContent = '';
+
+  toggleEmojiPicker(){
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  async addEmojiToReactions(emoji: string){
+    console.log(emoji);
+    const reaction = this.createNewReaction(emoji);
+    console.log(reaction);
+    const reactionIndex = this.currentMessage.reactions.findIndex(r => r.id === emoji);
+    if (reactionIndex === -1) {
+      this.currentMessage.reactions.push(reaction);
+    } else {
+      const userIndex = this.currentMessage.reactions[reactionIndex].fromUser.findIndex(u => u === this.userService.getCurrentUser().uid);
+      if (userIndex === -1) {
+        this.currentMessage.reactions[reactionIndex].counter ++;
+        this.currentMessage.reactions[reactionIndex].fromUser.push(this.userService.getCurrentUser().uid);
+      } else {
+        this.currentMessage.reactions[reactionIndex].counter --;
+        this.currentMessage.reactions[reactionIndex].fromUser.splice(userIndex, 1);
+        if (this.currentMessage.reactions[reactionIndex].counter === 0) {
+          this.currentMessage.reactions.splice(reactionIndex, 1);
+        }
+      }
+    }
+    await this.saveMesssageWithReaction();
+    this.toggleEmojiPicker();
+  }
+
+  async saveMesssageWithReaction(){
+    await this.handleChannelMessage();
+    if (!this.updatedInChannel) {
+      await this.handleConversationMessage();
+    }
+  }
+
+  createNewReaction(emoji: string){
+    return new Reaction({
+      counter: 1,
+      id: emoji,
+      fromUser: new Array(this.userService.getCurrentUser().uid)
+    })
+  }
 
   closeDataDetailView(){
     this.showDataDetailView = false;

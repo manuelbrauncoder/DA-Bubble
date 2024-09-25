@@ -20,10 +20,15 @@ export class ReactionBarComponent implements OnInit {
   @Input() currentMessage: Message = new Message()
   @Output() triggerAnswer = new EventEmitter<void>();
   @Output() triggerMenuPopup = new EventEmitter<void>();
+  @Output() triggerEmojiPicker = new EventEmitter<boolean>();
   
 
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
+  }
+
+  triggerEmojiPickerInParent(){
+    this.triggerEmojiPicker.emit();
   }
 
   triggerMenuPopupInParent() {
