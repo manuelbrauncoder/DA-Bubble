@@ -60,7 +60,10 @@
         @if (currentMessage.reactions.length > 0) {
             <div class="reactions">
                 @for (reaction of currentMessage.reactions; track $index) {
-                    <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                    <div class="reaction">
+                        <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                        <span>{{ reaction.counter }}</span>
+                    </div>
                 }
             </div>
             
