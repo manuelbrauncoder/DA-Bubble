@@ -16,12 +16,13 @@ import { fadeIn } from "../../../shared/animations";
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { ClickOutsideDirective } from '../../../shared/click-outside.directive';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
   animations: [fadeIn],
-  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent, EmojiPickerComponent, EmojiComponent],
+  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent, EmojiPickerComponent, EmojiComponent, ClickOutsideDirective],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -43,6 +44,10 @@ export class SingleMessageComponent implements OnInit {
   showEmojiPicker = false;
   editContent = '';
   showReactionPopups: boolean[] = [];
+
+  clickOutsideEmojiPicker(){
+    this.showEmojiPicker = false;    
+  }
 
   getReactionFrom(users: string[]) {
     const usernames = users.map(user => this.userService.getUserData(user).username);

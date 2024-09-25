@@ -1,4 +1,4 @@
-<div class="send-message-container">
+<div appClickOutside (clickOutside)="closeEmojiPicker()" class="send-message-container">
     @if (showEmojiPicker) {
         <div class="picker-wrapper">
             <app-emoji-picker (sendEmoji)="addEmojiToInput($event)" [content]="'send-message'"></app-emoji-picker>

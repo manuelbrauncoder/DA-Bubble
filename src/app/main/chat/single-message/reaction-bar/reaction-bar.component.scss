@@ -2,15 +2,15 @@
 @import '../../../../../styles.scss';
 
 main {
-    @include dFlex($g: 5px);
+    @include dFlex($g: 0.3125rem);
     background-color: white;
-    padding: 3px 15px 3px 20px;
-    border-radius: 25px 25px 0 25px;
-    border: 1px solid $color-purple-light;
+    padding: 0.1875rem 0.9375rem 0.1875rem 1.25rem;
+    border-radius: 1.5625rem 1.5625rem 0 1.5625rem;
+    border: 0.0625rem solid $color-purple-light;
 
     .icon-wrapper {
-        width: 40px;
-        height: 40px;
+        width: 2.5rem;
+        height: 2.5rem;
         border-radius: 100%;
         @include dFlex();
         transition: 150ms ease-in;
@@ -36,7 +36,6 @@ main {
             fill: $color-purple-3;
         }
     }
-
 }
 
 

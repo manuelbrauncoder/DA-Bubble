@@ -291,6 +291,10 @@ app-data-detail-view {
     background-color: rgba(236, 238, 254, 0.5019607843);
 }
 
+.emoji-picker-wrapper {
+    position: absolute;
+}
+
 .reactions {
     @include dFlex($g: 0.625rem, $jc: flex-start);
     flex-wrap: wrap;

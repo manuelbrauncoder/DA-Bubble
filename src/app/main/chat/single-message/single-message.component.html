@@ -77,12 +77,17 @@
         }
 
     </div>
-    <div class="reaction-bar-wrapper"
+    <div appClickOutside (clickOutside)="clickOutsideEmojiPicker()" class="reaction-bar-wrapper"
         [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'reaction-bar-current-user' : 'reaction-bar-user'">
         <app-reaction-bar (triggerHandleReaction)="handleReaction($event)" [threadMessage]="threadMessage" [currentMessage]="currentMessage" (triggerAnswer)="answer()"
             (triggerMenuPopup)="toggleMenuPopup()" (triggerEmojiPicker)="toggleEmojiPicker()"></app-reaction-bar>
         @if (showMenuPopup) {
         <div class="popup" (click)="showEditContainer()"><span>Nachricht bearbeiten</span></div>
+        }
+        @if (showEmojiPicker) {
+            <div class="emoji-picker-wrapper">
+                <app-emoji-picker (sendEmoji)="handleReaction($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
+            </div>
         }
     </div>
 
@@ -90,12 +95,5 @@
         <app-data-detail-view (closeDetailView)="closeDataDetailView()" @fadeIn [data]="currentMessage.data[0]"></app-data-detail-view>
         <div class="popup-background" @fadeIn (click)="closeDataDetailView()"></div>
         }
-
-    @if (showEmojiPicker) {
-        <div class="emoji-picker-wrapper">
-            <app-emoji-picker (sendEmoji)="handleReaction($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
-        </div>
-    }
-
 </div>
 

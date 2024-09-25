@@ -15,11 +15,12 @@ import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-tagga
 import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
+import { ClickOutsideDirective } from '../../../shared/click-outside.directive';
 
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent],
+  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent, ClickOutsideDirective],
   animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
@@ -46,6 +47,10 @@ export class SendMessageComponent implements OnInit {
   filePreviews: string[] = [];
 
   showEmojiPicker = false;
+
+  closeEmojiPicker(){
+    this.showEmojiPicker = false;
+  }
 
   toggleEmojiPicker(){
     this.showEmojiPicker = !this.showEmojiPicker;
