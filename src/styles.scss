@@ -19,6 +19,7 @@ h4 {
 
 html {
   font-size: 16px;
+
   @media (max-width: 999px) {
     font-size: 14px;
   }
@@ -65,11 +66,11 @@ app-main-content {
   }
 }
 
-app-single-message{
+app-single-message {
   transition: 300ms ease-out;
 }
 
-app-date-divider{
+app-date-divider {
   margin-top: auto;
 }
 
@@ -81,8 +82,9 @@ app-mobile-popup {
 app-send-message {
   width: 100%;
   padding: 1rem 2.188rem 2.5rem 2.188rem;
+
   @media(max-width: 999px) {
-      padding: 1rem;
+    padding: 1rem;
   }
 }
 
@@ -305,13 +307,18 @@ $color-error-red: #ed1e79;
   }
 }
 
-.highlight-message{
+.highlight-message {
   box-shadow: 6px 0 9px rgba(0, 0, 0, 0.1843137255);
   transition: 300ms ease-out;
 }
 
 .emoji-mart-scroll {
   height: 140px !important;
+}
+
+.emoji-mart {
+  box-shadow: 0rem 0.375rem 0.625rem 0rem rgba(0, 0, 0, 0.2) !important;
+  border-radius: 1.875rem 1.875rem 0 1.875rem  !important;
 }
 
 *::-webkit-scrollbar {

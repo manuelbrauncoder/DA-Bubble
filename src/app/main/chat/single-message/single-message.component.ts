@@ -42,6 +42,32 @@ export class SingleMessageComponent implements OnInit {
   showDataDetailView = false;
   showEmojiPicker = false;
   editContent = '';
+  showReactionPopups: boolean[] = [];
+
+  getReactionFrom(users: string[]) {
+    const usernames = users.map(user => this.userService.getUserData(user).username);
+    if (usernames.length === 1) {
+      return usernames[0];
+    } else if (usernames.length === 2) {
+      return `${usernames[0]} und ${usernames[1]}`;
+    } else {
+      const allButLast = users.slice(0, -1).join(', ');
+      const lastUser = users[users.length - 1];
+      return `${allButLast} und ${lastUser}`;
+    }
+  }
+
+  isPlural(counter: number) { 
+    return counter > 1 ? 'haben reagiert' : 'hat reagiert';
+   }
+
+  onMouseOver(index: number) {
+    this.showReactionPopups[index] = true;
+  }
+
+  onMouseLeave(index: number) {
+    this.showReactionPopups[index] = false;
+  }
 
   toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;

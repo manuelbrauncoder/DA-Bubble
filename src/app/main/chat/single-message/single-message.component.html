@@ -59,10 +59,17 @@
 
         @if (currentMessage.reactions.length > 0) {
             <div class="reactions">
-                @for (reaction of currentMessage.reactions; track $index) {
-                    <div (click)="handleReaction(reaction.id)" class="reaction">
+                @for (reaction of currentMessage.reactions; track $index; let index = $index) {
+                    <div [id]="index" (mouseleave)="onMouseLeave(index)" (mouseover)="onMouseOver(index)" (click)="handleReaction(reaction.id)" class="reaction">
                         <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
                         <span>{{ reaction.counter }}</span>
+                        @if (showReactionPopups[index]) {
+                            <div @fadeIn class="info-popup">
+                                <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                                    <span class="reaction-from">{{ getReactionFrom(reaction.fromUser)}}</span>
+                                    <span class="react">{{ isPlural(reaction.counter) }}</span>
+                            </div>
+                        }
                     </div>
                 }
             </div>
