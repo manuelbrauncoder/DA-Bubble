@@ -12,15 +12,11 @@ import { Thread } from '../models/thread.class';
 })
 export class FirestoreService {
   firestore = inject(Firestore);
-  // private isDefaultChannelset = false;
 
   currentChannel: Channel = new Channel();
   currentConversation: Conversation = new Conversation();
   currentThread: Thread = new Thread();
   currentMessage: Message = new Message();
-
-
-
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here
@@ -30,6 +26,7 @@ export class FirestoreService {
   messagesPerDayThread: any = []; // for thread
 
   constructor() { }
+
 
    getFormattedDate(timestamp: number): string {
     const date = new Date(timestamp);

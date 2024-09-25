@@ -1,4 +1,9 @@
 <div class="send-message-container">
+    @if (showEmojiPicker) {
+        <div class="picker-wrapper">
+            <app-emoji-picker></app-emoji-picker>
+        </div>
+    }
     <textarea [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
     <div class="icons">
@@ -14,7 +19,7 @@
 
             <hr>
 
-            <div class="bounding-box">
+            <div (click)="toggleEmojiPicker()" class="bounding-box">
                 <img src="assets/icons/channel-chat/addReactionIcon.svg">
             </div>
 

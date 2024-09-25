@@ -14,11 +14,12 @@ import { ThreadService } from '../../../services/thread.service';
 import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
 import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
+import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
 
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent],
+  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent],
   animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
@@ -43,6 +44,12 @@ export class SendMessageComponent implements OnInit {
   data: any[] = []; // message data, e.g. photos
   selectedFiles: File[] = [];
   filePreviews: string[] = [];
+
+  showEmojiPicker = false;
+
+  toggleEmojiPicker(){
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
 
   /**
    * Angular lifecycle hook - Called when the component is initialized.
