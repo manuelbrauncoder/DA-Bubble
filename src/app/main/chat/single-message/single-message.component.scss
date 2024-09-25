@@ -229,7 +229,6 @@
             fill: $color-purple-3;
         }
     }
-
 }
 
 .edit-container {
@@ -348,6 +347,7 @@ app-data-detail-view {
 
 .reaction {
     @include dFlex($g: 10px);
+    flex-wrap: wrap;
     border: 1px solid $color-purple-light;
     padding: 5px 10px;
     border-radius: 100vw;
@@ -357,7 +357,9 @@ app-data-detail-view {
         font-size: 16px;
         font-weight: 400;
         line-height: 21.82px;
-        text-align: left;
+    }
 
+    ngx-emoji {
+        @include dFlex();
     }
 }

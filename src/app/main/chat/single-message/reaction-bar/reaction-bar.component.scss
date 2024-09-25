@@ -19,6 +19,10 @@ main {
             background-color: $color-active-channel;
             transition: 150ms ease-in;
         }
+
+        ngx-emoji {
+            @include dFlex();
+        }
     }
 }
 

@@ -36,49 +36,59 @@ export class SingleMessageComponent implements OnInit {
   @Input() currentMessage: Message = new Message();
   @Input() threadMessage: boolean = false;
 
-
   showMenuPopup = false;
   editMode = false;
   updatedInChannel = false;
   showDataDetailView = false;
   showEmojiPicker = false;
-
   editContent = '';
 
-  toggleEmojiPicker(){
+  toggleEmojiPicker() {
     this.showEmojiPicker = !this.showEmojiPicker;
   }
 
-  async handleReaction(emoji: string){
+  async handleReaction(emoji: string) {
     const reaction = this.createNewReaction(emoji);
     const reactionIndex = this.currentMessage.reactions.findIndex(r => r.id === emoji);
     if (reactionIndex === -1) {
-      this.currentMessage.reactions.push(reaction);
+      this.addReactionToMessage(reaction);
     } else {
       const userIndex = this.currentMessage.reactions[reactionIndex].fromUser.findIndex(u => u === this.userService.getCurrentUser().uid);
       if (userIndex === -1) {
-        this.currentMessage.reactions[reactionIndex].counter ++;
-        this.currentMessage.reactions[reactionIndex].fromUser.push(this.userService.getCurrentUser().uid);
+        this.increaseReactionCounter(reactionIndex);
       } else {
-        this.currentMessage.reactions[reactionIndex].counter --;
-        this.currentMessage.reactions[reactionIndex].fromUser.splice(userIndex, 1);
-        if (this.currentMessage.reactions[reactionIndex].counter === 0) {
-          this.currentMessage.reactions.splice(reactionIndex, 1);
-        }
+        this.decreaseReactionCounter(reactionIndex, userIndex);
       }
     }
     await this.saveMesssageWithReaction();
-    this.toggleEmojiPicker();
+    this.showEmojiPicker = false;
   }
 
-  async saveMesssageWithReaction(){
+  addReactionToMessage(reaction: Reaction) {
+    this.currentMessage.reactions.push(reaction);
+  }
+
+  increaseReactionCounter(reactionIndex: number) {
+    this.currentMessage.reactions[reactionIndex].counter++;
+    this.currentMessage.reactions[reactionIndex].fromUser.push(this.userService.getCurrentUser().uid);
+  }
+
+  decreaseReactionCounter(reactionIndex: number, userIndex: number) {
+    this.currentMessage.reactions[reactionIndex].counter--;
+    this.currentMessage.reactions[reactionIndex].fromUser.splice(userIndex, 1);
+    if (this.currentMessage.reactions[reactionIndex].counter === 0) {
+      this.currentMessage.reactions.splice(reactionIndex, 1);
+    }
+  }
+
+  async saveMesssageWithReaction() {
     await this.handleChannelMessage();
     if (!this.updatedInChannel) {
       await this.handleConversationMessage();
     }
   }
 
-  createNewReaction(emoji: string){
+  createNewReaction(emoji: string) {
     return new Reaction({
       counter: 1,
       id: emoji,
@@ -86,7 +96,7 @@ export class SingleMessageComponent implements OnInit {
     })
   }
 
-  closeDataDetailView(){
+  closeDataDetailView() {
     this.showDataDetailView = false;
   }
 
@@ -221,7 +231,7 @@ export class SingleMessageComponent implements OnInit {
   weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
   ngOnInit(): void {
-    this.currentMessage = new Message(this.currentMessage);        
+    this.currentMessage = new Message(this.currentMessage);
   }
 
   formatAnswerCount() {
@@ -277,7 +287,7 @@ export class SingleMessageComponent implements OnInit {
   }
 
   /**
-   * show tread window with new or existing thread
+   * show thread window with new or existing thread
    * set curent message in fire service with current message from input
    */
   answer() {
@@ -312,7 +322,7 @@ export class SingleMessageComponent implements OnInit {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
-        this.fireService.currentThread = new Thread(this.currentMessage.thread)        
+        this.fireService.currentThread = new Thread(this.currentMessage.thread)
         this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
@@ -323,7 +333,6 @@ export class SingleMessageComponent implements OnInit {
       }
     }
   }
-
 
   /**
    * if the message already has a thread,
@@ -358,10 +367,6 @@ export class SingleMessageComponent implements OnInit {
     })
   }
 
-  /**
-   * set updatet message with thread in conversation
-   * save updated conversatin in firebase
-   */
   async saveUpdatedConversation() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === currentMessageId);
