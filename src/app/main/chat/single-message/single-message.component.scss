@@ -342,12 +342,12 @@ app-data-detail-view {
 }
 
 .reactions {
-    @include dFlex($g: 10px);
+    @include dFlex($g: 10px, $jc: flex-start);
+    flex-wrap: wrap;
 }
 
 .reaction {
     @include dFlex($g: 10px);
-    flex-wrap: wrap;
     border: 1px solid $color-purple-light;
     padding: 5px 10px;
     border-radius: 100vw;
