@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -26,7 +26,7 @@ import { AutofocusDirective } from '../../../shared/directives/autofocus.directi
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
 })
-export class SendMessageComponent implements OnInit {
+export class SendMessageComponent implements OnInit, OnChanges {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
   storageService = inject(FireStorageService);
@@ -42,12 +42,33 @@ export class SendMessageComponent implements OnInit {
   @Input() userUid = '';
   @Input() disableInput = false;
 
+  @ViewChild('textArea') textArea!: ElementRef;
+
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
   selectedFiles: File[] = [];
   filePreviews: string[] = [];
 
   showEmojiPicker = false;
+
+  onKeyDownEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !this.isBtnDisabled()) {
+      event.preventDefault();      
+      this.saveNewMessage();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentRecipient']) {
+      if (this.textArea) {
+        this.setFocus();
+      }
+    }
+  }
+
+  setFocus(){
+    this.textArea.nativeElement.focus();
+  }
 
   closeEmojiPicker(){
     this.showEmojiPicker = false;
@@ -72,7 +93,7 @@ export class SendMessageComponent implements OnInit {
 
   /**
    * Checks if the send button should be disabled.
-   * @returns {boolean} True if the input is disabled or no content/files are provided.
+   * @returns True if the input is disabled or no content/files are provided.
    */
   isBtnDisabled() {
     return this.disableInput || (this.content.trim().length === 0 && this.selectedFiles.length === 0);

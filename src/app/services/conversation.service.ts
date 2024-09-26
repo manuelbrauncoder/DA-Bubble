@@ -66,6 +66,7 @@ export class ConversationService {
     this.uiService.hightlightUserChat(this.userService.getUserData(secondUserUid));
     this.uiService.channelChatNotActive();
     this.scrolledToBottomOnStart = false;
+
   }
 
   showChatContent() {

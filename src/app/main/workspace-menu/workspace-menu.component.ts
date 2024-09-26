@@ -9,7 +9,6 @@ import { ConversationService } from '../../services/conversation.service';
 import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
 import { Channel } from '../../models/channel.class';
-import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-workspace-menu',

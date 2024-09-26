@@ -9,11 +9,12 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user.class';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
+import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
 
 @Component({
   selector: 'app-new-message',
   standalone: true,
-  imports: [SendMessageComponent, FormsModule, CommonModule],
+  imports: [SendMessageComponent, FormsModule, CommonModule, AutofocusDirective],
   templateUrl: './new-message.component.html',
   styleUrl: './new-message.component.scss'
 })
