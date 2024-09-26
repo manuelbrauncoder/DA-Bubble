@@ -1,3 +1,7 @@
+/**
+ * This Service handles up- and downloads to Firebase Storage
+ */
+
 import { Injectable } from '@angular/core';
 import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from 'firebase/auth';

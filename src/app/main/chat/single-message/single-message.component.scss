@@ -51,6 +51,10 @@
     height: 4.375rem;
     border-radius: 100%;
     background-color: white;
+    @media(max-width: 999px) {
+        width: 3.125rem;
+        height: 3.125rem;
+    }
 }
 
 .message {

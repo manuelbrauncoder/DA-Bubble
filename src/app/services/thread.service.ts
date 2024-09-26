@@ -1,3 +1,7 @@
+/**
+ * This services handles a few thread methods
+ */
+
 import { ElementRef, inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 
@@ -10,7 +14,6 @@ export class ThreadService {
   scrolledToBottomOnStart = false;
 
   constructor() { }
-
 
   scrollAtStart(container: ElementRef) {
     if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {
@@ -27,7 +30,6 @@ export class ThreadService {
         behavior: 'smooth'
       });
     } catch (error) {
-      console.log('Could not scroll to bottom');
     }
   }
 }

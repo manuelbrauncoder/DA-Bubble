@@ -15,7 +15,6 @@ export class UiService {
   fireService = inject(FirestoreService);
 
   currentDataPath = '';
-  // downloadUrl = '';
 
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
   showDirectMessages: boolean = true; // user list in workspace menu

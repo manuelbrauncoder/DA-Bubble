@@ -18,7 +18,6 @@ export class ConversationService {
   userService = inject(UserService);
   observerService = inject(BreakpointObserverService);
 
-
   scrolledToBottomOnStart = false;
 
   constructor() { }
@@ -113,7 +112,6 @@ export class ConversationService {
     return false;
   }
 
-  
   /**
    * check if first and second User are part of Participants 
    * @returns 

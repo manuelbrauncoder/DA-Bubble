@@ -1,3 +1,7 @@
+/**
+ * This service handles Channel Methods
+ */
+
 import { inject, Injectable, ElementRef } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { Channel } from '../models/channel.class';
@@ -17,7 +21,6 @@ export class ChannelService {
 
   constructor() { }
   
-
   scrollAtStart(container: ElementRef) {
     if (this.fireService.currentChannel.messages.length > 0 && !this.scrolledToBottomOnStart) {
       this.scrollToBottom(container);
@@ -33,7 +36,6 @@ export class ChannelService {
         behavior: 'smooth'
       });
     } catch (error) {
-      console.log('Could not scroll to bottom');
     }
   }
 
@@ -75,5 +77,4 @@ export class ChannelService {
       this.uiService.showThread = false;
     }
   }
-
 }

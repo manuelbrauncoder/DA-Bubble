@@ -1,5 +1,9 @@
+/**
+ * This Service handles everything with Firestore Database 
+ */
+
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, setDoc } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';

@@ -8,6 +8,8 @@ import { UserService } from '../../services/user.service';
 import { ConversationService } from '../../services/conversation.service';
 import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
 import { SearchBarComponent } from '../../shared/search-bar/search-bar.component';
+import { Channel } from '../../models/channel.class';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-workspace-menu',
@@ -29,6 +31,28 @@ export class WorkspaceMenuComponent {
     this.uiService.changeMainContent('newMessage');
     this.uiService.channelChatNotActive();
     this.uiService.userChatNotActive();
+    this.closeWorkspaceMenuInTablet();
+  }
+
+  closeWorkspaceMenuInTablet() {
+    if (this.observerService.isTablet) {
+      this.uiService.showWorkspaceMenu = false;
+    }
+  }
+
+  toggleChannels(channel: Channel){
+    this.channelService.toggleActiveChannel(channel, true);
+    this.closeWorkspaceMenuInTablet();
+  }
+
+  openConversation(uid: string){
+    this.conversationService.openConversation(uid);
+    this.closeWorkspaceMenuInTablet();
+  }
+
+  openAddChannelPopup(){
+    this.uiService.toggleAddChannelPopup();
+    this.closeWorkspaceMenuInTablet();
   }
  
 }

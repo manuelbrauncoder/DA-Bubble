@@ -34,7 +34,6 @@ export class AddChannelPopup2Component implements OnInit {
 
   setAvailableUserUids(){
     return this.channelService.fireService.users.map(user => user.uid);
-
   }
 
   /**

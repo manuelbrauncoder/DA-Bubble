@@ -13,6 +13,7 @@ main {
     position: absolute;
     bottom: 15%;
     left: -24px;
+    z-index: 5;
 }
 
 .workspace-menu-wrapper {
@@ -21,10 +22,11 @@ main {
     background-color: white;
     border-radius: 1.875rem;
     overflow-y: auto;
+    height: 100%;
 
     @media(max-width: 1399px) {
         position: absolute;
-        height: calc(100vh - 200px);
+        // height: calc(100vh - 200px);
         z-index: 3;
         box-shadow: 6px 0 6px #0000002f;
         border-radius: 1.875rem;
@@ -33,7 +35,7 @@ main {
     @media(max-width: 999px) {
         width: 100%;
         max-width: 100%;
-        height: unset;
+        // height: unset;
         box-shadow: unset;
         border-radius: unset;
         position: static;

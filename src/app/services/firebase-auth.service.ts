@@ -227,9 +227,7 @@ export class FirebaseAuthService {
   * Logs in a user with Firebase Authentication.
   *
   * If the login is successful, it changes the login state in firestore
-  *
-  * @param {string} email 
-  * @param {string} password 
+  * 
   * @returns {Observable<void>} An observable that completes when the login process is successful.
   */
   login(email: string, password: string): Observable<void> {
@@ -241,7 +239,6 @@ export class FirebaseAuthService {
         console.error('Login failed in FirebaseAuthService:', error);
         throw error;
       });
-
     return from(promise);
   }
 
@@ -317,7 +314,6 @@ export class FirebaseAuthService {
       });
     } else {
       console.log('No user is currently logged in.');
-
     }
   }
 
@@ -359,7 +355,6 @@ export class FirebaseAuthService {
           this.uiService.toggleVerifyPassword();
         }
         console.log(err);
-
       });
     }
   }
@@ -406,19 +401,16 @@ export class FirebaseAuthService {
   updateUserPassword(newPw: string) {
     if (this.auth.currentUser) {
       updatePassword(this.auth.currentUser, newPw).then(() => {
-        // add things todo after password changed
         console.log('Password from User updated:', this.auth.currentUser);
       }).catch((err) => {
-        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN // evtl schon vorher abfragen um fehler zu vermeiden!!
+        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN
         if (code) {
           console.log('Login again before change password');
-          // add popup to reAuthentcateUser();
         }
         console.warn('Error updating Password', err);
       })
     }
   }
-
 
   /**
  * Sends an email to the user to reset the password
@@ -432,7 +424,6 @@ export class FirebaseAuthService {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-
         console.error('Error Code:', errorCode);
         console.error('Error Message:', errorMessage);
       });
@@ -465,8 +456,6 @@ export class FirebaseAuthService {
       throw error;
     }
   }
-
-
 }
 
 

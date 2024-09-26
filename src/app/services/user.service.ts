@@ -1,3 +1,7 @@
+/**
+ * This Service handles different methods for User class
+ */
+
 import { inject, Injectable } from '@angular/core';
 import { FirestoreService } from './firestore.service';
 import { FirebaseAuthService } from './firebase-auth.service';
@@ -12,7 +16,6 @@ export class UserService {
   authService = inject(FirebaseAuthService);
 
   constructor() { }
-
 
   getUserData(userUid: string): User {
     const user = this.fireService.users.find(user => user.uid === userUid);
@@ -50,7 +53,6 @@ export class UserService {
     }
     return false;
   }
-
 
   /**
    * this method returns the img path for the avatar
