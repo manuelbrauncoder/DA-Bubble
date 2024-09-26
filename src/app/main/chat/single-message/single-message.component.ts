@@ -16,7 +16,7 @@ import { fadeIn } from "../../../shared/animations";
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { ClickOutsideDirective } from '../../../shared/click-outside.directive';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 @Component({
   selector: 'app-single-message',

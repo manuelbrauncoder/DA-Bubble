@@ -15,12 +15,13 @@ import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-tagga
 import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
-import { ClickOutsideDirective } from '../../../shared/click-outside.directive';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
+import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
 
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent, ClickOutsideDirective],
+  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent, ClickOutsideDirective, AutofocusDirective],
   animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'

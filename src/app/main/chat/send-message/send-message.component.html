@@ -4,7 +4,7 @@
             <app-emoji-picker (sendEmoji)="addEmojiToInput($event)" [content]="'send-message'"></app-emoji-picker>
         </div>
     }
-    <textarea [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
+    <textarea appAutofocus [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
     <div class="icons">
         <div class="add-elements">

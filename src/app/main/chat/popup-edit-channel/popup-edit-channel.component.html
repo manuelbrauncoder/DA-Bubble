@@ -37,7 +37,7 @@
                 <button type="button" [disabled]="isChannelNameTaken()" class="text-btn" (click)="saveNewChannelName()">Speichern</button>
             }
             @if (showNameInput && observerService.isMobile) {
-                <button [disabled]="isChannelNameTaken()" type="button" (click)="toggleNameInput()" class="mobile-icon">
+                <button [disabled]="isChannelNameTaken()" type="button" (click)="saveNewChannelName()" class="mobile-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_1814_16197" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                         <rect width="24" height="24" fill="#D9D9D9"/>
@@ -85,7 +85,7 @@
                 <button type="button" (click)="saveNewChannelDescription()" class="text-btn">Speichern</button>
             }
             @if (showDescriptionInput && observerService.isMobile) {
-                <div (click)="toggleDescriptionInput()" class="mobile-icon">
+                <div (click)="saveNewChannelDescription()" class="mobile-icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_1814_16197" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
                         <rect width="24" height="24" fill="#D9D9D9"/>
