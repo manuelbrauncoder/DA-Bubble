@@ -51,6 +51,7 @@
     height: 4.375rem;
     border-radius: 100%;
     background-color: white;
+
     @media(max-width: 999px) {
         width: 3.125rem;
         height: 3.125rem;
@@ -296,7 +297,12 @@ app-data-detail-view {
 }
 
 .emoji-picker-wrapper {
+    z-index: 3;
     position: absolute;
+    @media(max-width: 999px) {
+        top: 40px;
+        left: -20px;
+    }
 }
 
 .reactions {
@@ -326,12 +332,17 @@ app-data-detail-view {
 .info-popup {
     position: absolute;
     bottom: 2.5rem;
-    left: 2rem;
+    right: 2rem;
     background-color: $color-purple-1;
-    border-radius: 1.875rem 1.875rem 1.875rem 0;
+    border-radius: 1.875rem 1.875rem 0 1.875rem;
     padding: 0.9375rem 0.625rem;
     @include dFlex($fd: column, $g: 0.3125rem);
     min-width: 10rem;
+
+    @media(max-width: 999px) {
+        border-radius: 1.875rem 1.875rem 1.875rem 0;
+        left: 2rem;
+    }
 
     .reaction-from {
         font-family: Nunito;
