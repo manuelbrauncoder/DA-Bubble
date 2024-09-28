@@ -20,5 +20,14 @@ export class DataDetailViewComponent {
   triggerCloseDetailViewInParent(){
     this.closeDetailView.emit();
   }
+
+  async downloadFile(){
+    try {
+      await this.fireStorageService.downloadFile(this.uiService.currentDataPath);
+    } catch (error) {
+      console.log('Error downloading File', error);
+      
+    }
+  }
   
 }
