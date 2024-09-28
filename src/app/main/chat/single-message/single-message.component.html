@@ -24,9 +24,11 @@
         <!-- edit area -->
         @if (editMode) {
         <div class="edit-container">
-            <textarea [(ngModel)]="editContent" required name="edit-input" id=""></textarea>
+            <form id="editForm" name="editForm" #editForm="ngForm" (ngSubmit)="onSubmit(editForm)">
+                <textarea appAutofocus (keydown)="onKeyDownEnter($event)" [(ngModel)]="editContent" required name="edit-input" id=""></textarea>
+            </form>
             <div class="footer">
-                <div class="icon-wrapper svg-hover">
+                <div (click)="toggleEditEmojiPicker()" class="icon-wrapper svg-hover">
                     <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0_76631_17710" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0"
                             width="25" height="24">
@@ -38,13 +40,19 @@
                                 fill="black" />
                         </g>
                     </svg>
+                    @if (showEmojiPickerInEditMode) {
+                        <div class="edit-emoji-picker-wrapper">
+                            <app-emoji-picker (sendEmoji)="handleEditEmoji($event)" [content]="'send-message'" [currentMessage]="currentMessage"></app-emoji-picker>
+                        </div>
+                    }
                 </div>
                 <div class="btns">
                     <button (click)="cancelEditMode()" class="secondary-btn">Abbrechen</button>
-                    <button (click)="saveEditedMessage()" class="primary-btn">Speichern</button>
+                    <button [disabled]="!editForm.valid" type="submit" form="editForm" class="primary-btn">Speichern</button>
                 </div>
 
             </div>
+            
         </div>
         }
         <!-- edit area -->

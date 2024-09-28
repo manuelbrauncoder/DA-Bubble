@@ -253,6 +253,12 @@
             @include dFlex($g: 2rem);
         }
     }
+    form{
+        display: block;
+        padding: 0;
+        margin-right: auto;
+        border: unset;
+    }
 
     textarea {
         width: 100%;
@@ -304,6 +310,13 @@ app-data-detail-view {
         top: 40px;
         left: -20px;
     }
+}
+
+.edit-emoji-picker-wrapper {
+    z-index: 3;
+    position: absolute;
+    bottom: 60px;
+    left: 160px;
 }
 
 .reactions {

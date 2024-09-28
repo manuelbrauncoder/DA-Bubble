@@ -7,24 +7,34 @@ import { UserService } from '../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserverService } from '../../../services/breakpoint-observer.service';
 import { ThreadService } from '../../../services/thread.service';
-import { ReactionBarComponent } from "./reaction-bar/reaction-bar.component";
-import { FormsModule } from '@angular/forms';
+import { ReactionBarComponent } from './reaction-bar/reaction-bar.component';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Channel } from '../../../models/channel.class';
 import { Conversation } from '../../../models/conversation.class';
-import { DataDetailViewComponent } from "./data-detail-view/data-detail-view.component";
-import { fadeIn } from "../../../shared/animations";
+import { DataDetailViewComponent } from './data-detail-view/data-detail-view.component';
+import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
+import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
   animations: [fadeIn],
-  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent, EmojiPickerComponent, EmojiComponent, ClickOutsideDirective],
+  imports: [
+    CommonModule,
+    ReactionBarComponent,
+    FormsModule,
+    DataDetailViewComponent,
+    EmojiPickerComponent,
+    EmojiComponent,
+    ClickOutsideDirective,
+    AutofocusDirective
+  ],
   templateUrl: './single-message.component.html',
-  styleUrl: './single-message.component.scss'
+  styleUrl: './single-message.component.scss',
 })
 export class SingleMessageComponent implements OnInit {
   uiService = inject(UiService);
@@ -42,15 +52,26 @@ export class SingleMessageComponent implements OnInit {
   updatedInChannel = false;
   showDataDetailView = false;
   showEmojiPicker = false;
+  showEmojiPickerInEditMode = false;
   editContent = '';
   showReactionPopups: boolean[] = [];
 
-  clickOutsideEmojiPicker(){
-    this.showEmojiPicker = false;    
+  handleEditEmoji(emoji: string){
+    this.editContent += emoji;
+  }
+
+  toggleEditEmojiPicker(){
+    this.showEmojiPickerInEditMode = !this.showEmojiPickerInEditMode;
+  }
+
+  clickOutsideEmojiPicker() {
+    this.showEmojiPicker = false;
   }
 
   getReactionFrom(users: string[]) {
-    const usernames = users.map(user => this.userService.getUserData(user).username);
+    const usernames = users.map(
+      (user) => this.userService.getUserData(user).username
+    );
     if (usernames.length === 1) {
       return usernames[0];
     } else if (usernames.length === 2) {
@@ -62,9 +83,9 @@ export class SingleMessageComponent implements OnInit {
     }
   }
 
-  isPlural(counter: number) { 
+  isPlural(counter: number) {
     return counter > 1 ? 'haben reagiert' : 'hat reagiert';
-   }
+  }
 
   onMouseOver(index: number) {
     this.showReactionPopups[index] = true;
@@ -80,11 +101,15 @@ export class SingleMessageComponent implements OnInit {
 
   async handleReaction(emoji: string) {
     const reaction = this.createNewReaction(emoji);
-    const reactionIndex = this.currentMessage.reactions.findIndex(r => r.id === emoji);
+    const reactionIndex = this.currentMessage.reactions.findIndex(
+      (r) => r.id === emoji
+    );
     if (reactionIndex === -1) {
       this.addReactionToMessage(reaction);
     } else {
-      const userIndex = this.currentMessage.reactions[reactionIndex].fromUser.findIndex(u => u === this.userService.getCurrentUser().uid);
+      const userIndex = this.currentMessage.reactions[
+        reactionIndex
+      ].fromUser.findIndex((u) => u === this.userService.getCurrentUser().uid);
       if (userIndex === -1) {
         this.increaseReactionCounter(reactionIndex);
       } else {
@@ -101,7 +126,9 @@ export class SingleMessageComponent implements OnInit {
 
   increaseReactionCounter(reactionIndex: number) {
     this.currentMessage.reactions[reactionIndex].counter++;
-    this.currentMessage.reactions[reactionIndex].fromUser.push(this.userService.getCurrentUser().uid);
+    this.currentMessage.reactions[reactionIndex].fromUser.push(
+      this.userService.getCurrentUser().uid
+    );
   }
 
   decreaseReactionCounter(reactionIndex: number, userIndex: number) {
@@ -123,8 +150,8 @@ export class SingleMessageComponent implements OnInit {
     return new Reaction({
       counter: 1,
       id: emoji,
-      fromUser: new Array(this.userService.getCurrentUser().uid)
-    })
+      fromUser: new Array(this.userService.getCurrentUser().uid),
+    });
   }
 
   closeDataDetailView() {
@@ -147,6 +174,19 @@ export class SingleMessageComponent implements OnInit {
     this.editMode = false;
   }
 
+  async onKeyDownEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter' && this.editContent.trim().length > 0) {
+      event.preventDefault();
+      await this.saveEditedMessage();
+    }
+  }
+
+  async onSubmit(ngForm: NgForm) {
+    if (ngForm.valid && ngForm.submitted) {
+      await this.saveEditedMessage();
+    }
+  }
+
   async saveEditedMessage() {
     this.currentMessage.content = this.editContent;
     await this.handleChannelMessage();
@@ -161,7 +201,9 @@ export class SingleMessageComponent implements OnInit {
    */
   async handleChannelMessage() {
     const channel = this.fireService.currentChannel;
-    const messageIndex = channel.messages.findIndex(chMessage => chMessage.id === this.currentMessage.id);
+    const messageIndex = channel.messages.findIndex(
+      (chMessage) => chMessage.id === this.currentMessage.id
+    );
     if (messageIndex !== -1) {
       await this.updateMessageInChannelList(channel, messageIndex);
       this.updatedInChannel = true;
@@ -169,9 +211,15 @@ export class SingleMessageComponent implements OnInit {
     }
     for (let message of channel.messages) {
       if (message.thread) {
-        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        const threadMessageIndex = message.thread.messages.findIndex(
+          (m) => m.id === this.currentMessage.id
+        );
         if (threadMessageIndex !== -1) {
-          await this.updateMessageInChannelThread(channel, message, threadMessageIndex);
+          await this.updateMessageInChannelThread(
+            channel,
+            message,
+            threadMessageIndex
+          );
           this.updatedInChannel = true;
           return;
         }
@@ -181,11 +229,15 @@ export class SingleMessageComponent implements OnInit {
 
   /**
    * update the message in thread and save updated channel in firebase
-   * @param channel - the channel where the tread exists 
+   * @param channel - the channel where the tread exists
    * @param message - the parent message containing the thread
    * @param threadMessageIndex  - the index of the message in thread
    */
-  async updateMessageInChannelThread(channel: Channel, message: Message, threadMessageIndex: number) {
+  async updateMessageInChannelThread(
+    channel: Channel,
+    message: Message,
+    threadMessageIndex: number
+  ) {
     message.thread!.messages[threadMessageIndex] = this.currentMessage;
     await this.fireService.addChannel(channel);
     this.cancelEditMode();
@@ -193,8 +245,8 @@ export class SingleMessageComponent implements OnInit {
 
   /**
    * update the message in channel and save channel in firebase
-   * @param channel 
-   * @param messageIndex 
+   * @param channel
+   * @param messageIndex
    */
   async updateMessageInChannelList(channel: Channel, messageIndex: number) {
     channel.messages[messageIndex] = this.currentMessage;
@@ -211,28 +263,40 @@ export class SingleMessageComponent implements OnInit {
    */
   async handleConversationMessage() {
     const conversation = this.fireService.currentConversation;
-    const messageIndex = conversation.messages.findIndex(m => m.id === this.currentMessage.id);
+    const messageIndex = conversation.messages.findIndex(
+      (m) => m.id === this.currentMessage.id
+    );
     if (messageIndex !== -1) {
       await this.updateMessageInConversationList(conversation, messageIndex);
       return;
     }
     for (let message of conversation.messages) {
       if (message.thread) {
-        const threadMessageIndex = message.thread.messages.findIndex(m => m.id === this.currentMessage.id);
+        const threadMessageIndex = message.thread.messages.findIndex(
+          (m) => m.id === this.currentMessage.id
+        );
         if (threadMessageIndex !== -1) {
-          await this.updateMessageInConversationThread(conversation, message, threadMessageIndex);
+          await this.updateMessageInConversationThread(
+            conversation,
+            message,
+            threadMessageIndex
+          );
         }
       }
     }
   }
 
   /**
-   * 
+   *
    * @param conversation - The conversation where the thread exists.
    * @param message - The parent message containing the thread.
    * @param threadMessageIndex - The index from the message in the thread.
    */
-  async updateMessageInConversationThread(conversation: Conversation, message: Message, threadMessageIndex: number) {
+  async updateMessageInConversationThread(
+    conversation: Conversation,
+    message: Message,
+    threadMessageIndex: number
+  ) {
     message.thread!.messages[threadMessageIndex] = this.currentMessage;
     await this.fireService.addConversation(conversation);
     this.cancelEditMode();
@@ -243,7 +307,10 @@ export class SingleMessageComponent implements OnInit {
    * @param conversation - The conversation containing the message.
    * @param messageIndex - The index of the message in the conversation.
    */
-  async updateMessageInConversationList(conversation: Conversation, messageIndex: number) {
+  async updateMessageInConversationList(
+    conversation: Conversation,
+    messageIndex: number
+  ) {
     conversation.messages[messageIndex] = this.currentMessage;
     await this.fireService.addConversation(conversation);
     this.cancelEditMode();
@@ -254,57 +321,82 @@ export class SingleMessageComponent implements OnInit {
   }
 
   months = [
-    "Januar", "Februar", "März", "April",
-    "Mai", "Juni", "Juli", "August",
-    "September", "Oktober", "November", "Dezember"
+    'Januar',
+    'Februar',
+    'März',
+    'April',
+    'Mai',
+    'Juni',
+    'Juli',
+    'August',
+    'September',
+    'Oktober',
+    'November',
+    'Dezember',
   ];
 
-  weekdays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+  weekdays = [
+    'Montag',
+    'Dienstag',
+    'Mittwoch',
+    'Donnerstag',
+    'Freitag',
+    'Samstag',
+    'Sonntag',
+  ];
 
   ngOnInit(): void {
     this.currentMessage = new Message(this.currentMessage);
   }
 
   formatAnswerCount() {
-    return this.currentMessage.thread?.messages.length === 1 ? 'Antwort' : 'Antworten';
+    return this.currentMessage.thread?.messages.length === 1
+      ? 'Antwort'
+      : 'Antworten';
   }
 
   getFormattedDate() {
     const date = new Date(this.currentMessage.time);
     const weekday = this.weekdays[date.getDay()];
-    const month = this.months[(date.getMonth())];
-    const day = date.getDate()
+    const month = this.months[date.getMonth()];
+    const day = date.getDate();
     return `${weekday}, ${day} ${month}`;
   }
 
   /**
-   * 
+   *
    * @param timeStamp unix timestamp
-   * @returns formatted time 
+   * @returns formatted time
    */
   getFormattedTime(timeStamp: number) {
     const date = new Date(timeStamp);
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} Uhr`;
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')} Uhr`;
     return formattedTime;
   }
 
   /**
-   * 
+   *
    * @returns formatted time of last answer
    */
   getTimeOfLastAnswer() {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
-        return this.getFormattedTime(this.currentMessage.thread.messages[this.currentMessage.thread.messages.length - 1].time);
+        return this.getFormattedTime(
+          this.currentMessage.thread.messages[
+            this.currentMessage.thread.messages.length - 1
+          ].time
+        );
       }
     }
     return;
   }
 
   /**
-   * 
+   *
    * @returns true if the messages has answers,
    * false if it has no ansers
    */
@@ -353,7 +445,7 @@ export class SingleMessageComponent implements OnInit {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
-        this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.currentThread = new Thread(this.currentMessage.thread);
         this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
@@ -375,7 +467,7 @@ export class SingleMessageComponent implements OnInit {
     if (this.currentMessage.thread) {
       if (this.currentMessage.thread.messages.length > 0) {
         console.log('Thread gefunden');
-        this.fireService.currentThread = new Thread(this.currentMessage.thread)
+        this.fireService.currentThread = new Thread(this.currentMessage.thread);
         this.fireService.getMessagesPerDayForThread();
       } else {
         console.log('Keinen Thread gefunden, erstelle neuen');
@@ -394,20 +486,27 @@ export class SingleMessageComponent implements OnInit {
     return new Thread({
       id: '',
       rootMessage: this.currentMessage.id,
-      messages: []
-    })
+      messages: [],
+    });
   }
 
   async saveUpdatedConversation() {
     const currentMessageId = this.currentMessage.id;
-    const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === currentMessageId);
-    this.fireService.currentConversation.messages[updateId] = this.currentMessage;
-    await this.fireService.addConversation(this.fireService.currentConversation);
+    const updateId = this.fireService.currentConversation.messages.findIndex(
+      (message) => message.id === currentMessageId
+    );
+    this.fireService.currentConversation.messages[updateId] =
+      this.currentMessage;
+    await this.fireService.addConversation(
+      this.fireService.currentConversation
+    );
   }
 
   async saveUpdatedChannel() {
     const currentMessageId = this.currentMessage.id;
-    const updateId = this.fireService.currentChannel.messages.findIndex(message => message.id === currentMessageId);
+    const updateId = this.fireService.currentChannel.messages.findIndex(
+      (message) => message.id === currentMessageId
+    );
     this.fireService.currentChannel.messages[updateId] = this.currentMessage;
     await this.fireService.addChannel(this.fireService.currentChannel);
   }
