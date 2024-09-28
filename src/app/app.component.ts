@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
@@ -13,6 +13,8 @@ import { UiService } from './services/ui.service';
 import { BreakpointObserverService } from './services/breakpoint-observer.service';
 import { MobilePopupComponent } from "./shared/mobile-popup/mobile-popup.component";
 import { slideFromBottom } from "./shared/animations";
+import { IdleService } from './services/idle.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +26,8 @@ import { slideFromBottom } from "./shared/animations";
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'da-bubble';
-  private route = inject(ActivatedRoute);
 
+  idleService = inject(IdleService);
   breakpointService = inject(BreakpointObserverService);
   authService = inject(FirebaseAuthService);
   fireService = inject(FirestoreService);
@@ -34,6 +36,8 @@ export class AppComponent implements OnInit, OnDestroy {
   testMode: boolean = false;
   showFooterAndHeader: boolean = false;
   showResponsiveFooter: boolean = false;
+
+  private idleSubscription?: Subscription;
 
   unsubUsersList;
   unsubChannelList;
@@ -49,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private showNoResponsiveFooter: string[] = ['/dabubble', '/registration', '/avatar', '/sendmail', '/resetpwd', '/privacy_policy', '/imprint'];
 
   ngOnInit(): void {
+    this.initIdleWatching();
     this.breakpointService.initObserver();
     this.subLoginState();
     this.router.events.subscribe(event => {
@@ -63,6 +68,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubUsersList();
     this.unsubChannelList();
     this.unsubConversationList();
+    if (this.idleSubscription) {
+      this.idleSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -95,6 +103,28 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.router.url === '/dabubble') {
       this.router.navigate(['']);
     }
+  }
+
+  @HostListener('document:click', ['$event'])
+  @HostListener('document:mousemove', ['$event'])
+  @HostListener('document:keydown', ['$event'])
+  @HostListener('document:touchstart', ['$event'])
+  onUserAction(): void {
+    this.idleService.resetTimer(); // resetet den Timer bei Aktivität
+}
+
+  initIdleWatching(){
+    this.idleSubscription = this.idleService.idleState.subscribe((isIdle) => {
+      if (isIdle) {
+        console.log('Set User as away');
+      }
+    });
+    this.idleSubscription.add(this.idleService.logoutState.subscribe((isidle) => {
+      if (isidle) {
+        console.log('Log User out');
+        
+      }
+    }))
   }
 
 }
