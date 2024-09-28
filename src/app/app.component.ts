@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { HeaderComponent } from './shared/header/header.component';
 import { FirestoreService } from './services/firestore.service';
@@ -24,6 +24,7 @@ import { slideFromBottom } from "./shared/animations";
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'da-bubble';
+  private route = inject(ActivatedRoute);
 
   breakpointService = inject(BreakpointObserverService);
   authService = inject(FirebaseAuthService);
@@ -83,11 +84,17 @@ export class AppComponent implements OnInit, OnDestroy {
       } else {
         this.authService.currentUserSig.set(null);
         this.uiService.showEditUserAndLogoutPopup = false;
-        this.router.navigate(['']);
+        this.redirectToLogin();
         this.uiService.closeThreadWindow();
       }
       console.log('currently logged in user:', this.authService.currentUserSig());
     })
+  }
+
+  redirectToLogin(){
+    if (this.router.url === '/dabubble') {
+      this.router.navigate(['']);
+    }
   }
 
 }
