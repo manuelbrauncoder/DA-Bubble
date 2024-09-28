@@ -57,7 +57,11 @@
                 @for (uid of selectedUsers; track $index; let index = $index) {
                     <div class="selected-user">
                         <div class="img-wrapper">
-                            <hr [ngClass]="userService.getUserData(uid) ? 'online-state' : 'offline-state'">
+                            <hr [ngClass]="{
+                                'online-state': userService.getUserData(uid).status === 'online',
+                                'offline-state': userService.getUserData(uid).status === 'offline',
+                                'away-state': userService.getUserData(uid).status === 'away',
+                             }">
                             <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(uid))" alt="">
                         </div>
                     <span>{{ userService.getUserData(uid).username }}</span>
@@ -87,7 +91,11 @@
                 @for (uid of filteredUsers; track $index; let index = $index) {
                     <div (click)="selectUser(uid, index)" class="user">
                         <div class="img-wrapper">
-                            <hr [ngClass]="userService.getUserData(uid).currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                            <hr [ngClass]="{
+                                'online-state': userService.getUserData(uid).status === 'online',
+                                'offline-state': userService.getUserData(uid).status === 'offline',
+                                'away-state': userService.getUserData(uid).status === 'away',
+                             }">
                             <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(uid))" alt="">
                         </div>
                         <span>{{ userService.getUserData(uid).username }}</span>

@@ -233,7 +233,7 @@ export class FirebaseAuthService {
   login(email: string, password: string): Observable<void> {
     const promise = signInWithEmailAndPassword(this.auth, email, password)
       .then((response) => {
-        this.changeLoginState(true, response.user.uid);
+        this.changeLoginState('online', response.user.uid);
       })
       .catch((error) => {
         console.error('Login failed in FirebaseAuthService:', error);
@@ -249,11 +249,10 @@ export class FirebaseAuthService {
    * @param loggedInState true after login, false after logout
    * @param uid 
    */
-  changeLoginState(loggedInState: boolean, uid: string) {
+  changeLoginState(userStatus: 'online' | 'offline' | 'away', uid: string) {
     this.fireService.users.forEach((user) => {
       if (uid === user.uid) {
-        user.currentlyLoggedIn = loggedInState;
-        user.status = loggedInState ? 'online' : 'offline';
+        user.status = userStatus;
         this.fireService.addUser(user);
       }
     })
@@ -267,7 +266,7 @@ export class FirebaseAuthService {
   logout(): Observable<void> {
     const currentUserUid = this.currentUserSig()?.uid;
     const promise = signOut(this.auth).then(() => {
-      this.changeLoginState(false, currentUserUid!);
+      this.changeLoginState('online', currentUserUid!);
       this.guestUser = false;
       this.googleUser = false;
     }).catch((err) => {

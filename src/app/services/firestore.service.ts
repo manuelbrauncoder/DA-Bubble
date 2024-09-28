@@ -383,7 +383,6 @@ export class FirestoreService {
       uid: user.uid,
       email: user.email,
       username: user.username,
-      currentlyLoggedIn: user.currentlyLoggedIn || false,
       avatar: user.avatar,
       status: user.status,
       channelJoinRequestsSent: user.channelJoinRequestsSent || []
@@ -423,7 +422,6 @@ export class FirestoreService {
       username: user.username || '',
       createdAt: user.createdAt || 0,
       avatar: user.avatar || '',
-      currentlyLoggedIn: user.currentlyLoggedIn || false,
       userChatActive: user.userChatActive || false,
       status: user.status || 'offline',
       channelJoinRequestsSent: user.channelJoinRequestsSent

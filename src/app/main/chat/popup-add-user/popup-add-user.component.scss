@@ -70,15 +70,6 @@
     overflow-y: auto;
 }
 
-.online-state {
-    @extend .state-icon;
-    background-color: $color-online-green;
-}
-
-.offline-state {
-    @extend .state-icon;
-    background-color: $color-offline-gray;
-}
 
 .selected-users {
     @include dFlex($jc: flex-start, $ai: flex-start, $g: 0.25rem);
@@ -134,15 +125,7 @@
     position: relative;
 }
 
-.state-icon {
-    position: absolute;
-    bottom: 0.4375rem;
-    right: 0;
-    height: 0.875rem;
-    width: 0.875rem;
-    border-radius: 100%;
-    border: 0.125rem solid white;
-}
+
 
 .profile-img {
     width: 3.125rem;

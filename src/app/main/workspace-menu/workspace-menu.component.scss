@@ -117,26 +117,6 @@ header {
     position: relative;
 }
 
-.state-icon {
-    position: absolute;
-    bottom: 0.4375rem;
-    right: 0;
-    height: 0.875rem;
-    width: 0.875rem;
-    border-radius: 100%;
-    border: 0.125rem solid white;
-}
-
-.online-state {
-    @extend .state-icon;
-    background-color: $color-online-green;
-}
-
-.offline-state {
-    @extend .state-icon;
-    background-color: $color-offline-gray;
-}
-
 .add-channel {
     cursor: pointer;
     padding-left: 2.188rem;

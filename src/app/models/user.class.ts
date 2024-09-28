@@ -4,7 +4,6 @@ export class User {
     username: string;
     createdAt: number | string;
     avatar: string;
-    currentlyLoggedIn: boolean;
     userChatActive: boolean;
     status: 'online' | 'offline' | 'away';
     channelJoinRequestsSent: string[];
@@ -15,7 +14,6 @@ export class User {
         this.username = obj?.username ?? '';
         this.createdAt = obj?.createdAt ?? 0;
         this.avatar = obj?.avatar ?? '';
-        this.currentlyLoggedIn = obj?.currentlyLoggedIn ?? false;
         this.userChatActive = obj?.userChatActive ?? false;
         this.status = obj?.status ?? 'offline';
         this.channelJoinRequestsSent = obj?.channelJoinRequestsSent ?? [];

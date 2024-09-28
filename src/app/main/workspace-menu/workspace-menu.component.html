@@ -135,7 +135,11 @@
             <div (click)="openConversation(authService.auth.currentUser.uid)" class="user"
                 [ngClass]="{'chat-active': userService.getCurrentUser().userChatActive}">
                 <div class="img-wrapper">
-                    <hr class="online-state">
+                    <hr [ngClass]="{
+                        'online-state': userService.getCurrentUser().status === 'online',
+                        'offline-state': userService.getCurrentUser().status === 'offline',
+                        'away-state': userService.getCurrentUser().status === 'away'
+                      }">
                     <img class="profile-img" [src]="userService.getCurrentUsersAvatar()" alt="">
                 </div>
                 <span class="user-name">{{ authService.currentUserSig()?.username }} (Du)</span>
@@ -146,7 +150,11 @@
             <div (click)="openConversation(user.uid)" class="user"
                 [ngClass]="{'chat-active': user.userChatActive}">
                 <div class="img-wrapper">
-                    <hr [ngClass]="user.currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                    <hr [ngClass]="{
+                        'online-state': user.status === 'online',
+                        'offline-state': user.status === 'offline',
+                        'away-state': user.status === 'away'
+                      }">
                     <img class="profile-img" [src]="userService.setAvatarImg(user)" alt="">
                 </div>
                 <span class="user-name">{{ user.username }}</span>

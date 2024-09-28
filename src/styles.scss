@@ -187,6 +187,33 @@ $color-disabled-grey: #686868;
 $color-popup-bg: #eceefe80;
 $color-error-red: #ed1e79;
 
+.state-icon {
+  position: absolute;
+  bottom: 0.4375rem;
+  right: 0;
+  height: 0.875rem;
+  width: 0.875rem;
+  border-radius: 100%;
+  border: 0.125rem solid white;
+}
+
+.online-state {
+  @extend .state-icon;
+  background-color: $color-online-green;
+}
+
+.offline-state {
+  @extend .state-icon;
+  background-color: $color-offline-gray;
+}
+
+.away-state {
+  @extend .state-icon;
+  background-color: $color-disabled-grey;
+}
+
+// 
+
 // input fields for channel
 .channel-form {
   background-color: unset;

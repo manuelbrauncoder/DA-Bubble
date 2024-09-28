@@ -35,7 +35,11 @@
                             @if (uid !== authService.auth.currentUser?.uid) {
                                 <div class="user">
                                     <div class="img-wrapper">
-                                        <hr [ngClass]="userService.getUserData(uid).currentlyLoggedIn ? 'online-state' : 'offline-state'">
+                                         <hr [ngClass]="{
+                                            'online-state': userService.getUserData(uid).status === 'online',
+                                            'offline-state': userService.getUserData(uid).status === 'offline',
+                                            'away-state': userService.getUserData(uid).status === 'away',
+                                         }">
                                         <img class="profile-img" [src]="userService.setAvatarImg(userService.getUserData(uid))" alt="">
                                     </div>
                                     <span class="user-name">{{ userService.getUserData(uid).username }}</span>

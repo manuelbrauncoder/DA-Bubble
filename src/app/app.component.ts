@@ -111,12 +111,14 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('document:touchstart', ['$event'])
   onUserAction(): void {
     this.idleService.resetTimer(); // resetet den Timer bei Aktivität
+    this.authService.changeLoginState('online', this.userService.getCurrentUser().uid);
 }
 
   initIdleWatching(){
     this.idleSubscription = this.idleService.idleState.subscribe((isIdle) => {
       if (isIdle) {
         console.log('Set User as away');
+        this.authService.changeLoginState('away', this.userService.getCurrentUser().uid);
       }
     });
     this.idleSubscription.add(this.idleService.logoutState.subscribe((isidle) => {
