@@ -25,6 +25,7 @@ export class EditProfileComponent implements OnInit {
   avatarIsChanged: boolean = false;
   nameIsChanged: boolean = false;
   emailIsChanged: boolean = false;
+  selectedFile: File | null = null;
 
   updatedUser: User = new User();
 
@@ -67,7 +68,18 @@ export class EditProfileComponent implements OnInit {
    * Placeholder method for uploading a custom profile picture.
    * This method is not yet implemented.
    */
-  uploadOwnPicture() { }
+  uploadOwnPicture(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedAvatar = e.target.result;
+        this.selectNewAvatar(this.selectedAvatar);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
 
   /**

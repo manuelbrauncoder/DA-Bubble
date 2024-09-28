@@ -1,3 +1,7 @@
+/**
+ * This Service handles up- and downloads to Firebase Storage
+ */
+
 import { Injectable } from '@angular/core';
 import { initializeApp, getApps } from "firebase/app";
 import { getAuth } from 'firebase/auth';
@@ -69,5 +73,24 @@ export class FireStorageService {
   
     const parts = filePath.split('/');
     return parts[parts.length - 1];
+  }
+
+  async downloadFile(filePath: string, file: File): Promise<void> {
+    try {
+      const storageRef = ref(this.storage, filePath);
+      const downloadURL = await getDownloadURL(storageRef);
+
+      const a = document.createElement('a');
+      a.href = downloadURL;
+      a.download = this.extractFileName(filePath); 
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+
+    } catch (error) {
+      console.error("Error downloading file: ", error);
+      throw new Error('File download failed');
+    }
   }
 }

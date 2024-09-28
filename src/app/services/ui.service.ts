@@ -15,7 +15,6 @@ export class UiService {
   fireService = inject(FirestoreService);
 
   currentDataPath = '';
-  // downloadUrl = '';
 
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
   showDirectMessages: boolean = true; // user list in workspace menu
@@ -43,16 +42,12 @@ export class UiService {
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
-  // showDataDetailView: boolean = false;
 
   showMobileNavigation: boolean = false;
   showMobilePopup: boolean = false;
 
   mobilePopupContent: 'addUser' = 'addUser';
 
-  // toggleDataDetailView(){
-  //   this.showDataDetailView = !this.showDataDetailView;
-  // }
 
   toggleMobilePopup() {
     this.showMobilePopup = !this.showMobilePopup;

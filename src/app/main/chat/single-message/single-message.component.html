@@ -57,13 +57,37 @@
         </div>
         }
 
+        @if (currentMessage.reactions.length > 0) {
+            <div class="reactions">
+                @for (reaction of currentMessage.reactions; track $index; let index = $index) {
+                    <div [id]="index" (mouseleave)="onMouseLeave(index)" (mouseover)="onMouseOver(index)" (click)="handleReaction(reaction.id)" class="reaction">
+                        <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                        <span>{{ reaction.counter }}</span>
+                        @if (showReactionPopups[index]) {
+                            <div @fadeIn class="info-popup">
+                                <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
+                                    <span class="reaction-from">{{ getReactionFrom(reaction.fromUser)}}</span>
+                                    <span class="react">{{ isPlural(reaction.counter) }}</span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            
+        }
+
     </div>
-    <div class="reaction-bar-wrapper"
+    <div appClickOutside (clickOutside)="clickOutsideEmojiPicker()" class="reaction-bar-wrapper"
         [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'reaction-bar-current-user' : 'reaction-bar-user'">
-        <app-reaction-bar [threadMessage]="threadMessage" [currentMessage]="currentMessage" (triggerAnswer)="answer()"
-            (triggerMenuPopup)="toggleMenuPopup()"></app-reaction-bar>
+        <app-reaction-bar (triggerHandleReaction)="handleReaction($event)" [threadMessage]="threadMessage" [currentMessage]="currentMessage" (triggerAnswer)="answer()"
+            (triggerMenuPopup)="toggleMenuPopup()" (triggerEmojiPicker)="toggleEmojiPicker()"></app-reaction-bar>
         @if (showMenuPopup) {
         <div class="popup" (click)="showEditContainer()"><span>Nachricht bearbeiten</span></div>
+        }
+        @if (showEmojiPicker) {
+            <div class="emoji-picker-wrapper">
+                <app-emoji-picker (sendEmoji)="handleReaction($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
+            </div>
         }
     </div>
 
@@ -71,6 +95,5 @@
         <app-data-detail-view (closeDetailView)="closeDataDetailView()" @fadeIn [data]="currentMessage.data[0]"></app-data-detail-view>
         <div class="popup-background" @fadeIn (click)="closeDataDetailView()"></div>
         }
-
 </div>
 

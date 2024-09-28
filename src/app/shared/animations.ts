@@ -1,3 +1,10 @@
+/**
+ * Angular Animations
+ * Import this file in your component
+ * add animation to animations array
+ * in template call it with "@trigger-name"
+ */
+
 import { animate, style, transition, trigger } from '@angular/animations';
 
 const timing = '225ms ease-in';
@@ -24,16 +31,6 @@ export const toggleThread = trigger('toggleThread', [
     ]),
     transition(':leave', [
         animate('0.2s ease', style({ width: '0', opacity: 0 }))
-    ])
-]);
-
-export const expandChat = trigger('expandChat', [
-    transition(':enter', [
-        style({ flexGrow: 1, width: '100%' }),
-        animate('0.2s ease', style({ flexGrow: 2, width: 'auto' }))
-    ]),
-    transition(':leave', [
-        animate('0.2s ease', style({ flexGrow: 1, width: '100%' }))
     ])
 ]);
 

@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Message } from "./message.class";
-import { User } from "./user.class";
 
 export class Conversation {
     id: string;
@@ -15,7 +14,6 @@ export class Conversation {
         this.active = obj?.active ?? false;
     }
 }
-
 export class Participants {
     first: string;
     second: string;

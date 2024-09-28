@@ -32,7 +32,11 @@
 
                 <div class="upload-your-own-picture">
                     <span>eigenes Bild verwenden</span>
-                    <button (click)="uploadOwnPicture()">Datei hochladen</button>
+
+                    <label for="fileUpload">
+                        Datei hochladen
+                        <input type="file" id="fileUpload" (change)="uploadOwnPicture($event)">
+                    </label>
                 </div>
 
                 <div class="change-avatar-buttons-container">

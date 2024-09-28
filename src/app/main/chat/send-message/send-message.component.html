@@ -1,5 +1,10 @@
-<div class="send-message-container">
-    <textarea [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
+<div appClickOutside (clickOutside)="closeEmojiPicker()" class="send-message-container">
+    @if (showEmojiPicker) {
+        <div class="picker-wrapper">
+            <app-emoji-picker (sendEmoji)="addEmojiToInput($event)" [content]="'send-message'"></app-emoji-picker>
+        </div>
+    }
+    <textarea appAutofocus #textArea (keydown)="onKeyDownEnter($event)" [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
     <div class="icons">
         <div class="add-elements">
@@ -14,7 +19,7 @@
 
             <hr>
 
-            <div class="bounding-box">
+            <div (click)="toggleEmojiPicker()" class="bounding-box">
                 <img src="assets/icons/channel-chat/addReactionIcon.svg">
             </div>
 

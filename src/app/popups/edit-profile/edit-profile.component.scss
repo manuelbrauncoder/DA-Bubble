@@ -90,6 +90,7 @@
   img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: 100%;
     cursor: pointer;
   }
@@ -263,7 +264,7 @@
     font-size: 1.25rem;
   }
 
-  button {
+  label {
     background-color: white;
     font-weight: 700;
     font-size: 1.125rem;
@@ -274,10 +275,15 @@
     transition: ease-in-out 250ms;
 
     &:hover {
+      cursor: pointer;
       background-color: #444df2;
       color: white;
       transition: ease-in-out 250ms;
     }
+  }
+
+  input {
+    display: none;
   }
 }
 

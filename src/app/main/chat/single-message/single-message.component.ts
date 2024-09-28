@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { Message } from '../../../models/message.class';
+import { Message, Reaction } from '../../../models/message.class';
 import { UiService } from '../../../services/ui.service';
 import { FirestoreService } from '../../../services/firestore.service';
 import { Thread } from '../../../models/thread.class';
@@ -14,12 +14,15 @@ import { Conversation } from '../../../models/conversation.class';
 import { DataDetailViewComponent } from "./data-detail-view/data-detail-view.component";
 import { fadeIn } from "../../../shared/animations";
 import { FireStorageService } from '../../../services/fire-storage.service';
+import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
+import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 
 @Component({
   selector: 'app-single-message',
   standalone: true,
   animations: [fadeIn],
-  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent],
+  imports: [CommonModule, ReactionBarComponent, FormsModule, DataDetailViewComponent, EmojiPickerComponent, EmojiComponent, ClickOutsideDirective],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss'
 })
@@ -38,10 +41,93 @@ export class SingleMessageComponent implements OnInit {
   editMode = false;
   updatedInChannel = false;
   showDataDetailView = false;
-
+  showEmojiPicker = false;
   editContent = '';
+  showReactionPopups: boolean[] = [];
 
-  closeDataDetailView(){
+  clickOutsideEmojiPicker(){
+    this.showEmojiPicker = false;    
+  }
+
+  getReactionFrom(users: string[]) {
+    const usernames = users.map(user => this.userService.getUserData(user).username);
+    if (usernames.length === 1) {
+      return usernames[0];
+    } else if (usernames.length === 2) {
+      return `${usernames[0]} und ${usernames[1]}`;
+    } else {
+      const allButLast = users.slice(0, -1).join(', ');
+      const lastUser = users[users.length - 1];
+      return `${allButLast} und ${lastUser}`;
+    }
+  }
+
+  isPlural(counter: number) { 
+    return counter > 1 ? 'haben reagiert' : 'hat reagiert';
+   }
+
+  onMouseOver(index: number) {
+    this.showReactionPopups[index] = true;
+  }
+
+  onMouseLeave(index: number) {
+    this.showReactionPopups[index] = false;
+  }
+
+  toggleEmojiPicker() {
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  async handleReaction(emoji: string) {
+    const reaction = this.createNewReaction(emoji);
+    const reactionIndex = this.currentMessage.reactions.findIndex(r => r.id === emoji);
+    if (reactionIndex === -1) {
+      this.addReactionToMessage(reaction);
+    } else {
+      const userIndex = this.currentMessage.reactions[reactionIndex].fromUser.findIndex(u => u === this.userService.getCurrentUser().uid);
+      if (userIndex === -1) {
+        this.increaseReactionCounter(reactionIndex);
+      } else {
+        this.decreaseReactionCounter(reactionIndex, userIndex);
+      }
+    }
+    await this.saveMesssageWithReaction();
+    this.showEmojiPicker = false;
+  }
+
+  addReactionToMessage(reaction: Reaction) {
+    this.currentMessage.reactions.push(reaction);
+  }
+
+  increaseReactionCounter(reactionIndex: number) {
+    this.currentMessage.reactions[reactionIndex].counter++;
+    this.currentMessage.reactions[reactionIndex].fromUser.push(this.userService.getCurrentUser().uid);
+  }
+
+  decreaseReactionCounter(reactionIndex: number, userIndex: number) {
+    this.currentMessage.reactions[reactionIndex].counter--;
+    this.currentMessage.reactions[reactionIndex].fromUser.splice(userIndex, 1);
+    if (this.currentMessage.reactions[reactionIndex].counter === 0) {
+      this.currentMessage.reactions.splice(reactionIndex, 1);
+    }
+  }
+
+  async saveMesssageWithReaction() {
+    await this.handleChannelMessage();
+    if (!this.updatedInChannel) {
+      await this.handleConversationMessage();
+    }
+  }
+
+  createNewReaction(emoji: string) {
+    return new Reaction({
+      counter: 1,
+      id: emoji,
+      fromUser: new Array(this.userService.getCurrentUser().uid)
+    })
+  }
+
+  closeDataDetailView() {
     this.showDataDetailView = false;
   }
 
@@ -232,7 +318,7 @@ export class SingleMessageComponent implements OnInit {
   }
 
   /**
-   * show tread window with new or existing thread
+   * show thread window with new or existing thread
    * set curent message in fire service with current message from input
    */
   answer() {
@@ -279,7 +365,6 @@ export class SingleMessageComponent implements OnInit {
     }
   }
 
-
   /**
    * if the message already has a thread,
    * set this thread as currentThread.
@@ -308,15 +393,11 @@ export class SingleMessageComponent implements OnInit {
   createThread(): Thread {
     return new Thread({
       id: '',
-      rootMessage: new Message(this.currentMessage),
+      rootMessage: this.currentMessage.id,
       messages: []
     })
   }
 
-  /**
-   * set updatet message with thread in conversation
-   * save updated conversatin in firebase
-   */
   async saveUpdatedConversation() {
     const currentMessageId = this.currentMessage.id;
     const updateId = this.fireService.currentConversation.messages.findIndex(message => message.id === currentMessageId);

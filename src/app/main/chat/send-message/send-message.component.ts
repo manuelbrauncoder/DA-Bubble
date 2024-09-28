@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Channel } from '../../../models/channel.class';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,16 +14,19 @@ import { ThreadService } from '../../../services/thread.service';
 import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
 import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
+import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
+import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
+import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
 
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent],
+  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent, ClickOutsideDirective, AutofocusDirective],
   animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
 })
-export class SendMessageComponent implements OnInit {
+export class SendMessageComponent implements OnInit, OnChanges {
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
   storageService = inject(FireStorageService);
@@ -39,10 +42,46 @@ export class SendMessageComponent implements OnInit {
   @Input() userUid = '';
   @Input() disableInput = false;
 
+  @ViewChild('textArea') textArea!: ElementRef;
+
   content: string = ''; // content of the message
   data: any[] = []; // message data, e.g. photos
   selectedFiles: File[] = [];
   filePreviews: string[] = [];
+
+  showEmojiPicker = false;
+
+  onKeyDownEnter(event: KeyboardEvent) {
+    if (event.key === 'Enter' && !this.isBtnDisabled()) {
+      event.preventDefault();      
+      this.saveNewMessage();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['currentRecipient']) {
+      if (this.textArea) {
+        this.setFocus();
+      }
+    }
+  }
+
+  setFocus(){
+    this.textArea.nativeElement.focus();
+  }
+
+  closeEmojiPicker(){
+    this.showEmojiPicker = false;
+  }
+
+  toggleEmojiPicker(){
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
+  addEmojiToInput(emoji: string){
+    this.content += emoji;
+    this.toggleEmojiPicker();
+  }
 
   /**
    * Angular lifecycle hook - Called when the component is initialized.
@@ -54,7 +93,7 @@ export class SendMessageComponent implements OnInit {
 
   /**
    * Checks if the send button should be disabled.
-   * @returns {boolean} True if the input is disabled or no content/files are provided.
+   * @returns True if the input is disabled or no content/files are provided.
    */
   isBtnDisabled() {
     return this.disableInput || (this.content.trim().length === 0 && this.selectedFiles.length === 0);
@@ -159,7 +198,7 @@ export class SendMessageComponent implements OnInit {
    * @returns The index of the message to update.
    */
   findChannelMessageToUpdate() {
-    return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+    return this.userService.fireService.currentChannel.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage);
   }
 
   /**
@@ -167,7 +206,7 @@ export class SendMessageComponent implements OnInit {
    * @returns The index of the message to update.
    */
   findConversationMessageToUpdate() {
-    return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage.id);
+    return this.userService.fireService.currentConversation.messages.findIndex(message => message.id === this.userService.fireService.currentThread.rootMessage);
   }
 
   /**

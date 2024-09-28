@@ -1,3 +1,7 @@
+/**
+ * This Service handles different breakpoints
+ */
+
 import { inject, Injectable, DestroyRef } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { UiService } from './ui.service';
@@ -13,7 +17,7 @@ export class BreakpointObserverService {
   breakpointsToObserve = [
     `(max-width: 1399px)`,
     `(max-width: 999px)`,
-    `(min-width: 1100px)`
+    `(min-width: 1400px)`
   ];
 
   isMobile: boolean = false;
@@ -23,28 +27,24 @@ export class BreakpointObserverService {
 
   constructor(private responsive: BreakpointObserver, private destroyRef: DestroyRef) { }
 
+  /**
+   * initializes the breakpoin observer
+   */
   initObserver(){
     this.responsive.observe(this.breakpointsToObserve)
     .pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(state => {
       if (state.breakpoints[`(max-width: 1399px)`]) {
-        // tablet
-        console.log('Tablet');
-        this.uiService.showWorkspaceMenu = false;
         this.isTablet = true;
         this.isMobile = false;
         this.uiService.showChat = true;
       }
       if (state.breakpoints[`(max-width: 999px)`]) {
-        // mobile
-        console.log('Mobile');
         this.isMobile = true;
         this.isTablet = false;
         this.hideInMobile();
       }
       if (state.breakpoints[`(min-width: 1400px)`]) {
-        // desktop
-        console.log('Desktop');
         this.isMobile = false;
         this.isTablet = false;
         this.showInDesktop();

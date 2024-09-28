@@ -1,6 +1,11 @@
 @import "../../../../mixins.scss";
 @import "../../../../styles.scss";
 
+.picker-wrapper{
+  position: absolute;
+  bottom: 140px;
+}
+
 .send-message-container {
   position: relative;
   border: solid 0.063rem #adb0d9;

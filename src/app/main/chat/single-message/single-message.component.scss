@@ -51,6 +51,11 @@
     height: 4.375rem;
     border-radius: 100%;
     background-color: white;
+
+    @media(max-width: 999px) {
+        width: 3.125rem;
+        height: 3.125rem;
+    }
 }
 
 .message {
@@ -177,23 +182,23 @@
 .popup {
     background-color: white;
     z-index: 3;
-    @include dFlex($g: 15px);
+    @include dFlex($g: 0.9375rem);
     position: absolute;
     top: 50%;
     left: 15rem;
-    box-shadow: 0px 6px 14px 0px #00000033;
-    padding: 10px 20px;
-    border-radius: 0 30px 30px 30px;
+    box-shadow: 0px 0.375rem 0.875rem 0px #00000033;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0 1.875rem 1.875rem 1.875rem;
 
     span {
         font-family: Nunito;
-        font-size: 20px;
+        font-size: 1.25rem;
         font-weight: 500;
-        line-height: 27.28px;
+        line-height: 1.705rem;
         text-align: left;
         color: black;
         white-space: nowrap;
-        padding: 10px 20px;
+        padding: 0.625rem 1.25rem;
         border-radius: 100vw;
         transition: 150ms ease-in;
     }
@@ -207,8 +212,8 @@
 }
 
 .icon-wrapper {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     border-radius: 100%;
     @include dFlex();
     transition: 150ms ease-in;
@@ -229,7 +234,6 @@
             fill: $color-purple-3;
         }
     }
-
 }
 
 .edit-container {
@@ -262,68 +266,19 @@
     }
 }
 
-
-
-@keyframes reaction-bar-current-user-slide-in {
-    from {
-        transform: translateX(3rem);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes reaction-bar-current-user-slide-out {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateX(3rem);
-        opacity: 0;
-    }
-}
-
-@keyframes reaction-bar-user-slide-in {
-    from {
-        transform: translateX(-3rem);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes reaction-bar-user-slide-out {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    to {
-        transform: translateX(-3rem);
-        opacity: 0;
-    }
-}
-
 .data-preview {
     width: 6rem;
     height: 4rem;
     object-fit: cover;
     transition: all 300ms ease-out;
-    &:hover{
+
+    &:hover {
         transition: all 300ms ease-out;
         scale: 1.2;
     }
 }
 
-app-data-detail-view{
+app-data-detail-view {
     z-index: 3;
     position: fixed;
     top: 50%;
@@ -331,7 +286,7 @@ app-data-detail-view{
     transform: translate(-50%, -50%);
 }
 
-.popup-background{
+.popup-background {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -341,3 +296,67 @@ app-data-detail-view{
     background-color: rgba(236, 238, 254, 0.5019607843);
 }
 
+.emoji-picker-wrapper {
+    z-index: 3;
+    position: absolute;
+    @media(max-width: 999px) {
+        top: 40px;
+        left: -20px;
+    }
+}
+
+.reactions {
+    @include dFlex($g: 0.625rem, $jc: flex-start);
+    flex-wrap: wrap;
+}
+
+.reaction {
+    position: relative;
+    @include dFlex($g: 0.625rem);
+    border: 1px solid $color-purple-light;
+    padding: 0.3125rem 0.625rem;
+    border-radius: 100vw;
+
+    span {
+        font-family: Nunito;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.364rem;
+    }
+
+    ngx-emoji {
+        @include dFlex();
+    }
+}
+
+.info-popup {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2rem;
+    background-color: $color-purple-1;
+    border-radius: 1.875rem 1.875rem 0 1.875rem;
+    padding: 0.9375rem 0.625rem;
+    @include dFlex($fd: column, $g: 0.3125rem);
+    min-width: 10rem;
+
+    @media(max-width: 999px) {
+        border-radius: 1.875rem 1.875rem 1.875rem 0;
+        left: 2rem;
+    }
+
+    .reaction-from {
+        font-family: Nunito;
+        font-size: 1.125rem;
+        font-weight: 700;
+        line-height: 1.534rem;
+        color: white;
+    }
+
+    .react {
+        font-family: Nunito;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.364rem;
+        color: white;
+    }
+}

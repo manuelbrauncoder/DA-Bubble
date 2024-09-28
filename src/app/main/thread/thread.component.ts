@@ -1,10 +1,10 @@
-import { AfterViewChecked, Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { FirestoreService } from '../../services/firestore.service';
 import { SingleMessageComponent } from "../chat/single-message/single-message.component";
 import { SendMessageComponent } from "../chat/send-message/send-message.component";
 import { UiService } from '../../services/ui.service';
 import { FormatDateForListPipe } from '../../pipes/format-date-for-list.pipe';
-import { DateMessages } from '../../models/message.class';
+import { DateMessages, Message } from '../../models/message.class';
 import { ThreadService } from '../../services/thread.service';
 import { DateDividerComponent } from "../chat/single-message/date-divider/date-divider.component";
 import { BreakpointObserverService } from '../../services/breakpoint-observer.service';
@@ -24,6 +24,8 @@ export class ThreadComponent implements AfterViewChecked {
 
   @ViewChild('threadMessages') scrollContainer!: ElementRef;
 
+ 
+
   closeThread(){
     if (this.observerService.isMobile) {
       this.uiService.mobileBackBtn()
@@ -41,7 +43,7 @@ export class ThreadComponent implements AfterViewChecked {
   }
 
   compareDate(messageDate: DateMessages){
-    const rootDate = this.fireService.getFormattedDate(this.fireService.currentThread.rootMessage.time);
+    const rootDate = this.fireService.getFormattedDate(this.fireService.getMessageFromId(this.fireService.currentThread.rootMessage).time);
     if (messageDate.date === rootDate) {
       return true;
     } else {

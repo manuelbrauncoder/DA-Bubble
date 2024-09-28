@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Thread } from "./thread.class";
-import { User } from "./user.class";
 
 export class Message{
     id: string;
@@ -9,7 +8,7 @@ export class Message{
     content: string;
     thread?: Thread;
     data: any[];
-    reactions: any[];
+    reactions: Reaction[];
 
     constructor(obj?: Partial<Message>){
         this.id = obj?.id ?? uuidv4();
@@ -20,6 +19,18 @@ export class Message{
         this.data = obj?.data ?? [];
         this.reactions = obj?.reactions ?? [];
     }   
+}
+
+export class Reaction {
+    counter: number;
+    id: string;
+    fromUser: string[];
+
+    constructor(obj?: Partial<Reaction>) {
+        this.counter = obj?.counter ?? 0;
+        this.id = obj?.id ?? '';
+        this.fromUser = obj?.fromUser ?? [];
+    }
 }
 
 export class DateMessages {

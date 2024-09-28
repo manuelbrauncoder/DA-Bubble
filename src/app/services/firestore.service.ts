@@ -1,9 +1,13 @@
+/**
+ * This Service handles everything with Firestore Database 
+ */
+
 import { inject, Injectable } from '@angular/core';
-import { addDoc, collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, setDoc, updateDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, DocumentChange, DocumentData, Firestore, onSnapshot, query, setDoc } from '@angular/fire/firestore';
 import { orderBy } from '@firebase/firestore';
 import { User } from '../models/user.class';
 import { Channel } from '../models/channel.class';
-import { DateMessages, Message } from '../models/message.class';
+import { DateMessages, Message, Reaction } from '../models/message.class';
 import { Conversation, Participants } from '../models/conversation.class';
 import { Thread } from '../models/thread.class';
 
@@ -12,15 +16,11 @@ import { Thread } from '../models/thread.class';
 })
 export class FirestoreService {
   firestore = inject(Firestore);
-  // private isDefaultChannelset = false;
 
   currentChannel: Channel = new Channel();
   currentConversation: Conversation = new Conversation();
   currentThread: Thread = new Thread();
   currentMessage: Message = new Message();
-
-
-
   users: User[] = []; // all users stored here
   channels: Channel[] = []; // all channels stored here
   conversations: Conversation[] = []; // all conversations stored here
@@ -30,6 +30,26 @@ export class FirestoreService {
   messagesPerDayThread: any = []; // for thread
 
   constructor() { }
+
+  getMessageFromId(id: string): Message{
+    let returnMessage = new Message;
+    this.channels.forEach(channel => {
+      channel.messages.forEach(message => {
+        if (message.id === id) {
+          returnMessage = new Message(message);
+        } 
+      })
+    });
+    this.conversations.forEach(conversation => {
+      conversation.messages.forEach(message => {
+        if (message.id === id) {
+          returnMessage = new Message(message);
+        } 
+      })
+    })
+    return returnMessage;
+  }
+
 
    getFormattedDate(timestamp: number): string {
     const date = new Date(timestamp);
@@ -328,7 +348,7 @@ export class FirestoreService {
       sender: message.sender,
       content: message.content,
       data: message.data,
-      reactions: message.reactions
+      reactions: message.reactions.map(reaction => this.getCleanReactionJson(reaction))
     };
     if (message.thread) {
       cleanMessage.thread = this.getCleanThreadJson(message.thread)
@@ -336,10 +356,18 @@ export class FirestoreService {
     return cleanMessage;
   }
 
+  getCleanReactionJson(reaction: Reaction) {
+    return {
+      counter: reaction.counter,
+      id: reaction.id,
+      fromUser: reaction.fromUser
+    }
+  }
+
   getCleanThreadJson(thread: Thread) {
     return {
       id: thread.id,
-      rootMessage: this.getCleanMessageJson(thread.rootMessage),
+      rootMessage: thread.rootMessage || '',
       messages: thread.messages.map(message => this.getCleanMessageJson(message))
     }
   }

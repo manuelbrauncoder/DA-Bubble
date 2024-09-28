@@ -22,7 +22,7 @@ export class DateDividerComponent {
 
   getTime(){
     if (this.rootMessage) {
-      return this.fireService.currentThread.rootMessage.time;
+      return this.fireService.getMessageFromId(this.fireService.currentThread.rootMessage).time;
     } else {
       return this.day.messages[0].time;
     }
