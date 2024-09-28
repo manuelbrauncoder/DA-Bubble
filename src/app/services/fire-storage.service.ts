@@ -75,7 +75,7 @@ export class FireStorageService {
     return parts[parts.length - 1];
   }
 
-  async downloadFile(filePath: string, file: File): Promise<void> {
+  async downloadFile(filePath: string): Promise<void> {
     try {
       const storageRef = ref(this.storage, filePath);
       const downloadURL = await getDownloadURL(storageRef);
