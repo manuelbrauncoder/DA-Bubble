@@ -51,6 +51,9 @@ header {
     top: 87px;
     left: 23px;
     z-index: 2;
+    @media(max-width: 999px) {
+        top: 46px;
+    }
 }
 
 .result-wrapper {

@@ -190,6 +190,10 @@
     box-shadow: 0px 0.375rem 0.875rem 0px #00000033;
     padding: 0.625rem 1.25rem;
     border-radius: 0 1.875rem 1.875rem 1.875rem;
+    @media(max-width: 999px) {
+        top: 100%;
+        left: 0;
+    }
 
     span {
         font-family: Nunito;
@@ -223,9 +227,11 @@
         background-color: $color-active-channel;
         transition: 150ms ease-in;
     }
+    
 }
 
 .svg-hover {
+    
     transition: 150ms ease-in;
 
     &:hover svg {
@@ -238,7 +244,6 @@
 }
 
 .edit-container {
-    min-width: 50%;
     border: 1px solid $color-purple-light;
     background-color: white;
     border-radius: 1.25rem;
@@ -251,6 +256,10 @@
 
         .btns {
             @include dFlex($g: 2rem);
+            @media(max-width: 999px) {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     }
     form{
