@@ -151,11 +151,13 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('document:touchstart', ['$event'])
   onUserAction(): void {
     this.idleService.resetTimer();
-    this.authService.changeLoginState(
-      'online',
-      this.userService.getCurrentUser().uid
-    );
-    this.showAwayPopup = false;
+    if (this.showAwayPopup) {
+      this.authService.changeLoginState(
+        'online',
+        this.userService.getCurrentUser().uid
+      );
+      this.showAwayPopup = false;
+    }
   }
 
   initIdleWatching() {
@@ -173,7 +175,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  setUserAway(){
+  setUserAway() {
     if (this.router.url === '/dabubble') {
       this.showAwayPopup = true;
       this.authService.changeLoginState(
@@ -182,7 +184,7 @@ export class AppComponent implements OnInit, OnDestroy {
       );
     }
   }
-  logUserOut(){
+  logUserOut() {
     if (this.router.url === '/dabubble') {
       this.showAwayPopup = false;
       this.idleService.stopWatching();

@@ -152,6 +152,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
     } else {
       this.createThreadInChannelMessage(message);
     }
+    this.setDefaultsAndSyncMessages();
     await this.userService.fireService.addChannel(this.userService.fireService.currentChannel);
   }
 
@@ -180,6 +181,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
     } else {
       this.createThreadInConversationMessage(message);
     }
+    this.setDefaultsAndSyncMessages();    
     await this.userService.fireService.addConversation(this.userService.fireService.currentConversation);
   }
 
@@ -239,7 +241,6 @@ export class SendMessageComponent implements OnInit, OnChanges {
       await this.handleDirectMessage();
       this.conversationService.scrolledToBottomOnStart = false;
     }
-    this.setDefaultsAndSyncMessages();
   }
 
   /**
