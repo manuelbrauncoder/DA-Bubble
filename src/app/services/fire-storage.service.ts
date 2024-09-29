@@ -79,15 +79,16 @@ export class FireStorageService {
     try {
       const storageRef = ref(this.storage, filePath);
       const downloadURL = await getDownloadURL(storageRef);
-
+  
       const a = document.createElement('a');
       a.href = downloadURL;
-      a.download = this.extractFileName(filePath); 
+      
+      a.setAttribute('download', this.extractFileName(filePath)); 
       document.body.appendChild(a);
       a.click();
-
+  
       document.body.removeChild(a);
-
+  
     } catch (error) {
       console.error("Error downloading file: ", error);
       throw new Error('File download failed');
