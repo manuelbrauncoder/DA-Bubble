@@ -269,7 +269,7 @@ export class FirebaseAuthService {
   logout(): Observable<void> {
     const currentUserUid = this.currentUserSig()?.uid;
     const promise = signOut(this.auth).then(() => {
-      this.changeLoginState('online', currentUserUid!);
+      this.changeLoginState('offline', currentUserUid!);
       this.guestUser = false;
       this.googleUser = false;
     }).catch((err) => {
