@@ -32,6 +32,7 @@ import { UiService } from './ui.service';
 import { Router } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { Channel } from '../models/channel.class';
+import { IdleService } from './idle.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +48,7 @@ export class FirebaseAuthService {
   loginTooLongAgo: boolean = false;
   googleUser: boolean = false;
   guestUser: boolean = false;
+  idleService = inject(IdleService);
 
   currentUserSig = signal<AuthUser | null | undefined>(undefined);
 
@@ -234,6 +236,7 @@ export class FirebaseAuthService {
     const promise = signInWithEmailAndPassword(this.auth, email, password)
       .then((response) => {
         this.changeLoginState('online', response.user.uid);
+        this.idleService.startWatching();
       })
       .catch((error) => {
         console.error('Login failed in FirebaseAuthService:', error);
@@ -283,6 +286,7 @@ export class FirebaseAuthService {
     const guestPw = '123456'
     this.login(guestEmail, guestPw);
     this.guestUser = true;
+    this.idleService.startWatching();
   }
 
   /**

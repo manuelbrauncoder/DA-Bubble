@@ -16,3 +16,7 @@
 @if (uiService.showMobilePopup) {
     <app-mobile-popup @slideFromBottom></app-mobile-popup>
 }
+
+@if (showAwayPopup) {
+    <app-away-popup @fadeIn></app-away-popup>
+}

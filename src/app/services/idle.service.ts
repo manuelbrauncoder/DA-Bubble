@@ -7,8 +7,8 @@ import { interval, Observable, Subject, Subscription, throttle } from 'rxjs';
 export class IdleService {
   private awaySubject = new Subject<boolean>();
   private logoutSubject = new Subject<boolean>();
-  private timeoutForAway = 60;
-  private timeoutForLogout = 120;
+  private timeoutForAway = 120;
+  private timeoutForLogout = 420;
   private lastActivity?: Date;
   private idleCheckInterval = 10;
   private idleSubscription?: Subscription;
@@ -26,7 +26,7 @@ export class IdleService {
     return this.logoutSubject.asObservable();
   }
 
-  private startWatching(): void {
+  public startWatching(): void {
     console.log('start watching');
     
     this.idleSubscription = interval(this.idleCheckInterval * 1000)
