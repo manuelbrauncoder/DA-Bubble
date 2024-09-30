@@ -150,7 +150,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('document:keydown', ['$event'])
   @HostListener('document:touchstart', ['$event'])
   onUserAction(): void {
-    this.idleService.resetTimer();
+    this.idleService.resetTimer();    
     if (this.showAwayPopup) {
       this.authService.changeLoginState(
         'online',

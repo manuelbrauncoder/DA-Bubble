@@ -96,7 +96,7 @@
         <div class="popup" (click)="showEditContainer()"><span>Nachricht bearbeiten</span></div>
         }
         @if (showEmojiPicker) {
-            <div class="emoji-picker-wrapper">
+            <div [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'emoji-picker-wrapper-currentUser' : 'emoji-picker-wrapper-user'">
                 <app-emoji-picker (sendEmoji)="handleReaction($event)" [content]="'single-message'" [currentMessage]="currentMessage"></app-emoji-picker>
             </div>
         }

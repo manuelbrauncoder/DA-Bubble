@@ -3,7 +3,7 @@
  */
 
 import { inject, Injectable, DestroyRef } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UiService } from './ui.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -17,7 +17,8 @@ export class BreakpointObserverService {
   breakpointsToObserve = [
     `(max-width: 1399px)`,
     `(max-width: 999px)`,
-    `(min-width: 1400px)`
+    `(min-width: 1400px)`,
+    Breakpoints.HandsetLandscape
   ];
 
   isMobile: boolean = false;
@@ -48,6 +49,15 @@ export class BreakpointObserverService {
         this.isMobile = false;
         this.isTablet = false;
         this.showInDesktop();
+      }
+      if (state.breakpoints[Breakpoints.HandsetLandscape]) {
+        this.isHandsetLandscape = true;
+        console.log('handsetLandscape');
+        
+      } else {
+        this.isHandsetLandscape = false;
+        console.log('no landscape');
+        
       }
     })
   }

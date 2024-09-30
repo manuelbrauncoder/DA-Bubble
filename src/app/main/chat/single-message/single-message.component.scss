@@ -312,12 +312,25 @@ app-data-detail-view {
     background-color: rgba(236, 238, 254, 0.5019607843);
 }
 
-.emoji-picker-wrapper {
+.emoji-picker-wrapper-currentUser {
     z-index: 3;
     position: absolute;
+    top: 50px;
+    left: 0;
     @media(max-width: 999px) {
         top: 40px;
         left: -20px;
+    }
+}
+
+.emoji-picker-wrapper-user {
+    z-index: 3;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    @media(max-width: 999px) {
+        top: 40px;
+        right: -20px;
     }
 }
 
