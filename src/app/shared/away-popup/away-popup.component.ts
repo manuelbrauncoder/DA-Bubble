@@ -8,5 +8,16 @@ import { Component } from '@angular/core';
   styleUrl: './away-popup.component.scss'
 })
 export class AwayPopupComponent {
+  countdown = 5;
 
+  startCountdown(){
+    setInterval(() => {
+      this.countdown--;
+    }, 60000);
+  }
+
+  constructor(){
+    this.countdown = 5;
+    this.startCountdown();
+  }
 }
