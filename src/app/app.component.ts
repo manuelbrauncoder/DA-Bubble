@@ -28,6 +28,7 @@ import { slideFromBottom, fadeIn } from './shared/animations';
 import { IdleService } from './services/idle.service';
 import { Subscription } from 'rxjs';
 import { AwayPopupComponent } from './shared/away-popup/away-popup.component';
+import { MobileLandscapeComponent } from "./shared/mobile-landscape/mobile-landscape.component";
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,8 @@ import { AwayPopupComponent } from './shared/away-popup/away-popup.component';
     HeaderForUsermanagementComponent,
     MobilePopupComponent,
     AwayPopupComponent,
-  ],
+    MobileLandscapeComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -1,0 +1,18 @@
+@import '../../../mixins.scss';
+@import '../../../styles.scss';
+
+main{
+    width: 100%;
+    height: 100%;
+    @include dFlex($fd: column, $g: 1rem);
+    color: $color-purple-1;
+    background-color: $color-purple-light;
+
+    h4{
+        font-size: 1.5rem;
+    }
+
+    svg {
+        fill: $color-purple-1;
+    }
+}

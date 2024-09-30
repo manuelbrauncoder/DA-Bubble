@@ -1,3 +1,6 @@
+@if (breakpointService.isHandsetLandscape) {
+    <app-mobile-landscape></app-mobile-landscape>
+}@else {
 <app-header *ngIf="showFooterAndHeader"></app-header>
 
 <app-header-for-usermanagement *ngIf="!showFooterAndHeader"></app-header-for-usermanagement>
@@ -14,9 +17,10 @@
 <app-footer *ngIf="!showFooterAndHeader"></app-footer>
 
 @if (uiService.showMobilePopup) {
-    <app-mobile-popup @slideFromBottom></app-mobile-popup>
+<app-mobile-popup @slideFromBottom></app-mobile-popup>
 }
 
 @if (showAwayPopup) {
-    <app-away-popup @fadeIn></app-away-popup>
+<app-away-popup @fadeIn></app-away-popup>
+}
 }
