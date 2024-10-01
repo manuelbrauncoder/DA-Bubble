@@ -75,7 +75,7 @@ export class FireStorageService {
     return parts[parts.length - 1];
   }
 
-  async downloadFile(filePath: string): Promise<void> {
+  async downloadFile_OLD(filePath: string): Promise<void> {
     try {
       const storageRef = ref(this.storage, filePath);
       const downloadURL = await getDownloadURL(storageRef);
@@ -92,6 +92,33 @@ export class FireStorageService {
     } catch (error) {
       console.error("Error downloading file: ", error);
       throw new Error('File download failed');
+    }
+  }
+
+  async downloadFile(filePath: string) {
+    try {
+      const url = await getDownloadURL(ref(this.storage, filePath));
+  
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = (event) => {
+        const blob = xhr.response;
+  
+        // Datei-Download starten
+        const link = document.createElement('a');
+        const objectURL = URL.createObjectURL(blob);
+        link.href = objectURL;
+        link.download = `${this.extractFileName(filePath)}`; // Du kannst den Dateinamen anpassen
+        document.body.appendChild(link); // Füge den Link temporär ins DOM ein
+        link.click(); // Simuliere den Klick, um den Download zu starten
+        document.body.removeChild(link); // Entferne den Link wieder aus dem DOM
+        URL.revokeObjectURL(objectURL); // Bereinige die URL
+      };
+  
+      xhr.open('GET', url);
+      xhr.send();
+    } catch (error) {
+      console.error('Fehler beim Abrufen der Datei:', error);
     }
   }
 }

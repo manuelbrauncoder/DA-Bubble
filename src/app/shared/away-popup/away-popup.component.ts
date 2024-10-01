@@ -26,7 +26,7 @@ export class AwayPopupComponent {
         this.countdownText = '< 1 Minute';
       }
 
-    }, 1000); // jede Sekunde updaten
+    }, 1000);
   }
 
   constructor() {
