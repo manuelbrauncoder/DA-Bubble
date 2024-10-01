@@ -36,8 +36,8 @@
   }
   100% {
     top: -.7rem;
-    left: -.7rem;
-    transform: translate(0, 0) scale(0.45);
+    left: max(-0.7rem, calc((100vw - 1920px) / 2 - 0.7rem));
+    transform: translate(0, 0) scale(0.48);
   }
 }
 
@@ -152,5 +152,6 @@ form {
       font-size: .8rem;
     }
   }
+
 
 }
