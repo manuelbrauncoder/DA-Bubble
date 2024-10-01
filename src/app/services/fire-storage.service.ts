@@ -3,25 +3,31 @@
  */
 
 import { Injectable } from '@angular/core';
-import { initializeApp, getApps } from "firebase/app";
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from 'firebase/storage';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FireStorageService {
   private storage;
   private auth;
 
   firebaseConfig = {
-    apiKey: "your-api-key",
-    authDomain: "your-auth-domain",
-    projectId: "your-project-id",
+    apiKey: 'your-api-key',
+    authDomain: 'your-auth-domain',
+    projectId: 'your-project-id',
     storageBucket: 'gs://da-bubble-f85f7.appspot.com',
-    messagingSenderId: "your-messaging-sender-id",
-    appId: "your-app-id"
-  }
+    messagingSenderId: 'your-messaging-sender-id',
+    appId: 'your-app-id',
+  };
 
   constructor() {
     let firebaseApp;
@@ -41,17 +47,19 @@ export class FireStorageService {
       await uploadBytes(storageRef, file);
       return await getDownloadURL(storageRef);
     } catch (error) {
-      console.error("Error uploading file: ", error);
+      console.error('Error uploading file: ', error);
       throw new Error('File upload failed');
     }
   }
 
   async uploadFiles(files: File[]): Promise<string[]> {
-    const uploadPromises: Promise<string>[] = files.map(async file => {
-      const filePath = `uploads/${this.auth.currentUser?.uid}/${Date.now()}_${file.name}`;
+    const uploadPromises: Promise<string>[] = files.map(async (file) => {
+      const filePath = `uploads/${this.auth.currentUser?.uid}/${Date.now()}_${
+        file.name
+      }`;
       return await this.uploadFile(filePath, file);
     });
-  
+
     const urls = await Promise.all(uploadPromises);
     return urls;
   }
@@ -70,55 +78,70 @@ export class FireStorageService {
     if (filePath.startsWith('data:')) {
       return 'Vorschau';
     }
-  
+
     const parts = filePath.split('/');
     return parts[parts.length - 1];
   }
 
-  async downloadFile_OLD(filePath: string): Promise<void> {
-    try {
-      const storageRef = ref(this.storage, filePath);
-      const downloadURL = await getDownloadURL(storageRef);
-  
-      const a = document.createElement('a');
-      a.href = downloadURL;
-      
-      a.setAttribute('download', this.extractFileName(filePath)); 
-      document.body.appendChild(a);
-      a.click();
-  
-      document.body.removeChild(a);
-  
-    } catch (error) {
-      console.error("Error downloading file: ", error);
-      throw new Error('File download failed');
-    }
-  }
 
+  /**
+   * Downloads a file from Firebase Storage given a file path
+   * @param filePath to the file in firebase storage
+   */
   async downloadFile(filePath: string) {
     try {
       const url = await getDownloadURL(ref(this.storage, filePath));
-  
-      const xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = (event) => {
-        const blob = xhr.response;
-  
-        // Datei-Download starten
-        const link = document.createElement('a');
-        const objectURL = URL.createObjectURL(blob);
-        link.href = objectURL;
-        link.download = `${this.extractFileName(filePath)}`; // Du kannst den Dateinamen anpassen
-        document.body.appendChild(link); // Füge den Link temporär ins DOM ein
-        link.click(); // Simuliere den Klick, um den Download zu starten
-        document.body.removeChild(link); // Entferne den Link wieder aus dem DOM
-        URL.revokeObjectURL(objectURL); // Bereinige die URL
-      };
-  
-      xhr.open('GET', url);
-      xhr.send();
+      const blob = await this.fetchBlob(url);
+      const fileExtension = this.getFileExtension(blob.type);
+      this.downloadBlob(blob, `downloadedFile${fileExtension}`);
     } catch (error) {
       console.error('Fehler beim Abrufen der Datei:', error);
     }
+  }
+  
+  /**
+   * Fetches the blob from a given URL
+   * @param url 
+   * @returns 
+   */
+  private fetchBlob(url: string): Promise<Blob> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = () => resolve(xhr.response);
+      xhr.onerror = () => reject(new Error('Fehler beim Abrufen des Blobs'));
+      xhr.open('GET', url);
+      xhr.send();
+    });
+  }
+  
+  /**
+   * 
+   * @param mimeType of the file
+   * @returns the corresponding file extension
+   */
+  private getFileExtension(mimeType: string): string {
+    switch (mimeType) {
+      case 'image/jpeg': return '.jpg';
+      case 'image/png': return '.png';
+      case 'application/pdf': return '.pdf';
+      default: return '';
+    }
+  }
+  
+  /**
+   * Initiates the download of the given blob as a file
+   * @param blob 
+   * @param fileName 
+   */
+  private downloadBlob(blob: Blob, fileName: string): void {
+    const link = document.createElement('a');
+    const objectURL = URL.createObjectURL(blob);
+    link.href = objectURL;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(objectURL);
   }
 }
