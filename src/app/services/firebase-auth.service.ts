@@ -33,6 +33,7 @@ import { Router } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { Channel } from '../models/channel.class';
 import { IdleService } from './idle.service';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -96,7 +97,7 @@ export class FirebaseAuthService {
           username: user.displayName || 'No Username',
           email: user.email || 'No Email',
           avatar: user.photoURL || 'default-avatar-url',
-          currentlyLoggedIn: true,
+          status: 'online',
           createdAt: this.getCurrentTimestamp(),
         };
   
@@ -194,7 +195,6 @@ export class FirebaseAuthService {
       username: username,
       email: email,
       createdAt: this.getCurrentTimestamp(),
-      currentlyLoggedIn: true,
       avatar: avatar,
       status: 'online'
     }

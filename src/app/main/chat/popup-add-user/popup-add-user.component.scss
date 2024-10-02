@@ -1,7 +1,7 @@
 @import '../../../../mixins.scss';
 @import '../../../../styles.scss';
 
-.popup{
+.popup {
     box-shadow: 0rem 0.375rem 0.625rem 0rem #00000033;
     background-color: white;
     border-radius: 1.875rem 0 1.875rem 1.875rem;
@@ -10,7 +10,7 @@
     min-width: 30rem;
 }
 
-.mobile-popup{
+.mobile-popup {
     @include dFlex($fd: column, $g: 1.25rem);
     background-color: white;
     width: 100%;
@@ -19,9 +19,11 @@
 .title {
     @include dFlex($fd: column, $ai: flex-start, $jc: flex-start, $g: 0.3125rem);
     width: 100%;
+
     >div {
         @include dFlex($jc: space-between);
         width: 100%;
+
         h3 {
             font-family: Nunito;
             font-size: 1.5rem;
@@ -68,6 +70,11 @@
     background-color: white;
     max-height: 18.75rem;
     overflow-y: auto;
+
+    @media(max-width: 999px) {
+        top: -270px;
+        border-radius: 1.25rem 1.25rem 1.25rem 0;
+    }
 }
 
 
@@ -94,10 +101,12 @@
     }
 }
 
-.remove-user-icon:hover{
+.remove-user-icon:hover {
     scale: 1.05;
     cursor: pointer;
-    rect, path{
+
+    rect,
+    path {
         fill: $color-purple-3;
     }
 }
@@ -134,6 +143,6 @@
     object-fit: cover;
 }
 
-input{
+input {
     width: 100%;
 }

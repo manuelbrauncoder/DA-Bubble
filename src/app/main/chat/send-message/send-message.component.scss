@@ -4,6 +4,9 @@
 .picker-wrapper{
   position: absolute;
   bottom: 140px;
+  @media(max-width: 999px) {
+    left: 0;
+  }
 }
 
 .send-message-container {
