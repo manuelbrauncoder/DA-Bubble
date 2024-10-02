@@ -49,7 +49,6 @@ export class ChooseAvatarComponent {
   
         this.authService.register(this.regData.email, this.regData.username, this.regData.password, avatarUrl).subscribe({
           next: () => {
-            console.log('Registration complete with avatar:', avatarUrl);
             this.authService.clearStoredRegistrationData();
             this.showPopup = true;
   
@@ -58,7 +57,6 @@ export class ChooseAvatarComponent {
             }, 2000);
           },
           error: (err) => {
-            console.error('Registration failed:', err);
             if (err.code === 'auth/email-already-in-use') {
               this.registrationFailed = true;
               this.errorMassage = 'Email existiert bereits!';

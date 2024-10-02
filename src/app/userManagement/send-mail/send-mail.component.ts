@@ -21,7 +21,6 @@ export class SendMailComponent {
       this.showPopup = true;
       setTimeout(() => this.showPopup = false, 3000);
     } catch (error) {
-      console.error('Error:', error);
     }
   }
 }

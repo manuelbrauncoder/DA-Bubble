@@ -60,7 +60,6 @@ export class ResetPasswordComponent {
         }, 2000);
       } catch (error) {
         this.errorMessage = 'Fehler beim Zurücksetzen des Passworts.';
-        console.error('Error:', error);
       }
     }
   }

@@ -34,14 +34,6 @@ export class LoginComponent {
     }, 1000);
   }
 
-  // ngOnInit() {
-  //   this.authService.handleGoogleSignInRedirect();
-  // }
-
-  // googleLogin() {
-  //   this.authService.googleLoginRedirect();
-  // }
-
     /**
    * Login for user. Checks if email and pwd is in the database
    * and link to the main page.
@@ -51,7 +43,6 @@ export class LoginComponent {
     this.authService.login(this.loginData.email, this.loginData.password)
       .pipe(
         catchError((error) => {
-          console.error('Login error in LoginComponent:', error);
           this.loginFailed = true;
           return of(null);  
         })
@@ -71,7 +62,7 @@ export class LoginComponent {
       await this.authService.guestLogin();
       this.router.navigate(['/dabubble']);
     } catch (error) {
-      console.error('Guest login error in LoginComponent:', error);
+      this.loginFailed = true;
     }
   }
 
@@ -83,7 +74,6 @@ export class LoginComponent {
       await this.authService.googleLogin();
       this.router.navigate(['/dabubble']);
     } catch (error) {
-      console.error('Google login error in LoginComponent:', error);
       this.loginFailed = true;
     }
   }
