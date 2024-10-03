@@ -134,10 +134,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.redirectToLogin();
         this.uiService.closeThreadWindow();
       }
-      console.log(
-        'currently logged in user:',
-        this.authService.currentUserSig()
-      );
     });
   }
 

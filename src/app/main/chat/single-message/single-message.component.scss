@@ -365,7 +365,7 @@ app-data-detail-view {
     }
 }
 
-.info-popup {
+.info-popup-current-user {
     position: absolute;
     bottom: 2.5rem;
     right: 2rem;
@@ -374,25 +374,31 @@ app-data-detail-view {
     padding: 0.9375rem 0.625rem;
     @include dFlex($fd: column, $g: 0.3125rem);
     min-width: 10rem;
+}
 
-    @media(max-width: 999px) {
-        border-radius: 1.875rem 1.875rem 1.875rem 0;
-        left: 2rem;
-    }
+.info-popup-user {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 2rem;
+    background-color: $color-purple-1;
+    border-radius: 1.875rem 1.875rem 1.875rem 0;
+    padding: 0.9375rem 0.625rem;
+    @include dFlex($fd: column, $g: 0.3125rem);
+    min-width: 10rem;
+}
 
-    .reaction-from {
-        font-family: Nunito;
-        font-size: 1.125rem;
-        font-weight: 700;
-        line-height: 1.534rem;
-        color: white;
-    }
+.reaction-from {
+    font-family: Nunito;
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.534rem;
+    color: white;
+}
 
-    .react {
-        font-family: Nunito;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.364rem;
-        color: white;
-    }
+.react {
+    font-family: Nunito;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.364rem;
+    color: white;
 }

@@ -52,11 +52,9 @@ export class BreakpointObserverService {
       }
       if (state.breakpoints[Breakpoints.HandsetLandscape]) {
         this.isHandsetLandscape = true;
-        console.log('handsetLandscape');
         
       } else {
         this.isHandsetLandscape = false;
-        console.log('no landscape');
         
       }
     })

@@ -75,7 +75,7 @@
                         <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
                         <span>{{ reaction.counter }}</span>
                         @if (showReactionPopups[index]) {
-                            <div @fadeIn class="info-popup">
+                            <div @fadeIn [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'info-popup-current-user' : 'info-popup-user'">
                                 <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
                                     <span class="reaction-from">{{ getReactionFrom(reaction.fromUser)}}</span>
                                     <span class="react">{{ isPlural(reaction.counter) }}</span>
