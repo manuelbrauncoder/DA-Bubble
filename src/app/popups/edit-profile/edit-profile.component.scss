@@ -339,3 +339,9 @@
     z-index: 0;
   }
 }
+
+@media (max-width: 999px) {
+  .edit-profile {
+    top: 4rem;
+  }
+}

@@ -92,6 +92,12 @@ app-profile-change-confirmation {
   }
 }
 
+@media (max-width: 999px) {
+  .popup {
+    top: 4rem;
+  }
+}
+
 @media (max-width: 600px) {
   .popup {
     display: none;

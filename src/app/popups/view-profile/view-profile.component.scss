@@ -78,12 +78,12 @@
     justify-content: space-between;
     align-items: center;
 
-    :first-child {
+    .name {
       font-weight: 700;
       font-size: 2rem;
     }
 
-    :last-child {
+    .editBtn {
       font-weight: 600;
       font-size: 1.125rem;
       color: #535af1;
@@ -143,5 +143,52 @@
       font-size: 1.125rem;
       color: #1381ff;
     }
+  }
+}
+
+.editBtn-mobile {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 100%;
+  background-color: rgba(236, 238, 254, 1);
+
+  img {
+    transition: ease-in-out 250ms;
+  }
+
+  &:hover {
+    cursor: pointer;
+
+    img {
+      transform: scale(1.1);
+      filter: invert(48%) sepia(24%) saturate(3976%) hue-rotate(216deg)
+        brightness(103%) contrast(90%);
+      transition: ease-in-out 250ms;
+    }
+  }
+}
+
+@media (max-width: 999px) {
+  .view-profile {
+    top: 4rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .view-profile {
+    border-radius: 1.875rem;
+  }
+
+  .name-editBtn {
+    .editBtn {
+      display: none;
+    }
+  }
+
+  .editBtn-mobile {
+    display: flex;
   }
 }
