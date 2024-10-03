@@ -1,11 +1,11 @@
 .view-profile {
-  max-width: 31.25rem;
+  width: 31.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: white;
   border-radius: 1.875rem 0rem 1.875rem 1.875rem;
-  padding: 2.813rem 2.5rem 2.813rem 2.5rem;
+  padding: 2.813rem 2.5rem;
   gap: 2.375rem;
   box-shadow: 0rem 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -14,7 +14,7 @@
 }
 
 .profile-header {
-  width: 26.25rem;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,7 +67,7 @@
 }
 
 .name-editBtn-onlineStatus {
-  width: 26.25rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.938rem;
@@ -116,7 +116,7 @@
 }
 
 .email-address-container {
-  width: 26.25rem;
+  width: 100%;
   display: flex;
   gap: 0.938rem;
 
@@ -150,12 +150,14 @@
   display: none;
   justify-content: center;
   align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.188rem;
+  height: 2.188rem;
   border-radius: 100%;
   background-color: rgba(236, 238, 254, 1);
 
   img {
+    width: 1.143rem;
+    height: 1.141rem;
     transition: ease-in-out 250ms;
   }
 
@@ -180,6 +182,11 @@
 @media (max-width: 600px) {
   .view-profile {
     border-radius: 1.875rem;
+    padding: 2.813rem 1.25rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50.75%, -50%);
   }
 
   .name-editBtn {
@@ -190,5 +197,11 @@
 
   .editBtn-mobile {
     display: flex;
+  }
+}
+
+@media (max-width: 460px) {
+  .view-profile {
+    width: 95vw;
   }
 }
