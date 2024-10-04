@@ -198,6 +198,12 @@
   .editBtn-mobile {
     display: flex;
   }
+
+  .address {
+    :last-child {
+      color: black !important;
+    }
+  }
 }
 
 @media (max-width: 460px) {
