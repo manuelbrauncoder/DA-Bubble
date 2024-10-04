@@ -42,6 +42,7 @@ export class UiService {
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
   showTaggableUsersPopup: boolean = false;
+  showOtherUsersProfile: boolean = false;
 
   showMobileNavigation: boolean = false;
   showMobilePopup: boolean = false;
@@ -237,6 +238,10 @@ export class UiService {
 
   toggleTaggableUsersPopup() {
     this.showTaggableUsersPopup = !this.showTaggableUsersPopup;
+  }
+
+  toggleOtherUsersProfile() {
+    this.showOtherUsersProfile = !this.showOtherUsersProfile;
   }
 
   constructor() { }
