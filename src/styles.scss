@@ -181,7 +181,8 @@ form {
 
 // Colors
 $color-online-green: #92c83e;
-$color-offline-gray: #686868;
+$color-away-gray: #686868;
+$color-offline-red: #ed1e79;
 $color-purple-3: #535af1;
 $color-active-channel: #eceefe;
 $color-main-bg: #eceefe;
@@ -209,12 +210,12 @@ $color-error-red: #ed1e79;
 
 .offline-state {
   @extend .state-icon;
-  background-color: $color-offline-gray;
+  background-color: $color-offline-red;
 }
 
 .away-state {
   @extend .state-icon;
-  background-color: $color-disabled-grey;
+  background-color: $color-away-gray;
 }
 
 // 

@@ -33,7 +33,6 @@ import { Router } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
 import { Channel } from '../models/channel.class';
 import { IdleService } from './idle.service';
-import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root',
@@ -116,6 +115,7 @@ export class FirebaseAuthService {
       }
     }).catch((error) => {
       console.error('Google sign-in error:', error);
+      this.logout();
     });
   }
 
@@ -150,6 +150,7 @@ export class FirebaseAuthService {
       });
   }
 
+
   /**
    * Registers a new user with Firebase Authentication.
    *
@@ -164,7 +165,17 @@ export class FirebaseAuthService {
    */
    register(email: string, username: string, password: string, avatar: string): Observable<void> {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then((response) => {
-      updateProfile(response.user, { displayName: username });
+      this.handleUserData(response, email, username, avatar);
+    })
+      .catch((err) => {
+        console.error('Error register new User', err);
+        throw err;
+      });
+    return from(promise);
+  }
+
+  handleUserData(response: any, email: string, username: string, avatar: string){
+    updateProfile(response.user, { displayName: username });
       this.saveNewUserInFirestore(email, username, response.user.uid, avatar);
       this.addNewUserToWelcomeChannel(response.user.uid);
       this.currentUserSig.set({
@@ -172,12 +183,6 @@ export class FirebaseAuthService {
         username: response.user.displayName!,
         uid: response.user.uid!
       })
-    })
-      .catch((err) => {
-        console.error('Error register new User', err);
-        throw err;
-      });
-    return from(promise);
   }
 
   addNewUserToWelcomeChannel(uid: string){
@@ -344,22 +349,30 @@ export class FirebaseAuthService {
     const currentUser = this.auth.currentUser;
     if (currentUser) {
       updateEmail(currentUser, newEmail).then(() => {
-        this.uiService.toggleProfileChangeConfirmationPopup();
+        this.handleEmailUpdating(currentUser, newEmail);
+      }).catch((err) => {
+        this.handleUpdateEmailError(err);
+      });
+    }
+  }
+
+  handleEmailUpdating(currentUser: any, newEmail: string){
+    this.uiService.toggleProfileChangeConfirmationPopup();
         this.fireService.users.forEach((user) => {
           if (currentUser.uid === user.uid) {
             user.email = newEmail;
             this.fireService.addUser(user);
           }
         })
-      }).catch((err) => {
-        let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
+  }
+
+  handleUpdateEmailError(err: string){
+    let code = AuthErrorCodes.EMAIL_CHANGE_NEEDS_VERIFICATION;
         if (code) {
           this.loginTooLongAgo = true;
           this.uiService.toggleVerifyPassword();
         }
         console.log(err);
-      });
-    }
   }
 
   /**
@@ -393,27 +406,6 @@ export class FirebaseAuthService {
     }
   }
 
-  /**
-   * This method is for updating the users password
-   * If the last login was too long ago, the user has to be re-authenticate
-   * We need a popup, where the user can log in again
-   * in this popup, call the reAuthenticateUser() method
-   * after that, the user can update his password
-   * @param newPw 
-   */
-  updateUserPassword(newPw: string) {
-    if (this.auth.currentUser) {
-      updatePassword(this.auth.currentUser, newPw).then(() => {
-        console.log('Password from User updated:', this.auth.currentUser);
-      }).catch((err) => {
-        let code = AuthErrorCodes.CREDENTIAL_TOO_OLD_LOGIN_AGAIN
-        if (code) {
-          console.log('Login again before change password');
-        }
-        console.warn('Error updating Password', err);
-      })
-    }
-  }
 
   /**
  * Sends an email to the user to reset the password
