@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input,  } from '@angular/core';
 
 @Component({
   selector: 'app-popup-view-other-users-profile',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './popup-view-other-users-profile.component.scss'
 })
 export class PopupViewOtherUsersProfileComponent {
-
+  @Input()otherUsersProfile: any;
 }
