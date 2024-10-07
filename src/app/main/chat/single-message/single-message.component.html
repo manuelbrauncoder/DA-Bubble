@@ -8,8 +8,7 @@
         @if (!editMode) {
         <div [ngStyle]="{'flex-direction': userService.isMessageFromCurrentUser(currentMessage) ? 'row-reverse' : 'row'}"
             class="name-and-time">
-            <!-- <h3 (click)="openOtherUsersProfile(userService.getUserData(currentMessage.sender).avatar, userService.getUserData(currentMessage.sender).username, userService.getUserData(currentMessage.sender).status, userService.getUserData(currentMessage.sender).email)">{{ userService.getUserData(currentMessage.sender).username }}</h3> -->
-            <h3 (click)="getOtherUsersData(userService.getUserData(currentMessage.sender))">{{ userService.getUserData(currentMessage.sender).username }}</h3>
+            <h3 (click)="openOtherUsersProfile(userService.getUserData(currentMessage.sender))">{{ userService.getUserData(currentMessage.sender).username }}</h3>
             <span>{{ getFormattedTime(currentMessage.time) }}</span>
         </div>
 
@@ -109,7 +108,7 @@
         }
 
     @if (uiService.showOtherUsersProfile) {
-        <app-popup-view-other-users-profile [otherUsersProfile]="" @fadeIn></app-popup-view-other-users-profile>
+        <app-popup-view-other-users-profile [otherUsersProfile]="userService.getUserData(currentMessage.sender)" @fadeIn></app-popup-view-other-users-profile>
         <div class="popup-background" @fadeIn (click)="closeOtherUsersProfile()"></div>
     }
 </div>

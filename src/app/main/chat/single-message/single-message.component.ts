@@ -513,23 +513,15 @@ export class SingleMessageComponent implements OnInit {
     await this.fireService.addChannel(this.fireService.currentChannel);
   }
 
-  getOtherUsersData(otherUsersData: any) {
-    // userService.getUserData(currentMessage.sender).avatar, userService.getUserData(currentMessage.sender).username, userService.getUserData(currentMessage.sender).status, userService.getUserData(currentMessage.sender).email
-    otherUsersData.avatar,
-    otherUsersData.username,
-    otherUsersData.status,
-    otherUsersData.email
-    this.openOtherUsersProfile(otherUsersData.avatar, otherUsersData.username, otherUsersData.status, otherUsersData.email);
-  }
-
-  openOtherUsersProfile(avatar: string, username: string, status: string, email: string) {
+  openOtherUsersProfile(otherUsersData: any) {
     this.uiService.toggleOtherUsersProfile();
+
     console.log(
       {
-        'Imgpath of avatar:': avatar,
-        'Username:': username,
-        'Status:': status,
-        'Email Address:': email
+        'Imgpath of avatar:': otherUsersData.avatar,
+        'Username:': otherUsersData.username,
+        'Status:': otherUsersData.status,
+        'Email Address:': otherUsersData.email
       }
     );
   }
