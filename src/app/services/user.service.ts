@@ -15,6 +15,8 @@ export class UserService {
   fireService = inject(FirestoreService)
   authService = inject(FirebaseAuthService);
 
+  uidForProfile = '';
+
   constructor() { }
 
   getUserData(userUid: string): User {
