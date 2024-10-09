@@ -3,6 +3,22 @@
     <button (click)="logout()">Log out</button>
 </div>
 
+<div class="mobile-popup" @slideFromBottom>
+    <img src="assets/img/rectangle.svg" class="bar-handle" (click)="togglePopup()">
+
+    <div class="mobile-buttons-container">
+        <button (click)="viewProfile()">
+            <img src="assets/icons/account_circle.svg" style="width: 1.563rem; height: 1.563rem;">
+            Profil
+        </button>
+
+        <button (click)="logout()">
+            <img src="assets/icons/logout.svg" style="width: 1.373rem; height: 1.406rem;">
+            Log out
+        </button>
+    </div>
+</div>
+
 @if (uiService.showViewProfilePopup) {
     <app-view-profile></app-view-profile>
 }

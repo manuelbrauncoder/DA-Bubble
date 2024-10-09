@@ -134,10 +134,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.redirectToLogin();
         this.uiService.closeThreadWindow();
       }
-      console.log(
-        'currently logged in user:',
-        this.authService.currentUserSig()
-      );
     });
   }
 
@@ -153,7 +149,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @HostListener('document:touchstart', ['$event'])
   onUserAction(): void {
     this.idleService.resetTimer();    
-    if (this.showAwayPopup) {
+    if (this.userService.getCurrentUser().status === 'away') {
       this.authService.changeLoginState(
         'online',
         this.userService.getCurrentUser().uid

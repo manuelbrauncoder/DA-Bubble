@@ -65,7 +65,7 @@ form {
 
       >img {
         position: absolute;
-        top: 30%;
+        top: 29%;
         left: 1rem;
       }
 
@@ -151,7 +151,18 @@ form {
     >p {
       font-size: .8rem;
     }
+
+    >span {
+      font-size: .8rem;
+    }
   }
 
-
+  .input-wrapper {
+    >div {
+      >img {
+        top: 27%;
+        height: 1.5rem;
+      }
+    }
+  }
 }

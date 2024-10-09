@@ -18,6 +18,7 @@ import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.
 import { EmojiComponent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
+import { PopupViewOtherUsersProfileComponent } from '../popup-view-other-users-profile/popup-view-other-users-profile.component';
 
 @Component({
   selector: 'app-single-message',
@@ -31,7 +32,8 @@ import { AutofocusDirective } from '../../../shared/directives/autofocus.directi
     EmojiPickerComponent,
     EmojiComponent,
     ClickOutsideDirective,
-    AutofocusDirective
+    AutofocusDirective,
+    PopupViewOtherUsersProfileComponent
   ],
   templateUrl: './single-message.component.html',
   styleUrl: './single-message.component.scss',
@@ -509,5 +511,15 @@ export class SingleMessageComponent implements OnInit {
     );
     this.fireService.currentChannel.messages[updateId] = this.currentMessage;
     await this.fireService.addChannel(this.fireService.currentChannel);
+  }
+
+
+  openOtherUsersProfile() {
+    this.userService.uidForProfile = this.currentMessage.sender;
+    this.uiService.toggleOtherUsersProfile();
+  }
+
+  closeOtherUsersProfile() {
+    this.uiService.toggleOtherUsersProfile();
   }
 }

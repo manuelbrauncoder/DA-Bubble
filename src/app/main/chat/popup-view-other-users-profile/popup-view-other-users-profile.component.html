@@ -1,0 +1,36 @@
+<div class="other-users-profile">
+    <div class="other-users-profile-header">
+        <p>Profil</p>
+
+        <div class="bounding-box" (click)="closeOtherUsersProfile()">
+            <img src="assets/icons/close.svg">
+        </div>
+    </div>
+
+    <div class="other-users-profile-img">
+        <img [src]="user?.avatar">
+    </div>
+
+    <div class="name-and-onlineStatus">
+        <p class="name">{{ user?.username }}</p>
+
+        <div class="onlineStatus">
+            <img src="assets/icons/statusOnline.png">
+            <p>{{ user?.status }}</p>
+        </div>
+    </div>
+
+    <div class="email-address-container">
+        <img src="assets/icons/mail.png">
+
+        <div class="address">
+            <p>E-Mail-Adresse</p>
+            <p>{{ user?.email }}</p>
+        </div>
+    </div>
+
+    <button>
+        <img src="assets/icons/messageIcon.png">
+        <span>Nachricht</span>
+    </button>
+</div>

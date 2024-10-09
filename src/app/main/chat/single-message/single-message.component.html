@@ -8,7 +8,7 @@
         @if (!editMode) {
         <div [ngStyle]="{'flex-direction': userService.isMessageFromCurrentUser(currentMessage) ? 'row-reverse' : 'row'}"
             class="name-and-time">
-            <h3>{{ userService.getUserData(currentMessage.sender).username }}</h3>
+            <h3 (click)="openOtherUsersProfile()">{{ userService.getUserData(currentMessage.sender).username }}</h3>
             <span>{{ getFormattedTime(currentMessage.time) }}</span>
         </div>
 
@@ -75,7 +75,7 @@
                         <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
                         <span>{{ reaction.counter }}</span>
                         @if (showReactionPopups[index]) {
-                            <div @fadeIn class="info-popup">
+                            <div @fadeIn [ngClass]="userService.isMessageFromCurrentUser(currentMessage) ? 'info-popup-current-user' : 'info-popup-user'">
                                 <ngx-emoji [emoji]="reaction.id"></ngx-emoji>
                                     <span class="reaction-from">{{ getReactionFrom(reaction.fromUser)}}</span>
                                     <span class="react">{{ isPlural(reaction.counter) }}</span>
@@ -106,5 +106,9 @@
         <app-data-detail-view (closeDetailView)="closeDataDetailView()" @fadeIn [data]="currentMessage.data[0]"></app-data-detail-view>
         <div class="popup-background" @fadeIn (click)="closeDataDetailView()"></div>
         }
-</div>
 
+    @if (uiService.showOtherUsersProfile) {
+        <app-popup-view-other-users-profile @fadeIn></app-popup-view-other-users-profile>
+        <div class="popup-background" @fadeIn (click)="closeOtherUsersProfile()"></div>
+    }
+</div>

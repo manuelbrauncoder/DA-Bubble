@@ -23,20 +23,24 @@ app-search-bar{
   display: flex;
   align-items: center;
   gap: 0.625rem;
+
   >div{
     display: flex;
     align-items: center;
     gap: 0.625rem;
+
     h1{
       font-size: 1.5rem;
     }
   }
+
   img{
     height: 3.125rem;
     width: 3.125rem;
     border-radius: 100%;
     cursor: default;
   }
+
   svg{
     cursor: pointer;
   }

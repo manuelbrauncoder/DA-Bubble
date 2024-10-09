@@ -6,18 +6,25 @@ import { ViewProfileComponent } from '../view-profile/view-profile.component';
 import { EditProfileComponent } from '../edit-profile/edit-profile.component';
 import { VerifyPasswordComponent } from '../verify-password/verify-password.component';
 import { ProfileChangeConfirmationComponent } from '../profile-change-confirmation/profile-change-confirmation.component';
+import { slideFromBottom } from '../../shared/animations';
 
 
 @Component({
   selector: 'app-edit-user-and-logout-popup',
   standalone: true,
   imports: [CommonModule, ViewProfileComponent, EditProfileComponent, VerifyPasswordComponent, ProfileChangeConfirmationComponent],
+  animations: [slideFromBottom],
   templateUrl: './edit-user-and-logout-popup.component.html',
   styleUrl: './edit-user-and-logout-popup.component.scss'
 })
 export class EditUserAndLogoutPopupComponent {
   uiService = inject(UiService);
   authService = inject(FirebaseAuthService);
+
+
+  togglePopup() {
+    this.uiService.toggleEditUserAndLogoutPopup();
+  }
 
 
   /**

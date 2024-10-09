@@ -16,6 +16,7 @@ main {
         transition: 150ms ease-in;
 
         &:hover {
+            cursor: pointer;
             background-color: $color-active-channel;
             transition: 150ms ease-in;
         }
@@ -37,7 +38,3 @@ main {
         }
     }
 }
-
-
-
-

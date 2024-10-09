@@ -13,8 +13,11 @@
 
     <div class="name-editBtn-onlineStatus">
         <div class="name-editBtn">
-            <p>{{ authService.currentUserSig()?.username }}</p>
-            <p (click)="editProfile()">Bearbeiten</p>
+            <p class="name">{{ authService.currentUserSig()?.username }}</p>
+            <p (click)="editProfile()" class="editBtn">Bearbeiten</p>
+            <div class="editBtn-mobile" (click)="editProfile()">
+                <img src="assets/icons/edit.svg">
+            </div>
         </div>
 
         <div class="onlineStatus">

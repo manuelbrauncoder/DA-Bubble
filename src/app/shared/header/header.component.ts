@@ -9,7 +9,6 @@ import { BreakpointObserverService } from '../../services/breakpoint-observer.se
 import { SearchBarComponent } from "../search-bar/search-bar.component";
 
 
-
 @Component({
   selector: 'app-header',
   standalone: true,

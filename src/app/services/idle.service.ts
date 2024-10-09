@@ -27,7 +27,6 @@ export class IdleService {
   }
 
   public startWatching(): void {
-    console.log('start watching');
     
     this.idleSubscription = interval(this.idleCheckInterval * 1000)
       .pipe(throttle(() => interval(1000)))

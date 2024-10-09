@@ -174,11 +174,10 @@ export class FirestoreService {
       //console.log('New Data ', change.doc.data());
     }
     if (change.type === 'modified') {
-      console.log('Modified Data: ', change.doc.data());
-      //this.getMessagesPerDay();
+      //console.log('Modified Data: ', change.doc.data());
     }
     if (change.type === 'removed') {
-      console.log('Removed Data: ', change.doc.data());
+      //console.log('Removed Data: ', change.doc.data());
     }
   }
 

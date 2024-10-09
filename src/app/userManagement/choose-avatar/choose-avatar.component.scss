@@ -147,8 +147,19 @@ form {
     >p {
       font-size: .8rem;
     }
+    >span {
+      font-size: .8rem;
+    }
   }
 
+  .input-wrapper {
+    >div {
+      >img {
+        top: 27%;
+        height: 1.5rem;
+      }
+    }
+  }
   .profile-wrapper {
     >h3 {
       font-size: 1.5rem;

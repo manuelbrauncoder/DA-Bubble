@@ -35,3 +35,18 @@ img {
     gap: .2rem;
   }
 }
+
+@media(max-width: 700px) {
+  h2 {
+    font-size: 1.8rem;
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+  }
+  .privacy-wrapper {
+    padding: 1rem;
+  
+  }
+
+}
