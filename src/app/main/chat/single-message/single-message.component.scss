@@ -7,7 +7,7 @@
     width: 100%;
     display: flex;
     gap: 1.875rem;
-    cursor: pointer;
+    // cursor: pointer;
     padding: 1.5rem;
     transition: ease 225ms;
 
@@ -52,6 +52,7 @@
     border-radius: 100%;
     background-color: white;
     object-fit: cover;
+    cursor: default;
 
     @media(max-width: 999px) {
         width: 3.125rem;
@@ -75,6 +76,13 @@
         line-height: 1.534rem;
         text-align: left;
         color: black;
+        transition: ease-in-out 250ms;
+
+        &:hover {
+            cursor: pointer;
+            color: #444df2;
+            transition: ease-in-out 250ms;
+        }
     }
 
     span {
@@ -285,12 +293,13 @@
 .data-preview {
     width: 6rem;
     height: 4rem;
+    border-radius: 0.5rem 0.5rem 0.5rem 0.5rem;
     object-fit: cover;
     transition: all 300ms ease-out;
 
     &:hover {
         transition: all 300ms ease-out;
-        scale: 1.2;
+        scale: 1.05;
     }
 }
 
@@ -352,6 +361,13 @@ app-data-detail-view {
     border: 1px solid $color-purple-light;
     padding: 0.3125rem 0.625rem;
     border-radius: 100vw;
+    transition: ease-in-out 250ms;
+
+    &:hover {
+        cursor: pointer;
+        border-color: #444df2;
+        transition: ease-in-out 250ms;
+    }
 
     span {
         font-family: Nunito;
