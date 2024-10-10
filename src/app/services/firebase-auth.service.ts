@@ -244,7 +244,6 @@ export class FirebaseAuthService {
         this.idleService.startWatching();
       })
       .catch((error) => {
-        console.error('Login failed in FirebaseAuthService:', error);
         throw error;
       });
     return from(promise);
@@ -414,7 +413,7 @@ export class FirebaseAuthService {
   sendPasswordResetMail(email: string) {
     sendPasswordResetEmail(this.auth, email)
       .then(() => {
-        console.log('Password reset email sent!')
+        // console.log('Password reset email sent!')
       })
       .catch((error) => {
         const errorCode = error.code;

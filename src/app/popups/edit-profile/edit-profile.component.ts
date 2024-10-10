@@ -104,7 +104,6 @@ export class EditProfileComponent implements OnInit {
     this.currentUsersAvatar = imgPath;
     this.updatedUser = new User(this.userService.getCurrentUser());
     this.updatedUser.avatar = imgPath;
-    console.log(this.updatedUser);
   }
 
 
@@ -158,7 +157,6 @@ export class EditProfileComponent implements OnInit {
       this.updatedUser.username = this.editProfileData.name;
       await this.firestoreService.addUser(this.updatedUser);
       this.authService.updateUsername(this.editProfileData.name);
-      console.log(this.updatedUser);
       this.nameIsChanged = false;
       this.closeEditProfile();
       this.uiService.toggleProfileChangeConfirmationPopup();
