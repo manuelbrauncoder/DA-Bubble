@@ -1,13 +1,21 @@
 @import '../../../../styles.scss';
 @import '../../../../mixins.scss';
 
+.pdf-link {
+    transition: 125ms ease-out;
+
+    &:hover {
+        font-weight: 500;
+        transition: 125ms ease-out;
+    }
+}
+
 
 .message-container {
     position: relative;
     width: 100%;
     display: flex;
     gap: 1.875rem;
-    // cursor: pointer;
     padding: 1.5rem;
     transition: ease 225ms;
 

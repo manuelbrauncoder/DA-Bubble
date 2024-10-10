@@ -16,7 +16,12 @@
             class="content">
             <span>{{ currentMessage.content }}</span>
             @if (currentMessage.data.length > 0) {
-            <img (click)="openDataDetailView(currentMessage.data[0])" class="data-preview" src="{{currentMessage.data[0]}}" alt="">
+                @if (isFilePdf(getFileName(currentMessage.data[0]))) {
+                    <a class="pdf-link" [ngStyle]="{'color': userService.isMessageFromCurrentUser(currentMessage) ? 'white' : 'black'}" target="_blank" [href]="currentMessage.data">{{ getFileName(currentMessage.data[0])}}</a>
+                    <iframe [src]="sanitizedUrl" width="200" height="300" frameborder="0"></iframe>
+                } @else {
+                    <img (click)="openDataDetailView(currentMessage.data[0])" class="data-preview" src="{{currentMessage.data[0]}}" alt="">
+                }
             }
         </div>
         }
