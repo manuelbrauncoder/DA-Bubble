@@ -17,7 +17,7 @@
     <div>
       <label for="password"></label>
       <img src="assets/icons/login/lock_grey.png" alt="lock">
-      <input #password="ngModel" type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.password" name="password" required>
+      <input (keydown)="onKeyDownEnter($event, loginForm)" #password="ngModel" type="password" minlength="6" placeholder="Passwort" [(ngModel)]="loginData.password" name="password" required>
       <span *ngIf="password.invalid && (password.dirty || password.touched)">*Bitte geben Sie ein gültiges Passwort ein.</span>
     </div>
     

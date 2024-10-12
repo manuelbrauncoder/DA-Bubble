@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseAuthService } from '../../services/firebase-auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
 
@@ -32,6 +32,13 @@ export class LoginComponent {
         this.showStartScreen = false;
       }, 3000);
     }, 1000);
+  }
+
+  onKeyDownEnter(event: KeyboardEvent, loginForm: NgForm) {
+    if (event.key === 'Enter' && loginForm.valid) {
+      event.preventDefault();      
+      this.login();
+    }
   }
 
     /**
