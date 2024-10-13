@@ -17,6 +17,7 @@ export class LoginComponent {
   router = inject(Router);
   loginFailed: boolean = false;
   showStartScreen: boolean = true;
+  startScreenFadeOut: boolean = false;
   logoState: 'center' | 'corner' = 'center';
 
 
@@ -29,9 +30,12 @@ export class LoginComponent {
     setTimeout(() => {
       this.logoState = 'corner';
       setTimeout(() => {
-        this.showStartScreen = false;
-      }, 3000);
-    }, 1000);
+        this.startScreenFadeOut = true;
+        setTimeout(() => {
+          this.showStartScreen = false;
+        }, 500);
+      }, 1500);
+    }, 500);
   }
 
   onKeyDownEnter(event: KeyboardEvent, loginForm: NgForm) {

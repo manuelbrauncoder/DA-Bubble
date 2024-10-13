@@ -11,6 +11,12 @@
   bottom: 0;
   left: 0;
   right: 0;
+  opacity: 1;
+  transition: opacity 1s ease-out; 
+
+  &.fade-out {
+    opacity: 0;
+  }
 
 
   >img {
@@ -20,11 +26,11 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: all 1s ease-in-out;
+    transition: all .8s ease-in-out;
   }
 
   &.animate-logo img {
-    animation: moveLogo 1s 1s forwards;
+    animation: moveLogo .8s .8s forwards;
   }
 }
 
@@ -37,7 +43,7 @@
   100% {
     top: -.7rem;
     left: max(-0.7rem, calc((100vw - 1920px) / 2 - 0.7rem));
-    transform: translate(0, 0) scale(0.48);
+    transform: translate(0, 0) scale(0.44);
   }
 }
 
