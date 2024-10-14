@@ -16,19 +16,33 @@ import { User } from '../../models/user.class';
   styleUrl: './edit-profile.component.scss',
 })
 export class EditProfileComponent implements OnInit {
+  // Inject services used in the component
   uiService = inject(UiService);
   firestoreService = inject(FirestoreService);
   authService = inject(FirebaseAuthService);
   userService = inject(UserService);
+
+  // Holds the current user's avatar image
   currentUsersAvatar = this.userService.getCurrentUsersAvatar();
+
+  // Variables to track changes in the profile data
   selectedAvatar: string = '';
   avatarIsChanged: boolean = false;
   nameIsChanged: boolean = false;
   emailIsChanged: boolean = false;
   selectedFile: File | null = null;
 
+  // Updated user object
   updatedUser: User = new User();
 
+  // Stores original profile data for comparison
+  originalProfileData = {
+    name: '',
+    email: '',
+    avatar: '',
+  };
+
+  // Stores the edited profile data
   editProfileData = {
     name: '',
     email: '',
@@ -40,8 +54,15 @@ export class EditProfileComponent implements OnInit {
    * This method is called automatically by Angular when the component is created.
    */
   ngOnInit(): void {
-    this.editProfileData.name = this.authService.auth.currentUser?.displayName!;
-    this.editProfileData.email = this.authService.auth.currentUser?.email!;
+    const currentUser = this.authService.auth.currentUser;
+    this.editProfileData.name = currentUser?.displayName || '';
+    this.editProfileData.email = currentUser?.email || '';
+    this.currentUsersAvatar = this.userService.getCurrentUsersAvatar();
+  
+    // Store the original values for later comparison
+    this.originalProfileData.name = this.editProfileData.name;
+    this.originalProfileData.email = this.editProfileData.email;
+    this.originalProfileData.avatar = this.currentUsersAvatar;
   }
 
 
@@ -65,8 +86,10 @@ export class EditProfileComponent implements OnInit {
 
 
   /**
-   * Placeholder method for uploading a custom profile picture.
-   * This method is not yet implemented.
+   * Handles the uploading of a new user picture.
+   * Reads the selected file and sets it as the new avatar.
+   *
+   * @param {Event} event - The file input event.
    */
   uploadOwnPicture(event: any) {
     const file: File = event.target.files[0];
@@ -170,6 +193,21 @@ export class EditProfileComponent implements OnInit {
   onEmailChange() {
     this.emailIsChanged = true;
   }
+
+
+  /**
+   * Determines whether the save button should be disabled.
+   * Returns true if no changes have been made to the profile data.
+   *
+   * @returns {boolean} - True if the save button should be disabled, false otherwise.
+   */
+  isSaveButtonDisabled(): boolean {
+    return (
+      this.editProfileData.name === this.originalProfileData.name &&
+      this.editProfileData.email === this.originalProfileData.email &&
+      this.currentUsersAvatar === this.originalProfileData.avatar
+    );
+  }  
 
 
   /**

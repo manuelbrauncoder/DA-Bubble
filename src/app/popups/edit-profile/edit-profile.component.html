@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="upload-your-own-picture">
-                    <span>eigenes Bild verwenden</span>
+                    <span>Eigenes Bild verwenden</span>
 
                     <label for="fileUpload">
                         Datei hochladen
@@ -77,7 +77,7 @@
             <div class="buttons-container">
                 <input type="reset" value="Abbrechen" (click)="closeEditProfile()">
                 <input type="submit" value="Speichern" (click)="saveEdit(editProfileData.name, editProfileData.email)"
-                    [disabled]="!editProfileForm.valid || editProfileForm.submitted">
+                    [disabled]="isSaveButtonDisabled() || !editProfileForm.valid || editProfileForm.submitted">
             </div>
         </form>
     </div>
