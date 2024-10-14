@@ -17,6 +17,7 @@ import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
 import { ClickOutsideDirective } from '../../../shared/directives/click-outside.directive';
 import { AutofocusDirective } from '../../../shared/directives/autofocus.directive';
+import { User } from '../../../models/user.class';
 
 @Component({
   selector: 'app-send-message',
@@ -57,6 +58,43 @@ export class SendMessageComponent implements OnInit, OnChanges {
       this.saveNewMessage();
     }
   }
+
+  taggedUsers: string[] = [];
+
+  serach() {
+    this.taggedUsers = [];
+    const searchTerm = this.content.toLowerCase();
+
+    if (searchTerm.includes('@')) {
+      const userTerm = this.searchForAt(searchTerm);
+
+      console.log(this.content);
+      console.log(userTerm);
+  
+      this.searchForUsers(userTerm);
+    }
+  }
+
+  searchForAt(searchTerm: string) {
+    const atIndex = searchTerm.lastIndexOf('@');
+    return atIndex !== -1 ? searchTerm.substring(atIndex + 1) : '';
+  }
+
+  searchForUsers(userTerm: string) {
+    const users: User[] = this.userService.fireService.users.filter((u) => u.username.toLowerCase().trim().includes(userTerm));
+    const usernames = users.map((u) => `${u.username}`);
+    this.taggedUsers = [...this.taggedUsers, ...usernames];
+    console.log(this.taggedUsers);
+  }
+
+  setTaggedUser(filteredUser: string) {
+    const serachTermn = this.searchForAt(this.content);
+    if (serachTermn) {
+      const updatedContent = this.content.replace(this.searchForAt(this.content), filteredUser + ' ');
+      this.content = updatedContent;
+    }
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['currentRecipient']) {

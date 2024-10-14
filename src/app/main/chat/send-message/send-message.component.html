@@ -4,7 +4,13 @@
             <app-emoji-picker (sendEmoji)="addEmojiToInput($event)" [content]="'send-message'"></app-emoji-picker>
         </div>
     }
-    <textarea appAutofocus #textArea (keydown)="onKeyDownEnter($event)" [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
+    <textarea appAutofocus #textArea (input)="serach()" (keydown)="onKeyDownEnter($event)" [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
+
+    @for (filteredUser of taggedUsers; track $index) {
+        <div class="filteredUsers" (click)="setTaggedUser(filteredUser)">
+            {{ filteredUser }}
+        </div>
+    }
 
     <div class="icons">
         <div class="add-elements">
