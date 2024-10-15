@@ -60,9 +60,11 @@ export class SendMessageComponent implements OnInit, OnChanges {
   }
 
   taggedUsers: string[] = [];
+  taggedChannels: string[] = [];
 
   serach() {
     this.taggedUsers = [];
+    this.taggedChannels = [];
     const searchTerm = this.content.toLowerCase();
 
     if (searchTerm.includes('@')) {
@@ -73,11 +75,26 @@ export class SendMessageComponent implements OnInit, OnChanges {
   
       this.searchForUsers(userTerm);
     }
+
+
+    if (searchTerm.includes('#')) {
+      const userTerm = this.searchForHashtag(searchTerm);
+
+      console.log(this.content);
+      console.log(userTerm);
+  
+      this.searchForChannels(userTerm);
+    }
   }
 
   searchForAt(searchTerm: string) {
     const atIndex = searchTerm.lastIndexOf('@');
     return atIndex !== -1 ? searchTerm.substring(atIndex + 1) : '';
+  }
+
+  searchForHashtag(searchTerm: string) {
+    const hashtagIndex = searchTerm.lastIndexOf('#');
+    return hashtagIndex !== -1 ? searchTerm.substring(hashtagIndex + 1) : '';
   }
 
   searchForUsers(userTerm: string) {
@@ -87,10 +104,25 @@ export class SendMessageComponent implements OnInit, OnChanges {
     console.log(this.taggedUsers);
   }
 
+  searchForChannels(userTerm: string) {
+    const channels: Channel[] = this.userService.fireService.channels.filter((c) => c.name.toLowerCase().trim().includes(userTerm));
+    const channelnames = channels.map((c) => `${c.name}`);
+    this.taggedChannels = [...this.taggedChannels, ...channelnames];
+    console.log(this.taggedChannels);
+  }
+
   setTaggedUser(filteredUser: string) {
     const serachTermn = this.searchForAt(this.content);
     if (serachTermn) {
       const updatedContent = this.content.replace(this.searchForAt(this.content), filteredUser + ' ');
+      this.content = updatedContent;
+    }
+  }
+
+  setTaggedChannel(filteredChannel: string) {
+    const serachTermn = this.searchForHashtag(this.content);
+    if (serachTermn) {
+      const updatedContent = this.content.replace(this.searchForHashtag(this.content), filteredChannel + ' ');
       this.content = updatedContent;
     }
   }
