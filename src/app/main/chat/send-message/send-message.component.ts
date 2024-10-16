@@ -52,15 +52,18 @@ export class SendMessageComponent implements OnInit, OnChanges {
 
   showEmojiPicker = false;
 
+  filteringForUser: boolean = false;
+  taggedUsers: string[] = [];
+
+  filteringForChannel: boolean = false;
+  taggedChannels: string[] = [];
+
   onKeyDownEnter(event: KeyboardEvent) {
     if (event.key === 'Enter' && !this.isBtnDisabled()) {
       event.preventDefault();      
       this.saveNewMessage();
     }
   }
-
-  taggedUsers: string[] = [];
-  taggedChannels: string[] = [];
 
   serach() {
     this.taggedUsers = [];
@@ -69,20 +72,17 @@ export class SendMessageComponent implements OnInit, OnChanges {
 
     if (searchTerm.includes('@')) {
       const userTerm = this.searchForAt(searchTerm);
-
+      this.filteringForUser = true;
       console.log(this.content);
       console.log(userTerm);
-  
       this.searchForUsers(userTerm);
     }
 
-
     if (searchTerm.includes('#')) {
       const userTerm = this.searchForHashtag(searchTerm);
-
+      this.filteringForChannel = true;
       console.log(this.content);
       console.log(userTerm);
-  
       this.searchForChannels(userTerm);
     }
   }
@@ -117,6 +117,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
       const updatedContent = this.content.replace(this.searchForAt(this.content), filteredUser + ' ');
       this.content = updatedContent;
     }
+    this.filteringForUser = false;
   }
 
   setTaggedChannel(filteredChannel: string) {
@@ -125,6 +126,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
       const updatedContent = this.content.replace(this.searchForHashtag(this.content), filteredChannel + ' ');
       this.content = updatedContent;
     }
+    this.filteringForChannel = false;
   }
 
 

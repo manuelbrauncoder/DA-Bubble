@@ -6,16 +6,27 @@
     }
     <textarea appAutofocus #textArea (input)="serach()" (keydown)="onKeyDownEnter($event)" [disabled]="disableInput" type="text" [(ngModel)]="content" [placeholder]="getPlaceholderText()"></textarea>
 
-    
-    @for (filteredUser of taggedUsers; track $index) {
-        <div class="filteredUsers" (click)="setTaggedUser(filteredUser)">
-            {{ filteredUser }}
+    @if (filteringForUser) {
+        <div @fadeIn class="filteringForUserPopup">
+            <div class="filteredUsersList">
+                @for (filteredUser of taggedUsers; track $index) {
+                    <div class="filteredUsers" (click)="setTaggedUser(filteredUser)">
+                        {{ filteredUser }}
+                    </div>
+                }
+            </div>
         </div>
     }
 
-    @for (filteredChannel of taggedChannels; track $index) {
-        <div class="filteredChannels" (click)="setTaggedChannel(filteredChannel)">
-            {{ filteredChannel }}
+    @if (filteringForChannel) {
+        <div @fadeIn class="filteringForChannelPopup">
+            <div class="filteredChannelsList">
+                @for (filteredChannel of taggedChannels; track $index) {
+                    <div class="filteredChannels" (click)="setTaggedChannel(filteredChannel)">
+                        {{ filteredChannel }}
+                    </div>
+                }
+            </div>
         </div>
     }
 
