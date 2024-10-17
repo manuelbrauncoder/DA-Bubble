@@ -73,17 +73,17 @@ export class SendMessageComponent implements OnInit, OnChanges {
     if (searchTerm.includes('@')) {
       const userTerm = this.searchForAt(searchTerm);
       this.filteringForUser = true;
-      console.log(this.content);
-      console.log(userTerm);
       this.searchForUsers(userTerm);
+    } else {
+      this.filteringForUser = false; // Benutzer-Filterung deaktivieren, wenn @ gelöscht wurde
     }
 
     if (searchTerm.includes('#')) {
       const userTerm = this.searchForHashtag(searchTerm);
       this.filteringForChannel = true;
-      console.log(this.content);
-      console.log(userTerm);
       this.searchForChannels(userTerm);
+    } else {
+      this.filteringForChannel = false; // Channel-Filterung deaktivieren, wenn # gelöscht wurde
     }
   }
 
@@ -101,30 +101,30 @@ export class SendMessageComponent implements OnInit, OnChanges {
     const users: User[] = this.userService.fireService.users.filter((u) => u.username.toLowerCase().trim().includes(userTerm));
     const usernames = users.map((u) => `${u.username}`);
     this.taggedUsers = [...this.taggedUsers, ...usernames];
-    console.log(this.taggedUsers);
   }
 
   searchForChannels(userTerm: string) {
     const channels: Channel[] = this.userService.fireService.channels.filter((c) => c.name.toLowerCase().trim().includes(userTerm));
     const channelnames = channels.map((c) => `${c.name}`);
     this.taggedChannels = [...this.taggedChannels, ...channelnames];
-    console.log(this.taggedChannels);
   }
 
   setTaggedUser(filteredUser: string) {
-    const serachTermn = this.searchForAt(this.content);
-    if (serachTermn) {
+    const searchTermn = this.searchForAt(this.content);
+    if (searchTermn) {
       const updatedContent = this.content.replace(this.searchForAt(this.content), filteredUser + ' ');
       this.content = updatedContent;
+      this.setFocus();
     }
     this.filteringForUser = false;
   }
 
   setTaggedChannel(filteredChannel: string) {
-    const serachTermn = this.searchForHashtag(this.content);
-    if (serachTermn) {
+    const searchTermn = this.searchForHashtag(this.content);
+    if (searchTermn) {
       const updatedContent = this.content.replace(this.searchForHashtag(this.content), filteredChannel + ' ');
       this.content = updatedContent;
+      this.setFocus();
     }
     this.filteringForChannel = false;
   }
