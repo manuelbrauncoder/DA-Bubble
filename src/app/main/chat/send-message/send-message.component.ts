@@ -65,7 +65,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
     }
   }
 
-  serach() {
+  search() {
     this.taggedUsers = [];
     this.taggedChannels = [];
     const searchTerm = this.content.toLowerCase();
@@ -115,6 +115,9 @@ export class SendMessageComponent implements OnInit, OnChanges {
       const updatedContent = this.content.replace(this.searchForAt(this.content), filteredUser + ' ');
       this.content = updatedContent;
       this.setFocus();
+    } else {
+      this.content += filteredUser + ' ';
+      this.setFocus();
     }
     this.filteringForUser = false;
   }
@@ -124,6 +127,9 @@ export class SendMessageComponent implements OnInit, OnChanges {
     if (searchTermn) {
       const updatedContent = this.content.replace(this.searchForHashtag(this.content), filteredChannel + ' ');
       this.content = updatedContent;
+      this.setFocus();
+    } else {
+      this.content += filteredChannel + ' ';
       this.setFocus();
     }
     this.filteringForChannel = false;
@@ -197,6 +203,7 @@ export class SendMessageComponent implements OnInit, OnChanges {
    */
   displayTaggedUser(username: string) {
     this.content += `@${username} `;
+    this.setFocus();
   }
 
   /**
