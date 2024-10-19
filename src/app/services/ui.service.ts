@@ -41,7 +41,6 @@ export class UiService {
   showVerifyPasswordPopup: boolean = false;
   showChangeAvatarContainer: boolean = false;
   showProfileChangeConfirmationPopup: boolean = false;
-  showTaggableUsersPopup: boolean = false;
   showOtherUsersProfile: boolean = false;
 
   showMobileNavigation: boolean = false;
@@ -187,7 +186,6 @@ export class UiService {
    * Toggles the visibility of the popup for editing the user profile and logging out.
    * Resets other related popups to their hidden state.
    */
-
   toggleEditUserAndLogoutPopup() {
     this.showEditUserAndLogoutPopup = !this.showEditUserAndLogoutPopup;
     this.showViewProfilePopup = false;
@@ -234,10 +232,6 @@ export class UiService {
     setTimeout(() => {
       this.showProfileChangeConfirmationPopup = false;
     }, 4500);
-  }
-
-  toggleTaggableUsersPopup() {
-    this.showTaggableUsersPopup = !this.showTaggableUsersPopup;
   }
 
   toggleOtherUsersProfile() {

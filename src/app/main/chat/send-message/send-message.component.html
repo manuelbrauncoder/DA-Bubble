@@ -47,13 +47,8 @@
                 <img src="assets/icons/channel-chat/addReactionIcon.svg">
             </div>
 
-            <div class="popup-wrapper">
-                <div class="bounding-box" (click)="showTaggableUsers()">
-                    <img src="assets/icons/channel-chat/tagPersonIcon.svg">
-                </div>
-                @if (uiService.showTaggableUsersPopup) {
-                    <app-popup-taggable-users @fadeIn [currentRecipient]="currentRecipient" (userTagged)="displayTaggedUser($event)"></app-popup-taggable-users>
-                }
+            <div class="bounding-box" (click)="showTaggableUsers()">
+                <img src="assets/icons/channel-chat/tagPersonIcon.svg">
             </div>
         </div>
         
@@ -72,7 +67,3 @@
         <img src="assets/icons/channel-chat/sendIcon.svg" [ngStyle]="{ cursor: isBtnDisabled() }" class="send-btn" (click)="saveNewMessage()" [class.disabled]="isBtnDisabled()" [attr.disabled]="isBtnDisabled() ? true : null">
     </div>
 </div>
-
-@if (uiService.showTaggableUsersPopup) {
-    <div @fadeIn class="popup-background" (click)="showTaggableUsers()"></div>
-}

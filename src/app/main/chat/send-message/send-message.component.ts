@@ -11,7 +11,6 @@ import { UiService } from '../../../services/ui.service';
 import { ChannelService } from '../../../services/channel.service';
 import { ConversationService } from '../../../services/conversation.service';
 import { ThreadService } from '../../../services/thread.service';
-import { PopupTaggableUsersComponent } from '../popup-taggable-users/popup-taggable-users.component';
 import { fadeIn } from '../../../shared/animations';
 import { FireStorageService } from '../../../services/fire-storage.service';
 import { EmojiPickerComponent } from '../../../shared/emoji-picker/emoji-picker.component';
@@ -22,7 +21,7 @@ import { User } from '../../../models/user.class';
 @Component({
   selector: 'app-send-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, PopupTaggableUsersComponent, EmojiPickerComponent, ClickOutsideDirective, AutofocusDirective],
+  imports: [CommonModule, FormsModule, EmojiPickerComponent, ClickOutsideDirective, AutofocusDirective],
   animations: [fadeIn],
   templateUrl: './send-message.component.html',
   styleUrl: './send-message.component.scss'
@@ -194,15 +193,8 @@ export class SendMessageComponent implements OnInit, OnChanges {
    * Toggles the popup for selecting taggable users.
    */
   showTaggableUsers() {
-    this.uiService.toggleTaggableUsersPopup();
-  }
-
-  /**
-   * Adds a tagged user's username to the message content.
-   * @param {string} username - The username of the tagged user.
-   */
-  displayTaggedUser(username: string) {
-    this.content += `@${username} `;
+    this.content += '@';
+    this.search();
     this.setFocus();
   }
 
