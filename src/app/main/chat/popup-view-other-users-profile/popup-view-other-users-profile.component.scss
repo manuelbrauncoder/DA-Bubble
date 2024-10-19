@@ -79,20 +79,66 @@
     font-size: 2rem;
   }
 
-  .onlineStatus {
+  .statusOffline {
     height: 1.688rem;
     display: flex;
     align-items: center;
     gap: 0.938rem;
 
-    img {
-      cursor: default;
+    .statusSymbol {
+      width: 0.938rem;
+      height: 0.938rem;
+      background-color: red;
+      border-radius: 100%;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: red;
+      text-transform: capitalize;
+    }
+  }
+
+  .statusOnline {
+    height: 1.688rem;
+    display: flex;
+    align-items: center;
+    gap: 0.938rem;
+
+    .statusSymbol {
+      width: 0.938rem;
+      height: 0.938rem;
+      background-color: #92c83e;
+      border-radius: 100%;
     }
 
     p {
       font-weight: 400;
       font-size: 1.25rem;
       color: #92c83e;
+      text-transform: capitalize;
+    }
+  }
+
+  .statusAway {
+    height: 1.688rem;
+    display: flex;
+    align-items: center;
+    gap: 0.938rem;
+
+    .statusSymbol {
+      width: 0.938rem;
+      height: 0.938rem;
+      background-color: gray;
+      border-radius: 100%;
+    }
+
+    p {
+      font-weight: 400;
+      font-size: 1.25rem;
+      color: gray;
+      text-transform: capitalize;
     }
   }
 }

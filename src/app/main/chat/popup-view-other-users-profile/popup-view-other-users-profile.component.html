@@ -14,8 +14,8 @@
     <div class="name-and-onlineStatus">
         <p class="name">{{ user?.username }}</p>
 
-        <div class="onlineStatus">
-            <img src="assets/icons/statusOnline.png">
+        <div [ngClass]="checkStatus()">
+            <div class="statusSymbol"></div>
             <p>{{ user?.status }}</p>
         </div>
     </div>
