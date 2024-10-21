@@ -54,7 +54,7 @@
                 </div>
 
                 <input type="text" id="name" name="name" #name="ngModel" [(ngModel)]="editProfileData.name" value="" (ngModelChange)="onNameChange()"
-                    placeholder="Vorname Nachname" pattern="[A-Z][a-z]{1,} [A-Z][a-z]{1,}" required>
+                    placeholder="Vorname Nachname" pattern="[A-ZÄÖÜ][a-zäöüß]{1,} [A-ZÄÖÜ][a-zäöüß]{1,}" required>
                 @if (name.invalid && (name.dirty || name.touched)) {
                     <span>Bitte ein Vor- und Nachname eingeben</span>
                 }
