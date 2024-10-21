@@ -16,6 +16,8 @@ export class UiService {
 
   currentDataPath = '';
 
+  introAnimationPlayed: boolean = false; // the intro animation on the start screen will be played only once
+
   showWorkspaceMenu: boolean = true; // workspace menu in main-content
   showDirectMessages: boolean = true; // user list in workspace menu
   showChannels: boolean = true; // channel list in workspace menu

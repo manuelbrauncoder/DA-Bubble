@@ -1,6 +1,8 @@
-<div *ngIf="showStartScreen" class="startScreen" [class.animate-logo]="logoState === 'corner'" [class.fade-out]="startScreenFadeOut">
-  <img src="assets/img/Logo.png" alt="LOGO">
-</div>
+@if (!this.uiService.introAnimationPlayed) {
+  <div *ngIf="showStartScreen" class="startScreen" [class.animate-logo]="logoState === 'corner'" [class.fade-out]="startScreenFadeOut">
+    <img src="assets/img/Logo.png" alt="LOGO">
+  </div>
+}
 
 <form #loginForm="ngForm">
   <h2>Anmeldung</h2>

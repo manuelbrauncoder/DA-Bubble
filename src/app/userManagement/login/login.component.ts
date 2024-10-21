@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { catchError, of } from 'rxjs';
+import { UiService } from '../../services/ui.service';
 
 @Component({
   selector: 'app-login',
@@ -15,17 +16,22 @@ import { catchError, of } from 'rxjs';
 export class LoginComponent {
   authService = inject(FirebaseAuthService);
   router = inject(Router);
+  uiService = inject(UiService);
   loginFailed: boolean = false;
   showStartScreen: boolean = true;
   startScreenFadeOut: boolean = false;
   logoState: 'center' | 'corner' = 'center';
-
 
   loginData = {
     email: '',
     password: ''
   }
 
+  /**
+   * ngOnInit lifecycle hook for Angular component.
+   * It initiates a series of animations to move the logo from the center to the corner
+   * and fades out the start screen.
+   */
   ngOnInit() {
     setTimeout(() => {
       this.logoState = 'corner';
@@ -33,11 +39,19 @@ export class LoginComponent {
         this.startScreenFadeOut = true;
         setTimeout(() => {
           this.showStartScreen = false;
+          this.uiService.introAnimationPlayed = true;
         }, 500);
       }, 1500);
     }, 500);
   }
 
+  /**
+   * Handles the "Enter" keypress during login.
+   * If the form is valid and the "Enter" key is pressed, the login process is triggered.
+   * 
+   * @param event - The keyboard event triggered by pressing a key.
+   * @param loginForm - The login form containing user credentials.
+   */
   onKeyDownEnter(event: KeyboardEvent, loginForm: NgForm) {
     if (event.key === 'Enter' && loginForm.valid) {
       event.preventDefault();      
@@ -45,7 +59,7 @@ export class LoginComponent {
     }
   }
 
-    /**
+  /**
    * Login for user. Checks if email and pwd is in the database
    * and link to the main page.
    */
@@ -88,5 +102,4 @@ export class LoginComponent {
       this.loginFailed = true;
     }
   }
-
 }
